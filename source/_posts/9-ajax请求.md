@@ -10,7 +10,7 @@ keywords:
   - ajax
   - javascript
 date: 2019-03-24 23:09:57
-description: HTTP、Ajax、跨域方案、数据处理
+description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
 ---
 
 # 一、HTTP 
@@ -167,13 +167,63 @@ description: HTTP、Ajax、跨域方案、数据处理
   ```
 
 
-# 四、数据处理
+
+# 四、Ajax 常用的数据格式
+
+## JSON
+> 处理大量数据的规范格式
+
+  * 对象：`var json_obj = { name: 'Alice', age: 20 }`
+  * 字符串：`var json_str = “{ name: 'Alice', age: 20 }”`
+  * 转换
+    * 对象转字符串：`JSON.stringify(json_obj)`
+    * 字符串转对象：`JSON.parse(json_str) / eval('('+json_str+')')`  
+    * eval：不推荐使用，因为它会把 js 数据而不只是 json_str 都转为 json 对象
+
+
+## FormData
+> 处理包括二进制文件的表单数据并通过 post 方式发送到服务端
+
+  * html 
+    * form：`form id="form" method="post" enctype="multipart/form-data"`
+    * input：`input type="file" name="file"`
+  * 操作
+    ```js
+    // 1、实例一个空 FormData 对象之后 append 键值对
+    var formdata = new FormData() 
+    var file = document.getElementById("file").files[0]
+    formData.append('file', file)
+                              
+    // 2、form元素对象 作为参数传入  
+    var form = document.getElementById("form")
+    var formdata = new FormData(form);                          
+
+    // 3、getFormData 方法
+    var formobj =  document.getElementById("form");
+    var formdata = formobj.getFormData()
+
+    // 其它 API：has、getAll、forEach
+    formdata.delete("file")   
+    var file = formdata.get("file")        
+    ```
 
 
 
 
+# 五、Base64
 
+## 编码
+> 用来将数据内容全部转换成 ASCII(可见字符) 的一个编码算法，并非加密算法
 
+1. 理解 
+  * 本质：一种将二进制数据转为文本数据的方案
+  * 用途：早期用于邮件传输，现在常用于图片转码
+  * 适用场景
+    * 当访问外部资源很麻烦或受限时
+    * 当图片的体积太小，占用一个HTTP会话不是很值得时。
+    * 当图片是在服务器端用程序动态生成，各个访问用户显示不同时
+  * 缺点：编码后的数据体积一般会变大, 而且 DataUrl 形式的图片不会被浏览器缓存
+2. 
 
 
 

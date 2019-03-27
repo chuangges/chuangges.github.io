@@ -34,24 +34,40 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   hexo s     // 启动本地服务器, 即 hexo server
   ```
 
-## 部署到GitHub上（线上访问）
-> <div style="text-indent: 2em">由于Github是 外国网站且禁止百度爬虫访问，所以会导致百度搜不到你的网站。所以可以做两手准备：国内采用Coding托管，国外采用GitHub托管。</div>  
+## 部署到云服务器（线上访问）
+> <div style="text-indent: 2em">Github 是外国网站且禁止百度爬虫访问，所以会导致百度搜不到你的网站。可以做两手准备：国内采用Coding托管，国外采用GitHub托管，建议两者的用户名和密码保持一致。</div>  
 
-  1. __在github上建立一个仓库__ (Start a Project) 
-    <div style="text-indent: 2em">Repository name的格式是 `username.github.io`, username 必须是本人用户名, 这是GitHub Pages的特殊命名规范(亲测不区分大小写)。</div>  
-    
+### 配置步骤
+  1. 新建项目
+      GitHub：`username.github.io`
+      Coding：https://coding.net/
+  2. 配置 SSH
+    * 检查：`cd ~/.ssh`
+    * 生成：`ssh-keygen -t rsa -C "17621538916@163.com"`
+    * 输入密码并回车
+    * 查看公钥：`cat ~/.ssh/id_rsa.pub` 
+  3. 添加公钥
+  4. 基础配置
+    * 用户名：`git config --global user.name "chuanggefighting"`
+    * 邮箱：`git config --global user.email "17621538916@163.com"` 
+  5. 测试连接：`ssh -T git@github.com、ssh -T git@git.coding.net`
+  6. 开启 Pages 服务
 
-  2. __修改部署配置__ (blog/_config.yml)
-    
+
+### 修改配置文件
+
   ```yaml
   deploy:
-      type: git
-      repository: https://github.com/chuanggefighting/chuanggefighting.github.io.git
-      branch: master
+    type: git
+    repo: 
+      github: https://github.com/chuanggefighting/chuanggefighting.github.io.git
+      coding: https://git.dev.tencent.com/chuanggefighting/chuanggefighting.coding.me.git  # 腾讯
+      # coding: https://git.coding.net/chuanggefighting/chuanggefighting.coding.me.git     # Coding
+    branch: master
   ```
+  
 
-      
-3. __上传到服务器__  
+### 上传到服务器
 
   ```js
   cnpm install hexo-deployer-git --save  // 安装git部署插件
@@ -62,6 +78,7 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   hexo d                  // 部署到github, 即 hexo deploy
   hexo hexo g -d          // 简化命令, 部署前生成静态文件
   ```
+
 
 
 ## 创建新页面
