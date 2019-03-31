@@ -1,5 +1,5 @@
 ---
-title: Ajax 的全面总结
+title: 前后端通信方式
 tags:
   - Javascript
   - Ajax
@@ -10,27 +10,58 @@ keywords:
   - ajax
   - javascript
 date: 2019-03-24 23:09:57
-description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
+description: HTTP 协议、Ajax 异步请求、Socket 实时通信
 ---
 
 # 一、HTTP 
-> 超文本传输协议
+> 超文本传输协议，它是基于 TCP/IP 协议的一个应用层协议，用于定义客户端与服务器通信的格式，具有单向请求、无状态等特点
 
-  1. 简介：用于 web 应用传输数据，只能由客户端发起并由服务端响应，具有无状态等特点。
-  2. 传输单位：http 报文 (请求报文、响应报文)，报文结构可分为 请求/响应行、首部字段、实体部分。
-    * 请求行：用于说明请求方法、请求地址、http 版本号 
-    * 响应行：用于说明服务器 http 版本号、响应状态码、状态码的原因短句
-    * 首部字段：分为 通用首部字段、请求首部字段、响应首部字段、实体首部字段
-    * 实体部分：可以用实体首部字段加以说明，常用 content-type 说明实体内容的类型
-  3. 操作方式
-    * 浏览器的 url 地址栏 
-    * 页面有 src 属性的标签（img、script、link 等） 
-    * 带有 action 属性的 form 表单 
-    * XMLHttpRequest 对象
+## HTTP 报文
+> HTTP 通信的传输单位，可分为 请求报文和响应报文，内部结构如下
+
+  * 请求行：用于说明请求方法、请求地址、http 版本号 
+  * 响应行：用于说明服务器 http 版本号、响应状态码、状态码的原因短句
+  * 头部字段：分为 通用首部字段、请求首部字段、响应首部字段、实体首部字段
+  * 实体部分：可以用实体首部字段加以说明，常用 content-type 说明实体内容的类型
 
 
-# 二、Ajax
-> JavaScript 异步网络请求，在网页不跳转不刷新的情况下能够刷新局部页面内容
+## 操作方式
+  * 浏览器的 url 地址栏 
+  * XMLHttpRequest 对象
+  * 页面有 src 属性的标签（img、script、link 等） 
+  * 带有 action 属性的 form 表单 
+
+## 连接方式
+> 实际上是 TCP 协议的长/短连接，区别在于数据传输后是否立即关闭连接
+
+  1. 短连接
+    * HTTP1.0 默认方式。每次 HTTP 操作则建立一次连接，任务结束就立即关闭
+    * 常用于 并发量大但每个用户无需频繁操作的场景，比如浏览器网址的 http 服务
+  2. 长连接
+    * HTTP1.1 开始默认方式。任务结束后并不会立即关闭 TCP 连接，再次请求时继续使用
+    * HTTP 响应头会添加 `Connection: keep-alive`，而且可以在服务器软件中设定连接时间
+
+
+
+## 工作流程
+
+1. 全部流程
+  <div align="center">
+    ![HTTP 请求流程](/images/post/http_req.png)
+    <!-- <img src="/images/post/http_req.png" alt=""> -->
+  </div> 
+2. 域名解析过程
+  <div align="center">
+    ![域名解析过程](/images/post/domain.png)
+    <!-- <img src="/images/post/domain.png" alt=""> -->
+  </div> 
+3. 三次握手
+  <div style="text-indent: 2em">TCP 协议中，建立 TCP 需要与百度服务器握手三次，你先告诉服务器你要给服务器发东西（SYN），服务器应答你并告诉你它也要给你发东西（SYN、ACK），然后你应答服务器（ACK），共来回3次，称为3次握手。</div>
+  
+
+
+# 二、Ajax 基础
+> 异步网络请求，能够在页面不跳转不刷新的情况下实现局部加载的异步通信，减少了传输数据量
 
 ## 原理
 <div style="text-indent: 2em">在用户和服务器之间加了―个中间层 (Ajax 引擎)，通过 XmlHttpRequest 对象来向服务器发异步请求并获取数据，然后通过 js 操作 DOM 而更新页面，这样就让用户操作与服务器响应实现了异步化，从而 js 可以及时向服务器提出请求和处理响应而不阻塞用户，达到无刷新的效果;</div>
@@ -65,7 +96,6 @@ description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
   * `application/x-www-form-urlencoded`：jquery ajax 默认类型，使用查询字符串格式的数据
   * `multipart/form-data`：常用于表单上传文件，设置 form enctype 为该类型
   * `application/json`：axios 默认类型，使用 json 格式的数据
-
 
 
 ## 原生写法
@@ -122,7 +152,7 @@ description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
 
 
 
-# 三、跨域
+# 三、Ajax 跨域方案
 > A 网站的 js 代码试图访问 B 网站的数据
 
 ## 同源策略
@@ -168,7 +198,7 @@ description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
 
 
 
-# 四、Ajax 常用的数据格式
+# 四、Ajax 数据格式
 
 ## JSON
 > 处理大量数据的规范格式
@@ -182,7 +212,7 @@ description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
 
 
 ## FormData
-> 处理包括二进制文件的表单数据并通过 post 方式发送到服务端
+> 处理包括图片和文件的表单数据并通过 post 方式发送到服务端
 
   * html 
     * form：`form id="form" method="post" enctype="multipart/form-data"`
@@ -208,22 +238,64 @@ description: HTTP、Ajax、跨域方案、JSON、FormData、Base64、Blob
     ```
 
 
+# 五、实时通信
+  * Ajax 轮询
+    * 原理：客户端设置 计时器，每隔一段时间就向服务器发送一次请求
+    * 缺点：只能由客户端发起请求，而且需要服务器有很快的 资源处理速度
+  * http 长轮询
+    * 原理：客户端发起请求建立连接后，服务器会等到有内容更新时才去响应，否则不响应
+    * 缺点：采用阻塞模型，需要服务器有很高的并发处理能力，会占用服务器更多的资源空间。    
+  * WebSocket：只需要经过一个握手的动作，客户端与服务端就可以互相传送数据，不需要询问和等待
 
 
-# 五、Base64
+# 六、websocket
+> 一种全双工通信协议(双向通信)，和 HTTP 都是基于 TCP 协议的应用层协议，两者有良好的兼容性但没有联系。它能更好的节省服务器资源和带宽，而且可以实现实时通讯
 
-## 编码
-> 用来将数据内容全部转换成 ASCII(可见字符) 的一个编码算法，并非加密算法
+## 区分
+  * WebSocket 在建立握手时通过 HTTP 传输数据，但是建立之后传输真正数据时不需要 HTTP
+  * Socket 是应用层与TCP/IP协议族通信的中间软件抽象层，它其实并非一个协议而是一组接口
 
-1. 理解 
-  * 本质：一种将二进制数据转为文本数据的方案
-  * 用途：早期用于邮件传输，现在常用于图片转码
-  * 适用场景
-    * 当访问外部资源很麻烦或受限时
-    * 当图片的体积太小，占用一个HTTP会话不是很值得时。
-    * 当图片是在服务器端用程序动态生成，各个访问用户显示不同时
-  * 缺点：编码后的数据体积一般会变大, 而且 DataUrl 形式的图片不会被浏览器缓存
-2. 
+## 连接过程
+  1. 浏览器、服务器通过 TCP 三次握手建立连接 (通信基础)
+  2. 浏览器通过向服务器发起一个包含 WebSocket 支持版本号等附加头信息的 HTTP请求
+  3. 服务器同样采用HTTP协议返回应答信息
+  4. 当收到连接成功的信息后通过 TCP 通道进行传输通信
+  5. 客户端/服务器端 关闭连接前可以自由传输数据
+
+## API
+
+  ```js
+  // 建立连接
+  var ws = null;
+  function initWebSocket{
+    // 浏览器支持则建立连接  
+    if ('WebSocket' in window) {
+        ws = new WebSocket('ws://10.148.221.210:5000')  
+
+        // 连接成功则向服务器发送数据
+        ws.onopen = function() {
+            // 0、1、2、3 ：正在连接、连接成功、连接正在关闭、连接失败或已关闭
+            if (socket.readyState===1) {
+                ws.send("connect success")
+            }
+        })
+
+        // 收到服务器数据则执行相关处理
+        socket.onmessage = function(msg){ }
+
+        // 连接失败则重连
+        ws.addEventListener('error', fn)
+    }
+  }
+
+  // 离开当前页面时断开连接
+  ws.close()
+  ```
+
+
+
+
+
 
 
 

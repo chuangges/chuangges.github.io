@@ -9,7 +9,7 @@ keywords:
   - js
   - javascript
 date: 2019-03-19 23:11:12
-description: 字符串、对象、数组
+description: 字符串、对象、数组、base64、二进制对象 
 ---
 
 # 一、字符串
@@ -558,4 +558,444 @@ description: 字符串、对象、数组
   ```
 
  
+
+# 四、Base64
+> 基于 64 个可打印字符 `A-Z、a-z、0-9、+、/` 来表示二进制数据的一种方法
+
+## 产生
+  * 需求
+    * 网络传输中文时容易出现乱码情况
+    * 网络传输图片等文件的字符并不全是可打印的字符
+    * 电子邮件早期只能传输英文，中文字符不能被服务器处理
+  * 适用场景
+    * 当访问外部资源很麻烦或受限时
+    * 当图片的体积太小，占用一个 HTTP 会话不是很值得时
+    * 当图片是在服务器端用程序动态生成，各个访问用户显示不同时
+  * 图片应用
+    * 主流浏览器都支持基于 Base64 编码的 dataURL 字符串 作为图片地址，[图片在线转码](http://imgbase64.duoshitong.com/) 
+    * 图片上传服务器时需要纯字符串形式，截取 data:image/png;base64, 后面的字符串即可上传
+
+
+## Base64 编码
+> 一种将二进制序列的数据转换为字符串的编码算法，只是无法直接看到明文但并非加密
+
+  * 理解
+    * 字节 byte 是存储二进制数据的基本单位
+    * 中文有 utf-8、gbk 等多种编码，不同编码对应的结果都不一样
+    * 对于图片、文本和音视频等数据，只有转换为 二进制序列 之后才能进行 Base64 编码
+    * 编码后的数据体积一般会变大，而且 base64Url 形式的图片不会被浏览器缓存，每次访问这样页面时都被下载一次，所以不适合被大量使用
+  * 规则
+    1. 将每三个字节作为一组，一共是 24 个二进制位
+    2. 将 24 个二进制位分为四组，每个组有 6 个二进制位
+    3. 在每组前面加两个00，扩展为 32 个二进制位，即 4 个字节
+    4. 根据 base64 编码对照表转换为扩展后的每个字节的对应字符
+
+
+## API
+
+### 浏览器原生实现
+  ```js 
+  // 编码
+  window.btoa('xiaomabuhei')  
+  // 解码
+  window.atob('eGlhb21hYnVoZWk=')          
+
+
+  // 中文编码时需要先进行 URI 组件编码
+  window.btoa(window.encodeURIComponent('小马不黑'))
+  window.decodeURIComponent(window.atob(baseStr))
+  ```
+
+### js 实现
+  ```js
+  var Base64 = {
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+    encode: function(input) {
+      var output = "";  
+      var chr1, chr2, chr3, enc1, enc2, enc3, enc4;  
+      var i = 0;  
+      input = Base64._utf8_encode(input);  
+      while (i &lt; input.length) {  
+          chr1 = input.charCodeAt(i++);  
+          chr2 = input.charCodeAt(i++);  
+          chr3 = input.charCodeAt(i++);  
+          enc1 = chr1 &gt;&gt; 2;  
+          enc2 = ((chr1 & 3) &lt;&lt; 4) | (chr2 &gt;&gt; 4);  
+          enc3 = ((chr2 & 15) &lt;&lt; 2) | (chr3 &gt;&gt; 6);  
+          enc4 = chr3 & 63;  
+          if (isNaN(chr2)) {  
+              enc3 = enc4 = 64;  
+          } else if (isNaN(chr3)) {  
+              enc4 = 64;  
+          }  
+          output = output +  
+          _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +  
+          _keyStr.charAt(enc3) + _keyStr.charAt(enc4);  
+      }  
+      return output; 
+    },
+
+    decode: function(input) {
+      var output = "";  
+      var chr1, chr2, chr3;  
+      var enc1, enc2, enc3, enc4;  
+      var i = 0;  
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");  
+      while (i &lt; input.length) {  
+          enc1 = _keyStr.indexOf(input.charAt(i++));  
+          enc2 = _keyStr.indexOf(input.charAt(i++));  
+          enc3 = _keyStr.indexOf(input.charAt(i++));  
+          enc4 = _keyStr.indexOf(input.charAt(i++));  
+          chr1 = (enc1 &lt;&lt; 2) | (enc2 &gt;&gt; 4);  
+          chr2 = ((enc2 & 15) &lt;&lt; 4) | (enc3 &gt;&gt; 2);  
+          chr3 = ((enc3 & 3) &lt;&lt; 6) | enc4;  
+          output = output + String.fromCharCode(chr1);  
+          if (enc3 != 64) {  
+              output = output + String.fromCharCode(chr2);  
+          }  
+          if (enc4 != 64) {  
+              output = output + String.fromCharCode(chr3);  
+          }  
+      }  
+      output = Base64._utf8_decode(output);  
+      return output;  
+    },
+
+    _utf8_encode: function(string) {
+      string = string.replace(/\r\n/g, "\n");  
+      var utftext = "";  
+      for (var n = 0; n &lt; string.length; n++) {  
+          var c = string.charCodeAt(n);  
+          if (c &lt; 128) {  
+              utftext += String.fromCharCode(c);  
+          } else if((c &gt; 127) && (c &lt; 2048)) {  
+              utftext += String.fromCharCode((c &gt;&gt; 6) | 192);  
+              utftext += String.fromCharCode((c & 63) | 128);  
+          } else {  
+              utftext += String.fromCharCode((c &gt;&gt; 12) | 224);  
+              utftext += String.fromCharCode(((c &gt;&gt; 6) & 63) | 128);  
+              utftext += String.fromCharCode((c & 63) | 128);  
+          }  
+  
+      }  
+      return utftext; 
+    },
+
+    _utf8_decode: function(e) {
+      var string = "";  
+      var i = 0;  
+      var c = c1 = c2 = 0;  
+      while ( i &lt; utftext.length ) {  
+          c = utftext.charCodeAt(i);  
+          if (c &lt; 128) {  
+              string += String.fromCharCode(c);  
+              i++;  
+          } else if((c &gt; 191) && (c &lt; 224)) {  
+              c2 = utftext.charCodeAt(i+1);  
+              string += String.fromCharCode(((c & 31) &lt;&lt; 6) | (c2 & 63));  
+              i += 2;  
+          } else {  
+              c2 = utftext.charCodeAt(i+1);  
+              c3 = utftext.charCodeAt(i+2);  
+              string += String.fromCharCode(((c & 15) &lt;&lt; 12) | ((c2 & 63) &lt;&lt; 6) | (c3 & 63));  
+              i += 3;  
+          }  
+      }  
+      return string;
+    }
+  }
+  ```
+
+
+## 图片转换为 base64 
+  <div align="center">
+    ![图片上传流程图](/images/post/img_upload.png)
+    <!-- <img src="/images/post/img_upload.png" alt=""> -->
+  </div> 
+
+### 本地上传图片
+  ```js
+  // html：input type="file" id="uploadImg"
+
+  function getBase64Img(fileObj, callback){  
+      var reader = new FileReader();  
+      reader.readAsDataURL(fileObj);   // 转为 Base64 格式 
+      reader.onload = function(e){  
+          // 变成字符串  
+          // callback(reader.result);  
+          callback(e.target.result);
+      }  
+   }
+   var imgFile = document.getElementById("fileInput").files[0];
+   fileInput.addEventListener("change", function (event) {
+     var file = fileInput.files[0];
+     getBase64Img(file, function(imgBase64){
+        if (imgBase64.length > 2100000) {
+              // 2 M = 2097152 B
+              alert( '请上传不大于 2M 的图片！');
+              return;
+        }else{
+            // 截取 data:image/png;base64 后面的纯字符串
+            var upload_file = imgBase64.substring(imgBase64.indexOf(",") + 1);
+            // 上传截取后的字符串
+            console.log(upload_file);
+        }
+    })
+   }, false)
+  ```
+
+
+### 网络或本地图片
+  ```js
+  // 图像文件转 Base64
+  function getBase64Img(img) {
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+      var dataURL = canvas.toDataURL("image/" + ext);
+      return dataURL;
+  }
+
+  // Base64 字符串转二进制
+  function base64ToBlob(dataurl) {
+
+      // 去掉 url 的头并转化为byte
+      var arr = dataurl.split(',');
+
+      // 处理异常：将 ASCII 码小于0的转换为大于0
+      var mime = arr[0].match(/:(.*?);/)[1];
+
+      // 解码
+      var bytes = window.atob(arr[1]);
+      var n = bytes.length;
+
+      // 生成视图（直接针对内存）：8位无符号整数，长度1个字节
+      var u8arr = new Uint8Array(n);
+
+      while (n--) {
+          u8arr[n] = bytes.charCodeAt(n);
+      }
+      return new Blob([u8arr], { type: mime });
+  }
+  
+  var image = new Image();
+  image.src = "img_url";
+  image.onload = function() {
+      var base64 = getBase64Img(image);
+      var file = base64ToBlob(base64);
+  }
+  ```
+
+
+# 五、二进制对象
+<div style="text-indent: 2em">js 最初无法处理文件、网络流等二进制 (编码格式的) 数据，只能先使用 charCodeAt() 逐字节读取 或者 转换为 Base64 格式，但是处理速度慢而且容易出错。js 后来通过引入 API 逐渐可以处理二进制数据，但是标准库里没有相关内容，所以 NodeJs 就自己搞了一套，现在 Web 自己也搞起来了，这就导致了 Web 环境和 Node 环境里的二进制内容处理方式有些不同。</div> 
+
+## 通用
+<div style="text-indent: 2em">`ArrayBuffer 对象` 表示内存中存储了一段二进制数据的原始缓冲区，它不能直接读写，只能通过 `TypedArray/DataView 视图` 转换为类型化数组之后来读写。同一段内存的不同数据有不同的读取方式，对应不同的视图。视图的作用是以指定格式读写二进制数据但本身并不存储，本质是二进制数据的抽象数据结构，两种视图的区别在于字节序，TypedArray 视图的数组成员都是同一个数据类型，DataView 视图的数组成员可以是不同的数据类型。。</div> 
+
+### ArrayBuffer
+> 用于存储二进制数据，本质是一串数字组成的乱码但没有格式，不能直接被访问
+
+  ```js
+  // 创建一个 8 字节的缓冲区对象
+  let buffer = new ArrayBuffer(8);
+
+  // 字节长度 8
+  console.log(buffer.byteLength);   
+
+  // 参数是否为视图实例
+  ArrayBuffer.isView(buffer) 
+
+  // 裁剪缓冲区
+  let buffer1 = buffer.slice(0, 1)  
+  ```
+
+
+### TypedArray
+> 成员为相同的数据类型
+
+  * 本质：一组类的统称，它们的实例都是类数组对象
+  * 语法：和普通数组语法相同，但是其元素的数据类型相同而且没有空位
+  * API：
+    * 有符号整数：Int8Array、Int16Array、Int32Array
+    * 无符号整数：Uint8Array、Uint16Array、Uint32Array
+    * 浮点数：Float32Array、Float64Array
+ 
+  ```js
+  // 直接生成视图，默认生成底层 ArrayBuffer 实例并赋值
+  var f = new Float64Array(8)
+
+  // 通过 buffer 生成视图，默认全部内容，参数为 buffer、开始索引、长度
+  let buffer = new ArrayBuffer(4);
+  let a = new Int8Array(buffer)   
+  var b = new Uint32Array(buffer, 0, 1)
+  var c = new Uint8Array(buffer, 1, 1)
+
+  // 操作视图元素
+  for (var i=0; i &lt; f.byteLength; i++){ }
+  f[1] = 10        // [0, 10]
+
+  // 与普通数组互转
+  var arr = Array.from(f) 
+  arr_2 = Array.apply([], t)
+  var u = new Uint8Array([ 1, 2, 3 ])
+
+  // 与字符串互转
+  var str = String.fromCharCode.apply(null, buffer)
+  function strToBuf (str) {
+    // 每个字符占用2个字节
+    var buf = new ArrayBuffer(str.length*2)
+    var bufView = new Uint16Array(buf)
+    for(var i=0; i &lt; str.length; i++){
+        bufView[i] = str.charCodeAt(i)
+    }
+      return bufView;
+  }
+  ```
+
+### DataView 
+> TypedArray 的强化版，成员可以是不同的数据类型，而且读写时可以自行设定 大/小 端字节序
+ 
+  ```js
+  let buffer = new ArrayBuffer(4)
+  let dataView = new DataView(buffer)
+
+  // 独有方法，写入参数是 开始位置、写入数据、大/小端读取
+  dataView.getInt8(0)
+  dataView.setInt8(0, 10)
+  dataView.setInt32(0, 25, false) 
+  ```
+
+## web 环境特有
+
+### Blob 
+> 表示一个不可变的文件对象，它提供了一系列操作文件的接口
+
+  1. 创建方式
+    * 构造函数：`new Blob(dataArr, options)`
+      * dataArr：必选数组，数组成员可以是二进制对象或字符串
+      * options：可选对象，用于设置数组中数据的 MIME 类型
+    * slice 方法：`blob.slice(start, end, contentType)` 
+      * 从已有的 Blob 对象调用 slice 接口切出一个新的 Blob 对象
+      * contentType：可选，规定新 Blob 对象的类型
+    * canvas 对象：`canvas.toBlob(callback, type, options)`
+      * 把当前绘制信息转为一个 Blob 对象
+  2. 属性与方法
+    * 属性
+      * size：对象的字节长度
+      * type：对象的数据类型 
+      * isClosed: 该对象是否调用过 close()
+    * 方法
+      * close：释放对象
+      * slice：裁剪并返回新对象
+  
+  ```js
+  // String 转为 Blob
+  var blob = new Blob(["Hello World"], {type:"text/plain"});
+
+  // ArrayBuffer 转为 Blob
+  var buffer = new ArrayBuffer(8)
+  var blob = new Blob([buffer], {type:"text/plain"});
+
+  // TypeArray 转为 Blob
+  var uArr = new Uint16Array([97, 32, 72, 100]);
+  var blob = new Blob([uArr]);
+
+  let blob = blob_2.slice(1, 5);
+
+  var canvas = document.getElementById("canvas");
+  canvas.toBlob(function(blob){
+     console.log(blob);
+  })
+  ```
+
+
+### Blob 派生对象
+> blob 对象是它们的底层对象，它们都是继承 blob 对象并进行了扩展，但其内容一样无法修改
+
+  1. __File 对象__
+    * 功能：保存文件的相关信息并允许 Js 访问
+    * 分类
+      * input 元素上选择文件后返回的 FileList 对象 
+      * 普通元素被自由拖拽时返回的 DataTransfer 对象
+      * HTMLCanvasElement 上执行 mozGetAsFile() 方法后返回的结果
+  2. __FileReader 对象__
+    * 功能：提供异步读取文件内容或二进制数据的接口
+    * 保存：读取的文件内容会被保存到 result 属性中
+    * 异步读取
+      * readAsText(file, encoding)：返回 纯文本。encoding 指定编码格式（默认 'UTF-8'）
+      * readAsDataURL(file)：返回 基于 Base64 编码的 dataURL 字符串（读取图像时常用）
+      * readAsBinaryString(file)：返回 文件的原始二进制字符串（每个字符表示一字节）
+      * readAsArrayBuffer(file)：返回 包含文件内容的 ArrayBuffer 对象
+    * 中止读取：abort() 
+    * 回调函数
+      * onload：成功时
+      * onerror：出错时
+      * onprogress：更新时
+      * onloadstart：开始时
+      * onloadend：完成时
+      * onabort：中止时
+  3. __URL 对象__
+    * 功能：通过内存文件创建出一个临时指向 File/Blob 对象的 url
+    * 静态方法
+      * createObjectURL：生成
+      * revokeObjectURL：释放
+    * 注意事项
+      * 网页一旦刷新或关闭，已生成的 url 就会失效
+      * 同样的 blob 在不同的事件调用中会得到不同 url
+
+
+  ```js
+  // 选择文件后获取文件信息
+  var fileInput = document.querySelector("#fileInput");
+
+  fileInput.addEventListener("change", function (event) {
+      var fileList = fileInput.files
+      var file = fileList[0];
+      console.log(file.name, file.size)
+  }, false)
+
+  // 拖动结束时获取被拖动的数据
+  var box = document.getElementById("#box");
+  box.ondrop = function(event){
+      // 拖动的默认处理方式是在新窗口打开
+      event.preventDefault()    
+
+      console.log(event.dataTransfer.files)
+  }
+
+  // 获取文件二进制数据
+  var reader = new FileReader();
+  reader.readAsArrayBuffer(file);
+
+  reder.onprogress = function(e){ 
+    console.log(reader.result)  
+    console.log(e.target.result)
+  }
+  reader.onload = function (e) { 
+    console.log(reader.result)  
+    console.log(e.target.result)
+  }
+
+  // 在网页插入图片
+  var img = document.createElement("img");
+  img.src = window.URL.createObjectURL(file);
+  img.width = 60;
+  img.onload = function(e) {
+      window.URL.revokeObjectURL(this.src);
+  }
+  document.body.appendChild(img);
+  ```
+
+ 
+## Node 环境特有
+
+### Buffer 
+> 它继承于 Uint8Array 并实现了更多的接口，大小固定，表示一块未加工的内存缓存区。
+
+
 

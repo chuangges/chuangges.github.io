@@ -7,49 +7,225 @@ top: false
 keywords:
   - tool
 date: 2019-02-20 15:41:48
-description: Npm、Gulp、WebPack、Git
+description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
 ---
 
-# 一、构建工具
+# 一、电脑
+
+## 操作系统
+  1. __Windows__
+    * 人妻，什么都有，还常附带不想要的东西。
+    * 微软的系统，基于Basic开发，是最普及的桌面系统，主要特点是功能强大但安全堪忧，适用于正常办公以及游戏。
+  2. __Mac OS/OSX__
+    * 女友，带着有面子但必须按照它的规则。
+    * 苹果系统，基于linux开发，主要特点是应用软件较少和较安全，适用于办公的高端移动化处理。
+  3. __Linux__
+    * 小萝莉，你让它干嘛就干嘛。
+    * 一种自由和开放源码的类Unix操作系统，可安装在手机电脑等各种计算机硬件设备中，主要特点是网络功能强大且对内存等硬件的消耗小，多用于网络服务器中，优点是其易用性和丰富的应用软件。
+          
+
+## 操作接口
+  1. __终端 terminal__ 
+    * 用于人与计算机进行交互的输入输出接口
+    * 本质是通过电缆、网络等连接主机的外部附加设备，一台计算机可以连接个终端
+  2. __控制台 console__ 
+    * 用于管理主机的特殊终端，只允许管理员使用
+    * 本质是直接和计算机相连接的原生设备，一台计算机一般只能有一个控制台
+  3. __命令解释器 shell__
+    * 提供用户界面的程序，用于与计算机内核交互
+    * 本质是 接受用户指令后，调用其他程序与内核交互完成指令
+    * 一般分为 命令行shell 和 图形shell，分别提供 命令行界面 CLI 和 图形用户界面 GUI
+    * 批处理：将一系列命令按照一定顺序集合为一个可执行的文本文件，在window系统的扩展名为 bat/cmd，双击文件即可运行
+  4. __终端与 shell 的分工__
+    * 终端从用户接受 鼠标键盘等设备的输入信息，然后发送给 shell
+    * shell 从终端获取用户指令，解析后发给计算机内核执行，并返回结果给终端
+
+
+## mac 
+  1. __应用软件安装__
+    * 通过 App Stroe 安装
+    * 将浏览器中下载好的 dmg 安装包拖到"应用程序"目录
+  2. __系统软件安装__
+    * brew 即 Homebrew，是 Mac OSX 上的软件包管理工具，用来安装、更新、卸载软件
+    * 命令行配置环境变量：vi ~/.bash_profile - 编辑文件 - esc键退出编辑 - :wq回车保存
+  3. __实现翻墙__
+    * 配置 VPN：VPN 即虚拟专用网络，可用来保护隐私和自由访问外国网站
+    * 配置 proxy：即配置代理地址
+
+
+# 二、浏览器 chrome 
+  1. __搜索__（Google输入框中所有空格都被理解为加号）
+    * 完整匹配: "mysql foreign key"（引号）
+    * 筛选: "mysql key" - "nodejs"（加减号）
+    * 返回所有: "mysql connect error *"（加通配符）
+    * 站内搜索: "mysql foreign key" site:stackoverflow.com
+    * 加速: 输入网址后点击Tab，这样可直接使用该站点的站内搜索
+  2. __调试js代码__
+    * Alert, Console等
+    * 断点调试
+      * 步骤：F12开发者工具 ——> 点击Sources菜单 ——> 左侧树中找到相应文件 ——> 点击行号列(右键为条件断点) ——> 刷新页面 ——> JS执行到断点位置停住，此时可以跟随鼠标查看功能按钮
+      * [相关技巧](http://blog.csdn.net/crper/article/details/50722753) 
+    * debug断点
+      * 在触发文件中添加 "debugger;" 语句后触发，当代码执行到该语句时就会自动断点, 接下去的操作和在Sources面板添加断点调试几乎一模一样，唯一区别在于调试后需要删除该语句。
+      * 由于有时会遇到异步加载html片段的情况，其JS代码在Sources中无法找到，因此无法直接在开发工具中直接添加断点时可用debug断点（F10一步一步执行，F8一下执行完成）
+  3. __高阶调试功能__
+    * [内置抓包工具等](https://www.cnblogs.com/guaidianqiao/p/7615430.html) 
+  4. __扩展插件__
+    * 谷歌访问助手
+      * 安装：[下载安装包](http://www.ggfwzs.com/) ——> 更多工具 ——> 扩展程序 ——> 直接拖拽 ——> 添加扩展程序
+      * 扩展其它插件：谷歌访问助手 ——> 谷歌网上商店 ——> 搜索插件 ——> 点击添加扩展
+    * 常用插件推荐
+      * 掘金
+      * Google翻译         
+      * FeHelper 
+      * JSONView   
+      * What runs         
+      * Clear Cache
+      * Code Plunker    
+      * Vue.js devtools         
+      * AngularJS Batarang      
+      * React Developer Tools  
+  5. __Chrome黑科技__
+    * 实现翻墙
+      * 配置proxy代理：setting  system ——> proxy settings ——> LAN setting ——> proxy server ——> 配置 Address 和 Port
+      * 配置Chrome扩展：下载[Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) ——> 注册登录
+    * 解析VIP视频 
+      * 打开网站 [Greasy Fork](https://greasyfork.org/zh-CN) ——> 搜索VIP视频解析 ——> 安装脚本
+    * 其它：视频广告过滤、电脑管家上网防护等
+
+
+
+# 三、代码编辑器 vscode
+> 常用扩展插件
+
+  * 显示效果类
+    * Dracula Official ：高亮主题
+    * Beautify ：代码高亮
+    * vscode-icon ：让资源树目录加上图标
+    * Bracket Pair Colorizer ：每一对括号用不同颜色区别
+    * Open-In-Browser ：直接在浏览器中打开文件的快捷菜单 alt + b
+  * 辅助编辑类
+    * ESlint ：检测js
+    * Prettier ：代码格式化 alt + shift + F 
+    * CSS Peek ：追踪至定义处（右键选择前两个选项）
+    * Path Intellisense ：自动补全路径
+    * Auto Close Tag ：自动闭合HTML标签
+    * Auto Rename Tag ：自动修改匹配的标签
+    * HTML CSS Support ：CSS的智能补全
+    * JavaScript (ES6) code snippets ：JS语法提示
+  * Vue插件类
+    * Vetur ：语法高亮
+    * VueHelper ：vue代码提示插件
+    * Vue 2 Snippets ：语法高亮 + 代码补全
+    * HTML Snippets ：在.vue文件中使用html代码补全功能
+  *  其它类
+    * npm ：运行npm命令
+    * npm Intellisense ：导入时提示已安装模块
+    * Python ：添加对.py文件的支持
+    * GitLens ：简单实现git提交代码
+    * Debugger for chrome ：调试Debug
+    
+
+  ```json
+  // vscode 基础配置
+
+  // 配置中文：ctrl + shift + p --> Display Language
+      "locale":"zh-CN"
+
+  // 用户配置：文件 --> 首选项 --> 设置 --> User Settings
+      // 指定工作台中使用的颜色主题。    
+      "workbench.colorTheme": "Monokai",    
+      // 指定在工作台中使用的图标主题    
+      "workbench.iconTheme": "vscode-icons",    
+      // 窗口失去焦点自动保存    
+      "files.autoSave": "off",    
+      // 如果设置为 "true"，将不再显示扩展建议的通知。   
+      "extensions.ignoreRecommendations": true,    
+      // 如果设置成 true，关于新的版本消息将不再显示    
+      "vsicons.dontShowNewVersionMessage": true,    
+      // 控制是否将打开的编辑器显示为预览。    
+      "workbench.editor.enablePreview": false,   
+      // 字体字号
+      "editor.fontSize": 18, 
+      //代码缩进风格4个字符    
+      "editor.tabSize": 4,    
+      // 控制编辑器是否应在键入后自动设置行的格式    
+      "editor.formatOnType": false,    
+      // 保存时取消自动格式化    
+      "editor.formatOnSave": false,    
+      // 编辑粘贴取消自动格式化    
+      "editor.formatOnPaste": false,    
+      // 控制编辑器中呈现空白字符的方式为“边界”，不会在单词之间呈现单空格。    
+      "editor.renderWhitespace": "boundary",    
+      // 控制光标动画样式    
+      "editor.cursorBlinking": "smooth",    
+      //设置Eslint需要验证的语言    
+      "eslint.validate": [        
+          "javascript",        
+          "javascriptreact",        
+          "html",        
+          "vue",        
+          {            
+              "language": "vue",            
+              "autoFix": true        
+          }
+      ],
+      //每列显示内容长多，超出时控制编辑器列的换行。
+      "editor.wordWrap": "wordWrapColumn",
+      "editor.wordWrapColumn": 150,
+      //创建人，修改人    
+      "fileheader.Author": "klierbyck",    
+      "fileheader.LastModifiedBy": "klierbyck",    
+      // 在函数参数括号前定义空格处理。需要 TypeScript >= 2.1.5。    
+      "typescript.format.insertSpaceBeforeFunctionParenthesis": true,    
+      // 在函数参数括号前定义空格处理。需要 TypeScript >= 2.1.5。    
+      "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+      // HTML Snippets 插件配置
+      "emmet.triggerExpansionOnTab": true,
+      "emmet.includeLanguages": {
+          "vue-html": "html",
+          "vue": "html"
+      },
+  ```
+      
+
+
+# 四、前端自动化构建
 
 ## 构建需求
 
-1. __预处理__
-<div style="text-indent: 2em">低层语言的更换或升级都因兼容性问题而面临着巨大困难，这催生了各种中间语言的预处理器，例如 通过 Babel 将 ES6 转换成可以在浏览器中运行的 js代码，通过 Sass/Less/Stylus 可以在线编程并转换成 css代码。</div> 
+  1. __预处理__
+    <div style="text-indent: 2em">低层语言的更换或升级都因兼容性问题而面临着巨大困难，这催生了各种中间语言的预处理器，例如 通过 Babel 将 ES6 转换成可以在浏览器中运行的 js代码，通过 Sass/Less/Stylus 可以在线编程并转换成 css代码。</div> 
 
-2. __风格与测试__
-<div style="text-indent: 2em">在一个典型的工作流中，每次Push主分支或npm发布都应首先运行代码风格检查和单元测试。我们需要这些操作能够在合适的时候自动执行。</div> 
+  2. __风格与测试__
+    <div style="text-indent: 2em">在一个典型的工作流中，每次Push主分支或npm发布都应首先运行代码风格检查和单元测试。我们需要这些操作能够在合适的时候自动执行。</div> 
 
-3. __资源压缩__
-<div style="text-indent: 2em">在开发网站代码时，我们希望模块化地进行编码，即每个业务逻辑、通用工具或者架构元素都需要组织在单独的文件中。但是如果用户浏览网页时也载入这么多源文件则会影响页面打开速度，因此在网站发布时需要将源码合并压缩，js可能还需要模块化，CSS文件可能还需要合并、添加兼容性前缀等，这些重复性工作我们也希望写成脚本。   </div> 
+  3. __资源压缩__
+    <div style="text-indent: 2em">在开发网站代码时，我们希望模块化地进行编码，即每个业务逻辑、通用工具或者架构元素都需要组织在单独的文件中。但是如果用户浏览网页时也载入这么多源文件则会影响页面打开速度，因此在网站发布时需要将源码合并压缩，js可能还需要模块化，CSS文件可能还需要合并、添加兼容性前缀等，这些重复性工作我们也希望写成脚本。   </div> 
 
-4. __静态资源的URL替换__
-<div style="text-indent: 2em">该需求最复杂, 因为生产环境中的资源地址可能和开发环境中很不同，可能是由于JS合并、CSS合并，也可能是由于应用了CDN加速。我们需要在部署时更改所有HTML文件中的静态资源地址。</div> 
+  4. __静态资源的URL替换__
+    <div style="text-indent: 2em">该需求最复杂, 因为生产环境中的资源地址可能和开发环境中很不同，可能是由于JS合并、CSS合并，也可能是由于应用了CDN加速。我们需要在部署时更改所有HTML文件中的静态资源地址。</div> 
 
 
-## 构建工具分类
+## 构建工具
 <div style="text-indent: 2em">"自动化构建"是指通过工具实现构建系统、编译和转换代码、压缩资源、部署配置等功能，优化"从源码到网页"的开发流程，这有利于提高开发效率并改善代码质量。</div>
 <div style="text-indent: 2em">所有的开发工具都是为了使大量低技术含量任务完成自动化从而减轻工作，它们的组合使用完全看个人选择。开发过程一般会以Node和npm为核心，然后搭配 Gulp + Bower 或者 Webpack。</div>
 
-1. __执行通用任务__
-* NPM / Bower：基于NodeJS的包管理和分发工具，用来下载、安装、上传以及管理已经安装的包
-* Gulp / Grunt：基于NodeJS的自动化构建工具，用来自动化完成一些常见的、重复的Web开发任务，如网页自动刷新和预处理等。两者最大区别是Gulp采取流式接口。
-
-
-2. __模块绑定__
-* Webpack：前端资源模块化管理和打包工具，用来配置各种模块所需要的处理方式，常见配置有 scss 代码预处理、ES6 代码转换、模块打包的规则和地址等
-* Browserify：打包工具，常用于将 Node 项目模块打包成浏览器支持形式
-* RequireJS：Js模块加载器，常用于 NodeJS 中加载模块
-
-3. __代码分析__
-* ESLint / JSLint：检测工具，常用于分析代码中潜在错误。
-
-4. __单元测试__
-* Jasmine：测试工具，常用于测试自己的代码
+  1. __执行通用任务__
+    * NPM / Bower：基于NodeJS的包管理和分发工具，用来下载、安装、上传以及管理已经安装的包
+    * Gulp / Grunt：基于NodeJS的自动化构建工具，用来自动化完成一些常见的、重复的Web开发任务，如网页自动刷新和预处理等。两者最大区别是Gulp采取流式接口。
+  2. __模块绑定__
+    * Webpack：前端资源模块化管理和打包工具，用来配置各种模块所需要的处理方式，常见配置有 scss 代码预处理、ES6 代码转换、模块打包的规则和地址等
+    * Browserify：打包工具，常用于将 Node 项目模块打包成浏览器支持形式
+    * RequireJS：Js模块加载器，常用于 NodeJS 中加载模块
+  3. __代码分析__
+    * ESLint / JSLint：检测工具，常用于分析代码中潜在错误。
+  4. __单元测试__
+    * Jasmine：测试工具，常用于测试自己的代码
 
 
   
-# 二、NPM
+# 五、安装工具 NPM
 ## 使用场景
   * 从NPM服务器下载别人编写的三方包到本地使用
   * 从NPM服务器下载并安装别人编写的命令行程序到本地使用
@@ -95,7 +271,7 @@ description: Npm、Gulp、WebPack、Git
   ```
 
 
-# 三、Gulp
+# 六、构建工具 Gulp
 
 ## 常用插件
   * gulp-minify-html：压缩html
@@ -119,53 +295,53 @@ description: Npm、Gulp、WebPack、Git
 
 
 ## 设置任务
-1. __服务器__
-  ```js
-  var gulp = require('gulp'),
-      browserSync = require('browser-sync');
-  // 1.搭建静态服务器
-  gulp.task('browser-sync', function () {
-      browserSync.init({
-          files:['**'],
-          server:{
-              baseDir:'./',             // 服务器的根目录
-              index:'blink/blink.html'  // 默认打开的文件
-          },
-          port:8050  // 指定访问服务器的端口号
-      });
-  });
-  // 2.使用代理（注意本地服务器必须自己搭建的）
-  gulp.task('browser-sync', function () {
-      browserSync.init({
-          files:['**'],
-          proxy:'localhost',  // 本地服务器的地址
-          port:8080           // 访问的端口号
-      });
-  });
-  ```
- 
-2. __默认任务__
-  ```js
-  gulp.task('default',['serve']);  
-  gulp.task('server',['sass','mihtml','minijs'],function(){
-      bs.init({
-          open:'external',
-          server:'./build'  //服务根目录
-      })
-      // 监听html
-      gulp.watch('./html/*.html',['mihtml'])
-      gulp.watch('./build/html/*.html').on('change',reload)
-  }) 
-    
+  1. __服务器__
+    ```js
+    var gulp = require('gulp'),
+        browserSync = require('browser-sync');
+    // 1.搭建静态服务器
+    gulp.task('browser-sync', function () {
+        browserSync.init({
+            files:['**'],
+            server:{
+                baseDir:'./',             // 服务器的根目录
+                index:'blink/blink.html'  // 默认打开的文件
+            },
+            port:8050  // 指定访问服务器的端口号
+        });
+    });
+    // 2.使用代理（注意本地服务器必须自己搭建的）
+    gulp.task('browser-sync', function () {
+        browserSync.init({
+            files:['**'],
+            proxy:'localhost',  // 本地服务器的地址
+            port:8080           // 访问的端口号
+        });
+    });
+    ```
+  
+  2. __默认任务__
+    ```js
+    gulp.task('default',['serve']);  
+    gulp.task('server',['sass','mihtml','minijs'],function(){
+        bs.init({
+            open:'external',
+            server:'./build'  //服务根目录
+        })
+        // 监听html
+        gulp.watch('./html/*.html',['mihtml'])
+        gulp.watch('./build/html/*.html').on('change',reload)
+    }) 
+      
 
-  gulp.task('default', function(){
-      gulp.run('lint', 'sass', 'scripts');
-        // 监听sass文件变化
-      gulp.watch('src/sass/*.sass', function(){
-          gulp.run('lint', 'sass', 'scripts');
-      });
-  });
-  ```
+    gulp.task('default', function(){
+        gulp.run('lint', 'sass', 'scripts');
+          // 监听sass文件变化
+        gulp.watch('src/sass/*.sass', function(){
+            gulp.run('lint', 'sass', 'scripts');
+        });
+    });
+    ```
 
 ## 基础使用
   1. __初始化目录__
@@ -274,19 +450,19 @@ description: Npm、Gulp、WebPack、Git
     ```
 
   3. __运行gulp__
-      ```json
-      // 定义 package.json 文件中的 scripts
-      "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "gulp dev",                   //执行gulp dev命令
-        "clean": "rimraf dist",                // 清空删除dist中所有文件
-        "build": "rimraf dist && gulp build"   // 执行两个命令，先清空dist再重新打包
-      },
-      //注意先全局安装rimraf: npm install rimraf -g
-      ```
+    ```json
+    // 定义 package.json 文件中的 scripts
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "gulp dev",                   //执行gulp dev命令
+      "clean": "rimraf dist",                // 清空删除dist中所有文件
+      "build": "rimraf dist && gulp build"   // 执行两个命令，先清空dist再重新打包
+    },
+    //注意先全局安装rimraf: npm install rimraf -g
+    ```
 
 
-# 四、Webpack
+# 七、打包工具 Webpack
 
 ## 模块打包工具
 <div style="text-indent: 2em">分析项目结构，找到Js模块和浏览器不能直接运行的拓展语言（Scss、TypeScript 等），并将其转换和打包为合适的格式供浏览器使用。在很多场景下可以替代Gulp/Grunt类的工具，工作流程如下：</div>  
@@ -379,9 +555,8 @@ module.exports = {
 ```
 
 
-------
 
-# 五、Git
+# 八、版本管理工具 Git
 
 ## Git 和 Svn
   1. Svn：集中式管理工具。所有版本文件都集中存放到一个服务器上，所有开发者都从该服务器上更新或上传修改代码，注意需要连网。
