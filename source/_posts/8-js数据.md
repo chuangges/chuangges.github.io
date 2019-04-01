@@ -142,8 +142,10 @@ description: 字符串、对象、数组、base64、二进制对象
   var obj = { name: "tom", age: 20 }
 
   // 获取
-  var name = obj.name
-  var age = obj['age']   
+  // 点操作后只能是属性名，有横杠时须去掉并把后面的首字母大写
+  var name = obj.name   
+   // 中括号中可放属性名或变量名  
+  var age = obj['age']  
 
   // 修改
   obj.name = "新属性值"  
@@ -327,6 +329,9 @@ description: 字符串、对象、数组、base64、二进制对象
   var arr1 = new Array()    // 空数组
   var arr2 = new Array(10)    // 长度为10 
   var arr3 =  new Array(1, 2)   // 两个元素
+
+  // 数组中是否存在下标为 1 的元素
+  1 in arr 
   ```
 
 ## 拷贝
@@ -709,10 +714,6 @@ description: 字符串、对象、数组、base64、二进制对象
 
 
 ## 图片转换为 base64 
-  <div align="center">
-    ![图片上传流程图](/images/post/img_upload.png)
-    <!-- <img src="/images/post/img_upload.png" alt=""> -->
-  </div> 
 
 ### 本地上传图片
   ```js

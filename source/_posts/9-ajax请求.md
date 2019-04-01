@@ -1,5 +1,5 @@
 ---
-title: 前后端通信方式
+title: 前后端通信和页面常用功能
 tags:
   - Javascript
   - Ajax
@@ -10,7 +10,7 @@ keywords:
   - ajax
   - javascript
 date: 2019-03-24 23:09:57
-description: HTTP 协议、Ajax 异步请求、Socket 实时通信
+description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下载和数据储存等页面功能
 ---
 
 # 一、HTTP 
@@ -150,6 +150,34 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信
   })
   ```
 
+## Ajax 封装
+  ```js
+  function requestUrl(url, type, data, callback, error, async) {
+      var async = (async == null || async.toString() == "" || typeof(async) == "undefined") ? true : !!async;
+      $.ajax({
+          url: url,
+          method: type,
+          async: async,
+          data: data
+      })
+      .done(function( _data ) {
+          if (_data.status == 200) {
+              callback(_data.data);
+          } else {
+              if (typeof(error) == 'function') {
+                  error(_data)
+              } else {
+                  alert(_data.data.errMsg)
+              }
+          }
+      })
+      .fail(function( jqXHR, textStatus ) {
+          setTimeout(function() {
+              requestUrl(url, type, data, callback, error, async);
+          }, 1000);
+      })
+  }
+  ```
 
 
 # 三、Ajax 跨域方案
@@ -293,10 +321,277 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信
   ```
 
 
+# 七、表单数据
+
+## 表单提交
+  
+  1. 问题：点击一次按钮而执行两次 Ajax 
+  2. 原因：执行完 Ajax 请之求后，并没有阻止 submit 提交
+  3. 解决方案
+    * 不使用 type="submit" 的按钮，而使用 type="button"
+    * 点击事件的回调函数中的最后一行添加：return false
+    * 先解绑再绑定：`$("#btn").off("click").on("click", fn)` 
+
+
+## 表单序列化
+> 普通表单元素必须设置 name，checkbox 必须设置 name、value
+
+  ```js
+  var data = $("form").serialize();           // 字符串 
+  var jsonArr = $("form").serializeArray();   // 数组
+  var jsonObj = $("form").serializeObject();  // JSON
+
+  $.fn.serializeObject = function () {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function () {
+          var val = this.value || ''   // 如果是 null 则赋值为 ''  
+          if(o[this.name]) {           
+              if(this.value){
+                  o[this.name] = o[this.name] + "," + val;
+              }
+              
+          } else {
+              o[this.name] = val; 
+          }
+      });
+      var $radio = $('input[type=radio],input[type=checkbox],select[multiple="multiple"]',this);
+      $.each($radio,function(){
+          if(!o.hasOwnProperty(this.name)){
+              o[this.name] = null;
+          }else if(o[this.name] == 'on'){
+              o[this.name] = true;
+          }else{
+              o[this.name] = o[this.name];
+          }
+      });
+      return o;
+  };
+  ```
 
 
 
 
+# 八、页面功能
+
+## 页面跳转
+  1. 实现方式
+    * 关闭当前页面，打开新页面
+      * `a href="url"`
+      * `window.location.href = url`
+    * 保留当前页面，打开新页面
+      * `a href="url" target="_blank"`
+      * `window.open(url, "_blank")`
+    * 模拟点击 a 标签
+      * `$("#box")[0].click()`
+      * `document.getElementById("box").click()` 
+  2. 传递数据
+    * url 查询字符串
+    * cookie 等数据储存
+    * window.open、window.opener  
+
+
+## 页面刷新
+  * `window.location.reload()`
+  * `window.location.href = url`
+  * `window.location.replace(url)`
+
+
+## 文件下载
+> 浏览器中的文件地址打不开时就会变为下载
+
+  * `location.href = url`：
+  * 借助 Blob 和 download 属性实现文本信息文件下载
+  * 借助 Base64 实现任意文件下载
+
+  ```js
+  // location 下载文件
+	function dl_file(){
+	   var url = "http://www.baidu.com/"
+	   location.href = url + "?name=mike&age=20"
+	}
+
+  //借助 Blob 和 download 属性实现文本信息文件下载
+	function bolb_download(content, filename) {
+
+      // 创建隐藏的可下载链接
+	    var link = document.createElement('a');
+	    link.download = filename;
+      link.style.display = 'none';
+      
+	    // 字符内容转变成blob地址
+	    var blob = new Blob([content]);
+      link.href = URL.createObjectURL(blob);
+      
+	    // 模拟点击和移除
+	    document.body.appendChild(link);
+      link.click();
+	    document.body.removeChild(link);
+	};
+
+  var textarea = document.querySelector('textarea');
+	var btn = document.querySelector('input[type="button"]');
+	if ('download' in document.createElement('a')) {
+	    // 作为test.html文件下载
+	    btn.addEventListener('click', function () {
+	        bolb_download(textarea.value, 'test.html');    
+	    });
+	} else {
+	    btn.onclick = function () {
+	        alert('浏览器不支持');    
+	    };
+	}
+
+
+  // 借助 Base64 实现任意文件下载
+	function di_file(domImg, filename) {
+	    
+	    var link = document.createElement('a');
+	    link.download = filename;
+      link.style.display = 'none';
+      
+	    // 图片转base64地址
+	    var canvas = document.createElement('canvas');
+	    var context = canvas.getContext('2d');
+	    var width = domImg.width;
+	    var height = domImg.height;
+      context.drawImage(domImg, 0, 0);
+      link.href = context.toDataURL('image/png');
+      
+	    // 模拟点击和移除
+	    document.body.appendChild(link);
+	    link.click();
+	    document.body.removeChild(link);
+	};
+  ```
+
+
+## 图片上传
+  <div align="center">
+    ![图片上传流程图](/images/post/img_upload.png)
+    <!-- <img src="/images/post/img_upload.png" alt=""> -->
+  </div> 
+
+  ```js
+  // oss图片上传
+  var ossUpload = {
+      //获取上传文件后缀
+      getSuffix: function(filename) {
+          var pos = filename.lastIndexOf('.');
+          var suffix = '';
+          if (pos != -1) {
+              suffix = filename.substring(pos + 1)
+          }
+          return suffix;
+      },
+      //配置上传参数
+      setUpParam: function($target ,data) {
+          var formData = new FormData();
+          $.each(data, function(i, n) {
+              formData.append(i, n)
+          })
+          formData.append('file', $target[0].files[0]);
+          return formData;
+      },
+      //上传图片
+      uploadImg: function(url, formData, callback) {
+          $.ajax({
+              url: url.host,
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false
+          })
+          .done(function(data) {
+              callback(data);
+          })
+          .fail(function() {
+              setTimeout(function() {
+                  uploadImg(url, formData, callback);
+              }, 1000)
+          })
+      }
+  }
+  ```
+
+
+
+# 九、客户端数据储存
+
+## cookie
+> 同一网站上所有页面共享，有大小、数量限制(4kb) 和过期时间，适用于保存一些用户名等简单信息
+          
+  * 设置：`$.cookie("name", data, option)`    
+  * 获取：`$.cookie("name")`             
+  * 删除：`$.cookie('name', null)`   
+
+
+## localStorage
+> 本地存储的数据没有过期时间，而且可储存电话本等持久的大量数据
+
+  * 设置：`localStorage.setItem(key, value) / .key = value`
+  * 读取：`localStorage.getItem(key) / .key`
+  * 删除：`localStorage.removeItem(key)/ clear()`
+
+
+## sessionStorage
+> 会话存储，用户关闭浏览器窗口后就会删除数据，基本操作同上
+
+
+## 以上区别
+  * 传递
+    * cookie 数据通常经过加密，而且会在浏览器和服务器间来回传递
+    * 后两个不会自动把数据发给服务器，仅在本地保存。
+  * 存储大小
+    * cookie 数据大小不能超过4k，始终在同源的http请求中携带
+    * 后两个虽然也有存储大小的限制但比 cookie 大得多，可以达到 5M 及以上
+  * 生命周期
+    * cookie 数据只在过期时间之前一直有效
+    * localStorage存储持久数据，不要不主动删除数据就有效有效
+    * sessionStorage数据在当前浏览器窗口关闭后自动删除
+  * 作用域    
+    * sessionStorage 不在不同浏览器窗口中共享
+    * 另外两个在所有同源窗口中都共享
+
+
+## 临时数据
+> html 标签上添加自定义属性来存储和操作数据，注意 js 可以动态添加和删除，但不能删除行内添加的
+
+  * html：`div data-name="值"`，name 为自定义属性名
+  * 注意：`data-e-name：eName, data-myName：myname`
+  * 原生 js
+    * 获取：`div.dataset.name`
+    * 设置：`div.dataset.name = new`
+    * 删除：`div.dataset.name = null`
+  * jQuery
+    * 获取：`$("div").data("name")`
+    * 设置：`$("div").data("name", "new")`
+    * 删除：`$("div").removeDate("name")`
+
+
+## 离线存储
+> Application Cache。浏览速度较快，而且减少服务器负载 
+
+
+
+# 十、登录
+
+## 实现逻辑
+  <div align="center">
+    ![登录注册逻辑](/images/post/login.png)
+    <!-- <img src="/images/post/login.png" alt=""> -->
+  </div> 
+
+
+## Token
+> 遵从 oauth2.0 规范的授权令牌，它是一种身份/权限的认证方式 
+
+  1. 生成方式：服务端接收客户端发送的 userId，然后根据算法和编码方式生成
+  2. 优势
+    * 可以避免 CSRF 攻击
+    * 完全由应用管理，可以避开同源策略
+    * 可扩展性强(不用存储)，还可用于 APP
+    * 可以是无状态的，可以在多个服务间共享
 
 
 

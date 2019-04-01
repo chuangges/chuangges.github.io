@@ -633,7 +633,109 @@ description: ECMAScript、DOM、BOM
     * 鼠标事件：`click、dbclick、mousedown、mousemove、mouseout、mouseover、mouseup`
     * 键盘事件：`keydown、keypress、keyup`
     * HTML事件：`load、unload、resize、change、scroll、focus、blur、select、reset、submit`
+  
+  ```js
+    var Event = {
 
+      // 页面加载完成后
+      readyEvent: function(fn) {  
+          if (fn == null) { 
+              fn = document;
+          } 
+          var oldonload = window.onload; 
+          if (typeof window.onload != 'function') {
+              window.onload = fn; 
+          }else{
+              window.onload = function() { 
+                  oldonload(); 
+                  fn();
+              }
+          }
+      }, 
+
+      // 绑定事件
+      addEvent: function(element, type, handler) { 
+          if (element.addEventListener) {    
+                element.addEventListener(type, handler, false); // DOM2
+          }else if (element.attachEvent) { 
+              element.attachEvent('on' + type, function() {
+                    handler.call(element);     // 兼容IE
+              }); 
+          }else { 
+              element['on' + type] = handler;  // DOM0
+          }
+      },
+
+      // 移除事件 
+      removeEvent: function(element, type, handler) {
+          if (element.removeEventListener) {
+              element.removeEventListener(type, handler, false); 
+          }else if (element.datachEvent) { 
+              element.datachEvent('on' + type, handler); 
+          }else{
+              element['on' + type] = null;
+          }
+      },
+
+      // 获取应用到元素上的所有样式
+      getStyle: function(obj){
+          var style = null;
+          if(window.getComputedStyle){
+              style = window.getComputedStyle(obj,null);  // W3C
+          }else{
+              style = obj.currentStyle;   // IE
+          }
+          return style;
+      },
+
+      // 获取事件对象，确保随时可以使用
+      getEvent: function(e) { 
+          var ev = e || window.event;
+          if(!ev){ 
+              var c = this.getEvent.caller; 
+              while(c) { 
+                  ev = c.argument[0]; 
+                  if (ev && Event == ev.constructor) {
+                          break; 
+                  } 
+                  c = c.caller; 
+              } 
+          } 
+          return ev; 
+      },
+
+      // 获取触发事件的元素 
+      getTarget: function(event) { 
+          return event.target || event.srcElemnt; 
+      },
+
+      // 阻止冒泡，比如 父子元素都有事件时阻止同时触发
+      stopPropagation: function(ev) { 
+          if (ev.stopPropagation) { 
+              ev.stopPropagation(); 
+          }else { 
+              ev.cancelBubble = true;
+          }
+      }, 
+      stop_propagation: function() { 
+          var e = window.event || arguments.callee.caller.arguments[0];
+          if(e && e.stopPropagation){ 
+              e.stopPropagation();   
+          }else if(window.event){ 
+              window.event.cancelBubble = true;  
+          }
+      }, 
+
+      // 阻止浏览器默认行为，比如 点击提交按钮时阻止默认提交表单、a链接阻止默认跳转
+      preventDefault: function(ev) {
+          if (ev.preventDefault) { 
+              ev.preventDefault(); 
+          }else{
+              ev.returnValue = false; 
+          }
+      } 
+  }
+  ```
 
 
 ### 事件委托
