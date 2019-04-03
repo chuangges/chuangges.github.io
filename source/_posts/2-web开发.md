@@ -1,5 +1,5 @@
 ---
-title: web 开发入门
+title: web 项目开发
 tags:
   - Skill
 categories: Web Skills
@@ -7,7 +7,7 @@ top: false
 keywords:
   - tool
 date: 2019-02-17 15:41:48
-description: 前端技能和常用网站、浏览器结构和渲染、渲染方式和框架模式、Restful 规范
+description: 前端技能和网站、浏览器结构和渲染、渲染和框架模式、Restful 规范、模块化开发
 ---
 
 # 一、技术栈
@@ -46,8 +46,16 @@ description: 前端技能和常用网站、浏览器结构和渲染、渲染方�
 
 # 三、浏览器
 
+## 页面判断
+> PC 端还是移动端
+
+  * 功能检测 “touchstart” in document
+  * 特征检测  navigator.userAgent
+
+
 ## 分层结构
 > 浏览器的抽象分层结构图中将浏览器分成了以下子系统
+
   * 用户界面：用于和用户进行交互的功能组件，如地址栏、返回、前进按钮等
   * 浏览器引擎：用于查询和操作渲染引擎的界面
   * 渲染引擎：负责显示请求的内容，如果请求 HTML 则它解析 HTML 和 CSS 并显示
@@ -82,9 +90,17 @@ description: 前端技能和常用网站、浏览器结构和渲染、渲染方�
     * css 下载时会阻塞渲染，但带有 media 属性除外
     * 遇到 script 标签时，DOM 构建停止直到 js 脚本下载并执行完毕，此时浏览器一般会下载其他资源但不会解析。如果 js 中有对 CSSOM 的操作，还会先确保 CSSOM 已经被下载并构建。
   * 重绘重排导致重新进行渲染树的生成
-    * 重排一定重绘
-    * 重绘：简单外观的改变就会引起重绘，比如颜色变化等
-    * 重排(回流)：重新计算布局，通常由元素的结构、增删、位置、尺寸变化引起，比如 img 下载成功后替换填充页面 img 元素而引起尺寸变化。也会由 js 的属性值读取引起，比如读取 offset、scroll、cilent、getComputedStyle 等信息。
+    * 重绘：简单外观的改变就会引起重绘，比如颜色变化等。重排一定重绘。
+    * 重排(回流)：重新计算布局，通常由元素的结构、增删、位置、尺寸变化引起。比如 img 下载成功后替换填充页面 img 元素而引起尺寸变化。也会由 js 的属性值读取引起，比如读取 offset、scroll、cilent、getComputedStyle 等信息。
+    * 优化
+
+
+    * 直接改变 className，如果动态改变样式则使用 cssText
+    * 让要操作的元素进行离线处理，处理完后一起更新
+      * 使用 `display: none`，只引发两次回流和重绘
+      * 使用 `DocumentFragment` 进行缓存操作，引发一次回流和重绘
+      * 使用 `cloneNode(true/false)、replaceChild`，引发一次回流和重绘
+
 
 
 ## 渲染优化
@@ -100,7 +116,8 @@ description: 前端技能和常用网站、浏览器结构和渲染、渲染方�
   * css 尽量层次简单并放入 head，提前加载并防止 html 渲染后重新结合 css 引起页面闪烁
 
 
-# 四、前后端渲染
+# 四、渲染方式
+> 客户端是上网时使用的手机、电脑等机器，而服务器是性能较强大的机器，可保持长时间运行并保证可随时访问服务器上文件
 
 ## 客户端渲染
   * 实现原理：浏览器异步请求服务器获取数据，然后浏览器拼接 数据和模板文件 得到最终的 HTML字符串，最后直接解析并渲染到页面。
@@ -159,7 +176,7 @@ description: 前端技能和常用网站、浏览器结构和渲染、渲染方�
 
 
 
-# 五、框架
+# 五、框架模式
 
 ## 框架和库
   * 类库：一个有组织的功能集合，用于提供特定功能的接口并被调用
@@ -223,7 +240,7 @@ description: 前端技能和常用网站、浏览器结构和渲染、渲染方�
 
 
 
-# 六、Restful 
+# 六、Restful 架构
 <div style="text-indent: 2em">RESTful 是一种架构的规范与约束、原则而并非架构或标准，符合这种规范的架构就是 RESTful架构。基于这个风格设计的软件可以更简洁，更有层次，更容易实现缓存等机制，常用于客户端和服务器交互类的软件。</div>
 
 ## 架构
@@ -258,8 +275,304 @@ description: 前端技能和常用网站、浏览器结构和渲染、渲染方�
 
 
 
+# 七、模块化编程
+
+<div style="text-indent: 2em">早期引用 JS 文件时直接通过 script 即可，但是随着项目的复杂度越来越大，这种方式带来了 逻辑混乱、可维护性差等问题。为了编写可维护的代码，我们采用将代码合理拆分到不同的文件里，每一个文件就是一个模块，文件路径就是模块名，这种组织代码的方式就是模块化。</div> 
+
+## 优势
+  * 开发效率高，有利于多人协同开发
+  * 解决项目中的全局变量污染的问题
+  * 功能单一，方便代码的复用和维护
+  * 解决文件依赖问题，无需关注文件引用顺序
 
 
+## JS 环境
+  * 服务器端
+    * 相同的代码需要多次执行
+    * CPU 和内存资源是瓶颈
+    * 加载时从磁盘中加载
+  * 浏览器端
+    * 代码需要从一个服务器端分发到多个客户端执行
+    * 带宽网络是瓶颈
+    * 加载时需要通过网络加载
+
+
+## 发展进程
+  1. 命名空间形式的代码封装 (函数封装)
+  2. 通过 立即执行函数(IIFE) 创建的命名空间
+  3. 服务器端运行时 Nodejs 的 CommonJS 规范
+  4. 将模块化运行在浏览器端的 AMD/CMD 规范
+  5. 兼容 AMD 和 CommonJS 的 UMD 规范
+  6. 通过语言标准支持的 ES Module
+
+  ```js
+  // 命名空间
+  function square(x) {
+      if(typeof x !== "number") return;
+      return x * x;
+  }
+  var utils = {
+      add: function(x, y) {
+          return x + y
+      }
+  }
+
+  // IIFE
+  var module = (function(){
+      var count = 0;
+      return {
+          inc: function(){
+              count += 1;
+          },
+          dec: function(){
+              count += -1;
+          }
+      }
+  })()
+  module.inc();
+
+  // CommonJS
+
+  ```
+
+
+
+## CommonJS
+> 服务器端的模块化开发规范，主要特点是 同步加载模块，Nodejs 的模块规范就是参照它实现的
+
+<div style="text-indent: 2em">CommonJS 会在启动时把内置模块和加载过的模块放在本地硬盘，文件读取时不受限于网络而等待时间很短，所以在 Node 环境中使用同步加载的方式不会有很大问题。但是 CommonJS 如果应用在浏览器端，同步加载的机制会使得 JS 阻塞 UI 线程，造成页面卡顿，网速不好时还会导致浏览器假死。</div> 
+
+
+### 模块定义
+<div style="text-indent: 2em">为了方便，NodeJs 为每个模块提供一个 exports 变量指向 module.exports，相当于在每个模块头部执行 `var exports = module.exports`。exports 默认是个空对象，可以添加属性和方法但不能被赋值，因为这样会切断了两者联系，而且不能导出需要new实例化的类。使用时建议 module.exports 导出对象和类、exports 导出普通函数和变量</div> 
+
+  * 一个单独的文件就是一个模块
+  * 每个模块都是一个单独的作用域
+  * 每个模块内部都有一个 module 对象来代表当前模块
+  * 暴露模块中的内容可以通过 module.exports、exports 
+    
+
+### 模块加载
+  * 本质：读取模块内部的 module.exports 变量
+  * 特点
+    * 缓存结果：模块第一次加载并执行之后就会缓存结果，再次加载时就会直接读取缓存结果，想要再次运行则必须清除缓存
+    * 同步加载：模块加载会阻塞接下来代码的执行，需要等到模块加载完成才能继续执行
+  * 方法
+    * require()：当前模块中读取其它模块并执行
+    * require.resolve()：解析模块标识符的绝对路径
+
+### 模块标识
+> require() 的参数，require 会根据其格式使用不同的路径加载原则去寻找模块文件
+
+  * 模块名：符合小驼峰命名的字符串
+    * 核心模块：系统安装目录
+    * 安装模块：node_modules 目录
+  * 绝对路径：以 "/" 开头
+  * 相对路径：以 "./" 开头
+
+
+  ```js
+  // 导出一个要实例化的类  module.exports = exports = function (){ }
+
+  // rocker.js 
+  module.exports = function(name, age) {
+      this.name = name;
+      this.age = age;
+      thisl.about = function() {
+          console.log(this.name + 'is' + this.age + 'years old');
+      };
+  };
+
+  // 引用
+  var Rocker = require('./rocker.js')
+  var r = new Rocker('Ozzy', 62)
+  r.about()   // Ozzy is 62 years old
+
+
+  // 导出一个静态类 exports.funcName = function (){}
+
+  // hello.js
+  function hello() {
+      console.log('Hello, world');
+  }
+  function greet(name) {
+      console.log('Hello, ' + name + '!');
+  }
+  // 写法一
+  module.exports = {
+      hello: hello,
+      greet: greet
+  }
+  // 写法二
+  exports.hello = hello;
+  exports.greet = greet;
+  // 错误写法
+  exports = {
+      hello: hello,
+      greet: greet
+  }
+
+  // 引用
+  var hello = require('./hello.js')
+  hello.hello()  // Hello, world
+  ```
+
+
+## AMD
+> 异步模块定义，浏览器端模块化开发规范。它允许异步和按需加载模块，requireJS 是参照它实现的
+
+### 特点
+  * 异步加载方式，模块加载不影响后面语句的运行
+    * 实现方式：依赖模块的所有语句都放置在回调函数中并在模块加载完成后执行
+    * 解决问题：js 加载时浏览器会停止页面渲染，加载文件越多则页面失去的响应时间越长
+  * 管理模块之间的依赖性，便于代码的编写和维护
+    * 解决问题：js 文件需要它的被依赖文件早于它加载到浏览器 
+
+
+### 语法 
+  * 模块定义：`define(可选模块标识, 依赖模块数组, 模块初始化要执行的函数或对象)`
+  * 模块加载：`require(依赖模块数组, 模块加载成功后的回调函数)`
+
+  ```js
+  // 定义模块 myModule.js
+  define(['dependency'], function(){
+      var name = 'Byron';
+      function printName(){
+          console.log(name);
+      }
+      return {
+          printName: printName
+      };
+  });
+
+  // 加载模块
+  require(['myModule'], function (my){
+  　 my.printName();
+  });
+  ```
+
+
+## CMD 
+> AMD 基础上改进的一种规范，主要区别是对依赖模块的执行时机处理不同。seaJS 是参照它实现的
+
+### 区别
+  * 依赖处理
+    * AMD 推崇依赖前置，在定义模块时就要声明其依赖的模块 
+    * CMD 推崇就近依赖，只有在用到某个模块时再去 require 
+  * 方法    
+    * AMD API 默认是一个当多个用，比如模块加载分为全局的和局部的 require
+    * CMD 推崇职责单一而且简单，比如模块加载只有 seajs.use() 
+
+
+### 语法
+  ```js
+  // 定义模块  index.js
+  define(function(require, exports, module) {
+
+      // 使用 exports
+      exports.name = 'index';
+      exports.hello = function() {
+          console.log('Hello index');
+      };
+
+      // 使用 module.exports
+      module.exports = {
+          name: 'index',
+          hello: function() {
+            console.log('index');
+          }
+      };
+  });
+
+  // 加载模块
+  seajs.use('index', function(my) {
+      my.hello();
+  });
+  ```
+
+
+## UMD
+> 兼容 AMD 和 commonJS，提出了跨平台的解决方案
+
+  ```js
+  // 无导入导出规范，只有如下的常规写法来检测 JS 环境
+  (function (root, factory) {
+      if (typeof define === 'function' && define.amd) {
+          // AMD
+          define(['jquery'], factory);
+      } else if (typeof exports === 'object') {
+          // CommonJS
+          module.exports = factory(require('jquery'));
+      } else {
+          // 挂载到全局：root 即 window
+          root.returnExports = factory(root.jQuery);
+      }
+  }(this, function ($) {
+      // 方法
+      function myFunc(){ };
+      // 暴露公共方法
+      return myFunc;
+  }));
+  ```
+
+
+## ES Module
+> ES6 的最新语法支持规范
+
+<div style="text-indent: 2em">CommonJS 和 AMD 规范都只能在运行时确定依赖。而 ES6 在语言层面提出了模块化方案, ES6 module 模块编译时就能确定模块的依赖关系，以及输入和输出的变量。ES6 模块化这种加载称为 编译时加载(异步按需加载)、静态加载。</div> 
+
+  * 导入：`import {模块名A，模块名B...} from '模块路径'`
+  * 导出：`export、export default`
+  * 异步加载：`import('模块路径').then()`
+
+  ```js
+  /* 错误写法 */
+  // 写法一
+  export 1;
+
+  // 写法二
+  var m = 1;
+  export m;
+
+  // 写法三
+  if (x === 2) {
+    import MyModual from './myModual';
+  }
+
+  /* 正确写法 */
+  // 写法一
+  export var m = 1;
+
+  // 写法二
+  var m = 1;
+  export {m};
+
+  // 写法三
+  var n = 1;
+  export {n as m};
+
+  // 写法四
+  var n = 1;
+  export default n;
+
+  // 写法五
+  if (true) {
+      import('./myModule.js')
+      .then(({export1, export2}) => {
+        // ...·
+      });
+  }
+
+  // 写法六
+  Promise.all([
+    import('./module1.js'),
+    import('./module2.js'),
+    import('./module3.js'),
+  ])
+  .then(([module1, module2, module3]) => {
+    // ···
+  });
+  ```
 
 
 

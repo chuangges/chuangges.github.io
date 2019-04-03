@@ -206,8 +206,7 @@ links_title: 推荐阅读
 #links_layout: block
 links_layout: inline
 links:
-  印记中文: https://www.docschina.org/
-  站长工具: http://tool.chinaz.com/tools/openweb.aspx/
+  印记中文: https://www.docschina.org/ 
   在线工具: http://tool.lu/
   Github: https://github.com/
   Stack Overflow: https://stackoverflow.com/

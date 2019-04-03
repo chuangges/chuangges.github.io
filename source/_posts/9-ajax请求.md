@@ -1,5 +1,5 @@
 ---
-title: 前后端通信和页面常用功能
+title: 通信方式和页面功能
 tags:
   - Javascript
   - Ajax
@@ -13,7 +13,7 @@ date: 2019-03-24 23:09:57
 description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下载和数据储存等页面功能
 ---
 
-# 一、HTTP 
+# 一、HTTP 协议
 > 超文本传输协议，它是基于 TCP/IP 协议的一个应用层协议，用于定义客户端与服务器通信的格式，具有单向请求、无状态等特点
 
 ## HTTP 报文
@@ -30,6 +30,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   * XMLHttpRequest 对象
   * 页面有 src 属性的标签（img、script、link 等） 
   * 带有 action 属性的 form 表单 
+
 
 ## 连接方式
 > 实际上是 TCP 协议的长/短连接，区别在于数据传输后是否立即关闭连接
@@ -60,11 +61,11 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   
 
 
-# 二、Ajax 基础
+# 二、Ajax 请求
 > 异步网络请求，能够在页面不跳转不刷新的情况下实现局部加载的异步通信，减少了传输数据量
 
 ## 原理
-<div style="text-indent: 2em">在用户和服务器之间加了―个中间层 (Ajax 引擎)，通过 XmlHttpRequest 对象来向服务器发异步请求并获取数据，然后通过 js 操作 DOM 而更新页面，这样就让用户操作与服务器响应实现了异步化，从而 js 可以及时向服务器提出请求和处理响应而不阻塞用户，达到无刷新的效果;</div>
+<div style="text-indent: 2em">在用户和服务器之间加了―个中间层 (Ajax 引擎)，通过 XmlHttpRequest 对象来向服务器发异步请求并获取数据，然后通过 js 操作 DOM 而更新页面，这样就让用户操作与服务器响应实现了异步化，从而 js 可以及时向服务器提出请求和处理响应而不阻塞用户，达到无刷新的效果。注意如果出现乱码问题就是因为编码格式冲突，发送中文数据时通过 encodeURI() 编码，接收中文数据时通过 decodeURI() 解码即可。</div>
 
 ## 优点
   * 使用异步方式与服务器通信，响应速度更快
@@ -84,11 +85,15 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   1. 区别
     * method：`GET、POST`
     * 请求头：POST 发送数据时必须设置
+    * 安全性：GET 请求时暴露参数数据，安全性较低
+    * 长度限制：GET 有长度限制，不适合发送大量数据
+    * 请求缓存：GET 请求可以被缓存和保存，而 POST 请求不能
     * 参数位置：`url?参数=值&参数=值、xhr.send("参数=值&参数=值")`
   2. 场景
-    * GET：直接在地址栏输入参数
-    * POST：有密码、数据量过大 (无字符限制)、带有文件的表单
+    * GET：安全性要求不高时，从服务器获取数据
+    * POST：对于大量数据、密码数据等，提交到服务器处理
 
+   
 
 ## ContentType
 > 请求体类型，告诉服务器发送数据的格式
@@ -180,7 +185,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   ```
 
 
-# 三、Ajax 跨域方案
+# 三、Ajax 跨域
 > A 网站的 js 代码试图访问 B 网站的数据
 
 ## 同源策略
@@ -226,7 +231,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 
 
-# 四、Ajax 数据格式
+# 四、Ajax 数据
 
 ## JSON
 > 处理大量数据的规范格式
@@ -266,7 +271,11 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
     ```
 
 
-# 五、实时通信
+
+# 五、websocket
+> 一种全双工通信协议(双向通信)，和 HTTP 都是基于 TCP 协议的应用层协议，两者有良好的兼容性但没有联系。它能更好的节省服务器资源和带宽，而且可以实现实时通讯
+
+## 实时通信
   * Ajax 轮询
     * 原理：客户端设置 计时器，每隔一段时间就向服务器发送一次请求
     * 缺点：只能由客户端发起请求，而且需要服务器有很快的 资源处理速度
@@ -276,10 +285,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   * WebSocket：只需要经过一个握手的动作，客户端与服务端就可以互相传送数据，不需要询问和等待
 
 
-# 六、websocket
-> 一种全双工通信协议(双向通信)，和 HTTP 都是基于 TCP 协议的应用层协议，两者有良好的兼容性但没有联系。它能更好的节省服务器资源和带宽，而且可以实现实时通讯
-
-## 区分
+## 区分 Socket
   * WebSocket 在建立握手时通过 HTTP 传输数据，但是建立之后传输真正数据时不需要 HTTP
   * Socket 是应用层与TCP/IP协议族通信的中间软件抽象层，它其实并非一个协议而是一组接口
 
@@ -321,7 +327,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   ```
 
 
-# 七、表单数据
+# 六、表单数据
 
 ## 表单提交
   
@@ -372,7 +378,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 
 
-# 八、页面功能
+# 七、页面功能
 
 ## 页面跳转
   1. 实现方式
@@ -475,7 +481,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   ```js
   // oss图片上传
   var ossUpload = {
-      //获取上传文件后缀
+      // 获取上传文件后缀
       getSuffix: function(filename) {
           var pos = filename.lastIndexOf('.');
           var suffix = '';
@@ -484,7 +490,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
           }
           return suffix;
       },
-      //配置上传参数
+      // 配置上传参数
       setUpParam: function($target ,data) {
           var formData = new FormData();
           $.each(data, function(i, n) {
@@ -493,7 +499,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
           formData.append('file', $target[0].files[0]);
           return formData;
       },
-      //上传图片
+      // 上传图片
       uploadImg: function(url, formData, callback) {
           $.ajax({
               url: url.host,
@@ -516,7 +522,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 
 
-# 九、客户端数据储存
+# 八、数据储存
 
 ## cookie
 > 同一网站上所有页面共享，有大小、数量限制(4kb) 和过期时间，适用于保存一些用户名等简单信息
@@ -574,13 +580,20 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 
 
-# 十、登录
+# 九、用户登录
 
 ## 实现逻辑
   <div align="center">
     ![登录注册逻辑](/images/post/login.png)
     <!-- <img src="/images/post/login.png" alt=""> -->
   </div> 
+
+
+## 实现过程
+  1. 利用 Ajax 将用户名和密码发送到对应接口
+  2. 后台接收到对应数据后，通过用户名去查询对应密码
+  3. 对比查询到的密码和前台传过来的密码是否相等，如果相等返回成功，否则返回失败
+  4. 前端接收到登陆成功状态，将对应登陆成功的样式显示在对应位置，并将 username、userid 保存为 cookie (登陆状态保持)
 
 
 ## Token

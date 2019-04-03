@@ -287,17 +287,15 @@ description: 字符串、对象、数组、base64、二进制对象
   ```
 
 
-## 原型对象
+## 原型链
 
-### 原型对象
-  1. 函数对象：通过 new Function() 创建都是函数对象，其他的都是普通对象。每个对象都有 `__proto__` 属性指向原型对象，但只有函数对象才有 `prototype` 属性。
-  2. 原型对象：一个普通对象。所有的原型对象都会自动获得一个指向其构造函数的指针 `constructor`，构造函数通过 `prototype` 属性指向它的原型对象，可以说 原型对象 `Person.prototype` 就是构造函数 `Person` 的一个实例。
+<div style="text-indent: 2em">每个对象都会在其内部初始化一个属性，就是 prototype (原型)，当我们访问一个对象的属性时，如果这个对象内部没有这个属性则去 prototype 里找这个属性，这个 prototype 又会有自己的 prototype，直到 null 结束，如果没有则返回undefined，这就是原型链的运行原理，即查找顺序：`实例对象 obj --> 原型对象 fn.prototype --> Object.prototype -->  null`</div>
 
+  1. 相互关系：`obj.constructor.prototype = obj.__proto__`
+  2. 函数对象：通过 new Function() 创建都是函数对象，其他的都是普通对象。每个对象都有 `__proto__` 属性指向原型对象，但只有函数对象才有 `prototype` 属性
+  3. 原型对象：一个普通对象。所有的原型对象都会自动获得一个指向其构造函数的指针 `constructor`，构造函数通过 `prototype` 属性指向它的原型对象，可以说 原型对象 `Person.prototype` 就是构造函数 `Person` 的一个实例
+  3. 原型链继承：利用原型让一个引用类型继承另一个引用类型的属性和方法，即让原型对象等于另一个类型的实例，这样就可以通过 `__proto__` 属性构成实例与原型的链条, 从而实现继承。
 
-### 原型链继承
-  1. __基本思路__：利用原型让一个引用类型继承另一个引用类型的属性和方法，即让原型对象等于另一个类型的实例，这样就可以通过 `__proto__` 属性构成实例与原型的链条, 从而实现继承。
-  2. __实现过程__：调用实例对象中的属性或方法时，如果自身有则调用，没有则通过 `__proto__` 属性沿着原型链向上查找直到 null 结束，如果没有则返回undefined。查找顺序为：`实例对象 obj --> 原型对象 fn.prototype --> Object.prototype -->  null`。
-  3. __继承代码__
  
   ```js
   function Person(name){
