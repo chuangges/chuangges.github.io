@@ -1,14 +1,14 @@
 ---
-title: 通信方式和页面功能
+title: Web 通信和页面功能
 tags:
   - Javascript
-  - Ajax
+  - Ajax + Socket
 categories: Javascript
 top: false
 keywords:
   - js
   - ajax
-  - javascript
+  - socket
 date: 2019-03-24 23:09:57
 description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下载和数据储存等页面功能
 ---

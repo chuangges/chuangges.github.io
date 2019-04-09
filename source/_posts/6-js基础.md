@@ -28,6 +28,12 @@ description: ECMAScript、DOM、BOM
   * 跨平台性：不依赖于操作系统，只需要兼容浏览器即可
 
 
+## 历史演变
+  * 始于1995年，前身为网景公司开发的 LiveScript，用来处理 以前由服务端负责的数据验证
+  * 后更名为JavaScript，功能演变为：前后端数据交互、页面特效、服务端开发 NodeJS
+  * JS 的很多语法和 Java、C# 语法相似，和 Java 毫无关系
+
+
 # 二、ECMAScript
 > 一种根据 ECMA-262 标准制定的通用脚本语言规范，JavaScript 是遵守该标准实现的一种脚本语言
 

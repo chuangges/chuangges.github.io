@@ -7,7 +7,7 @@ categories: Javascript
 top: false
 keywords:
   - js
-  - javascript
+  - 数据类型
 date: 2019-03-19 23:11:12
 description: 字符串、对象、数组、base64、二进制对象 
 ---
@@ -58,7 +58,7 @@ description: 字符串、对象、数组、base64、二进制对象
 
 　
 # 二、对象
-> 键值对的无序集合
+> 由方法和属性作为键值对组成的一个无序集合。可看作是一个黑盒子，使用时只关注它的对外接口而不需要了解内部结构
 
 ## 分类
   1. 内部对象
@@ -137,7 +137,7 @@ description: 字符串、对象、数组、base64、二进制对象
  
 
 
-## 基础操作
+## 操作
   ```js
   var obj = { name: "tom", age: 20 }
 
@@ -172,6 +172,32 @@ description: 字符串、对象、数组、base64、二进制对象
     }
     return ! Object.keys(obj).length
   }
+  ```
+
+
+## 原型链
+
+<div style="text-indent: 2em">每个对象都会在其内部初始化一个属性，就是 prototype (原型)，当我们访问一个对象的属性时，如果这个对象内部没有这个属性则去 prototype 里找这个属性，这个 prototype 又会有自己的 prototype，直到 null 结束，如果没有则返回undefined，这就是原型链的运行原理，即查找顺序：`实例对象 obj --> 原型对象 fn.prototype --> Object.prototype -->  null`</div>
+
+  1. 相互关系：`obj.constructor.prototype = obj.__proto__`
+  2. 函数对象：通过 new Function() 创建都是函数对象，其他的都是普通对象。每个对象都有 `__proto__` 属性指向原型对象，但只有函数对象才有 `prototype` 属性
+  3. 原型对象：一个普通对象。所有的原型对象都会自动获得一个指向其构造函数的指针 `constructor`，构造函数通过 `prototype` 属性指向它的原型对象，可以说 原型对象 `Person.prototype` 就是构造函数 `Person` 的一个实例
+  3. 原型链继承：利用原型让一个引用类型继承另一个引用类型的属性和方法，即让原型对象等于另一个类型的实例，这样就可以通过 `__proto__` 属性构成实例与原型的链条, 从而实现继承。
+
+ 
+  ```js
+  function Person(name){
+      this.name = name;   
+  }
+  Person.prototype.say = function(){
+      console.log(1);
+  }
+  function Son(name){
+      Person.call(this, name);
+  }
+  var s1 = new Son("son1");
+  var s2 = new Son("son2");
+  console.log(s1.__proto__ == s2.__proto__)
   ```
 
 
@@ -215,103 +241,6 @@ description: 字符串、对象、数组、base64、二进制对象
   checkout(100);   // 现金
   checkout(1, 2);  // 刷卡
   ```
-
-
-## 面向对象编程
-<div style="text-indent: 2em">`字面量方式 和 new Object()` 是两种最常用的对象创建方式，但是在使用同一接口创建多个对象时会产生大量重复代码，为了简化代码量并提高可维护性，项目开发时一般使用面向对象写法。</div>
-
-
-### 三大特征
-  * 封装：函数
-  * 继承：重用代码
-  * 多态：增加属性方法
-
-
-### 编程思想
-  * 对象：由方法和属性组成的一个整体，可看作是一个黑盒子，使用时只关注它的对外接口而不需要了解内部结构
-  * 面向对象：为空对象添加自定义的方法和属性
-    
-
-### 编程模式
-  * __工厂模式__：解决了重复实例化多个对象的问题，但是不能识别各自的实例化对象。
-  * __构造函数模式__：把函数当作一个类（首字母大写以区分普通函数），实例化的对象可以通过 instanceof 判断它的实例。基本原理是实例化时会隐式创建一个空对象并最后返回。
-  * __原型模式__：好处是可以让 `所有对象实例` 共享 `原型对象` 所包含的属性和方法。
-  * __混合模式__：将可变属性写入构造函数，将方法和固定属性写入原型对象，这样可以节省内存。
-
-
-  ```js
-  // 工厂模式
-  function person(name, age){
-      var obj = {};     // 原料
-      obj.name = name;  // 加工
-      obj.age = age;    
-      obj.say = function(){ 
-        console.log(this.name)    
-      }
-      return obj     
-  }
-  var p1 = person("tom", 18);
-
-
-  // 构造函数模式
-  function Person(name, age){     // 类：模具
-      this.name = name;  
-      this.age = age;    
-      this.say = function(){ 
-        console.log(this.name)    
-      }  
-  }
-  var p2 = new Person("tom", 20);  // 实例化对象：产品
-  console.log(p2 instanceof Person);
-
-
-  // 原型模式
-  function Person(){  }
-  Person.prototype.name = "tom";
-  Person.prototype.age = 24;
-  Person.prototype.say = function(){
-      console.log(this.name) 
-  }
-  var p3 = new Person()
-
-
-  // 混合模式
-  function Person(name, age){
-      this.name = name;   
-      this.age = age;   
-  }
-  Person.prototype.say = function(){
-      console.log(this.name);
-  }
-  var p4 = new Person();
-  ```
-
-
-## 原型链
-
-<div style="text-indent: 2em">每个对象都会在其内部初始化一个属性，就是 prototype (原型)，当我们访问一个对象的属性时，如果这个对象内部没有这个属性则去 prototype 里找这个属性，这个 prototype 又会有自己的 prototype，直到 null 结束，如果没有则返回undefined，这就是原型链的运行原理，即查找顺序：`实例对象 obj --> 原型对象 fn.prototype --> Object.prototype -->  null`</div>
-
-  1. 相互关系：`obj.constructor.prototype = obj.__proto__`
-  2. 函数对象：通过 new Function() 创建都是函数对象，其他的都是普通对象。每个对象都有 `__proto__` 属性指向原型对象，但只有函数对象才有 `prototype` 属性
-  3. 原型对象：一个普通对象。所有的原型对象都会自动获得一个指向其构造函数的指针 `constructor`，构造函数通过 `prototype` 属性指向它的原型对象，可以说 原型对象 `Person.prototype` 就是构造函数 `Person` 的一个实例
-  3. 原型链继承：利用原型让一个引用类型继承另一个引用类型的属性和方法，即让原型对象等于另一个类型的实例，这样就可以通过 `__proto__` 属性构成实例与原型的链条, 从而实现继承。
-
- 
-  ```js
-  function Person(name){
-      this.name = name;   
-  }
-  Person.prototype.say = function(){
-      console.log(1);
-  }
-  function Son(name){
-      Person.call(this, name);
-  }
-  var s1 = new Son("son1");
-  var s2 = new Son("son2");
-  console.log(s1.__proto__ == s2.__proto__)
-  ```
-
 
 
 # 三、数组
@@ -497,66 +426,6 @@ description: 字符串、对象、数组、base64、二进制对象
           }
       }
       return res;
-  }
-  ```
-
-
-### 排序
-  1. sort 排序 
-    * 升序排列：`return a-b`
-    * 倒序排列：`return b-a`
-  2. 冒泡排序
-    * 思想：相邻元素之间逐对两两比较，若不符合预期则先交换位置再继续比较，这样则每次比较都能把最大或最小的元素放在预期位置直到完成排序
-    * 特点：简单实用易理解，缺点是比较次数多、效率低
-  3. 快速排序：对冒泡排序的一种改进
-    * 思想：首先找到一个基准点（一般是数组中部），然后数组被分为两部分，依次与基准点数据比较，若比它小则放左边，反之放右边。
-    * 特点：快速且常用，缺点是需另外声明两个数组、浪费内存
-
-
-  ```js
-  // sort 排序  
-  export const orderArr = arr => {
-      arr.sort((a, b) => {
-
-          // 数组元素排序，
-          return a-b    
-
-          // 数组对象排序 
-          return a[property] - b[property]; 
-      })
-  }
-
-  // 冒泡排序
-  function bubbleSort(arr){
-      for(i=0; i &lt; arr.length-1; i++){
-          for(j=0; j &lt; arr.length-1-i; j++){
-              if(arr[j] &gt; arr[j+1]){
-                  var temp = arr[j];
-                  arr[j] = arr[j+1];
-                  arr[j+1] = temp;
-              }
-          }
-      }
-      return arr;
-  }
-   
-  // 快速排序
-  function  quickSort(arr){
-      if(arr.length &lt;= 1){
-          return arr 
-      }
-      var mIndex = Math.floor(arr.length/2)
-      var mVal = arr.splice(mIndex, 1)[0]
-      var left = [], right=[ ];
-
-      for(var i=0; i &lt; arr.length; i++){
-          if(arr[i] &lt; midIndexval){
-              left.push(arr[i])
-          }else{
-              right.push(arr[i])
-          }
-      }
-      return quickSort(left).concat([mVal], quickSort(right))
   }
   ```
 
