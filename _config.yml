@@ -155,7 +155,7 @@ baidusitemap:
 
 lazyload:
   enable: true
-  className: lazyload-img   #可选 需要延迟加载的图片 class 
+  # className: lazyload-img   #可选 需要延迟加载的图片 class 
   # loadingImg:   #可选 图片未加载时的代替图 eg. ./images/loading.png
 
 

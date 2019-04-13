@@ -1,5 +1,5 @@
 ---
-title: Web 编程模式
+title: Web 编程模式和算法
 tags:
   - Javascript
 categories: Javascript
@@ -8,12 +8,10 @@ keywords:
   - js
   - 编程
 date: 2019-04-02 21:38:29
-description: 函数式编程、模块化编程、面向对象编程、面向切面编程、异步编程
+description: 模块化编程、面向对象编程、面向切面编程、异步编程、排序和搜索算法
 ---
 
-
-
-# 四、模块化编程
+# 一、模块化编程
 
 <div style="text-indent: 2em">早期引用 JS 文件时直接通过 script 即可，但是随着项目的复杂度越来越大，这种方式带来了 逻辑混乱、可维护性差等问题。为了编写可维护的代码，我们采用将代码合理拆分到不同的文件里，每一个文件就是一个模块，文件路径就是模块名，这种组织代码的方式就是模块化。</div> 
 
@@ -261,64 +259,49 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
 
   ```js
   /* 错误写法 */
-  // 写法一
   export 1;
 
-  // 写法二
   var m = 1;
   export m;
 
-  // 写法三
   if (x === 2) {
     import MyModual from './myModual';
   }
 
   /* 正确写法 */
-  // 写法一
   export var m = 1;
 
-  // 写法二
   var m = 1;
   export {m};
 
-  // 写法三
   var n = 1;
   export {n as m};
 
-  // 写法四
   var n = 1;
   export default n;
 
-  // 写法五
-  if (true) {
-      import('./myModule.js')
-      .then(({export1, export2}) => {
-        // ...·
-      });
-  }
+  import('./myModule.js')
+  .then(({export1, export2}) => { })
 
-  // 写法六
   Promise.all([
     import('./module1.js'),
     import('./module2.js'),
     import('./module3.js'),
   ])
-  .then(([module1, module2, module3]) => {
-    // ···
-  });
+  .then(([module1, module2, module3]) => { })
   ```
 
   
-# 一、面向对象编程
-> 用于定义一个类，使用时通过 new 创建出一个包含了自定义的方法和属性的对象
+# 二、面向对象编程 OOP
+> 用对象的思想去写代码，用来定义一个类
 
 <div style="text-indent: 2em">`字面量方式 和 new Object()` 是两种最常用的对象创建方式，但是在使用同一接口创建多个对象时会产生大量重复代码，为了简化代码量并提高可维护性，项目开发时一般使用面向对象写法。</div>
 
-
-## 三大特征
-  * 封装：函数
-  * 继承：重用代码
-  * 多态：增加属性方法
+## 特点
+  * 抽象：抓住核心问题
+  * 封装：只能通过对象来访问方法
+  * 继承：从已有对象上继承出新的对象
+  * 多态：多对象的不同形态
 
 
 ## 实现方式
@@ -327,8 +310,7 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
     * 建议首字母大写以区分普通函数
     * 实例化的对象可以通过 instanceof 判断它的实例
   * __原型模式__：好处是可以让 `所有对象实例` 共享 `原型对象` 所包含的属性和方法
-  * __混合模式__：将可变属性写入构造函数，将方法和固定属性写入原型对象，这样可以节省内存
-  * __ES Module__：以上四种模式都是 ES5 方法，ES6 规范提供了更简单的定义类的方法
+  * __混合模式__：将可变属性写入构造函数，将方法和固定属性写入原型对象，这样可以节省内存 
 
 
   ```js
@@ -376,31 +358,66 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
       console.log(this.name);
   }
   var p4 = new Person();
-
-
-  // ES6 写法
-  class Point(x,y){
-      constructor(x,y){
-          this.x=x;
-          this.y=y;
-      }
-      toString(){
-          return '('+this.x+', '+this.y+')';  
-      }
-  }
   ```
  
 
-# 二、面向切面编程
+# 三、面向切面编程 AOP
+> 无侵入地将一个函数插入到另一个函数的前面或后面
+
+<div style="text-indent: 2em">主要功能是将日志统计、异常处理等一些跟核心业务逻辑模块无关的功能抽离出来并封装，然后动态插入到业务逻辑模块的指定位置。这样不仅简化了业务逻辑模块，而且方便统一管理功能模块。AOP 其实只是 OOP 的补充，OOP 从横向上区分出一个个的类，AOP 则从纵向上向对象中加入特定的代码。常用场景如下：</div>
+
+  * 防止 window.onload 被二次覆盖
+  * 给 Ajax 请求动态添加参数
+  * 统计函数的执行时间
+  * 分离表单请求和校验
+  * 职责链模式
+  * 组合替代继承
 
 
-# 三、异步编程
+  ```js
+  // before 切面：让一个函数在另一个函数之前执行
+  Function.prototype.before = function(fn) {
+      var _self = this;     // 保存原函数引用
+      return function(){
+        fn.apply(this, arguments)   // 执行新函数，修正 this
+        return _self.apply(this, arguments);  // 执行原函数
+      }
+  }
+
+  // after 切面：让一个函数在另一个函数之后执行
+  Function.prototype.after = function(fn) {
+    var _self = this;
+    return function(){
+      var ret = _self.apply(this, arguments);
+      fn.apply(this, arguments);
+      return ret;
+    }
+  }
+
+  var obj = {
+    name: 'tangdy',
+    getName: function(){
+      console.log(this.name);
+    }
+  }
+
+  obj.getName = obj.getName.before(function(){
+      console.log("before")
+  }).after(function(){
+      console.log("after")
+  });
+  obj.getName();
+
+  ```
+
+
+# 四、异步编程
   
-### 回调函数
+## 回调函数
   * 实现：作为参数传递到其它函数执行
   * 优点：简单、容易理解和部署
   * 缺点
-    * 不利于代码的阅读和维护
+    * 层层嵌套，不利于代码的阅读和维护
     * 每个任务只能指定一个回调函数
     * 各个部分之间高度耦合，流程会很混乱
     
@@ -417,7 +434,7 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
   ```
     
 
-### 事件监听
+## 事件监听
   * 实现：采用事件驱动模式 
   * 优点
     * 容易理解
@@ -441,7 +458,7 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
   ```
  
 
-### 观察者模式
+## 观察者模式
 > 即发布订阅模式，它定义了一种一对多的关系
 
   * 实现：让多个观察者同时对监听某个对象，对象变化会通知多个观察者对象而自动更新
@@ -464,7 +481,7 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
   ```
 
 
-### promise 模式
+## promise 对象
 > CommonJS 工作组提出的一种规范，目的是为异步编程提供统一接口
 
   * 实现机制
@@ -538,7 +555,386 @@ description: 函数式编程、模块化编程、面向对象编程、面向切�
   ]).then(function (value) {
       console.log(value);    
   });
+
+
+  // 封装 AJAX 实例
+  function get(url) { 
+      return new Promise(function (resolve, reject) { 
+          var req = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP')
+          req.open('GET', url, true) 
+          req.onload = function () {
+              if (req.readyState == 4 && req.status == 200) {
+                  resolve(req.response)
+              } else {
+                  reject(Error(req.statusText))
+              }
+          }
+
+          req.onerror = function () {
+              reject(Error("Network Error"));
+          }
+
+          req.send()
+      });
+  }
+  get("http://something").then(function (response) {
+      console.log(response);
+  }).catch(function (error) {
+      console.log(error);
+  })
+
   ```
+
+
+## async/await 异步函数
+> 一个用同步思维解决异步问题的方案，代码简洁而且更符合编写习惯
+     
+  * async：表示函数是异步的，定义的函数会隐式返回一个 promise 对象
+  * await：表示等待后面的异步函数返回结果之后再执行，只能用于 async 函数内部
+  
+  
+  ```js
+  // async 异步 
+  async function foo() { return "hello" }
+  const foo = async function () {}
+  const foo = async () => {}
+
+  console.log(foo());  // promise对象
+
+
+  // await 等待
+  let fun = function (time) {
+      return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+              resolve(); 
+          }, time)
+      })
+  }
+  let funAsync_1 = async function () {
+      console.log(1)
+      await fun(3000)
+      console.log(2);
+  }
+  let funAsync_2 = async function () {
+      console.log(3)
+      await funAsync_1()
+      console.log(4)
+  }
+  funAsync_2()  // 3、1、2、4
+
+
+  // 错误处理
+  let p = new Promise((resolve, reject) => {
+    reject("error")
+  })
+  async function demo(params) {
+    try {
+        let result = await p;
+    } catch(e) {
+        console.log(e);
+    }
+  }
+  demo()   // error
+
+
+  // 并行处理
+  function count(num) {
+      return new Promise((res, rej) => {
+          res(num)
+      })
+  }
+  // Promise 写法
+  count(100).then(res => {
+      return count(res + 100);
+  }).then(res => {
+      return count(res + 100);
+  }).then(res => {
+      console.log(res);
+  })
+  // await 写法
+  async function demo() {
+
+      // 返回一个值
+      let res_1 = await count(100);
+      let res_2 = await count(res_1 + 100);
+      let res_3 = await count(res_2 + 100);
+      return res_3;
+
+      // 返回数组
+      return await Promise.all([count(100), count(200)])
+
+  }
+  demo().then(res => {
+      console.log(res);
+  })
+
+
+  // 循环处理
+  function count(num) {
+      return new Promise((res, rej) => {
+          console.log(num)
+          res(num);
+      })
+  }
+  (async (names) => {
+      for(let i = 0; i &lt; names.length; i++) {
+          await count(names[i])
+      }
+  })([1, 2, 3])
+  ```
+
+
+# 五、JS 算法  
+  * 排序算法
+    * __冒泡排序__：比较任何两个相邻元素，如果第一个比第二个大则交换位置。元素向上移动到正确顺序，类似气泡上升至表面而得名。
+    * __选择排序__：每次从元素中选出最小或最大值，存放在序列的起始位置，以此循环至排序完毕。
+    * __插入排序__：将一个数据插入到已经排好序的有序数据中，从而得到一个新的、个数加一的有序数据，适用于少量数据的排序。
+    * __归并排序__：将原始序列切分成较小的序列直到无法再切分，然后将小序列排序后归并成大序列，直到最后只有一个排序完毕的大序列。
+    * __快速排序__：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行上述递归排序，以此达到整个数据变成有序序列。
+  * 搜索算法
+    * __顺序搜索__：让目标元素与列表中的每一个元素逐个比较，直到找出与给定元素相同的元素为止，缺点是效率低下。
+    * __二分搜索__：在一个有序列表，以中间值为基准拆分为两个子列表，拿目标元素与中间值作比较从而再在目标的子列表中递归此方法，直至找到目标元素。
+  * 其他
+    * __贪心算法__：在对问题求解时，不考虑全局，总是做出局部最优解的方法。
+    * __动态规划__：在对问题求解时，由以求出的局部最优解来推导全局最优解。
+    * __复杂度__：一个方法在执行的整个生命周期所需要占用的时间、空间等资源。
+
+
+
+## 冒泡排序
+  ```js
+  Array.prototype.bubbleSort = function() {
+      for (let i = 0; i &lt; this.length; i++) {
+          for (let j = 0; j &lt; this.length - 1 - i; j++) {
+              if (this[j] &gt; this[j + 1]) {
+                  let temp = this[j]
+                  this[j] = this[j + 1]
+                  this[j + 1] = temp
+              }
+          }
+      }
+  }
+  ```
+
+
+## 选择排序
+  ```js
+  Array.prototype.selectionSort = function() {
+      let indexMin
+      for (let i = 0; i &lt; this.length - 1; i++){
+          indexMin = i
+          for (var j = i; j &lt; this.length; j++){ 
+              if(this[indexMin] &gt; this[j]) {
+                  indexMin = j
+              }
+          } 
+          if (i !== indexMin){
+              let aux = this[i]
+              this[i] = this[indexMin]
+              this[indexMin] = aux
+          }
+      }
+      return this
+  }
+  ```
+
+
+## 插入排序
+  ```js
+  Array.prototype.insertionSort = function() {
+      let j
+      let temp
+      for (let i = 1; i &lt; this.length; i++) {
+          j = i
+          temp = this[i]
+          while (j &gt; 0 && this[j - 1] &gt; temp) {
+              this[j] = this[j - 1]
+              j--
+          } 
+          this[j] = temp
+          console.log(this.join(', '))
+      }
+      return this
+  }
+  ```
+
+
+## 归并排序
+  ```js
+  Array.prototype.mergeSort = function() {
+      const merge = (left, right) => {
+          const result = []
+          let il = 0
+          let ir = 0
+          while(il &lt; left.length && ir &lt; right.length) {
+              if(left[il] &lt; right[ir]) {
+                  result.push(left[il++])
+              } else {
+                  result.push(right[ir++])
+              }
+          }
+          while (il &lt; left.length) {
+              result.push(left[il++])
+          }
+          while (ir &lt; right.length) {
+              result.push(right[ir++])
+          }
+          return result
+      }
+      const mergeSortRec = array => {
+          if (array.length === 1) {
+              return array
+          }
+          const mid = Math.floor(array.length / 2)
+          const left = array.slice(0, mid)
+          const right = array.slice(mid, array.length)
+          return merge(mergeSortRec(left), mergeSortRec(right))
+      }
+      return mergeSortRec(this)
+  }
+  ```
+
+
+## 快速排序
+  ```js
+  Array.prototype.quickSort = function() {
+      const partition = (array, left, right) => {
+          var pivot = array[Math.floor((right + left) / 2)]
+          let i = left
+          let j = right
+          while (i &lt;= j) {
+              while (array[i] &lt; pivot) {
+                  i++
+              }
+              while (array[j] &gt; pivot) {
+                  j--
+              }
+              if (i &lt;= j) {
+                  let aux = array[i]
+                  array[i] = array[j]
+                  array[j] = aux
+                  i++
+                  j--
+              }
+          }
+          return i
+      }
+      const quick = (array, left, right) => {
+          let index
+          if (array.length &gt; 1) {
+              index = partition(array, left, right)
+              if (left &lt; index - 1) {
+                  quick(array, left, index - 1)
+              }
+              if (index &lt; right) {
+                  quick(array, index, right)
+              }
+          }
+      }
+      quick(this, 0, this.length - 1)
+      return this
+  }
+  ```
+
+
+## 顺序搜索
+  ```js
+  Array.prototype.sequentialSearch = function(item) {
+      for (let i = 0; i &lt; this.length; i++) {
+          if (item === this[i]) return i
+      }
+      return -1
+  }
+  ```
+
+
+## 二分搜索
+  ```js
+  Array.prototype.binarySearch = function(item) {
+      this.quickSort()
+      let low = 0
+      let mid = null
+      let element = null
+      let high = this.length - 1
+      while (low &lt;= high){
+          mid = Math.floor((low + high) / 2)
+          element = this[mid]
+          if (element &lt; item) {
+              low = mid + 1
+          } else if (element &gt; item) {
+              high = mid - 1
+          } else {
+              return mid
+          }
+      }
+      return -1
+  }
+  ```
+
+
+## 动态规划
+> 美国硬币：d1=1, d2=5, d3=10, d4=25，如果要找36美分的零钱，我们可以用 1个25美分、1个10美分和1个便士（ 1美分)
+最少硬币找零的解决方案是找到 n 所需的最小硬币数
+
+  ```js
+  class MinCoinChange {
+
+    constructor(coins) {
+      this.coins = coins
+      this.cache = {}
+    }
+
+    makeChange(amount) {
+      if (!amount) return []
+      if (this.cache[amount]) return this.cache[amount]
+      let min = [], newMin, newAmount
+      this.coins.forEach(coin => {
+          newAmount = amount - coin
+          if (newAmount &gt;= 0) {
+              newMin = this.makeChange(newAmount)
+          }
+          if (newAmount &gt;= 0 && 
+                (newMin.length &lt; min.length - 1 || !min.length) && 
+                (newMin.length || !newAmount)) {
+              min = [coin].concat(newMin)
+          }
+      })
+      return (this.cache[amount] = min)
+    }
+  }
+  const rninCoinChange = new MinCoinChange([1, 5, 10, 25])
+  console.log(minCoinChange.makeChange(36)) // [1, 10, 25]
+
+  const minCoinChange2 = new MinCoinChange([1, 3, 4])
+  console.log(minCoinChange2.makeChange(6))  // [3, 3]
+  ```
+
+
+## 贪心算法
+> 通过贪心算法得出上述解决方案
+  ```js
+  class MinCoinChange {
+
+    constructor(coins) {
+      this.coins = coins
+    }
+
+    makeChange(amount) {
+      const change = []
+      let total = 0
+      this.coins.sort((a, b) => a &lt; b).forEach(coin => {
+          while ((total + coin) &lt;= amount) {
+            change.push(coin)
+            total += coin
+          }
+      })
+      return change
+    }
+  }
+  const rninCoinChange = new MinCoinChange ( [ 1, 5, 10, 2 5])
+  console. log (rninCoinChange. rnakeChange (36))
+  ```
+
 
 
 

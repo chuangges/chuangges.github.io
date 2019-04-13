@@ -1,12 +1,11 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags: [Javascript] 
-categories: Javascript
+tags: [Vue] 
+categories: Vue
 top: false
 keywords:
-    - js
-    - javascript
+    - vue
 description:       # 文章摘要
 password:          # 文章密码
 abstract:          # 文章摘要

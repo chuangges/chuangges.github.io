@@ -136,6 +136,57 @@ description: 字符串、对象、数组、base64、二进制对象
   ```
  
 
+## 属性
+  * __数据属性__：包含一个数据值的位置，用于读取和写入值
+    * Configurable：配置，表示能否删除
+    * Enumerable：枚举，表示能否通过 for-in 循环
+    * Writable：可写，表示能否修改属性值
+    * Value：属性的数据值，表示读写属性值的位置
+  * __访问器属性__
+    * 即存取器属性，是一组获取和设置值的函数
+    * 设置 get/set 特性之后，属性就会变成访问器属性
+    * 不能直接定义，必须使用 Object.defineProperty() 来定义
+    * 分类：Configurable、Enumerable、Get、Set
+ 
+  ```js
+  const cat = { 
+    name: "Jine", 
+    _year: 2020    // 私有属性
+  }
+
+  // 查看属性
+  var prop = Object.getOwnPropertyDescriptor(cat, "name")
+
+  // 设置数据属性
+  Object.defineProperty(cat, 'name', {
+    writable: false,
+    value: 'Trump'
+  })
+
+  // 设置访问器属性
+  Object.defineProperty(dog, 'year', {
+    get: function () {
+        return this._year
+    },
+    set: function (newVal) {
+        this._year = newVal
+    }
+  })
+
+  // 初始化对象属性值
+  var person = {
+    _name: 'Jack',
+    get name() { 
+      return this._name + "_s"
+    },
+    set name(n) { 
+      this._name = n 
+    }
+  }
+  person.name = 'Lisa';
+  console.log(person.name);  // Lisa_s
+  ```
+
 
 ## 操作
   ```js
@@ -201,7 +252,7 @@ description: 字符串、对象、数组、base64、二进制对象
   ```
 
 
-## 对象序列化
+## 序列化
 <div style="text-indent: 2em">JSON 是一种轻量级的数据交互方式，可以存储和传输数据而显示更丰富的信息，一般作为前后端交互的数据格式。</div>
 
   ```js
@@ -241,6 +292,7 @@ description: 字符串、对象、数组、base64、二进制对象
   checkout(100);   // 现金
   checkout(1, 2);  // 刷卡
   ```
+
 
 
 # 三、数组
@@ -296,7 +348,6 @@ description: 字符串、对象、数组、base64、二进制对象
     return newObj;
   }
   ```
-  
 
 
 ## 特殊数组
