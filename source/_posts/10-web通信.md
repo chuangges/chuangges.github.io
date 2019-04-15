@@ -529,7 +529,30 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
           
   * 设置：`$.cookie("name", data, option)`    
   * 获取：`$.cookie("name")`             
-  * 删除：`$.cookie('name', null)`   
+  * 删除：`$.cookie('name', null)`  
+
+
+  ```js
+  export const setCookie = (name, value, expiredays) => {
+    var exdate = new Date();　　　　
+    exdate.setDate(exdate.getDate() + expiredays);　　　　
+    document.cookie = name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+  }
+  export const getCookie = (name) => {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg))
+        return (arr[2]);
+    else
+        return null;
+  }
+  export const delCookie =(name) => {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = this.getCookie(name);
+    if (cval != null)
+    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+  }
+  ```
 
 
 ## localStorage
@@ -538,6 +561,25 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   * 设置：`localStorage.setItem(key, value) / .key = value`
   * 读取：`localStorage.getItem(key) / .key`
   * 删除：`localStorage.removeItem(key)/ clear()`
+
+
+  ```js
+  export const setStore = (name, content) => {
+    if (!name) return;
+    if (typeof content !== 'string') {
+      content = JSON.stringify(content);
+    }
+    window.localStorage.setItem(name, content);
+  }
+  export const getStore = name => {
+    if (!name) return;
+    return window.localStorage.getItem(name);
+  }
+  export const removeStore = name => {
+    if (!name) return;
+    window.localStorage.removeItem(name);
+  }
+  ```
 
 
 ## sessionStorage

@@ -480,6 +480,18 @@ description: 字符串、对象、数组、base64、二进制对象
   }
   ```
 
+
+### 数据过滤
+  ```js
+  export const filterArr = items => {
+      return items.filter(function (item) {
+          // 遍历 item 对象里面的键值是否符合回调函数的测试
+          return Object.keys(item).some(function (key) {
+              return String(item[key]).toLowerCase().match(searchVal)
+          })
+      })
+  }
+  ```
  
 
 # 四、Base64

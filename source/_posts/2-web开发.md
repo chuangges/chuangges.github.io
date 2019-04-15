@@ -65,7 +65,7 @@ description: 常用网站、浏览器渲染、渲染方式、框架模式、Rest
   * __数据存储__：负责持久存储 cookie 和缓存等应用数据
 
   <div align="center">
-    ![浏览器结构](/images/frame/browserCom.png)
+    ![浏览器结构](/images/post/browserCom.png)
     <!-- <img src="/images/frame/browserCom.png" alt=""> -->
   </div> 
 
@@ -79,7 +79,7 @@ description: 常用网站、浏览器渲染、渲染方式、框架模式、Rest
   6. 页面加载完成（此时会触发 load 事件）
 
   <div align="center">
-    ![浏览器结构](/images/frame/browerRender.png)
+    ![浏览器结构](/images/post/browerRender.png)
     <!-- <img src="/images/frame/browerRender.png" alt=""> -->
   </div> 
 

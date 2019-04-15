@@ -28,7 +28,7 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * __Viewmodel__：绑定数据和 DOM 的中间件
 
   <div align="center">
-    ![Vue MVVM](/images/frame/vue.png) 
+    ![Vue MVVM](/images/frame/vue_bing.png) 
   </div> 
 
   <div style="text-indent: 2em">DOM Listeners、Data Bindings 是实现双向绑定功能的关键，实现原理是Object.defineProperty 中的 get、set 方法 和消息订阅模式。DOM Listeners 监听页面所有 View 层 DOM 元素的变化，发生变化时 Model 层的数据随之变化。Data Bindings 监听 Model 层的数据，数据发生变化时 View 层的 DOM 元素随之变化。</div> 
