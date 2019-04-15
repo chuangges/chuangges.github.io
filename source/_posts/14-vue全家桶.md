@@ -1,8 +1,8 @@
 ---
 title: Vue 全家桶系列
 tags:
-  - Vue
-categories: Vue
+  - Vue.js
+categories: Vue.js
 top: false
 keywords:
   - vue

@@ -1,8 +1,8 @@
 ---
 title: Vue 项目开发
 tags:
-  - Vue
-categories: Vue
+  - Vue.js
+categories: Vue.js
 top: false
 keywords:
   - vue

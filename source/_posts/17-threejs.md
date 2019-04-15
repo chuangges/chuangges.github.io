@@ -1,8 +1,8 @@
 ---
 title: WebGL 和 Three.js
 tags:
-  - Three
-categories: Three
+  - Three.js
+categories: Three.js
 top: false
 keywords:
   - three

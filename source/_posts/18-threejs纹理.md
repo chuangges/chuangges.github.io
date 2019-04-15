@@ -1,13 +1,13 @@
 ---
 title: Three.js 纹理
 tags:
-  - Three
-categories: Three
+  - Three.js
+categories: Three.js
 top: false
 keywords:
   - three
 date: 2019-04-15 23:40:11
-description: 
+description: 纹理贴图、纹理映射、纹理类型
 ---
 
 # 一、纹理贴图
@@ -47,8 +47,6 @@ description:
       * 贴图：将大图分割碎片化之后解析，然后使用 canvas 拼接
       * 优势：极大减少了图片加载时间而提高了用户体验
       * 劣势：增加服务器的负担，严重时可能导致崩溃
-
-
 
 
 

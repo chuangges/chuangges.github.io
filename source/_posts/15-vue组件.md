@@ -1,8 +1,8 @@
 ---
 title: Vue 组件化开发
 tags:
-  - Vue
-categories: Vue
+  - Vue.js
+categories: Vue.js
 top: false
 keywords:
   - vue

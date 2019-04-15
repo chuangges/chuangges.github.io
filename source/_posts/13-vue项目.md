@@ -1,8 +1,8 @@
 ---
 title: Vue 基础及其项目构建
 tags:
-  - Vue
-categories: Vue
+  - Vue.js
+categories: Vue.js
 top: false
 keywords:
   - vue
