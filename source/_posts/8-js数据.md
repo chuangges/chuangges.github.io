@@ -848,36 +848,38 @@ description: 字符串、对象、数组、base64、二进制对象
 ### Blob 派生对象
 > blob 对象是它们的底层对象，它们都是继承 blob 对象并进行了扩展，但其内容一样无法修改
 
-  1. __File 对象__
-    * 功能：保存文件的相关信息并允许 Js 访问
-    * 分类
-      * input 元素上选择文件后返回的 FileList 对象 
-      * 普通元素被自由拖拽时返回的 DataTransfer 对象
-      * HTMLCanvasElement 上执行 mozGetAsFile() 方法后返回的结果
-  2. __FileReader 对象__
-    * 功能：提供异步读取文件内容或二进制数据的接口
-    * 保存：读取的文件内容会被保存到 result 属性中
-    * 异步读取
-      * readAsText(file, encoding)：返回 纯文本。encoding 指定编码格式（默认 'UTF-8'）
-      * readAsDataURL(file)：返回 基于 Base64 编码的 dataURL 字符串（读取图像时常用）
-      * readAsBinaryString(file)：返回 文件的原始二进制字符串（每个字符表示一字节）
-      * readAsArrayBuffer(file)：返回 包含文件内容的 ArrayBuffer 对象
-    * 中止读取：abort() 
-    * 回调函数
-      * onload：成功时
-      * onerror：出错时
-      * onprogress：更新时
-      * onloadstart：开始时
-      * onloadend：完成时
-      * onabort：中止时
-  3. __URL 对象__
-    * 功能：通过内存文件创建出一个临时指向 File/Blob 对象的 url
-    * 静态方法
-      * createObjectURL：生成
-      * revokeObjectURL：释放
-    * 注意事项
-      * 网页一旦刷新或关闭，已生成的 url 就会失效
-      * 同样的 blob 在不同的事件调用中会得到不同 url
+#### File 对象
+  * 功能：保存文件的相关信息并允许 Js 访问
+  * 分类
+    * input 元素上选择文件后返回的 FileList 对象 
+    * 普通元素被自由拖拽时返回的 DataTransfer 对象
+    * HTMLCanvasElement 上执行 mozGetAsFile() 方法后返回的结果
+
+#### FileReader 对象 
+  * 功能：提供异步读取文件内容或二进制数据的接口
+  * 保存：读取的文件内容会被保存到 result 属性中
+  * 异步读取
+    * readAsText(file, encoding)：返回 纯文本。encoding 指定编码格式（默认 'UTF-8'）
+    * readAsDataURL(file)：返回 基于 Base64 编码的 dataURL 字符串（读取图像时常用）
+    * readAsBinaryString(file)：返回 文件的原始二进制字符串（每个字符表示一字节）
+    * readAsArrayBuffer(file)：返回 包含文件内容的 ArrayBuffer 对象
+  * 中止读取：abort() 
+  * 回调函数
+    * onload：成功时
+    * onerror：出错时
+    * onprogress：更新时
+    * onloadstart：开始时
+    * onloadend：完成时
+    * onabort：中止时
+
+#### URL 对象
+  * 功能：通过内存文件创建出一个临时指向 File/Blob 对象的 url
+  * 静态方法
+    * createObjectURL：生成
+    * revokeObjectURL：释放
+  * 注意事项
+    * 网页一旦刷新或关闭，已生成的 url 就会失效
+    * 同样的 blob 在不同的事件调用中会得到不同 url
 
 
   ```js
@@ -925,8 +927,88 @@ description: 字符串、对象、数组、base64、二进制对象
  
 ## Node 环境特有
 
-### Buffer 
-> 它继承于 Uint8Array 并实现了更多的接口，大小固定，表示一块未加工的内存缓存区。
+### Buffer   
+  <div style="text-indent: 2em;">Buffer 表示 V8 堆内存之外的一块原始内存，并不会占用 NodeJS 进程内存，常用来存储需要占用大量内存的数据。它继承于 Uint8Array 并实现了更多的接口，对象中的每个元素储存着 2 位 16 进制的数据，代表内存的一个字节。注意一个 Buffer 对象的大小在创建时就会固定下来，即创建之后不可改变。</div>
 
+  * 创建
+    * new Buffer：已经弃用
+    * __Buffer.from__：参数可为 string、buffer、array、object
+    * __Buffer.alloc__：指定大小并已经初始化数据
+    * __Buffer.allocUnsafe__：指定大小但并不初始化数据
+  * 读写
+    * __buf.writexxx__：写入缓冲区
+    * __buf.readxxx__：读取数据
+  * 转换
+    * __buf.toString__：转为字符串
+    * __buf.toJSON__：转为 json
+  * 判断
+    * __Buffer.isEncoding__：编码格式
+    * __Buffer.isBuffer__：对象是否为 Buffer
+  * 其它 
+    * __buf.length__：返回字节数
+    * __buf.indexOf__：返回位置
+    * __buf.compare__：对象比较
+    * __buf.fill__：填充数据
+    * __buf.slice__：裁剪
+    * __buf.copy__：拷贝
+    
 
+  ```js
+  // 创建 
+  const buf_1 = Buffer.from([0x62, 0x75, 0x66, 0x66]);
+  const buf = Buffer.from("hello")   // 编码格式默认 utf8 
+  console.log(buf.length)
 
+  const buf_2 = Buffer.alloc(5);       // 不做任何处理就是 0 填充
+  const buf = Buffer.alloc(5, 'a');  // 以 a 填充
+  const buf = Buffer.alloc(10, 'aGVsbG8gd29ybGQ=', 'base64');  // 以 base64 格式填充
+
+  const buf = Buffer.allocUnsafe(10);  // 只有一个参数
+
+  // 拼接
+  let buf_3 = Buffer.concat([buf_1, buf_2])
+
+  // 裁剪
+  var buf_2 = buf_1.slice(0, 5);
+
+  // 拷贝
+  buf_2.copy(buf_1, 2);
+
+  // 比较
+  var result = buf_1.compare(buf_2);
+
+  // 读写
+  var value = buf.readInt32LE(0)
+  buf.writeFloatLE(3. 16, 0)
+
+  // buffer 转字符串
+  const buf = Buffer.from('test')
+  buf.toString('utf8')             // test
+  buf.toString('utf8', 0, 2)       // te
+
+  // buffer 转 json
+  buf.toJSON()
+
+  // stream 转 buffer
+  function streamToBuffer(stream) {  
+      return new Promise((resolve, reject) => {
+          let buffers = [];
+          stream.on('error', reject);
+          stream.on('data', (data) => buffers.push(data))
+          stream.on('end', () => resolve(Buffer.concat(buffers))
+      })
+  }
+
+  // buffer 转 stream
+  let Duplex = require('stream').Duplex;
+
+  function bufferToStream(buffer) {  
+      let stream = new Duplex();
+      stream.push(buffer);
+      stream.push(null);
+      return stream;
+  }
+  ```
+ 
+        
+        
