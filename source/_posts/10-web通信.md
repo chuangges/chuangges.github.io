@@ -456,7 +456,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 	    link.download = filename;
       link.style.display = 'none';
       
-	    // 图片转base64地址
+	    // 图片转 base64 地址
 	    var canvas = document.createElement('canvas');
 	    var context = canvas.getContext('2d');
 	    var width = domImg.width;
@@ -479,7 +479,35 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   </div> 
 
   ```js
-  // oss图片上传
+  // html：input type="file" id="uploadImg"
+  function getBase64Img(fileObj, callback){  
+      var reader = new FileReader();  
+      reader.readAsDataURL(fileObj);   // 转为 Base64 格式 
+      reader.onload = function(e){  
+          // 变成字符串  
+          // callback(reader.result);  
+          callback(e.target.result);
+      }  
+   }
+   var imgFile = document.getElementById("fileInput").files[0];
+   fileInput.addEventListener("change", function (event) {
+     var file = fileInput.files[0];
+     getBase64Img(file, function(imgBase64){
+        if (imgBase64.length &gt; 2100000) {
+              // 2 M = 2097152 B
+              alert( '请上传不大于 2M 的图片！');
+              return;
+        }else{
+            // 截取 data:image/png;base64 后面的纯字符串
+            var upload_file = imgBase64.substring(imgBase64.indexOf(",") + 1);
+            // 上传截取后的字符串
+            console.log(upload_file);
+        }
+    })
+   }, false)
+
+
+  // oss 图片上传
   var ossUpload = {
       // 获取上传文件后缀
       getSuffix: function(filename) {
@@ -525,42 +553,72 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 # 八、数据储存
 
 ## cookie
-> 同一网站上所有页面共享，有大小、数量限制(4kb) 和过期时间，适用于保存一些用户名等简单信息
-          
-  * 设置：`$.cookie("name", data, option)`    
-  * 获取：`$.cookie("name")`             
-  * 删除：`$.cookie('name', null)`  
+> 随着每次 http 请求头信息一起发送，无形中增加了网络流量，而且能存储的数据容量较小，适用于购物车、客户端登录等场景
+
+  * 优点
+    * 可控制过期时间 
+    * 可扩展、可用性比较好
+    * 可加密减少 cookie 被破解的可能性
+  * 缺点
+    * 在请求头上携带数据安全性差
+    * 数量和长度有限制，最多 20 条，最长不能超过 40k
+  * API
+    * 存储：`document.cookie = "键=值"`
+    * 读取：`var val = document.cookie`         
+    * 删除：
+      * `var date = new Date()`
+      * `document.cookie = "key=value;expires=" + date.toGMTString()`  
 
 
   ```js
   export const setCookie = (name, value, expiredays) => {
-    var exdate = new Date();　　　　
-    exdate.setDate(exdate.getDate() + expiredays);　　　　
-    document.cookie = name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+      var exdate = new Date();　　　　
+      exdate.setDate(exdate.getDate() + expiredays);　　　　
+      document.cookie = name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
   }
-  export const getCookie = (name) => {
-    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-    if (arr = document.cookie.match(reg))
-        return (arr[2]);
-    else
-        return null;
+
+  export const getCookie = name => {
+      var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if (arr = document.cookie.match(reg))
+          return (arr[2]);
+      else
+          return null;
   }
-  export const delCookie =(name) => {
-    var exp = new Date();
-    exp.setTime(exp.getTime() - 1);
-    var cval = this.getCookie(name);
-    if (cval != null)
-    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+
+  export const delCookie = name => {
+      var exp = new Date();
+      exp.setTime(exp.getTime() - 1);
+      var cval = this.getCookie(name);
+      if (cval != null)
+      document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
   }
   ```
 
 
 ## localStorage
-> 本地存储的数据没有过期时间，而且可储存电话本等持久的大量数据
+> 本地存储方式可以长期存储数据，没有时间限制，而且可以储存电话本等大量数据
 
-  * 设置：`localStorage.setItem(key, value) / .key = value`
-  * 读取：`localStorage.getItem(key) / .key`
-  * 删除：`localStorage.removeItem(key)/ clear()`
+  * 特点：同源策略限制、只在本地存储、永久保存、同浏览器共享
+  * 优点
+    * 扩展了 cookie 的 4k 限制
+    * 可以将请求数据直接存储到本地，节约带宽
+    * 遵循同源策略，不同网站之间不能直接共用
+  * 缺点
+    * 需要手动删除，否则长期存在
+    * 浏览器大小不一，版本的支持也不一样
+    * 只支持存储 string 类型的数据，JSON 对象需要转换
+    * 本质是对字符串的读取，如果存储内容多则会消耗内存空间而导致页面变卡
+  * 应用场景
+    * 多页面访问共同数据：可以在多个标签页中共享数据
+    * 数据比较大的临时保存方案：比如在线编辑文章时的自动保存
+  * API
+    * 存储：`localStorage.setItem(key, value)`
+    * 读取
+      * 单个：`localStorage.getItem(key)`
+      * 全部：`localStorage.valueOf()`
+    * 删除
+      * 单个：`localStorage.removeItem(key)`
+      * 全部：`localStorage.clear()`
 
 
   ```js
@@ -583,7 +641,24 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 
 ## sessionStorage
-> 会话存储，用户关闭浏览器窗口后就会删除数据，基本操作同上
+> 会话存储，关闭浏览器之后数据就会消失。非常适合单页应用程序，便于各业务模块之间的传值
+
+  * 特点
+    * __同源策略限制__ 
+    * __单标签页限制__：同一个标签页中的同源页面共享数据
+    * __只在本地存储__：数据只会在存储在本地，并在标签页关闭后清除
+    * __存储方式__：采用键值对的方式，注意 value 值必须为字符串类型
+    * __存储上限限制__：不同的浏览器存储的上限不同，但大多数限制在 5MB 以下
+  * API
+    * 存储：`sessionStorage.setItem(key, value)`
+    * 读取
+      * 单个：`sessionStorage.getItem(key)`
+      * 全部：`sessionStorage.valueOf()`
+    * 删除
+      * 单个：`sessionStorage.removeItem(key)`
+      * 全部：`sessionStorage.clear()`
+
+ 
 
 
 ## 以上区别
@@ -591,7 +666,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
     * cookie 数据通常经过加密，而且会在浏览器和服务器间来回传递
     * 后两个不会自动把数据发给服务器，仅在本地保存。
   * 存储大小
-    * cookie 数据大小不能超过4k，始终在同源的http请求中携带
+    * cookie 数据大小不能超过4k，始终在同源的 http 请求中携带
     * 后两个虽然也有存储大小的限制但比 cookie 大得多，可以达到 5M 及以上
   * 生命周期
     * cookie 数据只在过期时间之前一直有效
@@ -615,10 +690,6 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
     * 获取：`$("div").data("name")`
     * 设置：`$("div").data("name", "new")`
     * 删除：`$("div").removeDate("name")`
-
-
-## 离线存储
-> Application Cache。浏览速度较快，而且减少服务器负载 
 
 
 

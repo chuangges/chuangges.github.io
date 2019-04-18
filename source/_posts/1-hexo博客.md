@@ -12,7 +12,7 @@ description: Hexo 是一个快速、简洁且高效的博客框架
 # 一、博客搭建
 
 ## 安装 Node.js 和 Git
-> <div style="text-indent: 2em">Git安装后可以创建 `ssh key` 并添加到 GitHub上, 这样配置之后就不再需要每次更新博客时都输入用户名和密码了。</div>  
+> Git安装后可以创建 `ssh key` 并添加到 GitHub上, 这样配置之后就不再需要每次更新博客时都输入用户名和密码了
     
 ## 安装hexo博客框架
   ```js
@@ -35,7 +35,7 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   ```
 
 ## 部署到云服务器（线上访问）
-> <div style="text-indent: 2em">Github 是外国网站且禁止百度爬虫访问，所以会导致百度搜不到你的网站。可以做两手准备：国内采用Coding托管，国外采用GitHub托管，建议两者的用户名和密码保持一致。</div>  
+> Github 是外国网站且禁止百度爬虫访问，所以会导致百度搜不到你的网站。可以做两手准备：国内采用Coding托管，国外采用GitHub托管，建议两者的用户名和密码保持一致  
 
 ### 配置步骤
   1. 新建项目
@@ -221,7 +221,7 @@ message: My Birthday      #密码提示
 ## 编写文章（基于Markdown）
 
 ### Markdown 简介
-> <div style="text-indent: 2em">Markdown是一种可以使用普通文本编辑器编写的轻量级「标记语言」，通过简单的标记语法可以使普通文本内容具有一定的格式，是一种适用于网络的书写语言，主要特点是易读易写、支持嵌入html标签和自动生成目录等。但是Hexo下使用的 Github风格的MarkDown（GFM）和 标准MarkDown（MD）在语法上稍有不同，以下主要介绍GFM语法。</div> 
+ <div style="text-indent: 2em">Markdown是一种可以使用普通文本编辑器编写的轻量级标记语言，通过简单的标记语法使普通文本内容具有一定的格式，是一种适用于网络的书写语言，主要特点是易读易写、支持嵌入html标签和自动生成目录等。但是Hexo下使用的 Github风格的MarkDown（GFM）和 标准MarkDown（MD）在语法上稍有不同，以下主要介绍GFM语法。</div> 
 
 
 ### MD 与 GFM 的区别

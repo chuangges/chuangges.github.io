@@ -583,6 +583,37 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       console.log(error);
   })
 
+
+   // 图片加载完成后播放音乐
+  this.loadImg([img, img_1, img_2_1, img_2_2]).then(() => {
+    setTimeout(() => {
+        this.playMusic()
+    }, 500)
+  })
+  const loadImg = (img) => {  
+      const isArray = Array.isArray(img)
+      // 参数为单个字符串/数组
+      if (!isArray) {
+          const oImg = new Image()
+          oImg.src = img
+          return new Promise(resolve => {
+              oImg.onload = () => {
+                  resolve()
+              }
+          })
+      }
+      const arr = []
+      img.forEach(val => {
+          const oImg = new Image()
+          oImg.src = val
+          arr.push(new Promise(resolve => {
+              oImg.onload = () => {
+                  resolve()
+              }
+          }))
+      })
+      return Promise.all(arr)
+  }
   ```
 
 
@@ -599,7 +630,7 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
   const foo = async function () {}
   const foo = async () => {}
 
-  console.log(foo());  // promise对象
+  console.log(foo());  // promise 对象
 
 
   // await 等待

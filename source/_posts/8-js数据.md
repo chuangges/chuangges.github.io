@@ -402,7 +402,7 @@ description: 字符串、对象、数组、base64、二进制对象
 
   // 判断元素         
   arr.every(function(item){
-      return item > 5
+      return item &gt; 5
   }) 
 
   // 排序
@@ -511,7 +511,7 @@ description: 字符串、对象、数组、base64、二进制对象
     * 图片上传服务器时需要纯字符串形式，截取 data:image/png;base64, 后面的字符串即可上传
 
 
-## Base64 编码
+## 编码
 > 一种将二进制序列的数据转换为字符串的编码算法，只是无法直接看到明文但并非加密
 
   * 理解
@@ -643,43 +643,12 @@ description: 字符串、对象、数组、base64、二进制对象
   ```
 
 
-## 图片转换为 base64 
+## 图片转换
+> 将网络或本地图片的地址转为 base64 格式
 
-### 本地上传图片
+### canvas
+
   ```js
-  // html：input type="file" id="uploadImg"
-
-  function getBase64Img(fileObj, callback){  
-      var reader = new FileReader();  
-      reader.readAsDataURL(fileObj);   // 转为 Base64 格式 
-      reader.onload = function(e){  
-          // 变成字符串  
-          // callback(reader.result);  
-          callback(e.target.result);
-      }  
-   }
-   var imgFile = document.getElementById("fileInput").files[0];
-   fileInput.addEventListener("change", function (event) {
-     var file = fileInput.files[0];
-     getBase64Img(file, function(imgBase64){
-        if (imgBase64.length > 2100000) {
-              // 2 M = 2097152 B
-              alert( '请上传不大于 2M 的图片！');
-              return;
-        }else{
-            // 截取 data:image/png;base64 后面的纯字符串
-            var upload_file = imgBase64.substring(imgBase64.indexOf(",") + 1);
-            // 上传截取后的字符串
-            console.log(upload_file);
-        }
-    })
-   }, false)
-  ```
-
-
-### 网络或本地图片
-  ```js
-  // 图像文件转 Base64
   function getBase64Img(img) {
       var canvas = document.createElement("canvas");
       canvas.width = img.width;
@@ -690,11 +659,10 @@ description: 字符串、对象、数组、base64、二进制对象
       var dataURL = canvas.toDataURL("image/" + ext);
       return dataURL;
   }
-
   // Base64 字符串转二进制
   function base64ToBlob(dataurl) {
 
-      // 去掉 url 的头并转化为byte
+      // 去头并转为 byte
       var arr = dataurl.split(',');
 
       // 处理异常：将 ASCII 码小于0的转换为大于0
@@ -719,7 +687,76 @@ description: 字符串、对象、数组、base64、二进制对象
       var base64 = getBase64Img(image);
       var file = base64ToBlob(base64);
   }
+
+
+  function getBase64Image(url, quality = 0.5) {
+      const img = new Image();
+      img.src = url
+      
+      return new Promise(resolve => {
+          img.onload = () => {
+              const canvas = document.createElement("canvas");
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const ctx = canvas.getContext("2d");
+
+              ctx.drawImage(img, 0, 0, img.width, img.height);
+              dataURL = canvas.toDataURL('image/jpeg', quality);
+              resolve(dataURL)
+          }
+      })
+  }
+  getBase64Image("./pic.png", 0.8).then(dataURL => {
+      console.log(dataURL)
+      document.querySelector('img').src = dataURL
+  })
   ```
+
+
+### html2canvas
+> 截图功能：将 html 页面转化为图片
+
+  ```js
+  html2canvas(document.querySelector('img'), {useCORS: true}).then(canvas => {
+      var base64 = canvas.toDataURL("image/jpeg", 0.1);
+      document.body.appendChild(canvas);
+      // downloadImg(base64, "meme.png")  // 下载图片
+  })
+  function downloadImg(base64, imgName) {
+      var a = document.createElement("a");
+      a.href = base64;
+      a.download = imgName;
+      a.click();
+  }
+  ```
+
+
+### Node.js
+  ```js
+  // 通过 fs.readFile
+  const fs = require('fs');
+  fs.readFile('./a.png', 'base64', (err, data) => {
+      // 图片需要在 data 前添加 'data:image/png;base64,'
+      console.log(data)
+  })
+
+
+  // 通过 fs.createReadStream
+  var fs = require('fs');
+  var readStream = fs.createReadStream('./pic.png');
+
+  readStream.on('data', function (chunk) {
+      console.log(chunk.toString('base64')) 
+  })
+  ```
+
+
+### Buffer
+  ```js
+  let base64 = Buffer.from('把我转化为base64').toString('base64')
+  console.log(base64)
+  ```
+
 
 
 # 五、二进制对象
