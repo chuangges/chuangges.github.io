@@ -137,7 +137,7 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   ├── src                   // 项目源码
   │   ├── App.vue                  // 根组件
   │   ├── main.js      			       // 主配置文件
-  │   ├── assets                   // 需要打包的组件静态资源
+  │   ├── assets                   // 需要打包的项目静态资源
   │   │    └── img/js/css
   │   ├── components               // 公共组件目录                 
   │   │    └── common/page                     
@@ -151,10 +151,9 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   │        ├── getter.js           
   │        └── mutation.js 
   │
-  └── static              // 不需要打包的插件和公共库资源
+  └── static              // 不需要打包的外部插件、公共库等资源
       └── css/js/font           
   ```
-
 
 ## 多页面项目
 
@@ -680,21 +679,33 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 # 六、打包问题
 > npm run build 执行打包操作后生成 dist 文件夹  
 
-## 打包路径
-> 打包后资源加载错误，需要在打包前将 绝对路径改成相对路径
+## 资源路径
+> 打包后资源加载错误，因为绝对路径加载的资源打包后会报错
+
+  * static 目录
+    * 特点：文件不会被 wabpack 编译处理，会被直接复制到打包目录
+    * 使用方式
+      * HTML 使用相对路径：`../static/images/bg.png`
+      * JS 使用打包后路径：`./static/images/bg.png`
+      * CSS 使用根目录路径：`../../static/images/bg.png`
+  * assets 目录
+    * 文件会经过 webpack 打包并重新编译，一般只能使用相对路径
+    * 图片等不能用于动态绑定 因为 webpack 使用 ` commenJS ` 规范而必须使用 require
+
 
   ```js
   // 文件 config/index.js  
   build: {
-    assetsPublicPath: './',      //路径改为相对路径
-    productionSourceMap: false   //加快编译 
+    assetsSubDirectory: './static',// 解决 css 路径问题
+    assetsPublicPath: './',      // 解决 js 路径问题
+    productionSourceMap: false   // 加快编译速度
   }
 
   // 静态资源 build/utils.js  
   if (options.extract) {
     return ExtractTextPlugin.extract({
       use: loaders,
-      publicPath:'../../',
+      publicPath:'../../',   // 打包时提取 CSS
       fallback: 'vue-style-loader'
     })
   }

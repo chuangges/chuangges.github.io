@@ -10,7 +10,7 @@ date: 2019-02-20 15:41:48
 description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
 ---
 
-# 一、电脑
+# 一、电脑系统 Mac
 
 ## 操作系统
   1. __Windows__
@@ -639,10 +639,10 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
 
 
 ## 把个人网页挂到 Github
-  1. __Github 上建立仓库，如 bird__
+  1. __Github 上建立仓库，比如 resume__
   2. __进入新建仓库并选择 “settings” 进行仓库设置，滚动到页面底部 “Github Pages” 部分__
-    * 点击 “Select theme” 对主题进行选择，完成后一个具备远程访问功能的仓库就已经设置好了
-    * 此时就可以通过网址访问了：chuanggefighting.github.io/bird/
+    * Source -- master branch，保存后就会自动生成网址
+    * 生成网址拼接文件路径后访问：chuanggefighting.github.io/resume/dist/index.html
   3. __将仓库代码克隆到本地__
     * 删除除了 .git 以外的其他文件，然后通过以下命令测试
     ```js
