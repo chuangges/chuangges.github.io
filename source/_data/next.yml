@@ -177,7 +177,7 @@ site_state: true
 # Value before `||` delimeter is the target permalink.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
-  GitHub: https://github.com/chuanggefighting || github
+  GitHub: https://github.com/ || github
   # E-Mail: mailto:17621538916@163.com || envelope
   #Weibo: https://weibo.com/yourname || weibo
   #Google: https://plus.google.com/yourname || google
@@ -202,15 +202,15 @@ social_icons:
 
 # Blog rolls  推荐阅读
 links_icon: link
-links_title: 推荐阅读
+links_title: 友情链接
 #links_layout: block
 links_layout: inline
 links:
+  个人简历: https://chuanggefighting.github.io/project/ 
   印记中文: https://www.docschina.org/ 
   在线工具: http://tool.lu/
-  Github: https://github.com/
-  Stack Overflow: https://stackoverflow.com/
   Learn Anything: https://learn-anything.xyz/
+   
   
 
 # Sidebar Avatar
