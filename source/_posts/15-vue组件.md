@@ -96,7 +96,8 @@ description: 实例对象、全局方法、插件开发、组件基础
 
 ### 运行流程
   <div align="center">
-    ![Vue 生命周期](/images/frame/vue_life.png) 
+    <!-- vue_life.png -->
+    ![Vue 生命周期](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqybxnfj30u01y7dir.jpg)
   </div> 
 
 
@@ -599,7 +600,8 @@ description: 实例对象、全局方法、插件开发、组件基础
 > 可看作一个不可见的包裹元素，主要用于分组的条件判断和列表渲染
 
   <div align="center">
-    ![Vue template](/images/frame/vue-temp.png) 
+    <!-- vue-temp.png -->
+    ![Vue template](https://ws3.sinaimg.cn/large/006tNc79gy1g29mqts4o7j30d30dxwel.jpg)
   </div> 
 
 
@@ -627,7 +629,8 @@ description: 实例对象、全局方法、插件开发、组件基础
 
 
   <div align="center">
-    ![Vue template](/images/frame/vue-special.png) 
+    <!-- vue-special.png -->
+    ![Vue special](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqu61kij30fl0o474n.jpg)
   </div> 
 
 

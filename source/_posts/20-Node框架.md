@@ -561,7 +561,8 @@ description: Express、Koa、Egg
 ### 上传文件
 
   <div align="center">
-    ![Node UploadFile](/images/frame/node-uploadFile.png) 
+    <!-- node-uploadFile.png -->
+    ![Node UploadFile](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqzbdnxj30go03c3yn.jpg)
   </div> 
 
   ```js
@@ -694,7 +695,8 @@ description: Express、Koa、Egg
   * 除此之外，Worker 中还有定时任务（app/schedule）
 
   <div align="center">
-    ![Egg Run](/images/frame/egg-run.png) 
+    <!-- egg-run.png -->
+    ![Egg Run](https://ws4.sinaimg.cn/large/006tNc79gy1g29n4bu14pj30gg0bpwf7.jpg)
   </div> 
 
 
@@ -703,7 +705,8 @@ description: Express、Koa、Egg
 
 ### 模块架构
   <div align="center">
-    ![Egg Framework](/images/frame/egg-framework.png) 
+    <!-- egg-framework.png -->
+    ![Egg Framework](https://ws1.sinaimg.cn/large/006tNc79gy1g29n4c66z6j30go0bw3yv.jpg)
   </div> 
 
 

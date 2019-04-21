@@ -415,7 +415,8 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
   <div style="text-indent: 2em">通过 vue Devtools 调试工具可以轻松查看状态变化，用户界面负责触发动作 Action 进而改变对应状态 State，从而反映到视图 View 上，所以 State 数据的流向为：`View --> Actions --> mutators --> State --> View`</div>
 
   <div align="center">
-    ![Vuex 实现原理](/images/frame/vuex_base.png) 
+    <!-- vuex_base.png -->
+    ![Vuex 实现原理](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqtjm99j30gv0cqmx6.jpg)
   </div> 
           
       

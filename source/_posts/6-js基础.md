@@ -468,7 +468,8 @@ description: ECMAScript、DOM、BOM
 
 ### 基础语法
 <div align="center">
-![regExp](/images/post/regExp.png)
+<!-- regExp.png -->
+![regExp](https://ws2.sinaimg.cn/large/006tNc79gy1g29m56ow0xj30yg0me40v.jpg)
 </div> 
 
 
@@ -530,7 +531,8 @@ description: ECMAScript、DOM、BOM
   * 属性节点：元素节点的属性
 
   <div align="center">
-  ![节点类型](/images/post/domNodes.png)  
+  <!-- domNodes.png -->
+  ![节点类型](https://ws3.sinaimg.cn/large/006tNc79gy1g29m59k5zuj30ap05mjrc.jpg) 
   </div> 
 
 
@@ -807,8 +809,8 @@ description: ECMAScript、DOM、BOM
 > 浏览器对象模型，用于操作浏览器本身的应用编程接口  
 
   <div align="center">
-  <!-- /images/post/bom.png -->
-  ![BOM](/images/post/bom.png)
+  <!-- bom.png -->
+  ![BOM](https://ws3.sinaimg.cn/large/006tNc79gy1g29m5edjj0j30u00ytqav.jpg)
   </div> 
 
 

@@ -223,7 +223,8 @@ description: 栈、队列、链表、集合、字典、散列表、树、图
 ## 单链表
 ### 结构  
   <div align="center">
-  ![单链表结构](/images/dataType/link-list.png) 
+  <!-- link-list.png -->
+  ![单链表结构](https://ws3.sinaimg.cn/large/006tNc79gy1g2acrag4juj30i102qjrc.jpg)
   </div>
   
   * data中保存着数据，next保存着下一个链表的引用
@@ -232,7 +233,8 @@ description: 栈、队列、链表、集合、字典、散列表、树、图
 
 ### 节点操作  
   <div align="center">
-  ![单链表节点操作](/images/dataType/link-opration.png) 
+  <!-- link-opration.png -->
+  ![单链表节点操作](https://ws2.sinaimg.cn/large/006tNc79gy1g29nbya5cyj30rs0ewt91.jpg)
   </div>
 
   * 插入：修改前驱节点而使其指向新节点，并将新节点指向原前驱节点指向的节点
@@ -808,10 +810,12 @@ description: 栈、队列、链表、集合、字典、散列表、树、图
 ### 存储结构
 
   <div align="center">
-  ![单链表结构](/images/dataType/binary-order.png) 
+  <!-- binary-order.png -->
+  ![二叉树顺序存储结构](https://ws3.sinaimg.cn/large/006tNc79gy1g29nbythfsj30l40gm75e.jpg)
   </div>
   <div align="center">
-  ![单链表结构](/images/dataType/binary-link.png) 
+  <!-- binary-link.png -->
+  ![二叉树链式存储结构](https://ws4.sinaimg.cn/large/006tNc79gy1g29nbyz7yqj30mg0at74y.jpg)
   </div>
 
   ```js
@@ -983,7 +987,8 @@ description: 栈、队列、链表、集合、字典、散列表、树、图
   * 缺点：只有一个相邻顶点的顶点也需要一整行来表示连接，浪费内存
 
   <div align="center">
-  ![单链表结构](/images/dataType/near-matrix.png) 
+  <!-- near-matrix.png -->
+  ![邻接矩阵](https://ws2.sinaimg.cn/large/006tNc79gy1g29nby42ahj30fd07tq2y.jpg)
   </div>
 
 
@@ -992,7 +997,8 @@ description: 栈、队列、链表、集合、字典、散列表、树、图
   * 只要能表示一对多的数据结构都可以用来描述邻接表，比如多维数组、链表、散列表、字典等
 
   <div align="center">
-  ![单链表结构](/images/dataType/near-table.png) 
+  <!-- near-table.png -->
+  ![邻接表](https://ws1.sinaimg.cn/large/006tNc79gy1g29nbxtgl2j30bx07ft8o.jpg)
   </div>
 
 ### 关联矩阵  
@@ -1001,7 +1007,8 @@ description: 栈、队列、链表、集合、字典、散列表、树、图
   * 通常用于边的数量比顶点少的情况，以节省空间和内存。
 
   <div align="center">
-  ![单链表结构](/images/dataType/relate-matrix.png) 
+  <!-- relate-matrix.png -->
+  ![关联矩阵](https://ws2.sinaimg.cn/large/006tNc79gy1g29nbxij3aj30jj04wglh.jpg)
   </div>
 
     

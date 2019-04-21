@@ -48,13 +48,13 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 1. 全部流程
   <div align="center">
-    ![HTTP 请求流程](/images/post/http_req.png)
-    <!-- <img src="/images/post/http_req.png" alt=""> -->
+    <!-- http_req.png -->
+    ![HTTP 请求流程](https://ws1.sinaimg.cn/large/006tNc79gy1g29m597o1aj30nm07rjrr.jpg)
   </div> 
 2. 域名解析过程
   <div align="center">
-    ![域名解析过程](/images/post/domain.png)
-    <!-- <img src="/images/post/domain.png" alt=""> -->
+    <!-- domain.png -->
+    ![域名解析过程](https://ws3.sinaimg.cn/large/006tNc79gy1g29m59rcmkj30l70a674u.jpg)
   </div> 
 3. 三次握手
   <div style="text-indent: 2em">TCP 协议中，建立 TCP 需要与百度服务器握手三次，你先告诉服务器你要给服务器发东西（SYN），服务器应答你并告诉你它也要给你发东西（SYN、ACK），然后你应答服务器（ACK），共来回3次，称为3次握手。</div>
@@ -474,8 +474,8 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 ## 图片上传
   <div align="center">
-    ![图片上传流程图](/images/post/img_upload.png)
-    <!-- <img src="/images/post/img_upload.png" alt=""> -->
+    <!-- img_upload.png -->
+    ![图片上传流程图](https://ws4.sinaimg.cn/large/006tNc79gy1g29m592kktj30hn0m00tu.jpg)
   </div> 
 
   ```js
@@ -697,8 +697,8 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 ## 实现逻辑
   <div align="center">
-    ![登录注册逻辑](/images/post/login.png)
-    <!-- <img src="/images/post/login.png" alt=""> -->
+    <!-- login.png -->
+    ![登录注册逻辑](https://ws3.sinaimg.cn/large/006tNc79gy1g29m56xtz6j30fb0kqq30.jpg)
   </div> 
 
 

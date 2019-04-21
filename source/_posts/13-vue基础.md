@@ -28,7 +28,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * __Viewmodel__：绑定数据和 DOM 的中间件
 
   <div align="center">
-    ![Vue MVVM](/images/frame/vue_bing.png) 
+    <!-- vue_bing.png -->
+    ![Vue MVVM](https://ws4.sinaimg.cn/large/006tNc79gy1g29mqytr6yj30m80btaa5.jpg) 
   </div> 
 
   <div style="text-indent: 2em">DOM Listeners、Data Bindings 是实现双向绑定功能的关键，实现原理是Object.defineProperty 中的 get、set 方法 和消息订阅模式。DOM Listeners 监听页面所有 View 层 DOM 元素的变化，发生变化时 Model 层的数据随之变化。Data Bindings 监听 Model 层的数据，数据发生变化时 View 层的 DOM 元素随之变化。</div> 
@@ -342,7 +343,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * server.js 文件将两个打包文件和 HTML 模板混合生成 HTML 返回给浏览器渲染
 
   <div align="center">
-    ![Vue SSR](/images/frame/vue-ssr.png) 
+    <!-- vue-ssr.png -->
+    ![Vue SSR](https://ws3.sinaimg.cn/large/006tNc79gy1g29n49t1z0j30m80a70t3.jpg)
   </div> 
 
 				 
@@ -366,14 +368,16 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 
 ### 单个文件 
   <div align="center">
-    ![vue-server-renderer](/images/frame/vue-render-1.png) 
+    <!-- vue-render-1.png -->
+    ![vue-server-renderer](https://ws3.sinaimg.cn/large/006tNc79gy1g29mquyagcj30lf0m2abk.jpg)
   </div> 
   
 
 ### 目录文件
   
   <div align="center">
-    ![vue-render-index](/images/frame/vue-render-2.png) 
+    <!-- vue-render-2.png -->
+    ![vue-render-index](https://ws1.sinaimg.cn/large/006tNc79gy1g29mqudkqqj30dp0c8glq.jpg)
   </div> 
   
 

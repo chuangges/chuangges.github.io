@@ -17,7 +17,8 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 ## 基础使用
   <div align="center">
-    ![Node UploadFile](/images/mobile/media.png) 
+    <!-- media.png -->
+    ![media](https://ws3.sinaimg.cn/large/006tNc79gy1g29njpd5auj30dk0ayaa5.jpg)
   </div> 
        
   ```js

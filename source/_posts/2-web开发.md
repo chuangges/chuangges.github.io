@@ -14,10 +14,9 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
 > web 开发就是呈现用户可理解的界面并响应用户操作
 
 <div align="center">
-![前端技能图](/images/post/technology.png)
-<!-- <img src="/images/post/technology.png" alt=""> -->
+<!-- technology.png -->
+![前端技能图](https://ws4.sinaimg.cn/large/006tNc79gy1g29lrhce41j30uv0rz76u.jpg)
 </div> 
-
 
 # 二、程序员网站       
   1. __常用__
@@ -65,10 +64,10 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
   * __数据存储__：负责持久存储 cookie 和缓存等应用数据
 
   <div align="center">
-    ![浏览器结构](/images/post/browserCom.png)
-    <!-- <img src="/images/frame/browserCom.png" alt=""> -->
+    <!-- browserCom.png -->
+    ![浏览器结构](https://ws2.sinaimg.cn/large/006tNc79gy1g29m5ajv28j30go0c9dg1.jpg)
+    
   </div> 
-
 
 ## 渲染流程
   1. 解析HTML结构（构建 DOM 树）
@@ -79,8 +78,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
   6. 页面加载完成（此时会触发 load 事件）
 
   <div align="center">
-    ![浏览器结构](/images/post/browerRender.png)
-    <!-- <img src="/images/frame/browerRender.png" alt=""> -->
+    <!-- browerRender.png -->
+    ![浏览器渲染](https://ws2.sinaimg.cn/large/006tNc79gy1g29m5aunl2j30pr05ka9z.jpg)
   </div> 
 
 
@@ -225,8 +224,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
   * 缺陷：包含大量的业务逻辑后，代码就会难以阅读和维护。
 
   <div align="center">
-    ![MVC架构图](/images/frame/mvc.png)
-    <!-- <img src="/images/post/technology.png" alt=""> -->
+    <!-- mvc.png -->
+    ![MVC架构图](https://ws4.sinaimg.cn/large/006tNc79gy1g29n4arf3rj30hn0ff74e.jpg)
   </div> 
 
 
@@ -235,8 +234,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
   * 缺陷：最接近用户的界面是需要根据需求变化而频繁更改的。
 
   <div align="center">
-    ![MVP架构图](/images/frame/mvp.png)
-    <!-- <img src="/images/frame/mvp.png" alt=""> -->
+  <!-- mvp.png -->
+    ![MVP架构图](https://ws3.sinaimg.cn/large/006tNc79gy1g29n4abxwtj30gz08cdfu.jpg)
   </div> 
 
 
@@ -244,8 +243,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
   * 实现思路：Model 负责业务对象和数据库的关系映射(ORM)，Template 负责如何把页面展示给用户(html)，View 负责业务逻辑并在适当时候调用 Model和Template。此外，通过一个URL分发器将一个个URL的页面请求分发给不同的View处理，View再调用相应的Model和Template。
 
   <div align="center">
-  ![MTV架构图](/images/frame/mtv.png)
-  <!-- <img src="/images/frame/mtv.png" alt=""> -->
+  <!-- mtv.png -->
+  ![MTV架构图](https://ws1.sinaimg.cn/large/006tNc79gy1g29n4bfbwnj30jt0ka74m.jpg)
   </div> 
 
 
@@ -262,8 +261,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
     * 类会增多（每个VC都附带一个 viewModel）
 
   <div align="center">
-  ![MVVM架构图](/images/frame/mvvm.png)
-  <!-- <img src="/images/frame/mvvm.png" alt=""> -->
+  <!-- mvvm.png -->
+  ![MVVM架构图](https://ws2.sinaimg.cn/large/006tNc79gy1g29n4a79ouj30jx0a5jrl.jpg)
   </div> 
 
 
@@ -499,7 +498,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
   4. 主线程空闲时，通过 `事件循环机制` 从任务队列中读取事件并放入执行栈，然后开始执行
 
   <div align="center">
-  ![Ajax实现过程](/images/post/ajax-process.png) 
+  <!-- ajax-process.png -->
+  ![Ajax实现过程](https://ws1.sinaimg.cn/large/006tNc79gy1g29m5erl02j30gl0943z2.jpg) 
   </div>
 
   <div style="text-indent: 2em;">从生产者与消费者的角度看，异步过程是这样的：工作线程是生产者，主线程是消费者(只有一个消费者)。工作线程执行异步任务，执行完成后把对应的回调函数封装成一条消息放到消息队列中。主线程不断地从消息队列中取消息并执行，当消息队列为空时主线程阻塞，直到消息队列再次非空。</div> 
@@ -521,7 +521,8 @@ description: 常用网站、浏览器、服务器、渲染模式、框架模式�
 
   
   <div align="center">
-  ![js 执行机制](/images/post/js-run.png) 
+  <!-- js-run.png -->
+  ![js 执行机制](https://ws4.sinaimg.cn/large/006tNc79gy1g29m58664aj30go0h2gng.jpg)
   </div>
 
 
