@@ -126,7 +126,7 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
     * Debugger for chrome ：调试Debug
     
 
-  ```json
+  ```js
   // vscode 基础配置
 
   // 配置中文：ctrl + shift + p --> Display Language
@@ -345,11 +345,16 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
 
 ## 基础使用
   1. __初始化目录__
-    <div align="center">
-      <!-- gulp.png -->
-      ![初始化目录结构](https://ws1.sinaimg.cn/large/006tNc79gy1g29n9mgl24j30li07swek.jpg)
-    </div> 
     ```js
+    ├── app              // 工作目录：源文件
+    │   ├── js
+    │   ├── Sass
+    │   └── index.html
+    │
+    ├── dist            // 目标目录：编译、压缩后的文件
+    └── release         // 可以发布到服务器的文件目录
+
+
     cnpm install gulp -g  // 全局安装，执行gulp任务
     cd GulpTest 
     cnpm init      // 生成package.json文件
@@ -480,11 +485,33 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
 
 ## 基础使用
   1. __初始化目录__
-    <div align="center">
-      <!-- webpack.png -->
-      ![初始化目录结构](https://ws2.sinaimg.cn/large/006tNc79gy1g29n9m532oj30ku0ro3zb.jpg)
-    </div>
     ```js
+    WebTest
+      ├── app              // 工作目录：源文件
+      │   ├── main.js
+      │   └── hello.js
+      │
+      ├── dist            // 目标目录：打包生成的 js 文件
+      │   └── index.html
+      │
+      ├── node_moudles
+      └── package.json 
+
+    // index.html
+    div id="app"         
+    script src="bundle.js"
+
+    // hello.js
+    moudle.exports = "hello world"
+
+    // main.js
+    const str = require("./hello.js")
+    document.querySelector("#app").appendChild(str)
+
+    // 打包执行
+    webpack app/main.js dist/bundle.js
+
+
     cd WebTest                          
     cnpm install -g webpack   // 全局安装
     cnpm install -S webpack   // 本地安装
