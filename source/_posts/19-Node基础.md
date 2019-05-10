@@ -64,9 +64,8 @@ description: 主要特点、运行机制、安装配置、核心模块
 
 
 ## 功能架构    
-  <div align="center">
-    <!-- node-framework.png -->
-    ![Node Framework](https://ws1.sinaimg.cn/large/006tNc79gy1g29mqzjqbuj30go06ijre.jpg) 
+  <div align="center"> 
+    ![Node Framework](/images/nodejs/node-framework.png) 
   </div> 
             
   * __顶部__：Js 编写的应用程序和模块
@@ -744,9 +743,8 @@ http.createServer(function (req, res) {
 
 ## 上传文件
 
-  <div align="center">
-    <!-- node-uploadFile.png -->
-    ![Node UploadFile](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqzbdnxj30go03c3yn.jpg)
+  <div align="center"> 
+    ![Node UploadFile](/images/nodejs/node-uploadFile.png)
   </div> 
 
   ```js

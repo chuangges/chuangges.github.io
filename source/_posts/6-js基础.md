@@ -467,9 +467,8 @@ description: ECMAScript、DOM、BOM
   ```
 
 ### 基础语法
-<div align="center">
-<!-- regExp.png -->
-![regExp](https://ws2.sinaimg.cn/large/006tNc79gy1g29m56ow0xj30yg0me40v.jpg)
+<div align="center"> 
+  ![regExp](/images/js/regExp.png)
 </div> 
 
 
@@ -530,9 +529,8 @@ description: ECMAScript、DOM、BOM
   * 文本节点：元素/属性节点中的文本内容
   * 属性节点：元素节点的属性
 
-  <div align="center">
-  <!-- domNodes.png -->
-  ![节点类型](https://ws3.sinaimg.cn/large/006tNc79gy1g29m59k5zuj30ap05mjrc.jpg) 
+  <div align="center"> 
+    ![节点类型](/images/js/domNodes.png) 
   </div> 
 
 
@@ -810,7 +808,7 @@ description: ECMAScript、DOM、BOM
 
   <div align="center">
   <!-- bom.png -->
-  ![BOM](https://ws3.sinaimg.cn/large/006tNc79gy1g29m5edjj0j30u00ytqav.jpg)
+  ![BOM](/images/js/bom.png)
   </div> 
 
 

@@ -598,14 +598,13 @@ module.exports = {
 ## 工作流程
 <div style="text-indent: 2em">开发者在自己的机器上更新服务器上的最新代码，然后根据需要创建分支，在该分支上提交本地修改的代码到远程仓库并通知主开发者合并代码。如果主开发者发现代码有冲突则让开发者修改后重新提交，没有冲突则合并代码。注意本地的 .git文件是指本地仓库，.git目录下存放着所有文件的版本和关联信息但默认隐藏。开发流程图如下</div>
 <div align="center">
-<!-- git_work.png -->
-![工作流程图](https://ws1.sinaimg.cn/large/006tNc79gy1g29n9mkm4xj30dp09oaat.jpg)
+  ![工作流程图](/images/web/git_work.png)
 </div> 
 
 ## 常用命令
 <div align="center">
 <!-- git_order.png -->
-![常用命令图](https://ws4.sinaimg.cn/large/006tNc79gy1g29n9n5zw0j316h0u0q7x.jpg)
+![常用命令图](/images/web/git_order.png)
 </div> 
 
 ## 基础配置

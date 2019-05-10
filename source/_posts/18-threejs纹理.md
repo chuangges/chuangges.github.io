@@ -27,8 +27,7 @@ description: 纹理贴图、纹理映射、纹理类型
   <div style="text-indent: 2em">随着 3D 模型的面越来越多，为每个面创建贴图不现实，`UV 贴图则是将 2D 纹理贴图映射到 3D 模型表面最灵活的一种方式`。在这个过程中，三维模型曲面网格的顶点坐标系 (x, y, z) 被展平映射到二维的纹理坐标系 (u, v)，将图像上的每一个点精确对应到模型物体的表面。</div>
   
   <div align="center">
-    <!-- texture-map.png -->
-    ![Texture Mapping](https://ws3.sinaimg.cn/large/006tNc79gy1g29nj8kue4j30go098t9g.jpg)
+    ![Texture Mapping](/images/threejs/texture-map.png)
   </div> 
              
   * UV 映射

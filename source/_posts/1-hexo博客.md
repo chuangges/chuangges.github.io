@@ -332,9 +332,9 @@ print 'Hello World!
 
 
 ### 使用github存储博客图片  
-  1. 在 blog/source/ 下创建img文件，将图片放入。
+  1. blog/source/ 创建图片文件夹
   2. 更新博客仓库，执行 hexo g -d
-  3. 在github仓库中找到图片位置，点击download，复制浏览器的链接，即为图片的链接
+  3. github 仓库的图片位置点击 download，复制图片的链接
   4. 将链接插入文章
 
 

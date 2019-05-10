@@ -496,8 +496,7 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
     * 更好地进行错误捕获 
   * 规范图解
     <div align="center">
-    <!-- promise.png -->
-    ![Promise 规范](https://ws3.sinaimg.cn/large/006tNc79gy1g29m56ve8sj30ff07uaac.jpg)
+      ![Promise 规范](/images/web/promise.png)
     </div>   
 
 

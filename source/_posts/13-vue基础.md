@@ -27,9 +27,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * __View__：对应 DOM 元素的视图部分
   * __Viewmodel__：绑定数据和 DOM 的中间件
 
-  <div align="center">
-    <!-- vue_bing.png -->
-    ![Vue MVVM](https://ws4.sinaimg.cn/large/006tNc79gy1g29mqytr6yj30m80btaa5.jpg) 
+  <div align="center"> 
+    ![Vue MVVM](/images/vue/vue_bing.png) 
   </div> 
 
   <div style="text-indent: 2em">DOM Listeners、Data Bindings 是实现双向绑定功能的关键，实现原理是Object.defineProperty 中的 get、set 方法 和消息订阅模式。DOM Listeners 监听页面所有 View 层 DOM 元素的变化，发生变化时 Model 层的数据随之变化。Data Bindings 监听 Model 层的数据，数据发生变化时 View 层的 DOM 元素随之变化。</div> 
@@ -342,9 +341,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * client-bundle 发送给浏览器用于混合静态标记
   * server.js 文件将两个打包文件和 HTML 模板混合生成 HTML 返回给浏览器渲染
 
-  <div align="center">
-    <!-- vue-ssr.png -->
-    ![Vue SSR](https://ws3.sinaimg.cn/large/006tNc79gy1g29n49t1z0j30m80a70t3.jpg)
+  <div align="center"> 
+    ![Vue SSR](/images/vue/vue-ssr.png)
   </div> 
 
 				 
@@ -367,17 +365,15 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 
 
 ### 单个文件 
-  <div align="center">
-    <!-- vue-render-1.png -->
-    ![vue-server-renderer](https://ws3.sinaimg.cn/large/006tNc79gy1g29mquyagcj30lf0m2abk.jpg)
+  <div align="center"> 
+    ![vue-server-renderer](/images/vue/vue-render-1.png)
   </div> 
   
 
 ### 目录文件
   
-  <div align="center">
-    <!-- vue-render-2.png -->
-    ![vue-render-index](https://ws1.sinaimg.cn/large/006tNc79gy1g29mqudkqqj30dp0c8glq.jpg)
+  <div align="center"> 
+    ![vue-render-index](/images/vue/vue-render-2.png)
   </div> 
   
 
@@ -589,8 +585,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     * `@import '../../assets/scss/mixin.scss'`
     * `@import url('../assets/css/reset.css')`
   * template
-    * 绝对路径：`img src='/static/images/logo.png'`    
-    * 相对路径：`img src='../../assets/images/1.png'`  
+    * 绝对路径：`img src='/static//images/logo.png'`    
+    * 相对路径：`img src='../../assets//images/1.png'`  
 									
 
  
@@ -689,9 +685,9 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * static 目录
     * 特点：文件不会被 wabpack 编译处理，会被直接复制到打包目录
     * 使用方式
-      * HTML 使用相对路径：`../static/images/bg.png`
-      * JS 使用打包后路径：`./static/images/bg.png`
-      * CSS 使用根目录路径：`../../static/images/bg.png`
+      * HTML 使用相对路径：`../static//images/bg.png`
+      * JS 使用打包后路径：`./static//images/bg.png`
+      * CSS 使用根目录路径：`../../static//images/bg.png`
   * assets 目录
     * 文件会经过 webpack 打包并重新编译，一般只能使用相对路径
     * 图片等不能用于动态绑定 因为 webpack 使用 ` commenJS ` 规范而必须使用 require

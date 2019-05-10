@@ -560,9 +560,8 @@ description: Express、Koa、Egg
 
 ### 上传文件
 
-  <div align="center">
-    <!-- node-uploadFile.png -->
-    ![Node UploadFile](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqzbdnxj30go03c3yn.jpg)
+  <div align="center"> 
+    ![Node UploadFile](/images/nodejs/node-uploadFile.png)
   </div> 
 
   ```js
@@ -694,9 +693,8 @@ description: Express、Koa、Egg
   * Controller 负责调用并组合 Service（app/service），最后将响应提交给客户端。Service 负责调用 Model 处理具体的业务逻辑
   * 除此之外，Worker 中还有定时任务（app/schedule）
 
-  <div align="center">
-    <!-- egg-run.png -->
-    ![Egg Run](https://ws4.sinaimg.cn/large/006tNc79gy1g29n4bu14pj30gg0bpwf7.jpg)
+  <div align="center"> 
+    ![Egg Run](/images/nodejs/egg-run.png)
   </div> 
 
 
@@ -704,9 +702,8 @@ description: Express、Koa、Egg
 > 要分析框架的实现原理，直接从所有源码开始分析比较难。但是可以先将其精简到最小功能系统，然后针对各个功能进行分析和叠加 
 
 ### 模块架构
-  <div align="center">
-    <!-- egg-framework.png -->
-    ![Egg Framework](https://ws1.sinaimg.cn/large/006tNc79gy1g29n4c66z6j30go0bw3yv.jpg)
+  <div align="center"> 
+    ![Egg Framework](/images/nodejs/egg-framework.png)
   </div> 
 
 

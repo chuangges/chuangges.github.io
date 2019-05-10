@@ -95,9 +95,8 @@ description: 实例对象、全局方法、插件开发、组件基础
 > Vue 实例由创建到销毁的完整运行一次的过程中会触发的函数
 
 ### 运行流程
-  <div align="center">
-    <!-- vue_life.png -->
-    ![Vue 生命周期](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqybxnfj30u01y7dir.jpg)
+  <div align="center"> 
+    ![Vue 生命周期](/images/vue/vue_life.png)
   </div> 
 
 
@@ -599,9 +598,8 @@ description: 实例对象、全局方法、插件开发、组件基础
 ## template 标签
 > 可看作一个不可见的包裹元素，主要用于分组的条件判断和列表渲染
 
-  <div align="center">
-    <!-- vue-temp.png -->
-    ![Vue template](https://ws3.sinaimg.cn/large/006tNc79gy1g29mqts4o7j30d30dxwel.jpg)
+  <div align="center"> 
+    ![Vue template](/images/vue/vue-temp.png)
   </div> 
 
 
@@ -628,9 +626,8 @@ description: 实例对象、全局方法、插件开发、组件基础
     * 获取子组件实例对象：`my-com ref="com"、this.$refs.com`
 
 
-  <div align="center">
-    <!-- vue-special.png -->
-    ![Vue special](https://ws2.sinaimg.cn/large/006tNc79gy1g29mqu61kij30fl0o474n.jpg)
+  <div align="center"> 
+    ![Vue special](/images/vue/vue-special.png)
   </div> 
 
 
