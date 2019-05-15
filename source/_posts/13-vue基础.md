@@ -83,7 +83,10 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 
   ```js
   // 构建流程
-  cnpm install vue webpack vue-cli -g   
+
+  // vue-cli 2.0
+  cnpm install vue webpack vue-cli -g  
+  vue -V                    // 查看版本 
 
   cd workspace
   vue init webpack project  // 生成目录 
@@ -91,7 +94,6 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 
   npm start                 // 热加载启动服务
   npm run build             // 打包生成静态文件
-
 
   // App.vue，兼容 pc 和移动端方案
   export default {
@@ -146,13 +148,91 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   │   │    └── index.js           
   │   │
   │   └── vuex             // Vuex store相关
-  │        ├── index.js
-  │        ├── action.js             
-  │        ├── getter.js           
-  │        └── mutation.js 
+  │        └── index.js、getter.js、mutation.js、action.js
   │
   └── static              // 不需要打包的外部插件、公共库等资源
-      └── css/js/font           
+      └── css/js/font 
+      
+      
+  // vue-cli 3.0 升级
+  
+  npm uninstall -g vue-cli
+  cnpm install -g @vue/cli
+
+  cd workspace
+  vue create test       // 预设 presets：默认/自定义
+
+  // vue.config.js：根目录新建文件，自动识别的 webpack 自定义配置文件
+  module.exports = {
+    // 根路径
+    baseUrl: process.env.NODE_ENV === 'production' ? '/online/' : '/',
+    // 输出目录
+    outputDir: 'dist2',
+    // 静态资源目录
+    assetDir: 'assets',
+    // 是否开启 eslint 保存检测
+    lintOnSave: false,
+    devServer: {
+        // host: 'localhost',
+        host: "0.0.0.0",
+        port: 8000,      // 端口号
+        https: false,    // https:{type:Boolean}
+        open: true,      // 配置自动启动浏览器  http://172.16.1.12:7071/rest/mcdPhoneBar/ 
+        hotOnly: true,   // 热更新
+        // 配置跨域请求
+        // proxy: 'http://localhost:8000'   // 只有一个代理
+        proxy: {                            // 配置多个代理
+          "/rest/*": {
+            target: "http://172.16.1.12:7071",
+            changeOrigin: true,
+            // ws: true,//websocket支持
+            secure: false
+          },
+          "/pbsevice/*": {
+            target: "http://172.16.1.12:2018",
+            changeOrigin: true,
+            //ws: true,//websocket支持
+            secure: false
+          },
+        },
+        // 模拟数据
+        before(app) {  
+            app.get('/api/seller', (req, res) => {
+                res.json({ errno: 0, data: requare('./data/seller.json') }) 
+            }),
+            app.post('/api/foods', (req, res) => { 
+                res.json({ errno: 0, data: foods })
+            })
+        }
+    },
+  }
+
+  npm run serve        // 本地运行·
+  npm run build        // 打包文件
+
+
+  ├── README.md              
+  ├── node_modules          
+  ├── .gitignore              
+  ├── .eslintrc.js       
+  ├── .babel.config.js　
+  ├── vue.config.js         // webpack 的自定义配置文件 
+  ├── package.json            
+  ├── package-lock.json       
+  │
+  ├── public                   
+  │   ├── index.html
+  │   └── favicon.ico
+  │
+  └── src 
+      ├── views
+      ├── assets
+      ├── components
+      ├── App.vue
+      ├── main.js
+      ├── router.js
+      └── store.js
+
   ```
 
 ## 多页面项目
