@@ -454,24 +454,44 @@ description: HTML、CSS
   ```
 
 
-## 文本溢出省略
+## 文本超出省略
   ```css
   /* 单行文本 */
   div{
-      width: 100px;
-      overflow: hidden;
-      text-overflow: ellipsis;  
-      white-space: nowrap;      
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;  
+    white-space: nowrap;      
   }
 
   /* 多行文本 */
   div{
-      width: 100px;
-      display: -webkit-box; 
-      overflow: hidden; 
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 弹性伸缩盒子 */
+    display: -webkit-box;
+    /* 文本最多显示行数 */
+    -webkit-line-clamp: 2;
+    /* 不设则不显示省略号 */
+    -webkit-box-orient: vertical;
+  }
+
+  /* 跨浏览器兼容方法 */
+  p {
+    position: relative;
+    line-height: 14px;
+    height: 42px;
+    overflow: hidden;
+  }
+  p::after {
+    content: "...";
+    font-weight: bold;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0 20px 1px 45px;
+    background: url(ellipsis_bg.png) repeat-y;
   }
   ```
 

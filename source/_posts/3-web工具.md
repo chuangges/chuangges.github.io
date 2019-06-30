@@ -127,65 +127,52 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
     
 
   ```js
-  // vscode 基础配置
-
-  // 配置中文：ctrl + shift + p --> Display Language
-      "locale":"zh-CN"
-
   // 用户配置：文件 --> 首选项 --> 设置 --> User Settings
-      // 指定工作台中使用的颜色主题。    
-      "workbench.colorTheme": "Monokai",    
-      // 指定在工作台中使用的图标主题    
-      "workbench.iconTheme": "vscode-icons",    
-      // 窗口失去焦点自动保存    
-      "files.autoSave": "off",    
-      // 如果设置为 "true"，将不再显示扩展建议的通知。   
-      "extensions.ignoreRecommendations": true,    
-      // 如果设置成 true，关于新的版本消息将不再显示    
-      "vsicons.dontShowNewVersionMessage": true,    
-      // 控制是否将打开的编辑器显示为预览。    
-      "workbench.editor.enablePreview": false,   
-      // 字体字号
-      "editor.fontSize": 18, 
-      //代码缩进风格4个字符    
-      "editor.tabSize": 4,    
-      // 控制编辑器是否应在键入后自动设置行的格式    
-      "editor.formatOnType": false,    
-      // 保存时取消自动格式化    
-      "editor.formatOnSave": false,    
-      // 编辑粘贴取消自动格式化    
-      "editor.formatOnPaste": false,    
-      // 控制编辑器中呈现空白字符的方式为“边界”，不会在单词之间呈现单空格。    
-      "editor.renderWhitespace": "boundary",    
-      // 控制光标动画样式    
-      "editor.cursorBlinking": "smooth",    
-      //设置Eslint需要验证的语言    
-      "eslint.validate": [        
-          "javascript",        
-          "javascriptreact",        
-          "html",        
-          "vue",        
-          {            
-              "language": "vue",            
-              "autoFix": true        
-          }
-      ],
-      //每列显示内容长多，超出时控制编辑器列的换行。
-      "editor.wordWrap": "wordWrapColumn",
-      "editor.wordWrapColumn": 150,
-      //创建人，修改人    
-      "fileheader.Author": "klierbyck",    
-      "fileheader.LastModifiedBy": "klierbyck",    
-      // 在函数参数括号前定义空格处理。需要 TypeScript >= 2.1.5。    
-      "typescript.format.insertSpaceBeforeFunctionParenthesis": true,    
-      // 在函数参数括号前定义空格处理。需要 TypeScript >= 2.1.5。    
-      "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-      // HTML Snippets 插件配置
-      "emmet.triggerExpansionOnTab": true,
-      "emmet.includeLanguages": {
-          "vue-html": "html",
-          "vue": "html"
-      },
+
+  // 解决 vscode 卡顿
+  search.followSymlinks: false,
+  git.enabled: false,
+  git.autorefresh: false,
+
+  // 指定工作台中使用的颜色主题。    
+  workbench.colorTheme: "Monokai",    
+  // 指定在工作台中使用的图标主题    
+  workbench.iconTheme: "vscode-icons",    
+  // 窗口失去焦点自动保存    
+  files.autoSave: "off",    
+  // 如果设置为 "true"，将不再显示扩展建议的通知 
+  extensions.ignoreRecommendations: true,    
+  // 如果设置成 true，关于新的版本消息将不再显示    
+  vsicons.dontShowNewVersionMessage: true,  
+  // 控制是否将打开的编辑器显示为预览。    
+  workbench.editor.enablePreview: false,   
+  // 字体字号
+  editor.fontSize: 18, 
+  //代码缩进风格4个字符    
+  editor.tabSize: 4,    
+  // 控制编辑器是否应在键入后自动设置行的格式    
+  editor.formatOnType: false,    
+  // 保存时取消自动格式化    
+  editor.formatOnSave: false,    
+  // 编辑粘贴取消自动格式化    
+  editor.formatOnPaste: false,  
+  //设置Eslint需要验证的语言    
+  eslint.validate: [        
+      "javascript",        
+      "javascriptreact",        
+      "html",        
+      "vue",        
+      {            
+        "language": "vue",            
+        "autoFix": true        
+      }
+  ],
+  // HTML Snippets 插件配置
+  emmet.triggerExpansionOnTab: true,
+  emmet.includeLanguages: {
+      "vue-html": "html",
+      "vue": "html"
+  },
   ```
       
 

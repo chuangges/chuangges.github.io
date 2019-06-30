@@ -34,22 +34,22 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
   import Router from 'vue-router'
   Vue.use(Router)
 
-  import user from '@/components/user'
-  import home from '@/components/home'
+  import user from '@/components/User'
+  import home from '@/components/Home'
 
   // 路由懒加载
-  const home = resolve => require(['@/components/Home.vue'], resolve)
+  const home = () => import("views/extension/Home.vue")
 
-  export default new Router({
-    mode: 'hash',               // 路径模式 
-    base: '/app/',              // 基路径(默认'/')
+  export default new Router({    
+    mode: "history",            // 路径模式 
+    base: process.env.BASE_URL  // 基路径(默认'/')           
     linkActiveClass: 'active',  // 链接激活时的class
 
     // history 模式下滚动行为，路由切换时页面滚动到指定位置
     scrollBehavior (to, from, savedPosition) { 
         if(savedPosition){  
-        return savedPosition  // 原位置
-    }else{
+            return savedPosition  // 原位置
+        }else{
             return {x: 0,y: 0};   // 顶部
         } 
         
@@ -231,172 +231,94 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
   * 别名：`axios.get(url, [config])、axios.post(url, [data], [config])`
   
 
-## 自定义配置
-  ```js
-  // axios/http.js
-  import axios from 'axios'
-  import store from '@/vuex/index'
-  import router from "../router"
+## 自定义配置  
 
-  import qs from "qs"   
-  import { Loading } from 'element-ui'
-  import { Message } from 'element-ui'
+```js
+// axios.js
+import axios from 'axios'
+import router from '@/router'
+import store from './vuex'
 
-  var CancelToken = axios.CancelToken;  // 异步发送的请求--取消操作
+// 创建axios实例
+const service = axios.create({
+    baseURL: process.env.VUE_APP_URL + "apigateway",
+    // timeout: 10000,            // 请求超时时间
+    responseType: "json",
+})
 
-  // 创建axios实例
-  const service = axios.create({
-      baseURL: process.env.API_ROOT,
-      timeout: 5000,            // 请求超时时间
-      responseType: "json",
-      // withCredentials: true, // 跨域请求时是否需要使用凭证(cookie等)
-  })
-
-  // service.defaults.baseURL = process.env.API_ROOT  默认配置
-
-  // 添加请求拦截器
-  let loading;
-  service.interceptors.request.use(
-      config => {
-          // 请求时loading效果
-          loading = Loading.service({ 
-              fullscreen: true,
-              lock: true,
-              text: 'Loading, please wait a moment.',
-              spinner: 'el-icon-loading'
-          });
-          // 让每个请求携带 token
-          if (store.getters.token) {
-              config.data = Object.assign({ token: store.getters.token }, config.data)
-          }
-      
-          // 设置表头  'application/json'
-          config.headers['Content-Type'] = 'application/json;charset=utf-8'
-
-          // 请求参数序列化
-          if (config.method === 'post' || config.method === "put" || config.method === "delete") {
-              config.data = qs.stringify(config.data) // 序列化
-          }
-          let cancel
-          config.cancelToken = new CancelToken( c => {
-              cancel = c;
-          })
-          // cancel()  中断请求
-          // router.push('/login')
-
-          return config;
-      }, 
-      error => {
-          Message({            
-              showClose: true,
-              message: error,
-              type: "error.data.error.message"
-          });
-          return Promise.reject(error);
-      }
-  )
-
-  // 添加响应拦截器
-  service.interceptors.response.use(
-      res => {    
-          // 请求正常则关闭动画
-          loading.close();
-
-          // 登录验证通过则跳转页面
-          if(res.data.status ==2){
-              router.push({
-                  path: "/login",
-                  query:{ redirect: router.currentRoute.fullPath }
-              })
-          } 
-
-          return Promise.resolve(res)
-      },
-      error => {     
-          // 请求错误则更新状态
-          const httpError = { 
-              hasError: true,
-              status: error.response.status,
-              statusText: error.response.statusText
-          }
-          store.commit('ON_HTTP_ERROR', httpError)
-          
-          return Promise.reject(error)
-      }
-  )
-  export default service
-
-
-  // main.js 全局引用
-  import http from '@/assets/js/http'
-  Vue.prototype.$axios = http
-  ```
-      
-
-## 本地模拟数据
-    
-### 自定义配置
-> 数据 static/data.json
-            
-  ```js
-  // webpack.dev.conf.js
-  const portfinder = require('portfinder')
-
-  // 模拟数据添加部分   开始
-  const express = require('express')
-  const app = express()                    // 创建express应用程序
-  var appData = require('../data.json')    // 加载本地数据文件
-  var seller = appData.seller              // 获取对应的本地数据
-  var goods = appData.goods
-  var ratings = appData.ratings
-  var apiRoutes = express.Router()        // 获取一个 express 的路由实例
-  app.use('/api', apiRoutes)              // 定义数据输出接口
-  // 结束
-
-  const devWebpackConfig = merge(baseWebpackConfig, {
-    devServer: {
-        // 最后添加接口选项
-        before(app) {  //  模拟数据选项
-            app.get('/api/seller', (req, res) => {
-                res.json({ errno: 0, data: seller }) 
-            }),
-            app.post('/api/foods', (req, res) => { 
-                res.json({ errno: 0, data: foods })
-            })
+// 请求拦截器
+service.interceptors.request.use(
+    config => {
+        // 让每个请求携带 token
+        if (store.getters.token) {
+            config.data = Object.assign({ token: store.getters.token }, config.data)
         }
+    
+        // 设置表头  'application/json'
+        config.headers['Content-Type'] = 'application/json;charset=utf-8'
+
+        // 异步请求的取消操作
+        let CancelToken = axios.CancelToken;  
+        let cancel
+        config.cancelToken = new CancelToken( c => {
+            cancel = c;
+        })
+        cancel()
+
+        // 状态更新
+        store.commit('showLoad', { status: 1, msg: "" })
+        return config
+    },
+    error => {
+        store.commit('showLoad', { status: 2, msg: "" })
+        return Promise.reject(error)
     }
-  }
-  ```
+)
+// 响应拦截器
+service.interceptors.response.use(
+    response => {
+        if(response.data.CResultCde == "0000"){
+            store.commit('hideLoad')
+        }else{
+            store.commit('showLoad', { status: 2, msg: response.data.CResultMsg })
+        }
+        return Promise.resolve(response)
+    },
+    error => {
+        store.commit('showLoad', { status: 2, msg: "" })
+        return Promise.reject(error)
+    }
+)
+// 导出对象
+export default service
 
+// 导出方法
+export function indexQRCode(data){
+    return _request('/pageSkipping/gas/getHomePageQRcode', 'post', data)
+}
+function _request (url, methods, data = undefined, params = {}) {
+    return new Promise((resolve, reject) => {
+        service({
+        method: methods,
+        url: url,
+        data: data,
+        params: Object.assign(params)
+        }).then((response) => {
+        return resolve(response.data)
+        }).catch((error) => {
+        return reject(error)
+        })
+    })
+}
 
-### 通过 mockjs
+// main.js 全局引用
+import http from './axios'
+Vue.prototype.$axios = http
 
-  * 安装：`cnpm install mockjs -S`
-  * 定义：`src/mack/index.js`
-  * 引入：`import './mock'`
-
-
-  ```js 
-  // src/mack/index.js
-  import Mock from 'mockjs'
-  let Random = Mock.Random   // 随机函数
-
-  const data =  () => {
-      let arr = []
-      for (let i = 0; i &lt; 10; i++) {
-          let newArticleObject = {
-              title: Random.csentence(5),
-              content: Random.cparagraph(5, 7),
-              time: Random.date() + ' ' + Random.time(),
-              location: Random.city()
-          }
-          arr.push(newArticleObject)
-      }
-      return {arr}
-  }
-  // 第三个参数可以是 对象/返回对象的函数
-  Mock.mock('/api/data', 'get', data)
-  ```
+// 局部引用
+import { indexQRCode } from '@/axios'
+```
+      
 
 
 # 三、状态管理 Vuex
@@ -438,171 +360,91 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 ### 单个文件
   ```js
   // vuex/store.js
-  import Vue from 'vue'
-  import Vuex from 'vuex'
-  Vue.use(Vuex)
 
-  // state 状态变量 
-  const state = {    
-      count: 1,
-      isShow: false 
-  }
+  import Vue from "vue";
+  import Vuex from "vuex";
 
-  // state 的计算属性：派生所需状态)
-  const getters = {
-      countNew: state => {  
-          return state.count * 10;
-      }
-  }
+  Vue.use(Vuex);
 
-  // 更新 state 的逻辑方法 (commit mutation 触发)
-  const mutations={
-      add(state){     
-          state.count += 1;
-      },
-      reduce(state,n){  // 第二个参数可自定义类型   
-          state.count -= n;
-      },
-      tog(state){  
-          state.isShow = !state.isShow;
-      },
-      init(state){
-          state.count = 1;
-      }
-  }
-
-  // 更新 state 的异步逻辑 (dispatch actions 触发)
-  const actions = {
-      // 完整写法  
-      add_all: (context) => { context.commit('add') },
-      
-      // 简写写法  同步提交(实时跟踪)
-      add: ({ commit }) => commit('add'), 
-      reduce: ({ commit },n) => commit('reduce',n), 
-
-      tog: ({ commit }) => commit('tog'), 
-      init: ({ commit }) => commit('init'), 
-
-      // 异步提交
-      addAsync: ({ commit }) => {  
-          setTimeout (() => {
-              commit('add'); 
-          }, 1000);
-      }
-  }
-
-  // 分割成不同模块使用：方便管理
-  const modules = {   
-      // 每个module中都有state等, 获取时 store.state.a
-      a: {
-          state: { count: 0},
-          // 参数 模块的局部状态state,getter和根节点状态
-          getters: {  
-              sum (state, getters, rootState) {
-                  return state.count + rootState.count
-              }
-          },
-          mutations: {    //模块的局部状态state
-              increment(state){
-                  state.count ++ ;
-              }
-          },
-          actions: { 
-              incrementIf ({ state, commit, rootState }) {
-                  if ((state.count + rootState.count) % 2 === 1) {
-                      commit('increment')
-                  }
-              }
-          }
-      },  
-      b: { }
-  }
-
-  // 注册所有模块并导出
-  const store = new Vuex.Store({
-      state,
-      mutations,
-      actions,
-      getters,
-      // modules  导出 modules 时就不需要导出以上变量了
+  export default new Vuex.Store({
+    // state 状态变量
+    state: {
+        VIEWID: 0,
+        LOADING: {
+            status: 0,
+            msg: ""
+        }
+    },
+    // state 的计算属性：派生所需状态
+    getters: {
+        IDNew: state => {  
+            return state.ID * 10;
+        }
+    },
+    // 同步更新 state：store.commit('showLoad', { status: 1, msg: "" })
+    mutations: {
+        viewEntrance(state, id){
+            state.VIEWID = id
+        },
+        showLoad (state, obj){
+            state.LOADING = obj
+        },
+        hideLoad (state){
+            state.LOADING = { status: 0, msg: "" }
+        },
+    },
+    // 异步更新 state：this.$store.dispatch('viewEntrance', id)
+    actions: {
+        // 简写写法
+        viewEntrance: ({ commit }, id) => commit('viewEntrance', id),
+        // 完整写法
+        viewEntrance: ( context, id) => { context.commit('viewEntrance', id) },
+        // 异步操作
+        entryAsync: ({ commit }, id) => {  
+            setTimeout (() => {
+                commit('viewEntrance', id)
+            }, 1000);
+        }
+    },
+    // 分割成不同模块以方便管理：使用时不再导出以上变量
+    modules: {
+        a: {
+            state: {},
+            getters: {},
+            mutations: {},
+            actions: {},
+        },
+        b: {}
+    }
   })
-  export default store
   ```
-
-
-### 文件拆分
-  ```js
-  // vuex/index.js：vuex 入口函数，在 main.js 中引入
-  import Vue from 'vue'
-  import Vuex from 'vuex'
-  import * as getters from './getters'
-  import * as actions from './actions'
-  import * as mutations from './mutations'
-  Vue.use(Vuex)
-  const state = {  // 声明状态
-          count: 0, isShow: false
-  }
-  const store = new Vuex.Store({  // 注册模块
-          state, getters, actions, mutations
-  })
-  export default store
-
-
-  // vuex/getters.js：获取状态信息
-  export const countNew = state => state.count*10
-
-
-  // vuex/mutations.js：同步操作状态值
-  export const init = state => { state.count = 1 }
-  export const add = state => {  state.count += 1 }
-  export const reduce = (state,n) => { state.count -= n }
-  export const tog = state => { state.isShow = !state.isShow }
-          
-      
-  // vuex/actions.js：异步处理逻辑
-  // 完整写法
-  export const _add = (context) => { context.commit('add') }
-  // 以下为简写写法
-  export const init = ({ commit }) => commit('init')	
-  export const add = ({ commit }) => commit('add')
-  export const reduce = ({ commit },n) => commit('reduce',n)
-  export const tog = ({ commit }) => commit('tog')
-  ```
-
+  
 
 ## 全局引用
   ```js
-  // main.js 
+  // main.js
   import store from './vuex'  
   new Vue({
-      el: '#app',
-      router,
-      store,
+    el: '#app',
+    router,
+    store,
   })
   ```
 
 
 ## 组件使用
   ```js
-  import { mapState, mapGetters, mapMutations, mapActions } 
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
   export default {
     data(){
         return{
             localState: 2
         }
     },
-    watch:{
-        isShow: function(){    // 隐藏时初始化count
-            if(!this.show){
-                this.$store.commit('init') 
-            }
-        }
-    },
     // 普通写法
     computed: {     
         count () {
-            return this.$store.state.count;  
-            // getters.countNew  
+            return this.$store.state.count;
         },
         isShow(){
             return this.$store.state.isShow;
@@ -616,13 +458,12 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
             return state.count + this.localState; 
         },
     }),
-    computed: mapState(['count','isShow']),  // 名称相同
+    computed: mapState(['count', 'isShow']),  // 名称相同
     computed: {
         local(){         // 组件数据
             return this.localState;
         },
         // 使用对象展开运算符将数据混入 computed 对象
-
         ...mapState([    // 映射 State
             'count',
             'isShow'
@@ -631,8 +472,6 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
             'countNew'
         ])
     }, 
-
-
     methods: {   
         reduce(){     // 有参数时需单独定义
             this.$store.commit('add')           // 同步

@@ -80,101 +80,58 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 						
 				
 ## 单页面项目
+> 查看版本：vue -V
+
+  1. __vue-cli 2__
+    * 安装：`cnpm i vue webpack vue-cli -g`
+    * 初始化：`vue init webpack project`
+    * 启动打包：`npm start && npm run build`
+  2. __vue-cli 3__
+    * 安装：`cnpm install @vue/cli webpack -g`
+    * 初始化：`vue create test`
+      * 默认配置
+      * 自定义配置
+        * 按钮：`A -- 全选、空格键 -- 选择与取消、上下 -- 移动`
+        * 选项：`Babel、Router、Vuex、CSS Pre-processors、Linter / Formatter`
+        * 校验：`ESLint + Prettier && Lint on save`
+        * 保存：`In dedicated config files && 自定义`
+    * 启动打包：`npm start && npm run build`
+
 
   ```js
-  // 构建流程
+  // vue.config.js：根目录新建，webpack 自动识别的自定义配置文件
 
-  // vue-cli 2.0
-  cnpm install vue webpack vue-cli -g  
-  vue -V                    // 查看版本 
-
-  cd workspace
-  vue init webpack project  // 生成目录 
-  cd project && npm i       // 安装依赖包
-
-  npm start                 // 热加载启动服务
-  npm run build             // 打包生成静态文件
-
-  // App.vue，兼容 pc 和移动端方案
-  export default {
-    name: "App",
-    created(){
-      if(document.documentElement.clientWidth > 640){
-          require('./style/pc.scss'); 
-          this.plaform = 'pc';     // 父类类名为 .pc
-      }else{
-          require('./style/mobile.scss'); 
-          this.plaform = 'mobile';  // 父类类名为.mobile
-      }
-    }
+  // cnpm i path -S
+  let path = require('path')
+  function resolve(dir) {
+    return path.join(__dirname, dir)
   }
 
-  // 项目目录
-  ├── README.md              // 说明文档
-  ├── node_modules           // 项目依赖包
-  ├── .editorconfig          // 定义代码格式
-  ├── .babelrc 　            // ES6 语法编译配置
-  ├── .postcssrc.js          // css 代码转换配置
-  ├── .gitignore             // git 上传需要忽略的文件格式
-  ├── .eslintrc.js           // eslint 是管理和检测 js 代码风格
-  |
-  ├── index.html             // 项目入口文件
-  ├── package.json           // 项目基本信息
-  ├── package-lock.json      // 优化性能的新增文件
-  │
-  ├── build                  // webpack 编译打包配置
-  │   ├── build.js                 // 打包执行文件
-  │   ├── check-versions.js        // 检查 node、npm 等版本
-  │   ├── utils.js                 // 构建常用工具
-  │   ├── vue-loader.conf.js       // css 加载器配置
-  │   ├── webpack.base.conf.js     // 基础配置
-  │   ├── webpack.dev.conf.js      // 开发环境
-  │   └── webpack.prod.conf.js     // 生产环境
-  │
-  ├── config                // 项目配置
-  │   ├── dev.env.js               // 开发环境
-  │   ├── prod.env.js              // 生产环境
-  │   └── index.js                 // 基础配置
-  │
-  ├── src                   // 项目源码
-  │   ├── App.vue                  // 根组件
-  │   ├── main.js      			       // 主配置文件
-  │   ├── assets                   // 需要打包的项目静态资源
-  │   │    └── img/js/css
-  │   ├── components               // 公共组件目录                 
-  │   │    └── common/page                     
-  │   │            
-  │   ├── router           // 路由配置
-  │   │    └── index.js           
-  │   │
-  │   └── vuex             // Vuex store相关
-  │        └── index.js、getter.js、mutation.js、action.js
-  │
-  └── static              // 不需要打包的外部插件、公共库等资源
-      └── css/js/font 
-      
-      
-  // vue-cli 3.0 升级
-  
-  npm uninstall -g vue-cli
-  cnpm install -g @vue/cli
-
-  cd workspace
-  vue create test       // 预设 presets：默认/自定义
-
-  // vue.config.js：根目录新建文件，自动识别的 webpack 自定义配置文件
   module.exports = {
     // 根路径
-    baseUrl: process.env.NODE_ENV === 'production' ? '/online/' : '/',
-    // 输出目录
-    outputDir: 'dist2',
-    // 静态资源目录
-    assetDir: 'assets',
-    // 是否开启 eslint 保存检测
+    publicPath: "./",
+    // 输出文件目录
+    outputDir: 'dist',
+    // 取消eslint验证
     lintOnSave: false,
+    // vux 相关配置,使用 vux-ui
+    configureWebpack: config => {
+      require('vux-loader').merge(config, {
+        options: {},
+        plugins: ['vux-ui']
+      })
+    },
+    // 配置目录别名：用于以后引用路径时减少复杂度
+    chainWebpack: config => {
+      config.resolve.alias
+        .set('@$', resolve('src'))
+        .set('assets', resolve('src/assets'))
+        .set('views', resolve('src/views'))
+        .set('components', resolve('src/components'))
+    },
     devServer: {
         // host: 'localhost',
-        host: "0.0.0.0",
+        host: "127.0.0.1",
         port: 8000,      // 端口号
         https: false,    // https:{type:Boolean}
         open: true,      // 配置自动启动浏览器  http://172.16.1.12:7071/rest/mcdPhoneBar/ 
@@ -195,7 +152,7 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
             secure: false
           },
         },
-        // 模拟数据
+        // 模拟本地数据
         before(app) {  
             app.get('/api/seller', (req, res) => {
                 res.json({ errno: 0, data: requare('./data/seller.json') }) 
@@ -204,142 +161,10 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
                 res.json({ errno: 0, data: foods })
             })
         }
-    },
+    }
   }
-
-  npm run serve        // 本地运行·
-  npm run build        // 打包文件
-
-
-  ├── README.md              
-  ├── node_modules          
-  ├── .gitignore              
-  ├── .eslintrc.js       
-  ├── .babel.config.js　
-  ├── vue.config.js         // webpack 的自定义配置文件 
-  ├── package.json            
-  ├── package-lock.json       
-  │
-  ├── public                   
-  │   ├── index.html
-  │   └── favicon.ico
-  │
-  └── src 
-      ├── views
-      ├── assets
-      ├── components
-      ├── App.vue
-      ├── main.js
-      ├── router.js
-      └── store.js
-
   ```
 
-## 多页面项目
-
-  ```js
-  // 目录调整
-  src
-  ├── assets
-  ├── components 
-  └── pages
-        ├── index
-        │    ├── App.vue
-        │    ├── index.html
-        │    └── index.js
-        |
-        └── login
-            ├── Login.vue
-            ├── login.html
-            └── login.js
-
-
-  // 修改webpack配置
-  
-  // 1、utils.js 末尾添加
-  /* 添加部分 ---------------------------- 开始 */
-
-  // glob 模块用于路径匹配配置 (使用 * 等符号)，安装后引用：npm i glob -S 
-  var glob = require('glob')
-  var HtmlWebpackPlugin = require('html-webpack-plugin')  // 页面模板
-  var PAGE_PATH = path.resolve(__dirname, '../src/pages')  // 页面路径
-  var merge = require('webpack-merge')    // merge处理
-
-  // 多入口配置：如果 pages 中存在 js 文件就存在就作为入口处理
-  exports.entries = function () {
-    var entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
-    var map = {}
-    entryFiles.forEach((filePath) => {
-        var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
-        map[filename] = filePath
-    })
-    return map
-  }
-
-  // 多页面输出配置
-  exports.htmlPlugin = function () {
-    let entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
-    let arr = []
-    entryHtml.forEach((filePath) => {
-        let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
-        let conf = {
-            template: filePath,  // 模板来源
-            filename: filename + '.html',   // 文件名称
-            // 页面模板需要添加对应的 js 脚本，不加则每个页面都会引入所有 js 脚本
-            chunks: ['manifest', 'vendor', filename],
-            inject: true
-        }
-        if (process.env.NODE_ENV === 'production') {
-            conf = merge(conf, {
-                minify: {
-                    removeComments: true,
-                    collapseWhitespace: true,
-                    removeAttributeQuotes: true
-                },
-                chunksSortMode: 'dependency'
-            })
-        }
-        arr.push(new HtmlWebpackPlugin(conf))
-    })
-    return arr
-  }
-  /* 添加部分 ---------------------------- 结束 */
-
-
-  // 2、webpack.base.conf.js 修改
-  entry: utils.entries(),  
-
-  // 3、webpack.dev.conf.js、webpack.prod.conf.js
-  plugins: [
-      /* 注释 ------------- 开始 */
-      // new HtmlWebpackPlugin({
-      //   filename: 
-      // }),
-      /* 注释 ------------- 结束 */
-
-      /* 添加 ------------------ */
-  ].concat(utils.htmlPlugin())
-
-
-  // 初始化页面
-  // 1、index.js
-  import index from './App.vue'
-  new Vue({
-    el: '#app',
-    router,
-    components: { index },
-    template: '&lt;index/&gt;'
-  })
-
-  // 2、login.js
-  import LoginView from './Login.vue'
-  new Vue({
-    el: '#app',
-    render: h => h(LoginView)
-  })
-
-  // 3、index.html 页面跳转：a href='login.html'
-  ```
 
 
 ## 首屏加载优化
@@ -367,7 +192,7 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   * 路由配置：`route/index.js`
 
   ```js
-  // build/webpack.prod.conf.js
+  // vue-cli2：build/webpack.prod.conf.js
   const PrerenderSPAPlugin = require('prerender-spa-plugin')
   const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 
@@ -595,35 +420,28 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     })
     ```
 
-				
-### Sass						
-  * 安装：`cnpm install sass-loader node-sass css-loader -S`
-  * 使用：`style lang="scss" scoped`
+
+### 适配移动端
+
+  * 安装：cnpm install postcss-px-to-viewport -D
   * 配置
     ```js
-    // build/webpack.base.conf.js
+    // postcss.config.js
     module.exports = {
-      resolve: {
-        // 添加扩展名 .scss
-        extensions: ['.js', '.vue', '.json', '.scss'],
-      },
-      module: {
-        rules: {
-          // 最后添加
-          {  
-            test: /\.scss$/,  
-            loaders: ['style', 'css', 'sass']  
-          }
+      plugins: {
+        'autoprefixer': {},
+        'postcss-px-to-viewport': { 
+          viewportWidth: 750, // 视窗的宽度，对应的是我们设计稿的宽度，一般是750 
+          viewportHeight: 1334, // 视窗的高度，根据750设备的宽度来指定，一般指定1334，也可以不配置 
+          unitPrecision: 3, // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除） 
+          viewportUnit: 'vw', // 指定需要转换成的视窗单位，建议使用vw 
+          selectorBlackList: ['.ignore', '.hairlines'], // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名 
+          minPixelValue: 1, // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值 
+          mediaQuery: false // 允许在媒体查询中转换`px`
         }
       }
     }
     ```
-
-
-### 对象展开运算符 
-  * 安装：`cnpm install babel-plugin-transform-object-rest-spread -S`
-  * 使用：`...mapGetters([ 'count' ])`
-  * 配置：`.babelrc 文件 -- "plugins": ["transform-object-rest-spread"]`
 
 
 ### 集成 Ace 代码编辑器
@@ -640,25 +458,6 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 
 ## 静态资源
 
-### global.scss
-  * 安装：cnpm install sass-resources-loader --save-dev
-  * 注意：如果要导入多个文件则全部导入到 global.scss：@import './reset.scss'
-  * 配置 
-
-  ```js
-  // build/utils.js -- scss: generateLoaders('sass') 
-  scss: generateLoaders('sass').concat(
-    {
-      loader: 'sass-resources-loader',
-      options: {
-        resources: path.resolve(__dirname, '../src/assets/global.scss')
-      }
-    }
-  )
-  ```
-
-
-### 静态文件
   * js：`import user from '@/components/user'`
   * css
     * `@import './swiper.css'`
@@ -676,24 +475,24 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
   ```json
   // package.json文件
   "scripts": {
-      "build": "node build/build.js",
-      "start": "rimraf dist && npm run build"
+      // 开发环境 development、生产环境 production、test 测试环境
+      "serve": "vue-cli-service serve --mode dev",
+      "build": "vue-cli-service build --mode prod",
+      "test": "vue-cli-service build --mode test",
+      "lint": "vue-cli-service lint"
   }
-  ```
 
+  // .env.dev
+  NODE_ENV = "dev"
+  VUE_APP_URL = "/apigateway"
 
-## 路径别名
-> 用于以后引用路径时减少复杂度：import getList from 'api/index'
-
-  ```js
-  // build/webpack.base.conf.js
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
-      'api': path.resolve(__dirname, '../src/api')
-    }
-  }
+  // .env.test
+  NODE_ENV = "production"  // 打包环境
+  VUE_APP_URL = "http://116.228.196.136:10003/apigateway"
+    
+  // .env.prod
+  NODE_ENV = "prod"
+  VUE_APP_URL = "https://api.yongcheng.com:19090/apigateway"
   ```
 
 		

@@ -76,7 +76,7 @@ description: 实例对象、全局方法、插件开发、组件基础
     },
     filters: {          // 过滤器：{{user.age | sum}} 
         sum: function (value) {
-            return value > 0;
+            return value == 0;
         }
     },
     mounted () {       // 监听
@@ -300,6 +300,7 @@ description: 实例对象、全局方法、插件开发、组件基础
 ## 全局组件
 > 将组件以插件形式封装
 
+
 ### 组件封装
   ```js
   // 初始化目录
@@ -503,7 +504,7 @@ description: 实例对象、全局方法、插件开发、组件基础
                   return { time: 1000 } 
               },  
               validator(val){  // 自定义验证
-                  return val > 0
+                  return val == 0
               }
           }
       }
