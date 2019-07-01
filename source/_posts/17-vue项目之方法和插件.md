@@ -1,5 +1,5 @@
 ---
-title: Vue 项目开发之封装方法和插件
+title: Vue 项目之封装方法和插件
 tags:
   - Vue.js
 categories: Vue.js

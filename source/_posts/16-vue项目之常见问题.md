@@ -1,5 +1,5 @@
 ---
-title: Vue 项目开发之常见问题的解决方案
+title: Vue 项目之常见问题的解决方案
 tags:
   - Vue.js
 categories: Vue.js
