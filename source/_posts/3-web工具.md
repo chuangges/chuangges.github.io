@@ -53,6 +53,15 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
     * 配置 proxy：即配置代理地址
 
 
+## TeamViewer
+> 远程控制
+
+  1. 安装注册：https://www.teamviewer.cn/cn/download/mac-os/
+  2. 登陆办公室、家中电脑上的 TeamViewer
+  3. 伙伴ID处输入办公室电脑的 ID，点击连接
+  4. 设置无人值守，然后电脑重启后的名称和密码不再改变
+
+
 # 二、浏览器 chrome 
   1. __搜索__（Google输入框中所有空格都被理解为加号）
     * 完整匹配: "mysql foreign key"（引号）
@@ -85,7 +94,7 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
       * Vue.js devtools         
       * AngularJS Batarang      
       * React Developer Tools  
-  5. __Chrome黑科技__
+  5. __实用黑科技__
     * 实现翻墙
       * 配置proxy代理：setting  system ——> proxy settings ——> LAN setting ——> proxy server ——> 配置 Address 和 Port
       * 配置Chrome扩展：下载[Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) ——> 注册登录
@@ -666,4 +675,13 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
     git push origin master  // 上传到远程仓库
     ```
   4. __更新个人代码到远程仓库__
+
+
+
+
+
+
+
+
+
 

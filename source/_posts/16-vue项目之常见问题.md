@@ -185,10 +185,29 @@ description: 常见问题的解决方案
   module.exports = {
     configureWebpack: {    // webpack 配置
       output: {            // 输出重构，打包编译后的文件名称：模块名称.版本号.时间戳
-        filename: `[name].${process.env.VUE_APP_Version}.${Timestamp}.js`,
-        chunkFilename: `[name].${process.env.VUE_APP_Version}.${Timestamp}.js`
+        filename: `[name]-${process.env.VUE_APP_Version}-${Timestamp}.js`,
+        chunkFilename: `[name]-${process.env.VUE_APP_Version}-${Timestamp}.js`
       },
     },
+
+    // 其他写法
+    configureWebpack: (config) => { 
+      Object.assign(config, {
+        // 开发生产共同配置
+        output: {            // 输出重构，打包编译后的文件名称：模块名称.版本号.时间戳
+          filename: `[name]-${process.env.VUE_APP_Version}-${Timestamp}.js`,
+          chunkFilename: `[name]-${process.env.VUE_APP_Version}-${Timestamp}.js`
+        },
+        // 别名配置
+        resolve: {
+          alias: {
+            '@': path.resolve(__dirname, './src'),
+            '@c': path.resolve(__dirname, './src/components'),
+            '@p': path.resolve(__dirname, './src/pages')
+          } 
+        }
+      })
+    }
   }
 
   /**
@@ -263,7 +282,7 @@ description: 常见问题的解决方案
         sessionStorage.setItem("store", JSON.stringify(this.$store.state))
     })
   }
-    ```
+  ```
 
 
 # 五、文件预览和下载
