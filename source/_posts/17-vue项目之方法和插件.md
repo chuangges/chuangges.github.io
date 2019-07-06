@@ -40,6 +40,43 @@ description: 常用方法和插件的封装
 # 二、方法封装
 > 组件中引用方法：`import { getUrlKey } from '@/tool.js'`
 
+## 设备判断
+  ```js
+  export function getDevice(){
+    
+    var browser = {
+      versions: function () {  
+        var u = navigator.userAgent, app = navigator.appVersion;  
+        return {//移动终端浏览器版本信息   
+          trident: u.indexOf('Trident') &gt; -1, //IE内核  
+          presto: u.indexOf('Presto') &gt; -1, //opera内核  
+          webKit: u.indexOf('AppleWebKit') &gt; -1, //苹果、谷歌内核  
+          gecko: u.indexOf('Gecko') &gt; -1 && u.indexOf('KHTML') == -1, //火狐内核  
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端  
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端  
+          android: u.indexOf('Android') &gt; -1 || u.indexOf('Linux') &gt; -1, //android终端或者uc浏览器  
+          iPhone: u.indexOf('iPhone') &gt; -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器  
+          iPad: u.indexOf('iPad') &gt; -1, //是否iPad  
+          webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部  
+        };  
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()  
+    } 
+
+    let device
+    if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {  
+      device = "IOS"
+    }  
+    else if (browser.versions.android) {  
+      device = "android"  
+    } else {  
+      device = "other" 
+    }
+    return device
+  }
+  ```
+
+
 ## 页面参数
   ```js
   export function getUrlKey(name) {
@@ -57,6 +94,53 @@ description: 常用方法和插件的封装
     return md5(hashStr)
   }
   ```
+
+
+## crypto 加密
+  ```js
+  /*
+  ** crypto-js 
+  ** word：待加密或者解密的字符串
+  ** keyStr：AES 加密需要用到的16位字符串的key
+  */
+  import CryptoJS from 'crypto-js'
+  export const crypto = { //加密
+    encrypt(val){
+      var keyStr = randomWord(true, 16, 20);
+      var key  = CryptoJS.enc.Utf8.parse(keyStr);
+      var srcs = CryptoJS.enc.Utf8.parse(val);
+      var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+      return encrypted.toString();
+    },
+    //解密
+    decrypt(val){
+      var keyStr = randomWord(true, 16, 20);
+      var key  = CryptoJS.enc.Utf8.parse(keyStr);
+      var decrypt = CryptoJS.AES.decrypt(val, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+      return CryptoJS.enc.Utf8.stringify(decrypt).toString();
+    }
+  }
+
+  /*
+  ** randomWord 产生任意长度随机字母数字组合
+  ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+  */
+  function randomWord(randomFlag, min, max){
+    var str = "",
+    range = min,
+    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    // 随机产生
+    if(randomFlag){
+      range = Math.round(Math.random() * (max-min)) + min;
+    }
+    for(var i=0; i &lt; range; i++){
+      pos = Math.round(Math.random() * (arr.length-1));
+      str += arr[pos];
+    }
+    return str;
+  }
+  ```
+
 
 ## 计算日期
   ```js

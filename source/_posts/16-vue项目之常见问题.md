@@ -162,7 +162,7 @@ description: 常见问题的解决方案
     * `watch: { '$route': {handler: 'resetData',immediate: true} }`
   * 简单方案
     * 监听路由地址变化来重新创建组件  
-    * `router-view :key="$route.fullpath"`
+    * `router-view :key="$route.fullPath"`
 
 
 # 三、页面缓存问题

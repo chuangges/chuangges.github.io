@@ -72,6 +72,17 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     * 可以同时在浏览器和 nodejs 中使用
 
 
+## UI 框架
+  * PC端：`Element、iView、vue-element-admin`
+  * 移动端
+    * `Vux`：采用微信的 weui 的设计样式，主要服务于微信页面
+    * `Vant`：由有赞前端团队基于有赞统一的规范实现，类似微信样式
+    * `mint-ui`：饿了么出品，文档详细，示例齐全，缺点是比较丑
+    * `Muse-UI`：兼容 PC 端和移动端，样式好看，建议使用在主打海外市场的应用
+    * `vonic`：采用了 ionic 样式，有部分组件被存放到 Vue 对象，比如 this.$tabbar
+    * `vue-material`：基于谷歌的 Material Design 规范构建，缺点是没有时间选择器、非中文文档
+    * `cube-ui`：由滴滴内部组件库精简提炼而来，核心目标是做到体验极致、灵活性强、易扩展以及提供良好的周边生态（后编译）
+
 
 # 二、浏览器渲染 SPA
 > 将浏览器中直接生成和操作 DOM 的单页面应用程序
@@ -114,8 +125,25 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     outputDir: 'dist',
     // 取消eslint验证
     lintOnSave: false,
-    // vux 相关配置,使用 vux-ui
+    
     configureWebpack: config => {
+      Object.assign(config, {
+        // 开发生产共同配置
+        output: {            // 输出重构，打包编译后的文件名称：模块名称.版本号.时间戳
+          filename: `[name]-${process.env.VUE_APP_Version}-${Timestamp}.js`,
+          chunkFilename: `[name]-${process.env.VUE_APP_Version}-${Timestamp}.js`
+        },
+        // 别名配置
+        resolve: {
+          alias: {
+            '@': path.resolve(__dirname, './src'),
+            '@c': path.resolve(__dirname, './src/components'),
+            '@p': path.resolve(__dirname, './src/pages')
+          } 
+        }
+      })
+
+      // vux 引用配置
       require('vux-loader').merge(config, {
         options: {},
         plugins: ['vux-ui']
