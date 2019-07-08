@@ -1,17 +1,17 @@
 ---
-title: Vue 项目之封装方法和插件
+title: Vue 自定义开发
 tags:
   - Vue.js
 categories: Vue.js
 top: false
 keywords:
   - vue
-date: 2019-04-14 23:11:50
-description: 常用方法和插件的封装
+date: 2019-04-14 22:11:50
+description: 方法和插件的封装方式、常用汇总
 ---
 
 
-# 一、全局方法
+# 一、方法封装
 
 ## 全局注册
 > 在组件中直接使用
@@ -28,7 +28,7 @@ description: 常用方法和插件的封装
 
 
 ## 单独封装
-> 利用 CommonJS 思想单独封装，然后在组件中引用
+> 利用 CommonJS 思想单独封装，然后在组件中引用：`import { getUrlKey } from '@/tool.js'`
 
   ```js
   // 引用
@@ -37,8 +37,7 @@ description: 常用方法和插件的封装
   ```
 
 
-# 二、方法封装
-> 组件中引用方法：`import { getUrlKey } from '@/tool.js'`
+# 二、常用方法
 
 ## 设备判断
   ```js
@@ -92,52 +91,6 @@ description: 常用方法和插件的封装
   export function getSign (prameArr) {
     const hashStr = prameArr.join("=&")
     return md5(hashStr)
-  }
-  ```
-
-
-## crypto 加密
-  ```js
-  /*
-  ** crypto-js 
-  ** word：待加密或者解密的字符串
-  ** keyStr：AES 加密需要用到的16位字符串的key
-  */
-  import CryptoJS from 'crypto-js'
-  export const crypto = { //加密
-    encrypt(val){
-      var keyStr = randomWord(true, 16, 20);
-      var key  = CryptoJS.enc.Utf8.parse(keyStr);
-      var srcs = CryptoJS.enc.Utf8.parse(val);
-      var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
-      return encrypted.toString();
-    },
-    //解密
-    decrypt(val){
-      var keyStr = randomWord(true, 16, 20);
-      var key  = CryptoJS.enc.Utf8.parse(keyStr);
-      var decrypt = CryptoJS.AES.decrypt(val, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
-      return CryptoJS.enc.Utf8.stringify(decrypt).toString();
-    }
-  }
-
-  /*
-  ** randomWord 产生任意长度随机字母数字组合
-  ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
-  */
-  function randomWord(randomFlag, min, max){
-    var str = "",
-    range = min,
-    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    // 随机产生
-    if(randomFlag){
-      range = Math.round(Math.random() * (max-min)) + min;
-    }
-    for(var i=0; i &lt; range; i++){
-      pos = Math.round(Math.random() * (arr.length-1));
-      str += arr[pos];
-    }
-    return str;
   }
   ```
 
@@ -260,7 +213,136 @@ description: 常用方法和插件的封装
   ```
 
 
-# 三、插件封装
+# 三、插件开发
+> 本质是一个必须提供一个公开接口的对象或函数，用来扩展 vue 功能
+    
+## 插件与组件
+  * 区别：插件可以实现很多组件无法实现的需求
+  * 关系：插件可以封装组件，组件可以暴露数据给插件
+
+
+## 自定义开发
+> Vue.use() 会自动调用 install() 并阻止相同插件注册多次
+
+### 常规写法
+  ```js
+  // toast.js
+  var Toast = {};        
+  Toast.install = function (Vue, options) { 
+      Vue.prototype.$msg = 'Hello World';
+  }
+  module.exports = Toast;      
+
+  // main.js
+  import Toast from './toast.js';
+  Vue.use(Toast);  
+  console.log(this.$msg);   // Hello World
+  ```
+
+
+### 模板写法
+  ```js
+  export default {
+      install: function (Vue, options) { //options一般是对象
+          // 添加全局方法和属性
+          Vue.myProperty = 'Hello Vue',    
+          Vue.myGlobalMethod = function () { }, 
+                  
+          // 添加全局资源：指令、过滤器、过渡等
+          Vue.directive('focus', function(el, binding, vnode, oldVnode){ })  
+          Vue.filter('formatTime', function (value){ })
+
+          // 添加组件选项：混入 Vue 实例本身没有的方法
+          Vue.mixin({        
+              created(){ },
+              methods: { }
+          }) 
+
+          // 添加实例方法：调用时使用 this.$get()
+          Vue.prototype.$get = function(){ }
+      }
+  }
+  ```
+
+
+## 全局组件
+> 将组件以插件形式封装
+
+### 组件封装
+  ```js
+  // 初始化目录
+  vue init webpack-simple test
+  cd test && cnpm install  
+  src              
+    ├── App.vue               
+    ├── main.js               
+    └── lib                 
+        ├── Loading.vue  
+        └── index.js     
+
+  // index.js
+  import Load from './Loading.vue'
+  const Loading = {
+      install: function (Vue) {
+          Vue.component('Loading', Load)
+      }
+  }
+  if (typeof window !== 'undefined' && window.Vue) { 
+      window.Vue.use(Loading) 
+  }
+  export default Loading
+
+  // main.js 
+  import Loading from './lib/index.js'
+  Vue.use(Loading)
+  ```
+
+### 修改配置
+  ```js
+  // webpack.config.js
+  module.exports = {
+      entry: './src/lib/index.js',
+      output: {
+          path: path.resolve(__dirname, './dist'),
+          publicPath: '/dist/',
+          filename: 'vue-loading.js',
+          library: 'loading',     // 指定 require 时的模块名
+          libraryTarget: 'umd',   // 生成不同 umd 的代码
+          umdNamedDefine: true    // 构建过程中对 AMD 模块进行命名
+      }
+  }
+
+  // package.json 
+  {
+    "name": "vue-loading",         // 组件名, 不能与已有npm包重复
+    "private": false,              // 组件包改为公用
+    "main":"dist/vue-slider.js",   // 配置 import 引入的检索地址
+    "repository": {                // 指定代码所在的仓库地址
+        "type": "git",
+        "url": "git+https://github.com/chuang/loading.git"
+    },
+  }
+  ```
+
+
+### 打包发布
+  * 打包：`npm run build`
+  * 登录：`npm login`
+  * 发布：`npm publish`
+  
+  
+### 安装使用
+  ```js
+  // 安装插件
+  npm install vue-loading   
+
+  // main.js 
+  import Loading from 'vue-loading'
+  Vue.use(Loading)
+  ```
+
+
+# 四、常用插件
 
 ## 表单验证
 
@@ -392,7 +474,7 @@ description: 常用方法和插件的封装
     }
     
     switch(value.length){
-      //15位身份证号校验
+      // 15 位身份证号校验
       case 15:
         if ((parseInt(value.substr(6,2))+1900) % 400 == 0 || ((parseInt(value.substr(6,2))+1900) % 100 != 0 && (parseInt(value.substr(6,2))+1900) % 4 == 0 )){ 
           ereg=/^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$/; 
@@ -403,18 +485,18 @@ description: 常用方法和插件的封装
           return false;	
         }
         break;
-      //18位身份证号校验
+      // 18 位身份证号校验
       case 18:
         if ( parseInt(value.substr(6,4)) % 400 == 0 || (parseInt(value.substr(6,4)) % 100 != 0 && parseInt(value.substr(6,4))%4 == 0 )){ 
-          //闰年出生日期的合法性正则表达式 
+          // 闰年出生日期的合法性正则表达式 
           ereg=/^[1-9][0-9]{5}(19|([2-9][0-9]))[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9xX]{1}$/;
         } else { 
-          //平年出生日期的合法性正则表达式 
+          // 平年出生日期的合法性正则表达式 
           ereg=/^[1-9][0-9]{5}(19|([2-9][0-9]))[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9xX]{1}$/;
         }	
         
-        if(ereg.test(value)){//测试出生日期的合法性  
-          //计算校验位  
+        if(ereg.test(value)){   // 测试出生日期的合法性  
+          // 计算校验位  
           S = (parseInt(idcard_array[0]) + parseInt(idcard_array[10])) * 7  
           + (parseInt(idcard_array[1]) + parseInt(idcard_array[11])) * 9  
           + (parseInt(idcard_array[2]) + parseInt(idcard_array[12])) * 10  
@@ -429,9 +511,9 @@ description: 常用方法和插件的封装
           Y = S % 11;
           M = "F";
           JYM = "10X98765432";
-          M = JYM.substr(Y,1);/*判断校验位*/
+          M = JYM.substr(Y,1);  // 判断校验位
           if(M == idcard_array[17].toUpperCase()){
-            return true; /*检测ID的校验位false;*/  
+            return true;    // 检测 ID 的校验位 false
           }  
           else {
             return false;  
@@ -507,7 +589,7 @@ description: 常用方法和插件的封装
     })
     installed = true
   }
-  // 自动注册vue
+  // 自动注册 vue
   if (typeof window !== 'undefined' && window.Vue) {
     window.Vue.use(plugin)
   }

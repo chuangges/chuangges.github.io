@@ -1,5 +1,5 @@
 ---
-title: Vue 组件化开发
+title: Vue API 和组件化开发
 tags:
   - Vue.js
 categories: Vue.js
@@ -7,7 +7,7 @@ top: false
 keywords:
   - vue
 date: 2019-04-14 18:26:43
-description: 实例对象、全局方法、插件开发、组件基础
+description: 实例对象、全局方法、组件基础
 ---
 
 # 一、实例对象
@@ -245,137 +245,7 @@ description: 实例对象、全局方法、插件开发、组件基础
   ```
 
 
-# 三、插件开发
-> 本质是一个必须提供一个公开接口的对象或函数，用来扩展 vue 功能
-    
-## 插件与组件
-  * 区别：插件可以实现很多组件无法实现的需求
-  * 关系：插件可以封装组件，组件可以暴露数据给插件
-
-
-## 自定义开发
-> Vue.use() 会自动调用 install() 并阻止相同插件注册多次
-
-### 常规写法
-  ```js
-  // toast.js
-  var Toast = {};        
-  Toast.install = function (Vue, options) { 
-      Vue.prototype.$msg = 'Hello World';
-  }
-  module.exports = Toast;      
-
-  // main.js
-  import Toast from './toast.js';
-  Vue.use(Toast);  
-  console.log(this.$msg);   // Hello World
-  ```
-
-
-### 模板写法
-  ```js
-  export default {
-      install: function (Vue, options) { //options一般是对象
-          // 添加全局方法和属性
-          Vue.myProperty = 'Hello Vue',    
-          Vue.myGlobalMethod = function () { }, 
-                  
-          // 添加全局资源：指令、过滤器、过渡等
-          Vue.directive('focus', function(el, binding, vnode, oldVnode){ })  
-          Vue.filter('formatTime', function (value){ })
-
-          // 添加组件选项：混入 Vue 实例本身没有的方法
-          Vue.mixin({        
-              created(){ },
-              methods: { }
-          }) 
-
-          // 添加实例方法：调用时使用 this.$get()
-          Vue.prototype.$get = function(){ }
-      }
-  }
-  ```
-
-
-## 全局组件
-> 将组件以插件形式封装
-
-
-### 组件封装
-  ```js
-  // 初始化目录
-  vue init webpack-simple test
-  cd test && cnpm install  
-  src              
-    ├── App.vue               
-    ├── main.js               
-    └── lib                 
-        ├── Loading.vue  
-        └── index.js     
-
-  // index.js
-  import Load from './Loading.vue'
-  const Loading = {
-      install: function (Vue) {
-          Vue.component('Loading', Load)
-      }
-  }
-  if (typeof window !== 'undefined' && window.Vue) { 
-      window.Vue.use(Loading) 
-  }
-  export default Loading
-
-  // main.js 
-  import Loading from './lib/index.js'
-  Vue.use(Loading)
-  ```
-
-### 修改配置
-  ```js
-  // webpack.config.js
-  module.exports = {
-      entry: './src/lib/index.js',
-      output: {
-          path: path.resolve(__dirname, './dist'),
-          publicPath: '/dist/',
-          filename: 'vue-loading.js',
-          library: 'loading',     // 指定 require 时的模块名
-          libraryTarget: 'umd',   // 生成不同 umd 的代码
-          umdNamedDefine: true    // 构建过程中对 AMD 模块进行命名
-      }
-  }
-
-  // package.json 
-  {
-    "name": "vue-loading",         // 组件名, 不能与已有npm包重复
-    "private": false,              // 组件包改为公用
-    "main":"dist/vue-slider.js",   // 配置 import 引入的检索地址
-    "repository": {                // 指定代码所在的仓库地址
-        "type": "git",
-        "url": "git+https://github.com/chuang/loading.git"
-    },
-  }
-  ```
-
-
-### 打包发布
-  * 打包：`npm run build`
-  * 登录：`npm login`
-  * 发布：`npm publish`
-  
-  
-### 安装使用
-  ```js
-  // 安装插件
-  npm install vue-loading   
-
-  // main.js 
-  import Loading from 'vue-loading'
-  Vue.use(Loading)
-  ```
-
-
-# 四、组件基础
+# 三、组件化开发
 > 组件只有挂载到某个 Vue 实例下才会生效，但组件内必须使用箭头函数，否则 this 不指向当前组件
 
 ## 基础使用
@@ -630,5 +500,6 @@ description: 实例对象、全局方法、插件开发、组件基础
   <div align="center"> 
     ![Vue special](/images/vue/vue-special.png)
   </div> 
+
 
 

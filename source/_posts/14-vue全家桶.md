@@ -233,92 +233,93 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 
 ## 自定义配置  
 
-```js
-// axios.js
-import axios from 'axios'
-import router from '@/router'
-import store from './vuex'
+    ```js
+    // axios.js
+    import axios from 'axios'
+    import router from '@/router'
+    import store from './vuex'
 
-// 创建axios实例
-const service = axios.create({
-    baseURL: process.env.VUE_APP_URL + "apigateway",
-    // timeout: 10000,            // 请求超时时间
-    responseType: "json",
-})
-
-// 请求拦截器
-service.interceptors.request.use(
-    config => {
-        // 让每个请求携带 token
-        if (store.getters.token) {
-            config.data = Object.assign({ token: store.getters.token }, config.data)
-        }
-    
-        // 设置表头  'application/json'
-        config.headers['Content-Type'] = 'application/json;charset=utf-8'
-
-        // 异步请求的取消操作
-        let CancelToken = axios.CancelToken;  
-        let cancel
-        config.cancelToken = new CancelToken( c => {
-            cancel = c;
-        })
-        cancel()
-
-        // 状态更新
-        store.commit('showLoad', { status: 1, msg: "" })
-        return config
-    },
-    error => {
-        store.commit('showLoad', { status: 2, msg: "" })
-        return Promise.reject(error)
-    }
-)
-// 响应拦截器
-service.interceptors.response.use(
-    response => {
-        if(response.data.CResultCde == "0000"){
-            store.commit('hideLoad')
-        }else{
-            store.commit('showLoad', { status: 2, msg: response.data.CResultMsg })
-        }
-        return Promise.resolve(response)
-    },
-    error => {
-        store.commit('showLoad', { status: 2, msg: "" })
-        return Promise.reject(error)
-    }
-)
-// 导出对象
-export default service
-
-// 导出方法
-export function indexQRCode(data){
-    return _request('/pageSkipping/gas/getHomePageQRcode', 'post', data)
-}
-function _request (url, methods, data = undefined, params = {}) {
-    return new Promise((resolve, reject) => {
-        service({
-        method: methods,
-        url: url,
-        data: data,
-        params: Object.assign(params)
-        }).then((response) => {
-        return resolve(response.data)
-        }).catch((error) => {
-        return reject(error)
-        })
+    // 创建axios实例
+    const service = axios.create({
+        baseURL: process.env.VUE_APP_URL,
+        // timeout: 10000,            // 请求超时时间
+        responseType: "json",
     })
-}
 
-// main.js 全局引用
-import http from './axios'
-Vue.prototype.$axios = http
+    // 请求拦截器
+    service.interceptors.request.use(
+        config => {
+            // 让每个请求携带 token
+            if (store.getters.token) {
+                config.data = Object.assign({ token: store.getters.token }, config.data)
+            }
+        
+            // 设置表头  'application/json'
+            config.headers['Content-Type'] = 'application/json;charset=utf-8'
 
-// 局部引用
-import { indexQRCode } from '@/axios'
-```
-      
+            // 异步请求的取消操作
+            let CancelToken = axios.CancelToken;  
+            let cancel
+            config.cancelToken = new CancelToken( c => {
+                cancel = c;
+            })
+            cancel()
+
+            // 状态更新
+            store.commit('showLoad', { status: 1, msg: "" })
+            return config
+        },
+        error => {
+            store.commit('showLoad', { status: 2, msg: "" })
+            return Promise.reject(error)
+        }
+    )
+    // 响应拦截器
+    service.interceptors.response.use(
+        response => {
+            if(response.data.CResultCde == "0000"){
+                store.commit('hideLoad')
+            }else{
+                store.commit('showLoad', { status: 2, msg: response.data.CResultMsg })
+            }
+            return Promise.resolve(response)
+        },
+        error => {
+            store.commit('showLoad', { status: 2, msg: "" })
+            return Promise.reject(error)
+        }
+    )
+    // 导出对象
+    export default service
+
+    // 导出方法
+    export function indexQRCode(data){
+        return _request('/pageSkipping/gas/getHomePageQRcode', 'post', data)
+    }
+    function _request (url, methods, data = undefined, params = {}) {
+        return new Promise((resolve, reject) => {
+            service({
+                method: methods,
+                url: url,
+                data: data,
+                params: Object.assign(params)
+                
+            }).then((response) => {
+                return resolve(response.data)
+            }).catch((error) => {
+                return reject(error)
+            })
+        })
+    }
+
+    // main.js 全局引用
+    import http from './axios'
+    Vue.prototype.$axios = http
+
+    // 局部引用
+    import { indexQRCode } from '@/axios'
+    ```
+        
 
 
 # 三、状态管理 Vuex
