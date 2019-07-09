@@ -7,7 +7,7 @@ top: false
 keywords:
   - 开发工具
 date: 2019-02-20 15:41:48
-description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
+description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具 Postman、前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
 ---
 
 # 一、电脑系统 Mac
@@ -104,8 +104,10 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
 
 
 
-# 三、代码编辑器 vscode
-> 常用扩展插件
+# 三、代码工具
+
+## 代码编辑 vscode
+> 常用扩展插件如下：
 
   * 显示效果类
     * Dracula Official ：高亮主题
@@ -184,6 +186,41 @@ description: 电脑、浏览器、代码编辑器、前端构建工具 (Npm、Gu
   },
   ```
       
+
+## 接口调试 Postman
+
+### 基础功能
+  <div align="center">
+    ![Postman](/images/web/postman.png)
+  </div> 
+
+
+### 接口请求
+  * GET 请求
+    * 点击 Params，输入 key、value
+    * 请求头与请求参数可以不填
+  * POST请求
+    * 参数值直接输入
+    * 设置参数格式： Content-Type
+      * `form-data`：即 multipart/form-data，它将表单的数据转换为 Key-Value，可以上传文件或数据
+      * `x-www-form-urlencoded`：即 application/x-www-from-urlencoded，将表单内的数据转换为 Key-Value
+      * `raw`：可以上传 text、json、xml、html 等任意格式的文本
+      * `binary`：即 Content-Type:application/octet-stream，只能上传二进制文件，一次上传一个文件
+
+
+### 管理用例 Collections
+> Collections 集合就是将多个接口请求放在一起并管理起来，一个工程创建一个 Collection 方便查找及统一处理数据
+
+  1. 创建 Collections：点击加号图标并输入内容
+  2. 添加请求：可以通过 Add Folder 针对不同的请求方式做分组 
+
+
+### 身份验证 Authentication
+  * `Basic Auth`：基础验证，会直接将用户名、密码的信息放在请求的 Header
+  * `Digest Auth`：使用当前填写的值生成 authorization header，如果 header 已经存在则会被移除
+  * `OAuth 1.0`：基于身份验证的请求，不用获取 access token、可以在 header 或者查询参数中设置 value
+  * `OAuth 2.0`：支持获得 token 并添加到 request
+
 
 
 # 四、前端自动化构建
