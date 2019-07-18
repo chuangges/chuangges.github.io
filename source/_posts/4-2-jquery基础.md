@@ -1,12 +1,11 @@
 ---
 title: jQuery 基础使用
 tags:
-  - jQuery
+  - Javascript
 categories: Javascript
 top: false
 keywords:
   - js
-  - jquery
 date: 2019-03-16 22:04:14 
 description: 基础概念、选择器、操作、事件机制、插件机制
 ---

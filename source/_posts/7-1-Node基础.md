@@ -1,7 +1,7 @@
 ---
 title: Node.js 主要内容
 tags:
-  - Node.js
+  - NodeJS
 categories: Node.js
 top: false
 keywords:

@@ -6,7 +6,6 @@ categories: Javascript
 top: false
 keywords:
   - js
-  - 编程
 date: 2019-04-02 21:38:29
 description: 模块化编程、面向对象编程、面向切面编程、异步编程、排序和搜索算法
 ---

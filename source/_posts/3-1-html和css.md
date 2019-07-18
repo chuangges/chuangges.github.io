@@ -1,8 +1,7 @@
 ---
 title: PC 端开发常用标签和样式
 tags:
-  - HTML
-  - CSS
+  - HTML + CSS
 categories: HTML + CSS
 top: false
 keywords:

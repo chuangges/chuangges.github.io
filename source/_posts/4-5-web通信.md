@@ -2,13 +2,10 @@
 title: Web 通信和页面功能
 tags:
   - Javascript
-  - Ajax + Socket
 categories: Javascript
 top: false
 keywords:
   - js
-  - ajax
-  - socket
 date: 2019-03-24 23:09:57
 description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下载和数据储存等页面功能
 ---
@@ -418,21 +415,23 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   //借助 Blob 和 download 属性实现文本信息文件下载
 	function bolb_download(content, filename) {
 
-      // 创建隐藏的可下载链接
-	    var link = document.createElement('a');
-	    link.download = filename;
-      link.style.display = 'none';
-      
-	    // 字符内容转变成blob地址
-	    var blob = new Blob([content]);
-      link.href = URL.createObjectURL(blob);
-      
-	    // 模拟点击和移除
-	    document.body.appendChild(link);
-      link.click();
-	    document.body.removeChild(link);
-	};
+    // 创建隐藏的可下载链接
+    var link = document.createElement('a')
+    link.setAttribute("download",name)
+    link.setAttribute("target", "_blank")
 
+    link.style.display = 'none'
+    
+    // 字符内容转变成 blob 地址
+    var blob = new Blob([content])
+    link.href = URL.createObjectURL(blob)
+    
+    // 模拟点击和移除
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  };
+  
   var textarea = document.querySelector('textarea');
 	var btn = document.querySelector('input[type="button"]');
 	if ('download' in document.createElement('a')) {
@@ -449,24 +448,24 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
   // 借助 Base64 实现任意文件下载
 	function di_file(domImg, filename) {
-	    
-	    var link = document.createElement('a');
-	    link.download = filename;
-      link.style.display = 'none';
-      
-	    // 图片转 base64 地址
-	    var canvas = document.createElement('canvas');
-	    var context = canvas.getContext('2d');
-	    var width = domImg.width;
-	    var height = domImg.height;
-      context.drawImage(domImg, 0, 0);
-      link.href = context.toDataURL('image/png');
-      
-	    // 模拟点击和移除
-	    document.body.appendChild(link);
-	    link.click();
-	    document.body.removeChild(link);
-	};
+
+    var link = document.createElement('a');
+    link.download = filename;
+    link.style.display = 'none';
+    
+    // 图片转 base64 地址
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var width = domImg.width;
+    var height = domImg.height;
+    context.drawImage(domImg, 0, 0);
+    link.href = context.toDataURL('image/png');
+    
+    // 模拟点击和移除
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+	}
   ```
 
 
@@ -476,32 +475,78 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   </div> 
 
   ```js
-  // html：input type="file" id="uploadImg"
-  function getBase64Img(fileObj, callback){  
-      var reader = new FileReader();  
-      reader.readAsDataURL(fileObj);   // 转为 Base64 格式 
-      reader.onload = function(e){  
-          // 变成字符串  
-          // callback(reader.result);  
-          callback(e.target.result);
-      }  
-   }
-   var imgFile = document.getElementById("fileInput").files[0];
-   fileInput.addEventListener("change", function (event) {
-     var file = fileInput.files[0];
-     getBase64Img(file, function(imgBase64){
-        if (imgBase64.length &gt; 2100000) {
-              // 2 M = 2097152 B
-              alert( '请上传不大于 2M 的图片！');
-              return;
+  // input ref="upload_input" type="file" accept="image/*" capture="camera" @change="changeImg"
+
+  // 模拟点击调用：输入框隐藏
+  this.$refs.upload_input.click()
+  
+  // vue
+  export default {
+    methods: {
+      async changeImg(){
+        let file = this.$refs.upload_input.files[0]
+        if(!file) return
+
+        const index = this.fileList.findIndex(item => item.name == file.name)
+        if(index &gt; -1) return
+
+        let imgBase64 = await this.fileReader(file)
+
+        // 截取 data:image/png;base64 后面的纯字符串
+        var base64Img = imgBase64.substring(imgBase64.indexOf(",") + 1);
+
+        // 根据原始图片大小判断是否需要压缩：size 是字节数，1MB = 1024KB，1KB = 1024字节
+        if(file.size &gt; this.max_size * 1024){
+          this.compressImg(imgBase64, file.name)
         }else{
-            // 截取 data:image/png;base64 后面的纯字符串
-            var upload_file = imgBase64.substring(imgBase64.indexOf(",") + 1);
-            // 上传截取后的字符串
-            console.log(upload_file);
+          this.$emit("updateFileList", file, imgBase64)
         }
-    })
-   }, false)
+      },
+      // 获取用户拍照的图片信息
+      fileReader (file) {
+        let _this = this
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+        // 监听读取操作结束
+        return new Promise(resolve => reader.onloadend = () => { return resolve(reader.result) })
+      },
+      // 压缩图片
+      compressImg(bdata, name){
+        var _this = this
+        var quality = 0.8;   // 压缩质量：0.1 时最小压缩
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        var img = new Image();
+        img.src = bdata;
+        img.onload = function(){
+            canvas.width = _this.targetWidth;
+            canvas.height = _this.targetWidth * (img.height / img.width);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            // 压缩后的 base64 图片
+            var cdata = canvas.toDataURL("image/jpeg", quality);
+
+            // 压缩率
+            var oldImgLen = bdata.length;
+            var newImgLen = cdata.length;
+            var compresRadio = (((oldImgLen-newImgLen)/oldImgLen*100).toFixed(2))+'%';
+            
+            // 压缩后的文件格式
+            let newFile = _this.dataURLtoFile(cdata, name);
+            _this.$emit("updateList", newFile, cdata);
+        }
+      },
+      // base64 转 file
+      dataURLtoFile(dataurl, filename){
+        let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, {type: mime});
+      }
+    }
+  }
 
 
   // oss 图片上传

@@ -1,13 +1,11 @@
 ---
 title: CSS 预处理工具
 tags:
-  - Skill
-  - CSS
-categories: Web Skills
+  - 项目开发
+categories: 项目开发
 top: false
 keywords:
-  - 构建工具
-  - scss
+  - 开发工具
   - css
 date: 2019-03-01 23:24:50
 description: Scss 的基础使用

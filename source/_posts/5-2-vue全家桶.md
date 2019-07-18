@@ -233,11 +233,14 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 
 ## 自定义配置  
 
+### 封装 axios
+
     ```js
     // axios.js
     import axios from 'axios'
     import router from '@/router'
-    import store from './vuex'
+    import store from './store'
+    import { crypto, random, randomWord } from './assets/js/tool.js';
 
     // 创建axios实例
     const service = axios.create({
@@ -249,6 +252,26 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
     // 请求拦截器
     service.interceptors.request.use(
         config => {
+            // 1：加密数据
+            if(config.headers.level == 1){  
+                const KP = {
+                    key: randomWord(true, 16, 16),  // 秘钥
+                    iv: randomWord(true, 16, 16)    // 偏移量
+                };
+                config.data = crypto.AESEnc(JSON.stringify(config.data), KP.key)
+
+                Object.assign(config.headers, {
+                    "Content-Type": "application/json;charset=utf-8",
+                    dataFormat: "json",
+                    authMethod: "no",
+                    signAlgo: "NO",
+                    transAlgo: "AES",
+                    shareKey: KP.key,
+                    timestamp: new Date().getTime(),
+                    nonce: String(random(0, 100))
+                })
+            }
+            
             // 让每个请求携带 token
             if (store.getters.token) {
                 config.data = Object.assign({ token: store.getters.token }, config.data)
@@ -277,6 +300,9 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
     // 响应拦截器
     service.interceptors.response.use(
         response => {
+            // 解密返回数据
+            response.data = JSON.parse(crypto.AESDec(response.data, response.config.headers.shareKey))
+
             if(response.data.CResultCde == "0000"){
                 store.commit('hideLoad')
             }else{
@@ -293,25 +319,78 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
     export default service
 
     // 导出方法
-    export function indexQRCode(data){
-        return _request('/pageSkipping/gas/getHomePageQRcode', 'post', data)
+    export function indexQRCode(data){  // 不加密
+        return _request('/getHomePageQRcode', 'post', data, { level: 2 })
     }
-    function _request (url, methods, data = undefined, params = {}) {
+    export function getProduct(data){   // 加密
+        const headers = { 
+            level: 1,     
+            module: "prodAction", 
+            method: "getProductInfoList"
+        }
+        return _request('', 'post', data, headers)
+    }
+
+    // 资料上传
+    export function batchFileUpload(data, progressfn){
+        return form_upload('/UploadController', data, progressfn)
+    }
+    
+    // 文件数据上传
+    function form_upload(url, data, progressfn){
+        // formData 需要纯净的 axios 请求
+        const formAxios = axios.create({
+            baseURL: process.env.VUE_APP_URL,
+            responseType: "json",
+            // timeout: 10000,
+        })
+
         return new Promise((resolve, reject) => {
-            service({
-                method: methods,
-                url: url,
-                data: data,
-                params: Object.assign(params)
-                
-            }).then((response) => {
+            formAxios({
+            method: 'post',
+            data: data,
+            headers: {
+                'Content-Type': "multipart/form-data"
+            },
+            onUploadProgress(progressEvent) { // 原生获取上传进度的事件
+                if (progressEvent.lengthComputable) {
+                // lengthComputable 主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+                // 如果 lengthComputable: false，就获取不到 progressEvent.total、progressEvent.loaded
+                progressfn(progressEvent);
+                }
+            },
+
+            }).then(response => {
                 return resolve(response.data)
-            }).catch((error) => {
+            }).catch(error => {
                 return reject(error)
             })
         })
     }
 
+    // 表单数据上传
+    function _request (url, methods, data, headers = { level: 1 }, params = {}) {
+        return new Promise((resolve, reject) => {
+            service({
+            method: methods,
+            url: headers.level == 1 ? "/api" : url,
+            data: data,
+            params: Object.assign(params),
+            headers: Object.assign(headers),
+            responseType: headers.level == 1 ? "text" : "json"
+
+            }).then(response => {
+            return resolve(JSON.parse(response.data.extBody))
+            }).catch(error => {
+            return reject(error)
+            })
+        })
+    }
+    ```
+
+
+### 引用方法
+    ```js
     // main.js 全局引用
     import http from './axios'
     Vue.prototype.$axios = http
@@ -319,7 +398,72 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
     // 局部引用
     import { indexQRCode } from '@/axios'
     ```
-        
+    
+
+### 加密方法
+
+    ```js
+    // tool.js
+
+    // 随机整数
+    export function random(min, max){
+        if(max == null){
+                max = min;  
+                min = 0;
+        }
+        return min + Math.floor(Math.random()*(max-min+1))
+    }
+
+    /*
+    ** randomWord 产生任意长度随机字母数字组合
+    ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+    */
+    export function randomWord(randomFlag, min, max){
+        var str = "",
+        pos = "",
+        range = min,
+        arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        // 随机产生
+        if(randomFlag){
+            range = Math.round(Math.random() * (max-min)) + min;
+        }
+        for(var i=0; i &lt; range; i++){
+            pos = Math.round(Math.random() * (arr.length-1));
+            str += arr[pos];
+        }
+        return str;
+    }
+
+    /*
+    ** crypto-js 
+    ** word：待加密或者解密的字符串
+    ** keyStr：AES 加密需要用到的16位字符串的key
+    */
+    import CryptoJS from 'crypto-js'
+    export const crypto = {
+        aesKey: 'com.iescp.gate',
+    AESEnc (content, key) {
+        if (!key) {
+        key = this.aesKey;
+        }
+        key = CryptoJS.enc.Utf8.parse(key) // 加密密钥
+        var srcs = CryptoJS.enc.Utf8.parse(content)
+        var encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: key, mode: CryptoJS.mode.CBC })
+        return encrypted.toString();
+    },
+
+    AESDec: function (content, key) {
+        if (!key) {
+        key = this.aesKey;
+        }
+        key = CryptoJS.enc.Utf8.parse(key) // 解密密钥
+        let decrypted = CryptoJS.AES.decrypt(content, key, { iv: key, mode: CryptoJS.mode.CBC })
+        let decryptedStr = decrypted.toString(CryptoJS.enc.Utf8)
+        return decryptedStr;
+        }
+    } 
+    ```
+
 
 
 # 三、状态管理 Vuex

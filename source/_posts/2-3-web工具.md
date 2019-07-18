@@ -1,8 +1,8 @@
 ---
 title: web 开发工具
 tags:
-  - Skill
-categories: Web Skills
+  - 项目开发
+categories: 项目开发
 top: false
 keywords:
   - 开发工具

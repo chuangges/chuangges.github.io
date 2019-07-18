@@ -1,13 +1,12 @@
 ---
 title: HTML5 新特性
 tags:
-  - 移动端
-categories: 移动端
+  - HTML + CSS
+categories: HTML + CSS
 top: false
 keywords:
-  - html5
-  - 移动端
-date: 2019-04-18 22:50:40
+  - html
+date: 2019-03-07 22:50:40
 description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏、存储
 ---
 
