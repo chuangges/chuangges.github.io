@@ -110,31 +110,35 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
 > 常用扩展插件如下：
 
   * 显示效果类
-    * Dracula Official ：高亮主题
-    * Beautify ：代码高亮
-    * vscode-icon ：让资源树目录加上图标
-    * Bracket Pair Colorizer ：每一对括号用不同颜色区别
-    * Open-In-Browser ：直接在浏览器中打开文件的快捷菜单 alt + b
+    * __Dracula Official__：高亮主题
+    * __Beautify__：代码高亮
+    * __vscode-icon__：让资源树目录加上图标
+    * __Bracket Pair Colorizer__：每一对括号用不同颜色区别
+    * __Open-In-Browser__：直接在浏览器中打开文件的快捷菜单 `alt + b`
   * 辅助编辑类
-    * ESlint ：检测js
-    * Prettier ：代码格式化 alt + shift + F 
-    * CSS Peek ：追踪至定义处（右键选择前两个选项）
-    * Path Intellisense ：自动补全路径
-    * Auto Close Tag ：自动闭合HTML标签
-    * Auto Rename Tag ：自动修改匹配的标签
-    * HTML CSS Support ：CSS的智能补全
-    * JavaScript (ES6) code snippets ：JS语法提示
-  * Vue插件类
-    * Vetur ：语法高亮
-    * VueHelper ：vue代码提示插件
-    * Vue 2 Snippets ：语法高亮 + 代码补全
-    * HTML Snippets ：在.vue文件中使用html代码补全功能
+    * __ESlint__：检测js
+    * __Prettier__：代码格式化 `alt + shift + F`
+    * __CSS Peek__：追踪至定义处（右键选择前两个选项）
+    * __Path Intellisense__：自动补全路径
+    * __Auto Close Tag__：自动闭合 HTML 标签
+    * __Auto Rename Tag__：自动修改匹配的标签
+    * __HTML CSS Support__：CSS 的智能补全
+    * __JavaScript (ES6) code snippets__：JS语法提示
+  * Vue 插件类
+    * __Vetur__：语法高亮
+    * __VueHelper__：vue代码提示插件
+    * __Vue 2 Snippets__：语法高亮、代码补全
+    * __HTML Snippets__：在.vue文件中使用html代码补全功能
+  * 小程序插件类
+    * __minapp__：标签、属性的智能补全
+    * __wechat-snippet__：代码辅助
+    * __wxml__：高亮显示、代码格式化
   *  其它类
-    * npm ：运行npm命令
-    * npm Intellisense ：导入时提示已安装模块
-    * Python ：添加对.py文件的支持
-    * GitLens ：简单实现git提交代码
-    * Debugger for chrome ：调试Debug
+    * __npm__：运行npm命令
+    * __npm Intellisense__：导入时提示已安装模块
+    * __Python__：添加对 py 文件的支持
+    * __GitLens__：简单实现 git 提交代码
+    * __Debugger for chrome__：调试 Debug
     
 
   ```js

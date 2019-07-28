@@ -469,7 +469,20 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
   ```
 
 
-## 图片上传
+## 文件在线预览
+> 常用需求为移动端预览 pdf
+
+* a 标签：`a href="fileurl" target="_blank"`
+* 页面内嵌 `iframe`
+* 通过标签嵌入内容
+  * `embed :src="previewUrl" type="application/pdf" width="100%" height="100%"`
+  * `object :src="previewUrl" width="100%" height="100%"`
+* 通过预览插件
+  * `pdfObject.js`：移动端不支持
+  * `pdf.js`：移动端支持，但是插件本身太大，而且盖章无法正常显示
+
+
+## 图片预览与上传
   <div align="center"> 
     ![图片上传流程图](/images/web/img_upload.png)
   </div> 
@@ -546,47 +559,6 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
         return new File([u8arr], filename, {type: mime});
       }
     }
-  }
-
-
-  // oss 图片上传
-  var ossUpload = {
-      // 获取上传文件后缀
-      getSuffix: function(filename) {
-          var pos = filename.lastIndexOf('.');
-          var suffix = '';
-          if (pos != -1) {
-              suffix = filename.substring(pos + 1)
-          }
-          return suffix;
-      },
-      // 配置上传参数
-      setUpParam: function($target ,data) {
-          var formData = new FormData();
-          $.each(data, function(i, n) {
-              formData.append(i, n)
-          })
-          formData.append('file', $target[0].files[0]);
-          return formData;
-      },
-      // 上传图片
-      uploadImg: function(url, formData, callback) {
-          $.ajax({
-              url: url.host,
-              type: 'POST',
-              data: formData,
-              processData: false,
-              contentType: false
-          })
-          .done(function(data) {
-              callback(data);
-          })
-          .fail(function() {
-              setTimeout(function() {
-                  uploadImg(url, formData, callback);
-              }, 1000)
-          })
-      }
   }
   ```
 
@@ -701,8 +673,6 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
       * 全部：`sessionStorage.clear()`
 
  
-
-
 ## 以上区别
   * 传递
     * cookie 数据通常经过加密，而且会在浏览器和服务器间来回传递

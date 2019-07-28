@@ -476,6 +476,14 @@ description: 路由控制、组件数据、页面缓存、
   ```
 
 
+## 数据更新问题
+> 更新对象或数组后对应的视图值却不刷新
+
+  * 更新对象：`this.$set(obj, key, value)`
+  * 更新数组：`this.$set(arr, index, value)`
+
+
+
 # 五、页面缓存
 
 ## 组件缓存
