@@ -654,14 +654,14 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
 ## ssh密钥配置
 <div style="text-indent: 2em">Git使用https协议，每次pull/push都要输入密码比较麻烦，而使用git协议后使用ssh密钥，这样可以省去每次都输密码。配置步骤如下：</div>
 
-  1. 检测SSH keys是否存在：cd ~/.ssh
-  2. 创建ssh key(生成密钥对)：ssh-keygen -t rsa -C "17621538916@163.com"
+  1. 检测SSH keys是否存在：`cd ~/.ssh`
+  2. 创建ssh key(生成密钥对)：`ssh-keygen -t rsa -C "17621538916@163.com"`
     * 此时会提示自定义名称和push时的密码 (不是git登录密码), 一般推荐略过(直接三个回车), 如果看到成功保存信息则说明如果创建成功
 
   3. 添加公钥到github等个人的远程仓库
-    1. 查看生成的公钥：cat ~/.ssh/id_rsa.pub 
+    1. 查看生成的公钥：`cat ~/.ssh/id_rsa.pub` 
     2. 登陆github：点击头像 --> Settings --> 左栏点击SSH and GPG keys --> 点击 New SSH key --> 复制上面的公钥内容，粘贴进"Key"，title自定义 --> 点击 Add key 
-    3. 测试SSH的连接：ssh -T git@github.com   
+    3. 测试SSH的连接：`ssh -T git@github.com`  
     4. 输入yes后可看到信息
               
 

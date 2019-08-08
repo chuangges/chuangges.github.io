@@ -7,14 +7,14 @@ title: 闯哥要去流浪了
 subtitle: 我知道你一定会来，所以我一直在等
 description: chuangge's blog.
 keywords: 前端, html, css, js, vue, nodejs, python
-author: chuanggefighting
+author: chuangges
 language: zh-CN
 timezone:
 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://chuanggefighting.github.io/
+url: https://chuangges.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -145,7 +145,7 @@ encrypt:
 nofollow:
   enable: true
   exclude:     # 例外的链接，可将友情链接放置此处
-  - 'https://chuanggefighting.github.io/'
+  - 'https://chuangges.github.io/'
 
 # hexo sitemap
 sitemap:
@@ -163,7 +163,8 @@ lazyload:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/chuanggefighting/chuanggefighting.github.io.git
+  repository: https://github.com/chuangges/chuangges.github.io.git
+    # gitee: https://gitee.com/chuangges/blog.git
   branch: master
 
 
