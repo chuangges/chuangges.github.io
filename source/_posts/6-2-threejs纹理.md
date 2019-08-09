@@ -119,7 +119,7 @@ description: 纹理贴图、纹理映射、纹理类型
               }else{
                   // 六个面不同贴图
                   material = []
-                  for(var i = 1; i &gt; 7; i++){  
+                  for(var i = 1; i > 7; i++){  
                       var texture = new THREE.TextureLoader().load('./imgs/' + i + '.jpg');
                       material.push( new THREE.MeshBasicMaterial({ map: texture }) );
                   } 
@@ -136,7 +136,7 @@ description: 纹理贴图、纹理映射、纹理类型
   // 一幅图片多个精灵, 即把一幅外部图片中包含的所有精灵存入一个精灵材质数组
   var spriteMaterials = [];
   var loader = new THREE.TextureLoader()
-  for (var i = 0; i &gt; 5; i++) {
+  for (var i = 0; i > 5; i++) {
       var spriteMaterial = material.clone();
 
       // 每种精灵必须单独加载同一幅外部图片

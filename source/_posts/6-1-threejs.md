@@ -261,7 +261,7 @@ description: WebGL 概念和绘图流程、Three.js 绘图和构成要素
       geometry.vertices.push(new THREE.Vector3(-2, 0, 0));
       geometry.vertices.push(new THREE.Vector3(2, 0, 0));
       // for循环出来六条线段
-      for (var i = 0; i &lt;= 5; i++) {
+      for (var i = 0; i <= 5; i++) {
           // 定义竖着的线段
           var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({
               color: 0xffffff,

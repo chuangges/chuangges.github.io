@@ -17,7 +17,7 @@ description: 实例对象、全局方法、组件基础
   ```js
   // 1、直接创建
   var app1 = new Vue({
-    el:"#app1",
+    el: "#app1",
   })
 
   // 2、首先创建无挂载点的实例
@@ -251,8 +251,8 @@ description: 实例对象、全局方法、组件基础
 ## 基础使用
 
 ### 书写方式
-  * __通过 script__：`script type="text/x-template" id="myCom"`
-  * __通过 template__：`template id="myCom"`
+  * __通过 script__：`<script type="text/x-template" id="myCom"></script>`
+  * __通过 template__：`<template id="myCom"></template>`
   * __单文件组件__：文件扩展名为 .vue，组成部分为 `template、script、style`
 
 
@@ -274,7 +274,7 @@ description: 实例对象、全局方法、组件基础
 
 
 ### 配置选项
-> name、template、props、data、computed、methods、components、created、...
+> `name、template、props、data、computed、methods、components、created、...`
 
 
 ### 对外接口
@@ -283,7 +283,9 @@ description: 实例对象、全局方法、组件基础
   * __slots 片断__：嵌套内容
 
 
+
 ### 扩展方法
+
   ```js
   // 定义一个混合对象
   export const myMixin = {
@@ -310,7 +312,7 @@ description: 实例对象、全局方法、组件基础
 
 
 ## 内置指令
-  * 数据渲染：`&#123;&#123;&#125;&#125;、v-text、v-html`
+  * 数据渲染：`{{data}}、v-text、v-html`
   * 条件渲染：`v-if、v-else`
   * 循环渲染：
     * 数组：`v-for="(item, index) in arr" :key="index"`
@@ -348,10 +350,10 @@ description: 实例对象、全局方法、组件基础
   * 子传父
     * 法一：通过ref属性在父组件中直接取得子组件的数据
     * 法二：子组件 $emit() 触发自定义事件，父组件 $on() 监听
-      * 父组件：`child @updateList = "updateList"`
+      * 父组件：`<child @updateList = "updateList"></child>`
       * 子组件：`this.$emit("updateList", data)`
   * 父传子：在子组件中通过 props 定义父组件传递的属性
-    * 父组件：child name="Tom" :songs="songs" :age="age" 
+    * 父组件：`<child name="Tom" :songs="songs" :age="age"></child>`
     * 子组件：props 接收属性如下
 
   ```js
@@ -386,12 +388,12 @@ description: 实例对象、全局方法、组件基础
 > 同步父子组件数据，注意不要在子组件中修改 props 接收的数据
 
   * 普通写法
-    * 父组件监听自定义事件：`child @update="val => pmsg = val" :msg="pmsg"`
+    * 父组件监听自定义事件：`<child @update="val => pmsg = val" :msg="pmsg"></child>`
     * 子组件触发事件：`props: { msg: String }、this.$emit('update', newVal)`
   * 使用 sync
     * 父组件
-      * 写法：`child :startDate.sync="startDate"`
-      * 扩展：`child :startDate="bar" @update:startDate="val => startDate = val"`
+      * 写法：`<child :startDate.sync="startDate"></child>`
+      * 扩展：`<child :startDate="bar" @update:startDate="val => startDate = val"></child>`
     * 子组件
       * 属性：`props: { startDate: String }`
       * 事件：`this.$emit("update:startDate", startDate)`
@@ -469,9 +471,31 @@ description: 实例对象、全局方法、组件基础
 ## template 标签
 > 可看作一个不可见的包裹元素，主要用于分组的条件判断和列表渲染
 
-  <div align="center"> 
-    ![Vue template](/images/vue/vue-temp.png)
-  </div> 
+
+### 条件渲染
+> 通过 key 实现切换时清空内容
+
+  ```html
+  <template v-if="loginType === 'username'">
+    <label>Username</label>
+    <input placeholder="Enter your username">
+  </template>
+  <template v-else>
+    <label>Email</label>
+    <input placeholder="Enter your email address">
+  </template>
+  ```
+
+
+### 列表渲染
+  ```html
+  <ul>
+    <template v-for="item in items">
+      <li>{{ item.msg }}</li>
+      <li class="divider"></li>
+    </template>
+  </ul>
+  ```
 
 
 ## 内置组件
@@ -484,22 +508,49 @@ description: 实例对象、全局方法、组件基础
 
 ## 特殊特性   
   * __key__  
-    * 管理可复用的元素
+    * 管理可复用的元素：`<router-view :key="$route.fullPath"></router-view>`
     * 减少运算来提高循环性能：`v-for="item in items" :key="item.id"`
   * __is__
     * 使用 v-bind:is 实现动态组件的切换效果
-    * 用于在 ul 等受限制的 html 元素中绑定组件：`li is="com1"`
+    ```xml
+    <!-- change: this.index = (++this.ndex)%3 -->
+    <button @change="change"></button>
+    <transition name="fade" appear>
+        <keep-alive>
+            <component :is="views[index]"></component>
+        </keep-alive>
+    </transition>
+    <transition name="move" mode="out-in">
+        <!-- include：字符串/正则，只有匹配的组件被缓存 -->
+        <!-- exclude：字符串/正则，任何匹配的组件都不会被缓存 -->
+        <keep-alive :include="tagList">
+            <router-view></router-view>
+        </keep-alive>
+    </transition>
+    ```
+    * 用于在 ul 等受限制的 html 元素中绑定组件：`<li is="com1"></li>`
   * __slot__ 
     * 配合 slot 内置组件实现嵌套内容的相应显示
     * 没有 slot 时不显示嵌套内容，多个 slot 时需使用具名插槽 (添加 name 属性)
+    ```xml
+    <li is="lis_slot">
+        <span slot="first" @click="print">first</span>
+        <span slot="second">second</span>
+    </li>
+    <!-- lis_slot.vue -->
+    <template>
+        <li>
+           <slot name="first"></slot> 
+           <slot name="second"></slot> 
+        </li>
+    </template>
+    ```
   * __ref__  
-    * 获取当前 DOM 元素：`li ref="cur"、this.$refs.cur`
-    * 获取子组件实例对象：`my-com ref="com"、this.$refs.com`
+    * 获取当前 DOM 元素：`<li ref="cur"、this.$refs.cur></li>`
+    * 获取子组件实例对象：`<my-com ref="com"></my-com>、this.$refs.com`
 
 
-  <div align="center"> 
-    ![Vue special](/images/vue/vue-special.png)
-  </div> 
+
 
 
 

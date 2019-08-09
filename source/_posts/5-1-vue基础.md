@@ -298,16 +298,59 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 
 
 ### 单个文件 
-  <div align="center"> 
-    ![vue-server-renderer](/images/vue/vue-render-1.png)
-  </div> 
+  ```js
+  // server.js
+
+  // 1.创建 vue 实例
+  const Vue = require("vue")
+  const app = new Vue({
+      data: {
+          hello: "hello world"
+      },
+      template: "<div>{{hello}}</div>"
+  })
+
+  // 2.创建 renderer 实例
+  const renderer = require("vue-server-renderer").createRenderer({
+      // 模版插值：注释部分为模版插入的占位符
+      template: `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <title>Document</title>
+          <body> 
+              <!--vue-ssr-outlet-->
+              <div>{{person}}</div>
+          </body>
+          </html>
+      `
+  })
+
+  // 3.将 vue 渲染为 html
+  renderer.renderToString(app, { person: "Mike" }, (err, html)=>{
+      if(err) throw err
+      console.log(html)
+  })
+  ```
   
 
 ### 目录文件
   
-  <div align="center"> 
-    ![vue-render-index](/images/vue/vue-render-2.png)
-  </div> 
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <!-- 三个大括号不进行 html 转义 -->
+    {{{meta}}}
+    <title>{{title}}</title>
+  <body> 
+      <!--vue-ssr-outlet-->
+  </body>
+  </html>
+  ```
   
 
   ```js
@@ -329,8 +372,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     const context = {
       title: ctx.url,
       meta: `
-        &lt; meta charset="UTF-8" &gt;
-        &lt; meta name="description" content="基于webpack、koa搭建的SSR" &gt;
+        <meta charset="UTF-8">
+        <meta name="description" content="基于webpack、koa搭建的SSR">
       `
     }
 
@@ -480,7 +523,7 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
 ## npm 不能安装的插件
 > 直接引入插件文件
 
-  * index.html：`script src="/static/bootstrap.min.js"`
+  * index.html：`<script src="/static/bootstrap.min.js"></script>`
   * main.js：`import '@/assets/css/bootstrap.min.css'`
 
 
@@ -492,8 +535,8 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     * `@import '../../assets/scss/mixin.scss'`
     * `@import url('../assets/css/reset.css')`
   * template
-    * 绝对路径：`img src='/static//images/logo.png'`    
-    * 相对路径：`img src='../../assets//images/1.png'`  
+    * 绝对路径：`<img src='/static//images/logo.png'>`    
+    * 相对路径：`<img src='../../assets//images/1.png'>`  
 									
 
  

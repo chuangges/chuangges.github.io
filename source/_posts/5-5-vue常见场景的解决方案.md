@@ -30,7 +30,7 @@ description: 路由控制、组件数据、页面缓存、
           meta: { requiresAuth: true  }
       }]
   })
-  router.beforeEach((to, from, next) =&gt; {
+  router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {    
           if (store.state.token) {  
               next();
@@ -48,14 +48,14 @@ description: 路由控制、组件数据、页面缓存、
 
   // 服务端验证
   axios.interceptors.request.use(
-    config =&gt; {
+    config => {
         if (store.state.token) {  
             config.headers['Token'] = store.state.token
         }
         return config;
     })
   axios.interceptors.response.use(
-    error =&gt; {
+    error => {
         if (error.res.status == 401) {
             // 清除 token 信息并跳转到登录页面
             store.commit("token_clear");
@@ -85,12 +85,12 @@ description: 路由控制、组件数据、页面缓存、
       {
         path: '/login',
         name: 'login',
-        component: () =&gt; import('@//components/login')
+        component: () => import('@//components/login')
       },
       {
         path: '*',
         name: '404',
-        component: () =&gt; import('@//components/404')
+        component: () => import('@//components/404')
       }
     ]
   })
@@ -125,9 +125,9 @@ description: 路由控制、组件数据、页面缓存、
   }
 
   function generaRouter(routers, data){
-    data.forEach((item)=&gt;{
+    data.forEach((item)=>{
         let menu = Object.assign({}, item)
-        menu.component = () =&gt; import(`@/components/${menu.component}.vue`)
+        menu.component = () => import(`@/components/${menu.component}.vue`)
         if(item.children){
             menu.children = []
             generaRouter(menu.children,item.children)
@@ -235,7 +235,7 @@ description: 路由控制、组件数据、页面缓存、
     if(randomFlag){
       range = Math.round(Math.random() * (max-min)) + min;
     }
-    for(var i=0; i &lt; range; i++){
+    for(var i=0; i < range; i++){
       pos = Math.round(Math.random() * (arr.length-1));
       str += arr[pos];
     }
@@ -412,7 +412,7 @@ description: 路由控制、组件数据、页面缓存、
     * `watch: { '$route': {handler: 'resetData',immediate: true} }`
   * 简单方案
     * 监听路由地址变化来重新创建组件  
-    * `router-view :key="$route.fullPath"`
+    * `<router-view :key="$route.fullPath"></router-view>`
 
 
 # 四、页面刷新
@@ -618,7 +618,7 @@ description: 路由控制、组件数据、页面缓存、
   * 获取改变前的数据
     * @change 方法一般传递参数之后就会覆盖原本的数据
     * 两种方案
-      * `el-input @change="value =&gt; changeVal(value, scope.row)"`
+      * `el-input @change="value => changeVal(value, scope.row)"`
       * `el-input @change="changeVal($event, scope.row, scope.$index)"`
 
 

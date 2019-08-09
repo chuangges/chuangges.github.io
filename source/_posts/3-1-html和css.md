@@ -495,106 +495,107 @@ description: HTML、CSS
   ```
 
 ## 特殊图形
-```css
-/* 半圆 */
-.semi-circle {
-    width: 100px;
-    height: 50px;
-    background: red;
-    border-radius: 50px 50px 0 0;
-}
-/* 半椭圆 */
-.semiellipse {
-    margin-top: 30px;
-    width: 100px;
-    height: 50px;
-    background: red;
-    border-radius: 100% 0 0 100% /50%;
-}
-/* 椭圆 */
-.ellipse {
-    width: 100px;
-    height: 50px;
-    background: red;
-    border-radius: 50px/25px;
-}
 
-/* 梯形 */
-.echelon {
-    width: 600px;
-    border: 100px solid;
-    border-color: transparent transparent #c00;
-}
+  ```css
+  /* 半圆 */
+  .semi-circle {
+      width: 100px;
+      height: 50px;
+      background: red;
+      border-radius: 50px 50px 0 0;
+  }
+  /* 半椭圆 */
+  .semiellipse {
+      margin-top: 30px;
+      width: 100px;
+      height: 50px;
+      background: red;
+      border-radius: 100% 0 0 100% /50%;
+  }
+  /* 椭圆 */
+  .ellipse {
+      width: 100px;
+      height: 50px;
+      background: red;
+      border-radius: 50px/25px;
+  }
 
-/* 三栏 */
-.three-cols {
-    width: 150px;
-    height: 30px;
-    padding: 15px 0;
-    border-top: 30px solid;
-    border-bottom: 30px solid;
-    background-color: currentColor;
-    background-clip: content-box;
-}
+  /* 梯形 */
+  .echelon {
+      width: 600px;
+      border: 100px solid;
+      border-color: transparent transparent #c00;
+  }
 
-/* 多层阴影 */
-.shadows {
-    width: 100px;
-    height: 100px;
-    background-color: #fff;
-    border: 5px solid black;
-    box-shadow: 0 0 0 5px green,0 0 0 10px red;
-}
+  /* 三栏 */
+  .three-cols {
+      width: 150px;
+      height: 30px;
+      padding: 15px 0;
+      border-top: 30px solid;
+      border-bottom: 30px solid;
+      background-color: currentColor;
+      background-clip: content-box;
+  }
 
-/* <div class="demo" data-title="hello world">title悬浮框</div> */
-.title {
-    margin-top: 100px;
-    margin-left: 100px;
-    position: relative;
-}
-.title:hover::after {
-    content: attr(data-title);/* 取到data-title属性的值 */
-    display: inline-block;
-    padding: 10px 14px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    position: absolute;
-    top: -50px;
-    left: -30px;
-}
+  /* 多层阴影 */
+  .shadows {
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+      border: 5px solid black;
+      box-shadow: 0 0 0 5px green,0 0 0 10px red;
+  }
 
-/* 眼睛 */
-.eye {
-    width: 150px;
-    height: 150px;
-    padding: 10px;
-    border: 10px solid;
-    border-radius: 50%;
-    background-color: currentColor;
-    background-clip: content-box;
-}
+  /* <div class="demo" data-title="hello world">title悬浮框</div> */
+  .title {
+      margin-top: 100px;
+      margin-left: 100px;
+      position: relative;
+  }
+  .title:hover::after {
+      content: attr(data-title);/* 取到data-title属性的值 */
+      display: inline-block;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      position: absolute;
+      top: -50px;
+      left: -30px;
+  }
 
-/* 放大镜 */
-.magnifier {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 5px solid #333;
-    position: relative;
-}
-.magnifier::after {
-    content: '';
-    display: block;    
-    width: 8px;    
-    height: 60px;    
-    border-radius: 5px;    
-    background: #333;    
-    position: absolute;    
-    right: -22px;    
-    top: 38px;    
-    transform: rotate(-45deg);
-}
-```
+  /* 眼睛 */
+  .eye {
+      width: 150px;
+      height: 150px;
+      padding: 10px;
+      border: 10px solid;
+      border-radius: 50%;
+      background-color: currentColor;
+      background-clip: content-box;
+  }
+
+  /* 放大镜 */
+  .magnifier {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 5px solid #333;
+      position: relative;
+  }
+  .magnifier::after {
+      content: '';
+      display: block;    
+      width: 8px;    
+      height: 60px;    
+      border-radius: 5px;    
+      background: #333;    
+      position: absolute;    
+      right: -22px;    
+      top: 38px;    
+      transform: rotate(-45deg);
+  }
+  ```
 
 
 

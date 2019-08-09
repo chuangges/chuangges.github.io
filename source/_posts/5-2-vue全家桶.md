@@ -427,7 +427,7 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
         if(randomFlag){
             range = Math.round(Math.random() * (max-min)) + min;
         }
-        for(var i=0; i &lt; range; i++){
+        for(var i=0; i < range; i++){
             pos = Math.round(Math.random() * (arr.length-1));
             str += arr[pos];
         }

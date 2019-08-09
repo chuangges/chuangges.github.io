@@ -47,15 +47,15 @@ description: 方法和插件的封装方式、常用汇总
       versions: function () {  
         var u = navigator.userAgent, app = navigator.appVersion;  
         return {//移动终端浏览器版本信息   
-          trident: u.indexOf('Trident') &gt; -1, //IE内核  
-          presto: u.indexOf('Presto') &gt; -1, //opera内核  
-          webKit: u.indexOf('AppleWebKit') &gt; -1, //苹果、谷歌内核  
-          gecko: u.indexOf('Gecko') &gt; -1 && u.indexOf('KHTML') == -1, //火狐内核  
+          trident: u.indexOf('Trident') > -1, //IE内核  
+          presto: u.indexOf('Presto') > -1, //opera内核  
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核  
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核  
           mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端  
           ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端  
-          android: u.indexOf('Android') &gt; -1 || u.indexOf('Linux') &gt; -1, //android终端或者uc浏览器  
-          iPhone: u.indexOf('iPhone') &gt; -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器  
-          iPad: u.indexOf('iPad') &gt; -1, //是否iPad  
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器  
+          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器  
+          iPad: u.indexOf('iPad') > -1, //是否iPad  
           webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部  
         };  
       }(),
@@ -170,10 +170,10 @@ description: 方法和插件的封装方式、常用汇总
       result['birthDay'] = DateFormat(birthDate)
           
       var _currDate = new Date();
-      if(Number(_birthDate.month) - 1 &lt; _currDate.getMonth()){
+      if(Number(_birthDate.month) - 1 < _currDate.getMonth()){
         result['age'] = _currDate.getFullYear() - birthDate.getFullYear();
       }else if(Number(_birthDate.month) - 1 == _currDate.getMonth()){
-        if(Number(_birthDate.date) &lt;= _currDate.getDate()){
+        if(Number(_birthDate.date) <= _currDate.getDate()){
           result['age'] = _currDate.getFullYear() - birthDate.getFullYear();
         }else{
           result['age'] = _currDate.getFullYear() - birthDate.getFullYear() - 1;
@@ -189,7 +189,7 @@ description: 方法和插件的封装方式、常用汇总
 ## 页面滚动
   ```js
   // 垂直滚动到页面指定位置
-  export const  scrollAnimation = (currentY, targetY, dom) =&gt; {
+  export const  scrollAnimation = (currentY, targetY, dom) => {
 
     // 计算需要移动的距离
     let needScroll = targetY - currentY
@@ -198,12 +198,12 @@ description: 方法和插件的封装方式、常用汇总
     // 注意 window 滚动
     dom = dom ? dom : 'window'
     
-    setTimeout(() =&gt; {
+    setTimeout(() => {
         const dist = Math.ceil(needScroll / 10)
         _currentY += dist
         dom.scrollTo(_currentY, currentY)
         // 如果移动幅度小于十个像素，直接移动，否则递归调用，实现动画效果
-        if (needScroll &lt; 10 || needScroll &gt; -10) {
+        if (needScroll < 10 || needScroll > -10) {
             scrollAnimation(_currentY, targetY, dom)
         } else {
             dom.scrollTo(currentY, targetY)
@@ -630,7 +630,7 @@ description: 方法和插件的封装方式、常用汇总
       methods: {
         limit: function () {
           let password = this.$data.password
-          return (password.length &gt;= 6 && password.length &lt;= 12)
+          return (password.length >= 6 && password.length <= 12)
         }
       }
     }

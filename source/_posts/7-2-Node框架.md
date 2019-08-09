@@ -560,9 +560,13 @@ description: Express、Koa、Egg
 
 ### 上传文件
 
-  <div align="center"> 
-    ![Node UploadFile](/images/nodejs/node-uploadFile.png)
-  </div> 
+  ```html
+  <!-- index.html -->
+  <form action="/file_upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" />
+      <input type="submit" value="上传文件">
+  </form>
+  ```
 
   ```js
   // 引入：npm install koa-body --save

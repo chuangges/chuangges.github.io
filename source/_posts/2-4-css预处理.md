@@ -102,129 +102,129 @@ $pos: bottom;
 ## 混合宏 `@mixin`
   * @mixin 定义可重用的代码段，@include 调用  
 
-```scss
-// 无参 
-@mixin aa {
-    margin: 10px;
-}
-.bb {
-    @include aa;
-}
+  ```scss
+  // 无参 
+  @mixin aa {
+      margin: 10px;
+  }
+  .bb {
+      @include aa;
+  }
 
-// 参数为数组 
-$margin: 100px;
-$left: 10px;
-@mixin aa($left, $margin) {
-    margin: $margin;
-    left: $left;
-}
-.bb {
-    @include aa($left, $margin);
-}
+  // 参数为数组 
+  $margin: 100px;
+  $left: 10px;
+  @mixin aa($left, $margin) {
+      margin: $margin;
+      left: $left;
+  }
+  .bb {
+      @include aa($left, $margin);
+  }
 
-// 参数为对象 
-$map: (left: 10px, width: 100px);
-@mixin aa($left, $width) {
-    // 接收参数为key值
-    left: $left;
-    width: $width;
-}
-div {
-    @include aa($map...); // 传递参数为对象名+...
-}
+  // 参数为对象 
+  $map: (left: 10px, width: 100px);
+  @mixin aa($left, $width) {
+      // 接收参数为key值
+      left: $left;
+      width: $width;
+  }
+  div {
+      @include aa($map...); // 传递参数为对象名+...
+  }
 
-// 默认参数(不传参数时会用默认参数)
-@mixin aa($left: 10px) {}
+  // 默认参数(不传参数时会用默认参数)
+  @mixin aa($left: 10px) {}
 
-// 不定参数 
-@mixin box-shadow($shadows...) {
-    //不定参数,用...
-    -moz-box-shadow: $shadows;
-    -webkit-box-shadow: $shadows;
-    box-shadow: $shadows;
-}
-.shadows {
-    @include box-shadow(2px 2px 2px #eee);
-}
+  // 不定参数 
+  @mixin box-shadow($shadows...) {
+      //不定参数,用...
+      -moz-box-shadow: $shadows;
+      -webkit-box-shadow: $shadows;
+      box-shadow: $shadows;
+  }
+  .shadows {
+      @include box-shadow(2px 2px 2px #eee);
+  }
 
-// 浏览器前缀设置 
-@mixin rounded($vert, $horz, $radius: 10px) {
-    border-#{$vert}-#{$horz}-radius: $radius;
-    -moz-border-radius-#{$vert}#{$horz}: $radius;
-    -webkit-border-#{$vert}-#{$horz}-radius: $radius;
-}
-#navbar li {
-    @include rounded(top, left);
-}
+  // 浏览器前缀设置 
+  @mixin rounded($vert, $horz, $radius: 10px) {
+      border-#{$vert}-#{$horz}-radius: $radius;
+      -moz-border-radius-#{$vert}#{$horz}: $radius;
+      -webkit-border-#{$vert}-#{$horz}-radius: $radius;
+  }
+  #navbar li {
+      @include rounded(top, left);
+  }
 
-#footer {
-    @include rounded(top, left, 5px);
-}
-```
+  #footer {
+      @include rounded(top, left, 5px);
+  }
+  ```
 
 
 ## 继承 `@extend`
   * 不管是否调用，基类的样式都将会出现在编译出来的 CSS 代码中  
 
-```scss
-.btn {
-  display: inline-block;
-  margin: 10px;
-  padding: 5px 15px;
-}
-.btn-bor {
-  border: 1px solid #ccc;
-}
-.btn-red {
-  @extend .btn; //多个扩展
-  @extend .btn-bor !optional; 
-  // 用optional直接跳过空样式,防止元素不存在而导致报错
-  border-color: red;
-}
+  ```scss
+  .btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 5px 15px;
+  }
+  .btn-bor {
+    border: 1px solid #ccc;
+  }
+  .btn-red {
+    @extend .btn; //多个扩展
+    @extend .btn-bor !optional; 
+    // 用optional直接跳过空样式,防止元素不存在而导致报错
+    border-color: red;
+  }
 
-.hoverlink {
-  @extend a:hover;   //@extend可扩展任何选择器
-}
-a:hover {
-  text-decoration: underline;
-}
+  .hoverlink {
+    @extend a:hover;   //@extend可扩展任何选择器
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 
-// 配合占位选择器(%扩展单一选择器,编译后不在css)使用
-.container div%box {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.bor-box {
-  @extend %box; //此时才会编译产生
-} 
-//编译为 .container div.bor-box { } 
-```
+  // 配合占位选择器(%扩展单一选择器,编译后不在css)使用
+  .container div%box {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .bor-box {
+    @extend %box; //此时才会编译产生
+  } 
+  //编译为 .container div.bor-box { } 
+  ```
 
 
 ## 占位符 `%placeholder`
   * 一个独立定义的声明块，不调用时不会编译生成 CSS  
 
-```scss
-%mt{
-    margin-top: 5px;  
-}
-.block {
-    @extend %mt;
-    span {
-        display:block;
-        @extend %mt;
-    }
-}
-.header {
-    color: orange;
-    @extend %mt;
-    span {
-        display:block;
-        @extend %mt;
-    }
-}
-```
+  ```scss
+  %mt{
+      margin-top: 5px;  
+  }
+  .block {
+      @extend %mt;
+      span {
+          display:block;
+          @extend %mt;
+      }
+  }
+  .header {
+      color: orange;
+      @extend %mt;
+      span {
+          display:block;
+          @extend %mt;
+      }
+  }
+  ```
 
 
 # 三、Scss 进阶语法
@@ -316,76 +316,76 @@ a:hover {
 
 ## 函数和运算 
 
-1. 自定义
-  * @fuction 定义，@return 返回结果
-2. 三元条件
-  * if($condition, $if-true, $if-false)：条件成立时返回值1，否则返回值2
-3. 颜色
-  * rgb/rgba()：创建颜色
-  * alpha/opacity($color)：获取颜色透明度值
-  * rgba($color, $alpha)：改变颜色透明度值
-  * mix($color1, $color2, [$weight])：混合颜色
-  * lighten/darken($color, $percent)：变浅/加深
-4. 数字
-  * random()：随机数
-  * min/max($nums...)：最小值/最大值
-  * floor/ceil($value)：向下/上整数
-  * percentage/abs/round($val)：百分比值/绝对值/取整
-5. 字符串
-  * quote/unquote($string)：给字符串添加/删除引号
-  * to-upper/lower-case()：字符串大小写字母转换
-6. List
-  * length($list)：获取长度
-  * nth($list, i)：获取列表项（索引i从1开始）
-  * append($px, 11px)：添加新值
-  * join($list1, $list2)：列表合并
-  * zip($lists...)：合并多个表为多维列表
-	* index($list, $value)：返回该值在列表中的索引	
-7. Map
-  * map-keys/values($map)：获取所有key/values
-  * map-get/remove($map, key)：获取/删除指定项
-  * map-has-key($map, key)：判断是否有key
-  * map-merge($map1, $map2)：合并map
-	* keywords($args)：返回函数参数(可动态设置key和value)
-8. Introspection
-  * type-of($value)：返回值的类型 
-  * unit($number)：返回值的单位
-  * unitless($number)：判断该值是否带有单位 
-  * commparable($num, $num)：判断两个值是否可做加减和合并
+  1. 自定义
+    * @fuction 定义，@return 返回结果
+  2. 三元条件
+    * if($condition, $if-true, $if-false)：条件成立时返回值1，否则返回值2
+  3. 颜色
+    * rgb/rgba()：创建颜色
+    * alpha/opacity($color)：获取颜色透明度值
+    * rgba($color, $alpha)：改变颜色透明度值
+    * mix($color1, $color2, [$weight])：混合颜色
+    * lighten/darken($color, $percent)：变浅/加深
+  4. 数字
+    * random()：随机数
+    * min/max($nums...)：最小值/最大值
+    * floor/ceil($value)：向下/上整数
+    * percentage/abs/round($val)：百分比值/绝对值/取整
+  5. 字符串
+    * quote/unquote($string)：给字符串添加/删除引号
+    * to-upper/lower-case()：字符串大小写字母转换
+  6. List
+    * length($list)：获取长度
+    * nth($list, i)：获取列表项（索引i从1开始）
+    * append($px, 11px)：添加新值
+    * join($list1, $list2)：列表合并
+    * zip($lists...)：合并多个表为多维列表
+    * index($list, $value)：返回该值在列表中的索引	
+  7. Map
+    * map-keys/values($map)：获取所有key/values
+    * map-get/remove($map, key)：获取/删除指定项
+    * map-has-key($map, key)：判断是否有key
+    * map-merge($map1, $map2)：合并map
+    * keywords($args)：返回函数参数(可动态设置key和value)
+  8. Introspection
+    * type-of($value)：返回值的类型 
+    * unit($number)：返回值的单位
+    * unitless($number)：判断该值是否带有单位 
+    * commparable($num, $num)：判断两个值是否可做加减和合并
 
 
-```scss
-@function colors($color) {
-    $names: map-keys($social-colors);
-    @if not index($names, $color) {
-        @warn "Waring: `#{$color} is not a valid color name.`";
-    }
-    @return map-get($social-colors, $color);
-}
-.btn-weibo {
-    color: colors(weibo);
-}
+  ```scss
+  @function colors($color) {
+      $names: map-keys($social-colors);
+      @if not index($names, $color) {
+          @warn "Waring: `#{$color} is not a valid color name.`";
+      }
+      @return map-get($social-colors, $color);
+  }
+  .btn-weibo {
+      color: colors(weibo);
+  }
 
-$social-colors: (
-    dribble: #ea4c89,
-    facebook: #3b5998,
-    github: #171515,
-    google: #db4437,
-    twitter: #55acee
-);
+  $social-colors: (
+      dribble: #ea4c89,
+      facebook: #3b5998,
+      github: #171515,
+      google: #db4437,
+      twitter: #55acee
+  );
 
-@each $name in map-keys($social-colors) {
-    .btn-#{$name} {
-        color: colors($name);
-    }
-}
+  @each $name in map-keys($social-colors) {
+      .btn-#{$name} {
+          color: colors($name);
+      }
+  }
 
-@for $i from 1 through length(map-keys($social-colors)) {
-    .btn-#{nth(map-keys($social-colors), $i)} {
-        color: colors(nth(map-keys($social-colors), $i));
-    }
-}
-```
+  @for $i from 1 through length(map-keys($social-colors)) {
+      .btn-#{nth(map-keys($social-colors), $i)} {
+          color: colors(nth(map-keys($social-colors), $i));
+      }
+  }
+  ```
 
 
 ## 调试

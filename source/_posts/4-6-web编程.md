@@ -707,7 +707,7 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       })
   }
   (async (names) => {
-      for(let i = 0; i &lt; names.length; i++) {
+      for(let i = 0; i < names.length; i++) {
           await count(names[i])
       }
   })([1, 2, 3])
@@ -734,9 +734,9 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
 ## 冒泡排序
   ```js
   Array.prototype.bubbleSort = function() {
-      for (let i = 0; i &lt; this.length; i++) {
-          for (let j = 0; j &lt; this.length - 1 - i; j++) {
-              if (this[j] &gt; this[j + 1]) {
+      for (let i = 0; i < this.length; i++) {
+          for (let j = 0; j < this.length - 1 - i; j++) {
+              if (this[j] > this[j + 1]) {
                   let temp = this[j]
                   this[j] = this[j + 1]
                   this[j + 1] = temp
@@ -751,10 +751,10 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
   ```js
   Array.prototype.selectionSort = function() {
       let indexMin
-      for (let i = 0; i &lt; this.length - 1; i++){
+      for (let i = 0; i < this.length - 1; i++){
           indexMin = i
-          for (var j = i; j &lt; this.length; j++){ 
-              if(this[indexMin] &gt; this[j]) {
+          for (var j = i; j < this.length; j++){ 
+              if(this[indexMin] > this[j]) {
                   indexMin = j
               }
           } 
@@ -774,10 +774,10 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
   Array.prototype.insertionSort = function() {
       let j
       let temp
-      for (let i = 1; i &lt; this.length; i++) {
+      for (let i = 1; i < this.length; i++) {
           j = i
           temp = this[i]
-          while (j &gt; 0 && this[j - 1] &gt; temp) {
+          while (j > 0 && this[j - 1] > temp) {
               this[j] = this[j - 1]
               j--
           } 
@@ -796,17 +796,17 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
           const result = []
           let il = 0
           let ir = 0
-          while(il &lt; left.length && ir &lt; right.length) {
-              if(left[il] &lt; right[ir]) {
+          while(il < left.length && ir < right.length) {
+              if(left[il] < right[ir]) {
                   result.push(left[il++])
               } else {
                   result.push(right[ir++])
               }
           }
-          while (il &lt; left.length) {
+          while (il < left.length) {
               result.push(left[il++])
           }
-          while (ir &lt; right.length) {
+          while (ir < right.length) {
               result.push(right[ir++])
           }
           return result
@@ -832,14 +832,14 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
           var pivot = array[Math.floor((right + left) / 2)]
           let i = left
           let j = right
-          while (i &lt;= j) {
-              while (array[i] &lt; pivot) {
+          while (i <= j) {
+              while (array[i] < pivot) {
                   i++
               }
-              while (array[j] &gt; pivot) {
+              while (array[j] > pivot) {
                   j--
               }
-              if (i &lt;= j) {
+              if (i <= j) {
                   let aux = array[i]
                   array[i] = array[j]
                   array[j] = aux
@@ -851,12 +851,12 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       }
       const quick = (array, left, right) => {
           let index
-          if (array.length &gt; 1) {
+          if (array.length > 1) {
               index = partition(array, left, right)
-              if (left &lt; index - 1) {
+              if (left < index - 1) {
                   quick(array, left, index - 1)
               }
-              if (index &lt; right) {
+              if (index < right) {
                   quick(array, index, right)
               }
           }
@@ -870,7 +870,7 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
 ## 顺序搜索
   ```js
   Array.prototype.sequentialSearch = function(item) {
-      for (let i = 0; i &lt; this.length; i++) {
+      for (let i = 0; i < this.length; i++) {
           if (item === this[i]) return i
       }
       return -1
@@ -886,12 +886,12 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       let mid = null
       let element = null
       let high = this.length - 1
-      while (low &lt;= high){
+      while (low <= high){
           mid = Math.floor((low + high) / 2)
           element = this[mid]
-          if (element &lt; item) {
+          if (element < item) {
               low = mid + 1
-          } else if (element &gt; item) {
+          } else if (element > item) {
               high = mid - 1
           } else {
               return mid
@@ -920,11 +920,11 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       let min = [], newMin, newAmount
       this.coins.forEach(coin => {
           newAmount = amount - coin
-          if (newAmount &gt;= 0) {
+          if (newAmount >= 0) {
               newMin = this.makeChange(newAmount)
           }
-          if (newAmount &gt;= 0 && 
-                (newMin.length &lt; min.length - 1 || !min.length) && 
+          if (newAmount >= 0 && 
+                (newMin.length < min.length - 1 || !min.length) && 
                 (newMin.length || !newAmount)) {
               min = [coin].concat(newMin)
           }
@@ -952,8 +952,8 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
     makeChange(amount) {
       const change = []
       let total = 0
-      this.coins.sort((a, b) => a &lt; b).forEach(coin => {
-          while ((total + coin) &lt;= amount) {
+      this.coins.sort((a, b) => a < b).forEach(coin => {
+          while ((total + coin) <= amount) {
             change.push(coin)
             total += coin
           }

@@ -78,16 +78,19 @@ feed: # RSS订阅插件
   path: atom.xml
   limit: 0
 
-plugins: hexo-generate-feed
+
 # Extensions
 ## Themes: https://hexo.io/themes/
 theme: next
+plugins: hexo-generate-feed
+
 
 symbols_count_time:
   symbols: true
   time: true
   total_symbols: true
   total_time: true
+
 
 live2d:
   enable: true
@@ -110,31 +113,31 @@ live2d:
     opacityOnHover: 1
 
 
-# hexo-neat
+# hexo-neat 影响代码块功能
 # 博文压缩
-neat_enable: true
-# 压缩html
-neat_html:
-  enable: true
-  exclude: 
-# 压缩css  
-neat_css:
-  enable: true
-  exclude:
-    - '**/*.min.css'
-# 压缩js
-neat_js:
-  enable: true
-  mangle: true
-  output:
-  compress:
-  exclude:
-    - '**/*.min.js'
-    - '**/jquery.fancybox.pack.js'
-    - '**/index.js'  
-    - '**/clicklove.js'
-    - '**/clipboard.js'
-    - '**/clipboard.min.js'
+# neat_enable: true
+# # 压缩html
+# neat_html:
+#   enable: true
+#   exclude: 
+# # 压缩css  
+# neat_css:
+#   enable: true
+#   exclude:
+#     - '**/*.min.css'
+# # 压缩js
+# neat_js:
+#   enable: true
+#   mangle: true
+#   output:
+#   compress:
+#   exclude:
+#     - '**/*.min.js'
+#     - '**/jquery.fancybox.pack.js'
+#     - '**/index.js'  
+#     - '**/clicklove.js'
+#     - '**/clipboard.js'
+#     - '**/clipboard.min.js'
 
 
 # 文章加密功能
@@ -153,18 +156,20 @@ sitemap:
 baidusitemap:
   path: baidusitemap.xml
 
+
 lazyload:
   enable: true
-  # className: lazyload-img   #可选 需要延迟加载的图片 class 
-  # loadingImg:   #可选 图片未加载时的代替图 eg. ./images/loading.png
+  onlypost: false
+  # className: lazyload-img   # 可选 需要延迟加载的图片 class 
+  # loadingImg: ./images/mobile/loading.png  # 可选 图片未加载时的代替图 eg. 
 
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/chuangges/chuangges.github.io.git
-    # gitee: https://gitee.com/chuangges/blog.git
+  # repository: https://github.com/chuangges/chuangges.github.io.git
+  repo: https://gitee.com/chuangges/chuangges.git
   branch: master
 
 

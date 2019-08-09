@@ -243,8 +243,11 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 > 处理包括图片和文件的表单数据并通过 post 方式发送到服务端
 
   * html 
-    * form：`form id="form" method="post" enctype="multipart/form-data"`
-    * input：`input type="file" name="file"`
+    ```html
+    <form id="form" method="post" enctype="multipart/form-data">
+      <input type="file" name="file">
+    </form>
+    ```
   * 操作
     ```js
     // 1、实例一个空 FormData 对象之后 append 键值对
@@ -501,7 +504,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
         if(!file) return
 
         const index = this.fileList.findIndex(item => item.name == file.name)
-        if(index &gt; -1) return
+        if(index > -1) return
 
         let imgBase64 = await this.fileReader(file)
 
@@ -509,7 +512,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
         var base64Img = imgBase64.substring(imgBase64.indexOf(",") + 1);
 
         // 根据原始图片大小判断是否需要压缩：size 是字节数，1MB = 1024KB，1KB = 1024字节
-        if(file.size &gt; this.max_size * 1024){
+        if(file.size > this.max_size * 1024){
           this.compressImg(imgBase64, file.name)
         }else{
           this.$emit("updateFileList", file, imgBase64)

@@ -15,9 +15,29 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 > 支持的格式：Ogg、MP3、WAV
 
 ## 基础使用
-  <div align="center"> 
-    ![media](/images/mobile/media.png)
-  </div> 
+
+  ```html
+  <!-- 
+      src：地址、preload：预加载、autoplay：自动播放
+      loop：循环播放、controls：浏览器自带的控制条 
+  -->
+  <audio src="music/bg.mp3" autoplay>不支持提示语句</audio>
+
+  <audio id="audio" loop controls>
+    <source src="music/bg.ogg" type="audio/ogg"></source>
+    <source src="music/bg.mp3" type="audio/mpeg"></source>
+    优先播放音乐 bg.ogg，不支持播放 bg.mp3
+  </audio>
+
+  <!-- width/height：video 独有属性、poster：视频封面 -->
+  <video src="video.mp4" width="400" height="300" loop></video>
+
+  <video preload="auto" poster="video.jpg" controls autobuffer>
+    <source src="movie.ogg" type="video/ogg"></source>
+    <source src="movie.mp4" type="video/mp4"></source>
+    您的浏览器不支持 video 标签
+  </video>
+  ```
        
   ```js
   // var audio = new Audio("test.mp3");
@@ -41,7 +61,7 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   audio.volume = value;  // 音量
   audio.muted = value;   // 静音
 
-  // 事件：loadstart、progress、
+  // 事件：loadstart、progress
   
   
   // 监听开始播放
@@ -78,19 +98,18 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 > ios、Android、微信为了节省流量而规定忽视 autoplay 属性
 
   ```js
-// ios、Android：循环播放失效时方案相似，
-document.addEventListener('touchstart', function () {
-
+  // ios、Android：循环播放失效时方案相似，
+  document.addEventListener('touchstart', function () {
     document.getElementById('audio').play();
-})
+  })
 
 
-// 微信
-document.addEventListener('WeixinJSBridgeReady', function() {
+  // 微信
+  document.addEventListener('WeixinJSBridgeReady', function() {
     document.getElementById('audios').play()
-})
-// 针对苹果的手机微信端
-function autoPlayVideo(){
+  })
+  // 针对苹果的手机微信端
+  function autoPlayVideo(){
     wx.config({
         debug:false,
         appId:"",
@@ -103,30 +122,32 @@ function autoPlayVideo(){
         var autoplayVideo = document.getElementById("audio");
         autoplayVideo.play()
     })
-}
+  }
+  ```
 
 
 ## 用户权限
 > navigator.getUserMedia 可以提示用户需要权限去使用像摄像头、麦克风等媒体设备
 
-// 兼容写法
-navigator.getMedia = (navigator.getUserMedia ||
+  ```js
+  // 兼容写法
+  navigator.getMedia = (navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia);
 
-// 获取用户摄像头并提供拍照功能：video、canvas、button
-window.addEventListener("DOMContentLoaded", function() {
+  // 获取用户摄像头并提供拍照功能：video、canvas、button
+  window.addEventListener("DOMContentLoaded", function() {
     // 获取元素，创建设置等等
     var canvas = document.getElementById("canvas"),
-            context = canvas.getContext("2d"),
-            video = document.getElementById("video"),
-            videoObj = { "video": true },
-            errBack = function(error) {
-                console.log("Video capture error: ", error.code);
-            };
+    context = canvas.getContext("2d"),
+    video = document.getElementById("video"),
+    videoObj = { "video": true },
+    errBack = function(error) {
+        console.log("Video capture error: ", error.code);
+    };
 
-    // 添加video 监听器
+    // 添加 video 监听器
     if(navigator.getUserMedia) { // 标准
         navigator.getUserMedia(videoObj, function(stream) {
             video.src = stream;
@@ -287,7 +308,7 @@ window.addEventListener("DOMContentLoaded", function() {
   function animation() {
       window.requestAnimationFrame(animate);
       x += speed;
-      if(x &lt;= 0 || x &gt;= 475){
+      if(x <= 0 || x >= 475){
           speed = -speed;
       }
       draw()
@@ -536,7 +557,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
           // 获取数据对象
           var fs = event.dataTransfer.files;
-          for(var i=0; i &gt; fs.length; i++){
+          for(var i=0; i > fs.length; i++){
 
               // 读取文件信息的接口对象
               var fr = new FileReader();  
@@ -687,11 +708,11 @@ window.addEventListener("DOMContentLoaded", function() {
     * 输入验证：`邮箱、地址、日期、数字、电话、范围、搜索、颜色`
     * 新增属性：`required、pattern、autofocus、autocomplete、novalidate、multiple`
   * 超链接
-    * 短信：`a href='sms:15919218899'`
-    * 电话：`a href="tel:15919218899"`
-    * 邮件：`a href="mailto:99519876@qq.com"`
-    * 地图：`a href="http://map.baidu.com/mobile/search..."`
-    * QQ客服：`a target="_blank" href="http://wpa.qq.com/msgrd?v=3&..."`
+    * 短信：`<a href='sms:15919218899'></a>`
+    * 电话：`<a href="tel:15919218899"></a>`
+    * 邮件：`<a href="mailto:99519876@qq.com"></a>`
+    * 地图：`<a href="http://map.baidu.com/mobile/search..."></a>`
+    * QQ客服：`<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&..."></a>`
   * History
     * 功能：实现无刷新更新地址
     * API：`history.pushState、history.replaceState`
