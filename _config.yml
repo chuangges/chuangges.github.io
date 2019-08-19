@@ -104,8 +104,8 @@ live2d:
   display:
     # 设置模型的位置
     position: left
-    width: 120
-    height: 240
+    width: 180
+    height: 360
   mobile:
     show: false
   react:
@@ -160,8 +160,8 @@ baidusitemap:
 lazyload:
   enable: true
   onlypost: false
-  # className: lazyload-img   # 可选 需要延迟加载的图片 class 
-  # loadingImg: ./images/mobile/loading.png  # 可选 图片未加载时的代替图 eg. 
+  className: lazyload-img   # 可选 需要延迟加载的图片 class 
+  loadingImg: ./images/mobile/loading.png  # 可选 图片未加载时的代替图 eg. 
 
 
 # Deployment
@@ -169,7 +169,7 @@ lazyload:
 deploy:
   type: git
   # repository: https://github.com/chuangges/chuangges.github.io.git
-  repo: https://gitee.com/chuangges/chuangges.git
+  repository: https://gitee.com/chuangges/chuangges.git
   branch: master
 
 

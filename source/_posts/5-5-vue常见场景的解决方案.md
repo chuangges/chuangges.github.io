@@ -7,7 +7,7 @@ top: false
 keywords:
   - vue
 date: 2019-04-14 23:11:50
-description: 路由控制、组件数据、页面缓存、
+description: 路由控制、路由控制、数据加密、数据更新、页面刷新、页面缓存、文件下载、UI 框架
 ---
 
 # 一、路由控制

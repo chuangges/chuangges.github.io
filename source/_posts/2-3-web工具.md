@@ -698,8 +698,13 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
     git status  查看状态
     git add TaskDoc/t_lishi.log  // 指定需要提交到本地仓库的文件
     git status 
-    git commit -m "create Navigation"      提交代码到本地
-    git push origin dev/t_lishi/Navigation    推送到远程仓库
+    git commit -m "create Navigation"      // 提交代码到本地
+    git push origin dev/t_lishi/Navigation    // 推送到远程仓库
+
+
+    // 下载远程代码
+    git clone url                  // 拉取远程主分支代码到本地
+    git clone -b my-branch url     // 拉取指定分支代码到本地
   ```
 
 

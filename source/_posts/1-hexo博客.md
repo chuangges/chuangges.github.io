@@ -55,14 +55,15 @@ description: Hexo 是一个快速、简洁且高效的博客框架
 
 
 ### 修改配置文件
+> 码云是国内的，访问速度较快，但是每次更新版本后需要手动部署
 
   ```yaml
   deploy:
     type: git
     repo: 
       github: https://github.com/chuanggefighting/chuanggefighting.github.io.git
-      coding: https://git.dev.tencent.com/chuanggefighting/chuanggefighting.coding.me.git  # 腾讯
       # coding: https://git.coding.net/chuanggefighting/chuanggefighting.coding.me.git     # Coding
+    repository: https://gitee.com/chuangges/chuangges.git     # 码云
     branch: master
   ```
 

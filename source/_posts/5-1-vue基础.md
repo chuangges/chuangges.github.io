@@ -31,27 +31,62 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     ![Vue MVVM](/images/vue/vue_bing.png) 
   </div> 
 
-  <div style="text-indent: 2em">DOM Listeners、Data Bindings 是实现双向绑定功能的关键，实现原理是Object.defineProperty 中的 get、set 方法 和消息订阅模式。DOM Listeners 监听页面所有 View 层 DOM 元素的变化，发生变化时 Model 层的数据随之变化。Data Bindings 监听 Model 层的数据，数据发生变化时 View 层的 DOM 元素随之变化。</div> 
+
+
+## 双向绑定
+
+### 实现方式
+
+  * __发布者-订阅者模式__：一般通过 sub、pub 的方式实现数据和视图的绑定监听
+    * 更新数据方式通常是 `vm.set('property', value)`，但这种方式现在比较 low 
+    * 我们更希望通过 `vm.property = value` 更新数据，同时自动更新视图，于是有了下面两种方式
+  * __脏值检查__： angular.js 是通过脏值检测的方式比对数据是否有变更来决定是否更新视图
+    * 最简单的方式就是通过 setInterval() 定时轮询检测数据变动
+    * angular 只有在指定的事件触发时进入脏值检测：DOM 事件、XHR 响应事件等
+  * __数据劫持__：vue.js 采用数据劫持结合发布者-订阅者模式的方式
+    * 通过 `Object.defineProperty()` 来劫持各个属性的 setter、getter
+    * 在数据变动时发布消息给订阅者，触发相应的监听回调。
+
+
+### vue 实现原理
+
+  1. 实现一个数据监听器 __Observer__，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者
+  2. 实现一个指令解析器 __Compile__，对每个元素节点的指令进行扫描和解析，并根据初始化模板 data 数据和相应的订阅器
+  3. 实现一个 __Watcher__，作为连接 Observer 和 Compile 的桥梁，能够订阅并收到每个属性变动的通知，然后执行相应回调函数，从而更新视图
+  4. mvvm __入口函数__，整合以上三者
+
+
+  <div align="center"> 
+    ![Vue 双向绑定](/images/vue/data_bing.png)
+  </div> 
+ 
+
+### vue 核心代码
+> 核心就是通过 Object.defineProperty() 重新定义了对象获取属性值 get 和设置属性值 set 的操作，该方法接收三个参数：操作对象、对象属性名、属性描述符 (对象)。
 
   ```js
-  // 对数据对象的每个属性添加对应的 get、set 方法 
-  Object.defineProperty(data, key, {
-      enumerable: true,
-      configurable: true,
-      // 读取数据时调用
-      get: function() {
-
-          // do something
-
-          return val;
-      },
-      // 对数据进行赋值操作时调用
-      set: function(newVal) {
-
-          // do something
-      }
-  });
+  // Observer.js
+  function defineReactive(data, key, val) {
+      observe(val); // 监听子属性
+      Object.defineProperty(data, key, {
+          enumerable: true, // 可枚举
+          configurable: false, // 不能再 define
+          get: function() {
+              // 由于需要在闭包内添加 watcher，所以通过 Dep 定义一个全局 
+              // target 属性来暂存 watcher, 添加完移除
+              if (Dep.target) dep.addSub(Dep.target)
+              return val;
+          },
+          set: function(newVal) {
+              if (val === newVal) return
+              val = newVal
+              // 通知所有订阅者
+              dep.notify()   
+          }
+      })
+  }
   ```
+
 
 
 ## 全家桶
@@ -82,6 +117,7 @@ description: Vue 框架、SPA、SSR、模块引用、基础配置、打包问题
     * `vonic`：采用了 ionic 样式，有部分组件被存放到 Vue 对象，比如 this.$tabbar
     * `vue-material`：基于谷歌的 Material Design 规范构建，缺点是没有时间选择器、非中文文档
     * `cube-ui`：由滴滴内部组件库精简提炼而来，核心目标是做到体验极致、灵活性强、易扩展以及提供良好的周边生态（后编译）
+
 
 
 # 二、浏览器渲染 SPA

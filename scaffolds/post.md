@@ -1,11 +1,11 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags: [微信小程序] 
-categories: 微信小程序
+tags: [React] 
+categories: React
 top: false
 keywords:
-    - 微信小程序
+    - React
 description:       # 文章摘要
 password:          # 文章密码
 abstract:          # 文章摘要
