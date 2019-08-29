@@ -7,7 +7,7 @@ top: false
 keywords:
   - React
 date: 2019-08-17 22:05:46
-description: 基础介绍、JSX 表达式、组件化开发
+description: 入门简介、JSX 表达式、组件化开发
 ---
 
 # 一、入门简介
@@ -236,28 +236,80 @@ description: 基础介绍、JSX 表达式、组件化开发
   ```
 
 
-## 初始化项目
+# 二、项目开发
 
-### 全家桶
-
+## 技术栈
   * __Babel__：编译工具
   * __Redux__：状态管理工具
   * __React-router__：路由工具
   * __create-react-app__：脚手架工具
 
 
-### 执行命令
+## 初始化目录
+> 相关文件：index.html (入口模板)、manifest.json (应用配置)、index.js (应用入口)、serviceWorker.js (生产环境缓存资源)
 
-  ```
+  ```js
   npm install -g create-react-app
-  create-react-app test
-  cd test
+  create-react-app my-app
+  cd my-app
   npm start
+
+  // 自定义目录
+  cd src
+  rm App.* index.css logo.svg
+  mkdir coms pages style tool
+
+  // 安装工具
+  cnpm i react-router-dom -S
+
+  // 修改 index.js
+  import './style/style.scss';
+  import App from './router/App';
+
+
+  // 新建 router.js：存放路由
+  import React, { Component } from 'react'
+  import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+  import SiteIndex from './pages/index'
+
+  export default class App extends Component {
+    render () {
+      return (
+        <Router basename="/">
+          <Switch>
+            <Route exact path='/' component={SiteIndex} />
+          </Switch>
+        </Router>
+      )
+    }
+  }
+
+  // 新建页面：page/site/index.jsx
+  import React, { Component } from 'react'
+
+  export default class Index extends Component {
+    constructor (props) {
+      super(props)
+      this.state = {}
+    }
+
+    componentDidMount () { }
+
+    render () {
+      return (
+        <div className="home">indexPage</div>
+      )
+    }
+  }
+
+  // 新建 style/index.css：存放全局样式
   ```
 
+ 
 
 
-### 简单练习
+
+## 简单练习
 
   ```js
   // test/src/index.js
