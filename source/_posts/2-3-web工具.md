@@ -64,28 +64,28 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
 
 # 二、浏览器 chrome 
   1. __搜索__（Google输入框中所有空格都被理解为加号）
-    * 完整匹配: "mysql foreign key"（引号）
-    * 筛选: "mysql key" - "nodejs"（加减号）
-    * 返回所有: "mysql connect error *"（加通配符）
-    * 站内搜索: "mysql foreign key" site:stackoverflow.com
-    * 加速: 输入网址后点击Tab，这样可直接使用该站点的站内搜索
+    * 完整匹配: `mysql foreign key`（引号）
+    * 筛选: `mysql key - nodejs`（加减号）
+    * 返回所有: `mysql connect error *`（加通配符）
+    * 站内搜索: `mysql foreign key site:stackoverflow.com`
+    * 加速: 输入网址后点击 Tab，这样可直接使用该站点的站内搜索
   2. __调试js代码__
     * Alert, Console等
     * 断点调试
-      * 步骤：F12开发者工具 ——> 点击Sources菜单 ——> 左侧树中找到相应文件 ——> 点击行号列(右键为条件断点) ——> 刷新页面 ——> JS执行到断点位置停住，此时可以跟随鼠标查看功能按钮
+      * 步骤：F12 开发者工具 ——> 点击Sources菜单 ——> 左侧树中找到相应文件 ——> 点击行号列(右键为条件断点) ——> 刷新页面 ——> JS执行到断点位置停住，此时可以跟随鼠标查看功能按钮
       * [相关技巧](http://blog.csdn.net/crper/article/details/50722753) 
-    * debug断点
-      * 在触发文件中添加 "debugger;" 语句后触发，当代码执行到该语句时就会自动断点, 接下去的操作和在Sources面板添加断点调试几乎一模一样，唯一区别在于调试后需要删除该语句。
+    * debug 断点
+      * 在触发文件中添加 `debugger;` 语句后触发，当代码执行到该语句时就会自动断点, 接下去的操作和在Sources面板添加断点调试几乎一模一样，唯一区别在于调试后需要删除该语句。
       * 由于有时会遇到异步加载html片段的情况，其JS代码在Sources中无法找到，因此无法直接在开发工具中直接添加断点时可用debug断点（F10一步一步执行，F8一下执行完成）
   3. __高阶调试功能__
     * [内置抓包工具等](https://www.cnblogs.com/guaidianqiao/p/7615430.html) 
   4. __扩展插件__
     * 谷歌访问助手
-      * 安装：[下载安装包](http://www.ggfwzs.com/) ——> 更多工具 ——> 扩展程序 ——> 直接拖拽 ——> 添加扩展程序
-      * 扩展其它插件：谷歌访问助手 ——> 谷歌网上商店 ——> 搜索插件 ——> 点击添加扩展
+      * 安装：[下载安装包](http://www.ggfwzs.com/) —> 更多工具 —> 扩展程序 —> 直接拖拽 ——> 添加扩展
+      * 扩展其它插件：谷歌访问助手 —> 谷歌网上商店 —> 搜索插件 —> 添加扩展
     * 常用插件推荐
       * 掘金
-      * Google翻译         
+      * Google 翻译         
       * FeHelper 
       * JSONView   
       * What runs         
@@ -95,11 +95,11 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
       * AngularJS Batarang      
       * React Developer Tools  
   5. __实用黑科技__
-    * 实现翻墙
-      * 配置proxy代理：setting  system ——> proxy settings ——> LAN setting ——> proxy server ——> 配置 Address 和 Port
-      * 配置Chrome扩展：下载[Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) ——> 注册登录
-    * 解析VIP视频 
-      * 打开网站 [Greasy Fork](https://greasyfork.org/zh-CN) ——> 搜索VIP视频解析 ——> 安装脚本
+    * __实现翻墙__
+      * 配置 proxy 代理：setting system —> proxy settings —> LAN setting —> proxy server —> 配置 Address、Port
+      * 配置 Chrome 扩展：下载 [Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) —> 注册登录
+    * __解析 VIP 视频__
+      * 打开网站 [Greasy Fork](https://greasyfork.org/zh-CN) —> 搜索VIP视频解析 —> 安装脚本
     * 其它：视频广告过滤、电脑管家上网防护等
 
 
@@ -110,8 +110,8 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
 > 常用扩展插件如下：
 
   * 显示效果类
-    * __Dracula Official__：高亮主题
     * __Beautify__：代码高亮
+    * __Dracula Official__：高亮主题
     * __vscode-icon__：让资源树目录加上图标
     * __Bracket Pair Colorizer__：每一对括号用不同颜色区别
     * __Open-In-Browser__：直接在浏览器中打开文件的快捷菜单 `alt + b`
@@ -126,7 +126,7 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
     * __JavaScript (ES6) code snippets__：JS语法提示
   * Vue 插件类
     * __Vetur__：语法高亮
-    * __VueHelper__：vue代码提示插件
+    * __VueHelper__：vue 代码提示插件
     * __Vue 2 Snippets__：语法高亮、代码补全
     * __HTML Snippets__：在.vue文件中使用html代码补全功能
   * 小程序插件类
@@ -134,7 +134,7 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
     * __wechat-snippet__：代码辅助
     * __wxml__：高亮显示、代码格式化
   *  其它类
-    * __npm__：运行npm命令
+    * __npm__：运行 npm 命令
     * __npm Intellisense__：导入时提示已安装模块
     * __Python__：添加对 py 文件的支持
     * __GitLens__：简单实现 git 提交代码
@@ -148,30 +148,26 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
   search.followSymlinks: false,
   git.enabled: false,
   git.autorefresh: false,
-
-  // 指定工作台中使用的颜色主题。    
-  workbench.colorTheme: "Monokai",    
-  // 指定在工作台中使用的图标主题    
-  workbench.iconTheme: "vscode-icons",    
+ 
   // 窗口失去焦点自动保存    
-  files.autoSave: "off",    
-  // 如果设置为 "true"，将不再显示扩展建议的通知 
+  files.autoSave: "onFocusChange",    
+  // 不再显示扩展建议的通知 
   extensions.ignoreRecommendations: true,    
-  // 如果设置成 true，关于新的版本消息将不再显示    
+  // 不再显示新版本消息    
   vsicons.dontShowNewVersionMessage: true,  
-  // 控制是否将打开的编辑器显示为预览。    
+  // 是否将打开的编辑器显示为预览 
   workbench.editor.enablePreview: false,   
   // 字体字号
-  editor.fontSize: 18, 
-  //代码缩进风格4个字符    
+  editor.fontSize: 16, 
+  // 代码缩进   
   editor.tabSize: 4,    
-  // 控制编辑器是否应在键入后自动设置行的格式    
+  // 是否自动设置键入后行的格式    
   editor.formatOnType: false,    
   // 保存时取消自动格式化    
   editor.formatOnSave: false,    
   // 编辑粘贴取消自动格式化    
   editor.formatOnPaste: false,  
-  //设置Eslint需要验证的语言    
+  //设置 Eslint 验证的语言    
   eslint.validate: [        
       "javascript",        
       "javascriptreact",        
