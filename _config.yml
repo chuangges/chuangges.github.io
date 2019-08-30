@@ -14,7 +14,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://chuangges.github.io/
+url: https://chuangges.gitee.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -148,7 +148,7 @@ encrypt:
 nofollow:
   enable: true
   exclude:     # 例外的链接，可将友情链接放置此处
-  - 'https://chuangges.github.io/'
+  - https://chuangges.gitee.io/
 
 # hexo sitemap
 sitemap:
@@ -171,5 +171,8 @@ deploy:
   # repository: https://github.com/chuangges/chuangges.github.io.git
   repository: https://gitee.com/chuangges/chuangges.git
   branch: master
+
+
+
 
 

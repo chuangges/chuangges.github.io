@@ -258,16 +258,29 @@ description: 入门简介、JSX 表达式、组件化开发
   cd src
   rm App.* index.css logo.svg
   mkdir coms pages style tool
+  ```
 
+
+## 路由功能
+
+### react-router
+> `react-router-v4` 称为 “第四代 react-router“，主要有三个包：`react-router(core)、react-router-dom(for web)、react-router-native(for #native)`。react-router 实现了路由的核心功能，react-router-dom/native 都是基于 react-router 并添加了对应运行环境的特定功能，它们通过 npm 安装时都会将 react-router 作为依赖安装。
+
+
+
+### 代码实现
+> https://www.jianshu.com/p/dcdb3884d73c
+
+  ```js
   // 安装工具
   cnpm i react-router-dom -S
 
-  // 修改 index.js
+  // 修改 src/index.js
   import './style/style.scss';
   import App from './router/App';
 
 
-  // 新建 router.js：存放路由
+  // 新建 src/router.js：存放路由
   import React, { Component } from 'react'
   import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
   import SiteIndex from './pages/index'
@@ -284,7 +297,7 @@ description: 入门简介、JSX 表达式、组件化开发
     }
   }
 
-  // 新建页面：page/site/index.jsx
+  // 新建页面：pages/index.jsx
   import React, { Component } from 'react'
 
   export default class Index extends Component {
@@ -293,11 +306,9 @@ description: 入门简介、JSX 表达式、组件化开发
       this.state = {}
     }
 
-    componentDidMount () { }
-
     render () {
       return (
-        <div className="home">indexPage</div>
+        <div className="index">indexPage</div>
       )
     }
   }
@@ -305,30 +316,11 @@ description: 入门简介、JSX 表达式、组件化开发
   // 新建 style/index.css：存放全局样式
   ```
 
- 
-
 
 
 ## 简单练习
 
-  ```js
-  // test/src/index.js
-  import React, { Component } from 'react'  // 组件父类 Component
-  import ReactDOM from 'react-dom'      // 将 React 组件渲染到页面
 
-  class Head extends Component {
-    render () {
-      return (
-        <h1>React 小书</h1>
-      )
-    }
-  }
-
-  ReactDOM.render(
-    <Head />,
-    document.getElementById('root')
-  )
-  ```
 
 
 
