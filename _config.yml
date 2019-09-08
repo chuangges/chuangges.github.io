@@ -147,8 +147,8 @@ encrypt:
 # 外部链接优化
 nofollow:
   enable: true
-  exclude:     # 例外的链接，可将友情链接放置此处
-  - https://chuangges.github.io/
+  exclude:     # 例外的链接，可将友情链接放置此
+  - https://chuangges.gitee.io/
 
 # hexo sitemap
 sitemap:
@@ -171,5 +171,8 @@ deploy:
   # repository: https://github.com/chuangges/chuangges.github.io.git
   repository: https://gitee.com/chuangges/chuangges.git
   branch: master
+
+
+
 
 

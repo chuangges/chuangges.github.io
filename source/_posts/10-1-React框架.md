@@ -259,13 +259,17 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
   rm App.* index.css logo.svg
   mkdir coms pages style tool
   ```
-
- 
+  
 
 ## 路由功能
 
 ### react-router
 > `react-router-v4` 称为 “第四代 react-router“，主要有三个包：`react-router(core)、react-router-dom(for web)、react-router-native(for #native)`。react-router 实现了路由的核心功能，react-router-dom/native 都是基于 react-router 并添加了对应运行环境的特定功能，它们通过 npm 安装时都会将 react-router 作为依赖安装。
+
+
+
+### 代码实现
+> https://www.jianshu.com/p/dcdb3884d73c
 
   ```js
   // 安装工具
@@ -313,9 +317,7 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
   ```
 
 
-
-
-# 三、JSX 语法
+# 二、JSX 语法
 > 全称 `JavaScript XML`，是 react 定义的一种类似于 XML 的 JS 扩展语法：`XML + JS`。用于创建 react 虚拟 DOM 对象，即 JSX 最终会被解析编译为合法的 JS 对象，基本规则为：< 开头的代码以标签的语法解析、{ 开头的代码以 JS 语法解析。
 
 

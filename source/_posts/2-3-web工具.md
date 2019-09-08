@@ -664,10 +664,10 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
 ## 工作提交代码
   ```js
   /**
-    *  远程分支   -->  本地分支
-    *  orgin/master --> master
-    *  orgin/dev/t_lishi/xx --> dev/t_lishi/xx
-    */
+   *  远程分支   -->  本地分支
+   *  orgin/master --> master
+   *  orgin/dev/t_lishi/xx --> dev/t_lishi/xx
+  **/
 
   git fetch --all        //更新远程修改但不会merge
   git reset --hard orgin/master  //强制更新(慎用)
