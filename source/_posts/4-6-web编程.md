@@ -1,5 +1,5 @@
 ---
-title: Web 编程模式和算法
+title: Javascript 编程和算法
 tags:
   - Javascript
 categories: Javascript
@@ -9,6 +9,182 @@ keywords:
 date: 2019-04-02 21:38:29
 description: 模块化编程、面向对象编程、面向切面编程、异步编程、排序和搜索算法
 ---
+
+
+# 一、编程范式
+> 即某种编程语言典型的编程风格或者说编程方式，它是程序员看待程序的观点，比如面向对象编程的世界中的程序是一系列相互作用的对象、函数式编程的世界中的程序是一个无状态的函数组合序列。需要注意的是，它是编程语言的一种分类方式但并不针对某种编程语言，每种编程语言都有它提倡的范式而且一般可以适用多种范式。JS 支持的编程范式主要特点如下：
+
+
+## 分类
+
+1. 命令式编程
+  * 又称过程式，包括数据运算、循环语句、条件分支和无条件分支等。
+  * 最基础的范式，是一种简单的从上至下完成任务，流水账式的编程风格。可以理解为面向过程，需要明确指出代码具体的执行过程。
+  * 核心是模块化思想，代码编写比较简单，但是依赖外部变量容易影响其它代码，可读性较少，后期的维护成本也较高，不适合复杂程序的设计。
+2. 声明式编程
+  * 包括数据库查询语言、正则表达式、函数式编程等。
+  * 它和命令式编程相对立，只需要告诉计算机代码执行的目标而不是具体过程。
+  * 核心是避免副作用，不改变也不依赖外部数据，能够最大程度的精简代码并适用于并行计算。
+3. 面向对象编程
+  * 核心是抽象，提供清晰的对象边界。结合封装、集成、多态特性，降低了代码的耦合度，提升了系统的可维护性。
+
+
+
+
+# 二、面向对象编程 OOP
+> 核心思想是将任务抽象成一个（或一组）对象的数据和操作，适用于对代码进行抽象封装并实现访问控制。`字面量方式 和 new Object()` 是两种最常用的对象创建方式，但是在使用同一接口创建多个对象时会产生大量重复代码，为了简化代码量并提高可维护性，项目开发时一般使用面向对象写法。程序设计包括三个基本概念：`封装性、继承性、多态性`，程序语言通过类、方法、对象和消息传递来支持面向对象的程序设计范式。
+
+
+  ```js
+  (function() {
+    "use strict";
+    var Task = function(nums) {
+      this.nums = nums;
+    };
+  
+    Task.prototype.square = function() {
+      var squares = [];
+      for (var i=0; i<this.nums.length; i++) {
+          squares.push(this.nums[i]*this.nums[i]);
+      }
+      return squares;
+    };
+    Task.prototype.sum = function(arr) {
+      var res = 0;
+      for (var i=0; i<arr.length; i++) {
+          res += arr[i];
+      }
+      return res;
+    };
+  
+    var t = new Task([2,4,6]);
+    console.log(t.sum(t.square()));  // 56
+  }())
+  ```
+
+
+## 特点
+  * 抽象：抓住核心问题
+  * 封装：只能通过对象来访问方法
+  * 继承：从已有对象上继承出新的对象
+  * 多态：多对象的不同形态
+
+
+## 实现方式
+  * __工厂模式__：解决了重复实例化多个对象的问题，但是不能识别各自的实例化对象
+  * __构造函数模式__：把函数当作一个类，实例化时它会隐式创建一个空对象并最后返回
+    * 建议首字母大写以区分普通函数
+    * 实例化的对象可以通过 instanceof 判断它的实例
+  * __原型模式__：好处是可以让 `所有对象实例` 共享 `原型对象` 所包含的属性和方法
+  * __混合模式__：可变属性写入构造函数，固定属性和方法写入原型对象，这样可以节省内存 
+
+
+  ```js
+  // 工厂模式
+  function person(name, age){
+      var obj = {};     // 原料
+      obj.name = name;  // 加工
+      obj.age = age;    
+      obj.say = function(){ 
+        console.log(this.name)    
+      }
+      return obj     
+  }
+  var p1 = person("tom", 18);
+
+
+  // 构造函数模式
+  function Person(name, age){     // 类：模具
+      this.name = name;  
+      this.age = age;    
+      this.say = function(){ 
+        console.log(this.name)    
+      }  
+  }
+  var p2 = new Person("tom", 20);  // 实例化对象：产品
+  console.log(p2 instanceof Person);
+
+
+  // 原型模式
+  function Person(){  }
+  Person.prototype.name = "tom";
+  Person.prototype.age = 24;
+  Person.prototype.say = function(){
+      console.log(this.name) 
+  }
+  var p3 = new Person()
+
+
+  // 混合模式
+  function Person(name, age){
+      this.name = name;   
+      this.age = age;   
+  }
+  Person.prototype.say = function(){
+      console.log(this.name);
+  }
+  var p4 = new Person();
+  ```
+
+
+
+## 面向切面编程 AOP
+> 无侵入地将一个函数插入到另一个函数的前面或后面
+
+<div style="text-indent: 2em">主要功能是将日志统计、异常处理等一些跟核心业务逻辑模块无关的功能抽离出来并封装，然后动态插入到业务逻辑模块的指定位置。这样不仅简化了业务逻辑模块，而且方便统一管理功能模块。AOP 其实只是 OOP 的补充，OOP 从横向上区分出一个个的类，AOP 则从纵向上向对象中加入特定的代码。常用场景如下：</div>
+
+  * 防止 window.onload 被二次覆盖
+  * 给 Ajax 请求动态添加参数
+  * 统计函数的执行时间
+  * 分离表单请求和校验
+  * 职责链模式
+  * 组合替代继承
+
+
+  ```js
+  // before 切面：让一个函数在另一个函数之前执行
+  Function.prototype.before = function(fn) {
+      var _self = this;     // 保存原函数引用
+      return function(){
+        fn.apply(this, arguments)   // 执行新函数，修正 this
+        return _self.apply(this, arguments);  // 执行原函数
+      }
+  }
+
+  // after 切面：让一个函数在另一个函数之后执行
+  Function.prototype.after = function(fn) {
+    var _self = this;
+    return function(){
+      var ret = _self.apply(this, arguments);
+      fn.apply(this, arguments);
+      return ret;
+    }
+  }
+
+  var obj = {
+    name: 'tangdy',
+    getName: function(){
+      console.log(this.name);
+    }
+  }
+
+  obj.getName = obj.getName.before(function(){
+      console.log("before")
+  }).after(function(){
+      console.log("after")
+  });
+  obj.getName();
+  ```
+
+
+## 事件驱动编程
+> 命令式编程的代码本身给出了程序执行的顺序，但事件驱动程序中的许多代码可能在完全不可预料的时刻被执行 (由用户与正在执行的程序的互动激发导致)。常用于用户与程序的交互，常用于 GUI (图形用户界面) 编程应用通过图形用户接口（鼠标、键盘、触摸板）进行交互式的互动，也可以用于异常的处理和响应用户自定义的事件等。实现事件驱动需要考虑事件定义、事件触发、事件转化、事件合并、事件排队、事件分派、事件处理、事件连带等实际问题，属于事件驱动的编程语言有：VB、C#、Java、Node.js 等。
+
+  * 事件：通知某个特定的事情已经发生（事件发生具有随机性） 
+  * 事件与轮询：轮询行为是一种无休止地观察和判断的行为方式。而事件是静静地等待事情的发生
+  * 事件处理器：对事件做出响应时所执行的一段程序代码，使得程序能够对于用户的行为做出反映
+
+
 
 # 一、模块化编程
 
@@ -290,127 +466,8 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
   .then(([module1, module2, module3]) => { })
   ```
 
-  
-# 二、面向对象编程 OOP
-> 用对象的思想去写代码，用来定义一个类
 
-<div style="text-indent: 2em">`字面量方式 和 new Object()` 是两种最常用的对象创建方式，但是在使用同一接口创建多个对象时会产生大量重复代码，为了简化代码量并提高可维护性，项目开发时一般使用面向对象写法。</div>
-
-## 特点
-  * 抽象：抓住核心问题
-  * 封装：只能通过对象来访问方法
-  * 继承：从已有对象上继承出新的对象
-  * 多态：多对象的不同形态
-
-
-## 实现方式
-  * __工厂模式__：解决了重复实例化多个对象的问题，但是不能识别各自的实例化对象
-  * __构造函数模式__：把函数当作一个类，实例化时它会隐式创建一个空对象并最后返回
-    * 建议首字母大写以区分普通函数
-    * 实例化的对象可以通过 instanceof 判断它的实例
-  * __原型模式__：好处是可以让 `所有对象实例` 共享 `原型对象` 所包含的属性和方法
-  * __混合模式__：可变属性写入构造函数，固定属性和方法写入原型对象，这样可以节省内存 
-
-
-  ```js
-  // 工厂模式
-  function person(name, age){
-      var obj = {};     // 原料
-      obj.name = name;  // 加工
-      obj.age = age;    
-      obj.say = function(){ 
-        console.log(this.name)    
-      }
-      return obj     
-  }
-  var p1 = person("tom", 18);
-
-
-  // 构造函数模式
-  function Person(name, age){     // 类：模具
-      this.name = name;  
-      this.age = age;    
-      this.say = function(){ 
-        console.log(this.name)    
-      }  
-  }
-  var p2 = new Person("tom", 20);  // 实例化对象：产品
-  console.log(p2 instanceof Person);
-
-
-  // 原型模式
-  function Person(){  }
-  Person.prototype.name = "tom";
-  Person.prototype.age = 24;
-  Person.prototype.say = function(){
-      console.log(this.name) 
-  }
-  var p3 = new Person()
-
-
-  // 混合模式
-  function Person(name, age){
-      this.name = name;   
-      this.age = age;   
-  }
-  Person.prototype.say = function(){
-      console.log(this.name);
-  }
-  var p4 = new Person();
-  ```
- 
-
-# 三、面向切面编程 AOP
-> 无侵入地将一个函数插入到另一个函数的前面或后面
-
-<div style="text-indent: 2em">主要功能是将日志统计、异常处理等一些跟核心业务逻辑模块无关的功能抽离出来并封装，然后动态插入到业务逻辑模块的指定位置。这样不仅简化了业务逻辑模块，而且方便统一管理功能模块。AOP 其实只是 OOP 的补充，OOP 从横向上区分出一个个的类，AOP 则从纵向上向对象中加入特定的代码。常用场景如下：</div>
-
-  * 防止 window.onload 被二次覆盖
-  * 给 Ajax 请求动态添加参数
-  * 统计函数的执行时间
-  * 分离表单请求和校验
-  * 职责链模式
-  * 组合替代继承
-
-
-  ```js
-  // before 切面：让一个函数在另一个函数之前执行
-  Function.prototype.before = function(fn) {
-      var _self = this;     // 保存原函数引用
-      return function(){
-        fn.apply(this, arguments)   // 执行新函数，修正 this
-        return _self.apply(this, arguments);  // 执行原函数
-      }
-  }
-
-  // after 切面：让一个函数在另一个函数之后执行
-  Function.prototype.after = function(fn) {
-    var _self = this;
-    return function(){
-      var ret = _self.apply(this, arguments);
-      fn.apply(this, arguments);
-      return ret;
-    }
-  }
-
-  var obj = {
-    name: 'tangdy',
-    getName: function(){
-      console.log(this.name);
-    }
-  }
-
-  obj.getName = obj.getName.before(function(){
-      console.log("before")
-  }).after(function(){
-      console.log("after")
-  });
-  obj.getName();
-
-  ```
-
-
-# 四、异步编程
+# 二、异步编程
   
 ## 回调函数
   * 实现：作为参数传递到其它函数执行
@@ -712,6 +769,7 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       }
   })([1, 2, 3])
   ```
+
 
 
 # 五、JS 算法  

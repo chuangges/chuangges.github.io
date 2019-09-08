@@ -127,7 +127,7 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
 						
 				
 ## 单页面项目
-> 查看版本：vue -V
+> 查看版本：vue -V。eslint + prettier 统一代码风格：https://yq.aliyun.com/articles/667333
 
   1. __vue-cli 2__
     * 安装：`cnpm i vue webpack vue-cli -g`

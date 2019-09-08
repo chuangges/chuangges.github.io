@@ -312,7 +312,7 @@ description: 实例对象、全局方法、组件基础
 
 
 ## 内置指令
-  * 数据渲染：`{{data}}、v-text、v-html`
+  * 数据渲染：`双层 { }、v-text、v-html`
   * 条件渲染：`v-if、v-else`
   * 循环渲染：
     * 数组：`v-for="(item, index) in arr" :key="index"`
