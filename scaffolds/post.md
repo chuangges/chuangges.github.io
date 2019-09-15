@@ -1,11 +1,11 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags: [React] 
-categories: React
+tags: [插件] 
+categories: 常用插件
 top: false
 keywords:
-    - React
+    - 常用插件
 description:       # 文章摘要
 password:          # 文章密码
 abstract:          # 文章摘要
