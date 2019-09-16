@@ -104,13 +104,13 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
 
 
 
-# 三、代码工具
+# 三、代码编辑工具
 
-## 代码编辑 vscode
-> 常用扩展插件如下：
+## 代码编辑器 vscode
+
+### 扩展插件
 
   * 显示效果类
-    * __Beautify__：代码高亮
     * __Dracula Official__：高亮主题
     * __vscode-icon__：让资源树目录加上图标
     * __Bracket Pair Colorizer__：每一对括号用不同颜色区别
@@ -138,56 +138,88 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
     * __npm Intellisense__：导入时提示已安装模块
     * __Python__：添加对 py 文件的支持
     * __GitLens__：简单实现 git 提交代码
+    * __Open in Browser__：浏览器中打开文件
     * __Debugger for chrome__：调试 Debug
-    
+
+
+
+### 常用配置
 
   ```js
   // 用户配置：文件 --> 首选项 --> 设置 --> User Settings
 
   // 解决 vscode 卡顿
-  search.followSymlinks: false,
-  git.enabled: false,
-  git.autorefresh: false,
- 
-  // 窗口失去焦点自动保存    
-  files.autoSave: "onFocusChange",    
-  // 不再显示扩展建议的通知 
-  extensions.ignoreRecommendations: true,    
-  // 不再显示新版本消息    
-  vsicons.dontShowNewVersionMessage: true,  
-  // 是否将打开的编辑器显示为预览 
-  workbench.editor.enablePreview: false,   
-  // 字体字号
-  editor.fontSize: 16, 
-  // 代码缩进   
-  editor.tabSize: 4,    
-  // 是否自动设置键入后行的格式    
-  editor.formatOnType: false,    
-  // 保存时取消自动格式化    
-  editor.formatOnSave: false,    
-  // 编辑粘贴取消自动格式化    
-  editor.formatOnPaste: false,  
-  //设置 Eslint 验证的语言    
-  eslint.validate: [        
-      "javascript",        
-      "javascriptreact",        
-      "html",        
-      "vue",        
-      {            
-        "language": "vue",            
-        "autoFix": true        
-      }
-  ],
-  // HTML Snippets 插件配置
-  emmet.triggerExpansionOnTab: true,
-  emmet.includeLanguages: {
-      "vue-html": "html",
-      "vue": "html"
-  },
-  ```
-      
+  "search.followSymlinks": false,  // cpu 占用过高
+  "git.enabled": false,
+  "git.autorefresh:: false,
 
-## 接口调试 Postman
+  // 窗口失去焦点自动保存   
+  "files.autoSave": "onFocusChange",
+  // 不再显示扩展建议的通知 
+  "extensions.ignoreRecommendations": true,   
+  // 不再显示新版本消息   
+  "vsicons.dontShowNewVersionMessage": true, 
+  // 是否将打开的编辑器显示为预览
+  "workbench.editor.enablePreview": false,   
+  // 字体字号
+  "editor.fontSize": 16,
+  // 代码缩进
+  "editor.tabSize": 2,
+  // eslint 验证语言
+  "eslint.validate": [  
+    "javascript",       
+    "javascriptreact",       
+    "html",
+    "vue",      
+    {
+      "language": "vue",           
+      "autoFix": true       
+    },
+    {
+      "language": "html",           
+      "autoFix": true       
+    }
+  ],
+  // 保存时自动修复 eslint 错误
+  "eslint.autoFixOnSave": true,
+  // 保存时自动格式化
+  "editor.formatOnSave": true
+  // HTML Snippets 插件配置
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "wxml": "html",
+    "vue-html": "html",
+    "vue": "html"
+  },
+  // 使对应扩展名的文件使用特定语言
+  "files.associations": {
+    "*.tpl": "html",
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    ".**rc": "json",
+    ".sequelizerc": "javascript"
+  }
+  ```
+
+
+## 代码规范 EditorConfig
+> EditorConfig 是一个名称为 .editorconfig 的自定义文件，用于在基本代码库中维持一致的编码风格和设置，例如缩进样式、选项卡宽度、行尾字符以及编码等，而无需考虑使用的编辑器或 IDE，这在多人合作开发项目时十分有用而且必要。
+
+  ```js
+  // .editorconfig：项目根目录下新建
+  root = true
+
+  [*]
+  indent_style = space
+  indent_size = 2
+  charset = utf-8
+  trim_trailing_whitespace = false
+  insert_final_newline = false
+  ```
+
+
+## 接口调试器 Postman
 
 ### 基础功能
   <div align="center">
@@ -711,6 +743,7 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
   // 从远程仓库里拉取一条本地不存在的分支到本地
   git stash                 // 保存所做的更改
   git checkout -b 本地分支名 origin/远程分支名  // 拉取远程分支
+  git pull
   git stash pop             // 将所做的更改移到当前分支上
 
   // 提交代码

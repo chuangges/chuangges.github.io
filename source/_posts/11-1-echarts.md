@@ -7,7 +7,7 @@ top: false
 keywords:
   - 常用插件
 date: 2019-09-16 11:13:10
-description: 基本介绍、简单使用、配置选项
+description: 基本介绍、引用方式、配置选项
 ---
 
 # 一、基本介绍
@@ -84,7 +84,7 @@ description: 基本介绍、简单使用、配置选项
 
 
 
-# 二、简单使用
+# 二、引用方式
 
 ## Vue
 > 安装：`cnpm install echarts -S`
@@ -206,45 +206,32 @@ description: 基本介绍、简单使用、配置选项
 
 
 # 三、配置选项
+> 图表选项 option 包含了图表实例任何可配置的选项：`公共选项、组件选项、数据选项`
 
-## title 标题
+https://www.jianshu.com/p/62b95115f522
 
-  ```js
-  // 包含主标题和副标题
-  title: {
-    target: 'blank',            // 指定窗口打开主标题超链接
-    textStyle: { },             // 主标题文字样式(颜色、粗细等)
-    subtextStyle: { },          // 副标题样式(对齐方式等)
-    textAlign: 'auto',          // 整体（主副标题）的水平对齐
-    textVerticalAlign: 'auto',  // 整体（主副标题）的垂直对齐
-    triggerEvent: false,        // 是否触发事件
-    padding: 5,                 // 标题内边距，接受数组指定上右下左边距
-    itemGap: 10,                // 主副标题间距
-    zlevel: 0,                  // 用于 Canvas 分层，内存开销大，谨慎使用
-    z: 2,                       // 控制图形的先后顺序，优先级低于zlevel
-    x: 'left',                  // 水平安放位置 (center、left、right、像素值)
-    y: 'top',                   // 垂直安放位置 (top、bottom、center、像素值)
-    left: 'auto',               // grid 组件容器左侧的距离 (center、left、right、像素值、%)
-    top: 'auto',                // grid 组件容器上侧的距离 (top、middle、bottom、像素值、%)
-    right: 'auto',              // grid 组件容器右侧的距离 (像素值、%)
-    bottom: 'auto',             // grid 组件容器下侧的距离 (像素值、%)
-    backgroundColor: 'transparent',     // 标题背景色
-    borderColor: '#ccc',                // 标题边框颜色
-    borderWidth: 0,                     // 标题边框线宽
-    borderRadius: 0,                    // 圆角半径，接受数组指定4个圆角半径
-    shadowBlur: 0,                      // 图形阴影的模糊大小
-    shadowColor: '#000',                // 阴影颜色
-    shadowOffsetX: 0,                   // 阴影水平方向上的偏移距离
-    shadowOffsetY: 0                    // 阴影垂直方向上的偏移距离
-  }
-  ```
+https://my.oschina.net/u/3363053/blog/900173
 
 
-## legend 图例
-> 仅列出图例单独的属性，公共属性如：`show、zlevel、x、y、z、left、top、right、bottom、padding、itemGap、backgroundColor、borderColor、borderWidth、borderRadius、shadowBlur、shadowColor、shadowOffsetX、shadowOffsetY、textStyle` 等部分属性可参考 title。
 
-https://www.jianshu.com/p/c475e97eb5e1
-https://www.jianshu.com/p/484a0d968749
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
