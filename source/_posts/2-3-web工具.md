@@ -702,48 +702,51 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
   **/
 
   git fetch --all        //更新远程修改但不会merge
-  git reset --hard orgin/master  //强制更新(慎用)
+  git reset --hard orgin/master  // 强制更新(慎用)
 
   git pull orgin master  // 拉取代码到本地并合并到本地
 
 
   git branch            // 查看本地分支
-  git checkout master   //切换到主分支分支
+  git checkout master   // 切换到主分支分支
 
   git branch -D BranchName    // 删除本地分支(--delete/-d)
   git branch -r -D origin/BranchName  // 删除远程分支
   git push origin :BranchName   // 删除远程分支简单方法
 
-  git checkout -b dev/t_lishi/Navigation  // 创建并切换到该分支          
+  git checkout -b BranchName           // 创建并切换到该分支          
   // 相当于以下两个命令的合并
-  git branch branchName     新建    
-  git checkout branchName   切换
+  git branch BranchName        // 新建    
+  git checkout BranchName      // 切换
 
-  git push origin dev/t_lishi/Navigation  // 推送到远端
-  git branch -a      // 查看远程分支
+  git push origin BranchName   // 推送到远端
+  git branch -a                // 查看远程分支
 
   // 修改某个文件后操作
-  git status  查看状态
-  git add TaskDoc/t_lishi.log  // 指定需要提交到本地仓库的文件
+  git status   // 查看状态
+  git add .    // 指定需要提交到本地仓库的文件
   git status 
-  git commit -m "create Navigation"      // 提交代码到本地
-  git push origin dev/t_lishi/Navigation    // 推送到远程仓库
+  git commit -m "create Branch"    // 提交代码到本地
+  git push origin BranchName       // 推送到远程仓库
 
 
   // 下载远程代码
   git clone url                  // 拉取远程主分支代码到本地
-  git clone -b my-branch url     // 拉取指定分支代码到本地
+  git clone -b BranchName url    // 拉取指定分支代码到本地
   git remote -v                  // 查询当前远程的版本
 
   // 从远程仓库获取最新代码到本地当前分支
   git pull
   git pull origin master
-  git pull origin dev
+  git pull origin BranchName
+
+  // 直接拉取远程分支
+  git checkout -b 本地分支名 origin/远程分支名  
 
   // 从远程仓库里拉取一条本地不存在的分支到本地
   git stash                 // 保存所做的更改
-  git checkout -b 本地分支名 origin/远程分支名  // 拉取远程分支
   git pull
+  git checkout 远程分支名
   git stash pop             // 将所做的更改移到当前分支上
 
   // 提交代码
