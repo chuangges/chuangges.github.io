@@ -771,9 +771,25 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
   4. __更新个人代码到远程仓库__
 
 
+## 代码下载或更新缓慢
+> 提升速度：git clone/pull、访问 github 网站
 
+  1. 获取 Github 相关网站的 IP
+    * 查询工具：[站长工具 DNS 查询 ](http://tool.chinaz.com/dns/?type=1&host=github.com&ip=)，选择 TTL 值最小的 IP
+    * 查询内容：`www.github.com、www.github.global.ssl.fastly.net`
+  2. 修改本地 host 文件
+    * /etc/hosts 文件是服务器 ip 和域名的映射文件，通过本机配置可以节约访问 DNS 服务机的时间。
+    ```js
+    // 打开文件编辑器
+    sudo vi /private/etc/hosts
 
+    // 移动至最后一行按下 o 键，然后添加 host 映射
+    151.101.72.249 github.global.ssl.fastly.net
+    192.30.253.112 github.com
 
+    // 按下 Esc、输入 ":wq" 将会自动保存并结束编辑器
+    ```
+  3. 更新 DNS 缓存，使增加的映射生效：`sudo dscacheutil -flushcache`
 
 
 

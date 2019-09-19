@@ -453,6 +453,21 @@ description: HTML、CSS
   ```
 
 
+## 文本对齐
+> 一行居中、多行左对齐
+
+  ```css
+  ul li {
+    width: 100px;
+    text-align: center;
+  }
+  ul li p {
+    display: inline-block;
+    text-align: left;
+  }
+  ```
+  
+
 ## 文本超出省略
   ```css
   /* 单行文本 */
@@ -495,22 +510,8 @@ description: HTML、CSS
   ```
 
 
-## 文本对齐
-> 一行居中、多行左对齐
 
-  ```css
-  ul li {
-    width: 100px;
-    text-align: center;
-  }
-  ul li p {
-    display: inline-block;
-    text-align: left;
-  }
-  ```
-
-
-## 特殊图形
+## 常用特殊图形
 
   ```scss
   // 三角形
