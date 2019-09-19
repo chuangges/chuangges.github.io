@@ -7,7 +7,7 @@ top: false
 keywords:
   - js
 date: 2019-04-02 21:38:29
-description: 模块化编程、面向对象编程、面向切面编程、异步编程、排序和搜索算法
+description: 命令式编程 (模块化编程)、声明式编程 (函数式编程等)、面向对象编程、面向切面编程、异步编程、排序和搜索算法
 ---
 
 
@@ -647,6 +647,10 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
   * 对象状态
     * 三种状态：等待 `pending`、已完成 `fulfilled`、已失败 `rejected`
     * 状态改变：只能从 pending 转变为 fulfilled/rejected，而且状态一旦改变就不会再变
+  * 原生方法
+    * then：Promise 被 reject 时触发
+    * catch：Promise 被 resolve 时触发
+    * finally：Promise 一定会被触发 (新特性)
   * 主要优势
     * 解决回调地狱问题
     * 更好地进行错误捕获 
@@ -670,6 +674,8 @@ description: 模块化编程、面向对象编程、面向切面编程、异步�
       console.log(error)
   }).then(() => {         // 继续执行
       console.log(333)
+  }).finally(() => {
+      // 一般用于结束动画等
   })
 
 

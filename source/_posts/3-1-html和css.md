@@ -494,17 +494,117 @@ description: HTML、CSS
   }
   ```
 
-## 特殊图形
+
+## 文本对齐
+> 一行居中、多行左对齐
 
   ```css
-  /* 半圆 */
+  ul li {
+    width: 100px;
+    text-align: center;
+  }
+  ul li p {
+    display: inline-block;
+    text-align: left;
+  }
+  ```
+
+
+## 特殊图形
+
+  ```scss
+  // 三角形
+  .triangle{
+    width: 0;
+    height: 0;
+    border-top: 50px solid black;
+    border-right: 50px solid transparent;
+    border-left: 50px solid transparent;
+  }
+
+  // 箭头
+  .border-triangle-top(@brcolor: #fbfdff, @bgcolor: #fff, @brwidth: 8px, @width: 100%, @height: 40px) {
+    width: @width;
+    height: @height;
+    position: relative;
+    &:after,
+    &:before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: @brwidth solid transparent;
+      border-bottom-color: @brcolor;
+      left: 50%;
+      margin-left: -@brwidth;
+      top: -@brwidth * 2;
+    }
+    &:after {
+      border-bottom-color: @bgcolor;
+      top: -@brwidth * 2 + 1px;
+    }
+  }
+  .border-triangle-bottom {
+    font-size: 12px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 5px #d9d9d9;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+    line-height: 18px;
+    
+    span{
+      display: inline-block;
+      text-align: left;
+      font-size: 12px;
+      &.t-left{
+        width: 100%;
+      }
+    }
+    &:after,
+    &:before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 4px solid transparent;
+      border-top-color: #d9d9d9;
+      left: 50%;
+      margin-left: -4px;
+      bottom: -8px;
+    }
+    &:after {
+      border-top-color: #fff;
+      bottom: -7px;
+    }
+  }
+
+  // <div class="title" data-title="hello world">title悬浮框</div>
+  .title {
+      margin-top: 100px;
+      margin-left: 100px;
+      position: relative;
+  }
+  .title:hover::after {
+      content: attr(data-title);
+      display: inline-block;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      position: absolute;
+      top: -50px;
+      left: -30px;
+  }
+
+  // 半圆
   .semi-circle {
       width: 100px;
       height: 50px;
       background: red;
       border-radius: 50px 50px 0 0;
   }
-  /* 半椭圆 */
+  // 半椭圆
   .semiellipse {
       margin-top: 30px;
       width: 100px;
@@ -512,7 +612,7 @@ description: HTML、CSS
       background: red;
       border-radius: 100% 0 0 100% /50%;
   }
-  /* 椭圆 */
+  // 椭圆
   .ellipse {
       width: 100px;
       height: 50px;
@@ -520,14 +620,14 @@ description: HTML、CSS
       border-radius: 50px/25px;
   }
 
-  /* 梯形 */
+  // 梯形
   .echelon {
       width: 600px;
       border: 100px solid;
       border-color: transparent transparent #c00;
   }
 
-  /* 三栏 */
+  // 三栏
   .three-cols {
       width: 150px;
       height: 30px;
@@ -538,7 +638,7 @@ description: HTML、CSS
       background-clip: content-box;
   }
 
-  /* 多层阴影 */
+  // 多层阴影
   .shadows {
       width: 100px;
       height: 100px;
@@ -547,24 +647,7 @@ description: HTML、CSS
       box-shadow: 0 0 0 5px green,0 0 0 10px red;
   }
 
-  /* <div class="demo" data-title="hello world">title悬浮框</div> */
-  .title {
-      margin-top: 100px;
-      margin-left: 100px;
-      position: relative;
-  }
-  .title:hover::after {
-      content: attr(data-title);/* 取到data-title属性的值 */
-      display: inline-block;
-      padding: 10px 14px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      position: absolute;
-      top: -50px;
-      left: -30px;
-  }
-
-  /* 眼睛 */
+  // 眼睛
   .eye {
       width: 150px;
       height: 150px;
@@ -575,7 +658,7 @@ description: HTML、CSS
       background-clip: content-box;
   }
 
-  /* 放大镜 */
+  // 放大镜
   .magnifier {
       width: 50px;
       height: 50px;

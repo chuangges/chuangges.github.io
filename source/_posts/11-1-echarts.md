@@ -214,7 +214,98 @@ https://my.oschina.net/u/3363053/blog/900173
 
 
 
+# 四、应用实例
 
+  ```js
+  function initEachart(list) {
+    let callNumList = list || [];
+    let mainEcharts = echarts.init(this.$refs.echart);
+    mainEcharts.setOption({
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: ["0点", "1点", "2点", "3点", "4点", "5点", "6点", "7点", "8点",
+              "9点", "10点", "11点", "12点", "13点", "14点", "15点", "16点",
+              "17点", "18点", "19点", "20点", "21点", "22点", "23点"
+        ],
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: "#F8F8F8"
+          }
+        },
+        axisTick: { show: false },
+        axisLine: {
+          lineStyle: { color: "#475669" }
+        },
+        axisLabel: {
+          interval: 0,
+          formatter: function(value, index) {
+            if (index == 0) {
+              return "\t\t\t\t\t" + value;
+            } else if (index == 23) {
+              return value + "\t\t\t\t\t";
+            } else {
+              return value;
+            }
+          }
+        }
+      },
+      color: ["#3B8EFF"],
+      yAxis: {
+        min: 0,
+        type: "value",
+        splitLine: {
+          show: true,
+          lineStyle: { color: "#F8F8F8" }
+        },
+        axisTick: { show: false },
+        axisLine: {
+          lineStyle: { color: "#475669" }
+        },
+        axisLabel: {
+          formatter: function(value, index) {
+            if (index == 0) {
+              return value + "\n";
+            } else if (index == 3) {
+              return "\n" + value;
+            } else {
+              return value;
+            }
+          }
+        }
+      },
+      series: [
+        {
+          data: callNumList,
+          type: "line",
+          smooth: true,
+          areaStyle: {
+            normal: { opacity: "0.2" }
+          },
+          itemStyle: {
+            normal: {
+              label: {
+                show: true,
+                position: [6, -14],
+                textStyle: {
+                  color: "#475669",
+                  fontSize: "14px"
+                }
+              }
+            }
+          }
+        }
+      ],
+      grid: {
+        left: "40",
+        right: "30",
+        top: "20",
+        bottom: "30"
+      }
+    })
+  }
+  ```
 
 
 
