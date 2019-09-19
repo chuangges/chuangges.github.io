@@ -784,8 +784,8 @@ git config --global user.email "17621538916@163.com"    //设置邮箱
     sudo vi /private/etc/hosts
 
     // 移动至最后一行按下 o 键，然后添加 host 映射
-    151.101.72.249 github.global.ssl.fastly.net
-    192.30.253.112 github.com
+    69.171.232.21 github.global.ssl.fastly.net
+    140.82.113.3 github.com
 
     // 按下 Esc、输入 ":wq" 将会自动保存并结束编辑器
     ```
