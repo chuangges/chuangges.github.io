@@ -1,5 +1,5 @@
 ---
-title: Web 通信和页面功能
+title: Web 通信功能和页面交互
 tags:
   - Javascript
 categories: Javascript
@@ -486,6 +486,7 @@ description: HTTP 协议、Ajax 异步请求、Socket 实时通信、上传下�
 
 
 ## 图片预览与上传
+
   <div align="center"> 
     ![图片上传流程图](/images/web/img_upload.png)
   </div> 

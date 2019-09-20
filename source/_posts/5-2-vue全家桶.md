@@ -634,6 +634,36 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
   ```
 
 
+## 简单用法
+
+  ```js
+  // store.js
+  export default new Vuex.Store({
+    state: {
+      LOADING: false
+    },
+    mutations: {
+      setState(state, newState) {
+        Object.assign(state, newState)
+      }
+    },
+    actions: { }
+  })
+
+  // main.js
+  Object.assign(Vue.prototype, {
+    showLoading: function () {
+      store.commit('setState', { LOADING: true })
+    },
+    hideLoading() {
+      store.commit('setState', { LOADING: false })
+    }
+  })
+
+  // 组件中使用
+  this.showLoading()
+  this.hideLoading()
+  ```
 
 
 

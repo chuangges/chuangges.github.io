@@ -14,26 +14,49 @@ description: 方法和插件的封装方式、常用汇总
 # 一、方法封装
 
 ## 全局注册
-> 在组件中直接使用
 
   ```js
-  // 注册
-  Vue.protytpe.$myMethod = function(options) {
-      console.log("this is my method");
+  // main.js：全剧引入
+  import validator from 'assets/js/validator.js'
+  Vue.use(validator)
+  // validator.js：以插件形式封装
+  export default {
+    install (Vue, options) => {
+        Vue.prototype.validator = { 
+          checkDate: (rule, value, callback){ },
+          checkEmpty: (rule, value, callbac) { }
+        }
+    }
   }
+  // 组件中使用：
+  this.validator.checkDate()
 
-  // 使用
-  this.myMethod()
+  // main.js：直接注册
+  Vue.protytpe.print = function(val) {
+      console.log(val);
+  }
+  Object.assign(Vue.prototype, {
+    showLoading () {
+      store.commit('setState', { LOADING: true })
+    },
+    hideLoading() {
+      store.commit('setState', { LOADING: false })
+    }
+  })
+  // 组件中使用
+  this.print(222)
+  this.showLoading()
   ```
 
 
 ## 单独封装
-> 利用 CommonJS 思想单独封装，然后在组件中引用：`import { getUrlKey } from '@/tool.js'`
 
   ```js
-  // 引用
-  import { myMethod } from 'assets/js/tool.js'
-  myMethod()
+  // tool.js：利用 CommonJS 思想单独封装
+  export function getUserInfo () { }
+
+  import { getUserInfo } from 'assets/js/tool.js'
+  getUserInfo()
   ```
 
 
@@ -421,7 +444,6 @@ description: 方法和插件的封装方式、常用汇总
   }
   // 校验表单的一个字段的第一个报错信息
   function checkRule (dom, rules) {
-  console.log(rules)
 
     let ruleCheckers = {
       required: checkEmpty,
