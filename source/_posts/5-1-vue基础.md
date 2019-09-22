@@ -230,23 +230,6 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
   ```
 
 
-
-## 首屏加载优化
-
-  * 首屏加载效果
-    * 页面内容加载完成前使用 loading、进度条、骨架屏 可以提升用户体验
-    * 骨架屏：vue-skeleton 使用一些空白内容的图形来展示未加载内容  
-  * 路由懒加载
-    * `const login = resolve => require(['common/Login.vue'], resolve)`
-  * 使用 v-if 减少不必要的组件加载：显示时才渲染弹窗等组件
-  * 通过 CDN 引入资源，减小服务器带宽压力
-    * 项目依赖会被全部打包到 vender.js，文件很大时首屏加载较慢
-    * 使用 cdn 文件代替就不会被打包进去，加载速度较快
-  * 将图片等一些静态资源放到云服务器，减小服务器压力
-  * 需加载三方资源：按需引入 ElementUI 等组件库
-  * 若首屏为登录页则可做成多入口
-  * webpack 开启 gzip 压缩
-
           
 ## 预渲染
 > 在构建阶段简单地生成生成匹配特定路由的静态 html 文件
@@ -443,7 +426,7 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
 
 ### 结果分析
 								
-  * SPA：前端打包后的 html 只包含 head 部分，body 部分都是动态插入到 `div id = "app"`
+  * SPA：前端打包后的 html 只包含 head 部分，body 部分都是动态插入到 `<div id = "app"></div>`
   * SSR：服务器提前编译 Vue 资源生成 HTML 并返回给浏览器，这样网络爬虫爬取的内容就是网站上所有可呈现的内容
 
 
@@ -565,7 +548,9 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
 
 ## 静态资源
 
-  * js：`import user from '@/components/user'`
+  * js
+    * 组件：`import user from '@/components/user'`
+    * 方法：`import { getUserInfo } from './tool.js'`
   * css
     * `@import './swiper.css'`
     * `@import '../../assets/scss/mixin.scss'`

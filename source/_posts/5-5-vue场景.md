@@ -7,7 +7,7 @@ top: false
 keywords:
   - vue
 date: 2019-04-14 23:11:50
-description: 路由控制、路由控制、数据加密、数据更新、页面刷新、页面缓存、文件下载、UI 框架
+description: 路由控制、数据加密、数据更新、页面刷新、页面缓存、UI 框架
 ---
 
 # 一、路由控制
@@ -544,69 +544,7 @@ description: 路由控制、路由控制、数据加密、数据更新、页面�
 
 
 
-# 六、文件下载
-> ios 设备上的页面指向下载地址后会直接预览，返回 vue 页面时会丢失 vuex 数据而导致页面报错
-
-  ```js
-  function download (fileUrl) {
-
-    // ios 
-    if (/(iP)/g.test(navigator.userAgent)) {
-      // 打开新页面
-      let routeData = this.$router.resolve({
-        path: "/new_page",
-        query: { "fileUrl": fileUrl }
-      });
-      window.open(routeData.href, '_blank');
-      return false
-    }
-    
-    const isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-    const isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
-
-    // Chrome、Safari
-    if (isChrome || isSafari) {
-        var link = document.createElement('a');
-        link.href = fileUrl;
-
-        if (link.download !== undefined) {
-            var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.length);
-            link.download = fileName;
-        }
-
-        if (document.createEvent) {
-            var e = document.createEvent('MouseEvents');
-            e.initEvent('click', true, true);
-            link.dispatchEvent(e);
-            return true;
-        }
-    }
-
-    if (fileUrl.lastIndexOf('.pdf') == -1) {
-      fileUrl += '.pdf';
-    }
-    
-    window.open(fileUrl, '_blank');
-    return true;
-  }
-
-  // new_page.vue：页面为空
-  export default {
-    created(){
-        let fileUrl = this.$route.query.fileUrl
-
-        if(fileUrl){
-            if (fileUrl.lastIndexOf('pdf') === -1) {
-                fileUrl += '.pdf';
-            }
-            window.location.href = fileUrl
-        }    
-    }
-  }
-  ```
-
-
-# 七、UI 框架
+# 六、UI 框架
 
 ## ElementUI
 
@@ -650,20 +588,6 @@ description: 路由控制、路由控制、数据加密、数据更新、页面�
     import FastClick from 'fastclick'
     FastClick.attach(document.body)
     ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -6,8 +6,8 @@ categories: 项目开发
 top: false
 keywords:
   - 开发工具
-date: 2019-02-20 15:41:48
-description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具 Postman、前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
+date: 2019-02-23 15:41:48
+description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
 ---
 
 # 一、电脑系统 Mac
@@ -53,58 +53,66 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
     * 配置 proxy：即配置代理地址
 
 
-## TeamViewer
-> 远程控制
+## 远程控制
 
-  1. 安装注册：https://www.teamviewer.cn/cn/download/mac-os/
+  1. 安装注册：[TeamViewer](https://www.teamviewer.cn/cn/download/mac-os/)
   2. 登陆办公室、家中电脑上的 TeamViewer
   3. 伙伴ID处输入办公室电脑的 ID，点击连接
   4. 设置无人值守，然后电脑重启后的名称和密码不再改变
 
 
-# 二、浏览器 chrome 
-  1. __搜索__（Google输入框中所有空格都被理解为加号）
-    * 完整匹配: `mysql foreign key`（引号）
-    * 筛选: `mysql key - nodejs`（加减号）
-    * 返回所有: `mysql connect error *`（加通配符）
-    * 站内搜索: `mysql foreign key site:stackoverflow.com`
-    * 加速: 输入网址后点击 Tab，这样可直接使用该站点的站内搜索
-  2. __调试js代码__
-    * Alert, Console等
-    * 断点调试
-      * 步骤：F12 开发者工具 ——> 点击Sources菜单 ——> 左侧树中找到相应文件 ——> 点击行号列(右键为条件断点) ——> 刷新页面 ——> JS执行到断点位置停住，此时可以跟随鼠标查看功能按钮
-      * [相关技巧](http://blog.csdn.net/crper/article/details/50722753) 
-    * debug 断点
-      * 在触发文件中添加 `debugger;` 语句后触发，当代码执行到该语句时就会自动断点, 接下去的操作和在Sources面板添加断点调试几乎一模一样，唯一区别在于调试后需要删除该语句。
-      * 由于有时会遇到异步加载html片段的情况，其JS代码在Sources中无法找到，因此无法直接在开发工具中直接添加断点时可用debug断点（F10一步一步执行，F8一下执行完成）
-  3. __高阶调试功能__
-    * [内置抓包工具等](https://www.cnblogs.com/guaidianqiao/p/7615430.html) 
-  4. __扩展插件__
-    * 谷歌访问助手
-      * 安装：[下载安装包](http://www.ggfwzs.com/) —> 更多工具 —> 扩展程序 —> 直接拖拽 ——> 添加扩展
-      * 扩展其它插件：谷歌访问助手 —> 谷歌网上商店 —> 搜索插件 —> 添加扩展
-    * 常用插件推荐
-      * 掘金
-      * Google 翻译         
-      * FeHelper 
-      * JSONView   
-      * What runs         
-      * Clear Cache
-      * Code Plunker    
-      * Vue.js devtools         
-      * AngularJS Batarang      
-      * React Developer Tools  
-  5. __实用黑科技__
-    * __实现翻墙__
-      * 配置 proxy 代理：setting system —> proxy settings —> LAN setting —> proxy server —> 配置 Address、Port
-      * 配置 Chrome 扩展：下载 [Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) —> 注册登录
-    * __解析 VIP 视频__
-      * 打开网站 [Greasy Fork](https://greasyfork.org/zh-CN) —> 搜索VIP视频解析 —> 安装脚本
-    * 其它：视频广告过滤、电脑管家上网防护等
-
-
 
 # 三、代码编辑工具
+
+## 浏览器工具 chrome
+
+### 搜索
+> Google输入框中所有空格都被理解为加号
+
+  * 完整匹配: `mysql foreign key`（引号）
+  * 筛选: `mysql key - nodejs`（加减号）
+  * 返回所有: `mysql connect error *`（加通配符）
+  * 站内搜索: `mysql foreign key site:stackoverflow.com`
+  * 加速: 输入网址后点击 Tab，这样可直接使用该站点的站内搜索
+
+
+### 调试 js 代码
+  * Alert, Console等
+  * 断点调试
+    * 步骤：F12 开发者工具 ——> 点击Sources菜单 ——> 左侧树中找到相应文件 ——> 点击行号列(右键为条件断点) ——> 刷新页面 ——> JS执行到断点位置停住，此时可以跟随鼠标查看功能按钮
+    * [相关技巧](http://blog.csdn.net/crper/article/details/50722753) 
+  * debug 断点
+    * 在触发文件中添加 `debugger;` 语句后触发，当代码执行到该语句时就会自动断点, 接下去的操作和在Sources面板添加断点调试几乎一模一样，唯一区别在于调试后需要删除该语句。
+    * 由于有时会遇到异步加载html片段的情况，其JS代码在Sources中无法找到，因此无法直接在开发工具中直接添加断点时可用debug断点（F10一步一步执行，F8一下执行完成）
+  * 高阶调试功能
+    * [内置抓包工具等](https://www.cnblogs.com/guaidianqiao/p/7615430.html) 
+
+
+### 扩展插件
+  * 谷歌访问助手
+    * 安装：[下载安装包](http://www.ggfwzs.com/) —> 更多工具 —> 扩展程序 —> 直接拖拽 ——> 添加扩展
+    * 扩展其它插件：谷歌访问助手 —> 谷歌网上商店 —> 搜索插件 —> 添加扩展
+  * 常用插件推荐
+    * 掘金
+    * Google 翻译         
+    * FeHelper 
+    * JSONView   
+    * What runs         
+    * Clear Cache
+    * Code Plunker    
+    * Vue.js devtools         
+    * AngularJS Batarang      
+    * React Developer Tools  
+
+
+### 实用黑科技
+  * __实现翻墙__
+    * 配置 proxy 代理：setting system —> proxy settings —> LAN setting —> proxy server —> 配置 Address、Port
+    * 配置 Chrome 扩展：下载 [Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) —> 注册登录
+  * __解析 VIP 视频__
+    * 打开网站 [Greasy Fork](https://greasyfork.org/zh-CN) —> 搜索VIP视频解析 —> 安装脚本
+  * 其它：视频广告过滤、电脑管家上网防护等
+
 
 ## 代码编辑器 vscode
 
@@ -200,22 +208,6 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
     ".**rc": "json",
     ".sequelizerc": "javascript"
   }
-  ```
-
-
-## 代码规范 EditorConfig
-> EditorConfig 是一个名称为 .editorconfig 的自定义文件，用于在基本代码库中维持一致的编码风格和设置，例如缩进样式、选项卡宽度、行尾字符以及编码等，而无需考虑使用的编辑器或 IDE，这在多人合作开发项目时十分有用而且必要。
-
-  ```js
-  // .editorconfig：项目根目录下新建
-  root = true
-
-  [*]
-  indent_style = space
-  indent_size = 2
-  charset = utf-8
-  trim_trailing_whitespace = false
-  insert_final_newline = false
   ```
 
 
@@ -628,23 +620,23 @@ description: 电脑、浏览器、代码编辑工具 vscode、代码调试工具
 ### 构建本地服务器
 <div style="text-indent: 2em">Webpack 提供一个可选的本地开发服务器 webpack-dev-server，它基于 Node.js 构建而且可以实现浏览器监听代码修改并自动刷新等效果，配置前需要通过 npm 安装它作为项目依赖。</div> 
 
-```js
-module.exports = {
-    entry: __dirname + '/app/main.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
-    },
-    devServer: {
-        contentBase: "./dist",    // 加载页面的所在目录
-        historyApiFallback: true, // 不跳转
-        inline: true,   // 实时刷新
-        hot: true  // 热更新，即不刷新浏览器的前提下刷新页面
-    }
-}
+  ```js
+  module.exports = {
+      entry: __dirname + '/app/main.js',
+      output: {
+          path: path.resolve(__dirname, 'dist'),
+          filename: 'bundle.js'
+      },
+      devServer: {
+          contentBase: "./dist",    // 加载页面的所在目录
+          historyApiFallback: true, // 不跳转
+          inline: true,   // 实时刷新
+          hot: true  // 热更新，即不刷新浏览器的前提下刷新页面
+      }
+  }
 
-// 配置后执行 npm run server 
-```
+  // 配置后执行 npm run server 
+  ```
 
 
 
@@ -661,26 +653,30 @@ module.exports = {
 
 
 ## 工作流程
-<div style="text-indent: 2em">开发者在自己的机器上更新服务器上的最新代码，然后根据需要创建分支，在该分支上提交本地修改的代码到远程仓库并通知主开发者合并代码。如果主开发者发现代码有冲突则让开发者修改后重新提交，没有冲突则合并代码。注意本地的 .git文件是指本地仓库，.git目录下存放着所有文件的版本和关联信息但默认隐藏。开发流程图如下</div>
-<div align="center">
-  ![工作流程图](/images/web/git_work.png)
-</div> 
+  <div style="text-indent: 2em">开发者在自己的机器上更新服务器上的最新代码，然后根据需要创建分支，在该分支上提交本地修改的代码到远程仓库并通知主开发者合并代码。如果主开发者发现代码有冲突则让开发者修改后重新提交，没有冲突则合并代码。注意本地的 .git文件是指本地仓库，.git目录下存放着所有文件的版本和关联信息但默认隐藏。开发流程图如下</div>
+
+  <div align="center">
+    ![工作流程图](/images/web/git_work.png)
+  </div> 
+
 
 ## 常用命令
-<div align="center">
-<!-- git_order.png -->
-![常用命令图](/images/web/git_order.png)
-</div> 
+  <div align="center">
+    <!-- git_order.png -->
+    ![常用命令图](/images/web/git_order.png)
+  </div> 
+
 
 ## 基础配置
-```js
-git config --global --list         //查看全局配置
-git config --global user.name "chuanggefighting"    //设置用户名
-git config --global user.email "17621538916@163.com"    //设置邮箱
-```
+  ```js
+  git config --global --list         //查看全局配置
+  git config --global user.name "chuanggefighting"    //设置用户名
+  git config --global user.email "17621538916@163.com"    //设置邮箱
+  ```
+
 
 ## ssh密钥配置
-<div style="text-indent: 2em">Git使用https协议，每次pull/push都要输入密码比较麻烦，而使用git协议后使用ssh密钥，这样可以省去每次都输密码。配置步骤如下：</div>
+  <div style="text-indent: 2em">Git使用https协议，每次pull/push都要输入密码比较麻烦，而使用git协议后使用ssh密钥，这样可以省去每次都输密码。配置步骤如下：</div>
 
   1. 检测SSH keys是否存在：`cd ~/.ssh`
   2. 创建ssh key(生成密钥对)：`ssh-keygen -t rsa -C "17621538916@163.com"`

@@ -106,7 +106,7 @@ description: Hexo 是一个快速、简洁且高效的博客框架
     2. hexo new page "archive"
     3. blog/sources/archive/index.md：`type: archive`
 
----
+
 
 # 二、博客管理
 
@@ -115,7 +115,7 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   2. __hexo博客源文件__ 
    <div style="text-indent: 2em; margin-bottom: 25px">hexo d 是把本地博客源文件生成的静态网页文件同步到github上而实现部署, 但是博客网站的本地源文件仍需要保存到个人电脑，为了方便在不同电脑上可以编辑管理，可以在github上另建分支，如 hexo分支 </div>
 
----
+
 
 # 三、博客个性化配置
 
@@ -124,20 +124,16 @@ description: Hexo 是一个快速、简洁且高效的博客框架
     * URL 网址配置(网址、根目录、链接格式等)
     * Extensions 扩展配置(主题、插件等)
     * 其他配置选项一般不需要修改
-
-
   2. __主题配置__ (具体在博客优化部分)
     * 安装主题 ：通过 git clone 下载到 blog/themes
     * 启动主题 ：修改 blog/_config.yml 的theme选项
     * 配置主题 ：修改 blog/themes/主题名/_config.yml
-
-
   3. __自定义域名配置__
     * 购买域名
     * 域名解析
     * 添加CNAME
 
----
+
 # 四、NexT主题优化
 
   1. __实用性优化__
@@ -161,8 +157,6 @@ description: Hexo 是一个快速、简洁且高效的博客框架
     * 添加文章置顶功能 ：hexo-generator-index-pin-top
     * 添加站点地图配置 ：hexo-generator-sitemap、hexo-generator-baidu-sitemap
     * DaoVoice在线联系
-    <br/>
-
   2. __博客个性化优化__
     * 添加页面加载动画 ：pace
     * 添加背景动画 ：canvas_nest
@@ -176,7 +170,7 @@ description: Hexo 是一个快速、简洁且高效的博客框架
     * 修改作者头像并旋转
     * 文章添加阴影效果
 
----
+
 
 # 五、基于 Markdown 编写博文
 
@@ -184,7 +178,6 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   * 站点目录下执行命令 hexo new "title"
   * 指定目录下直接创建 source/_post/title.md
 
----
 
 ## 初始化设置
 <div style="text-indent: 2em">使用命令创建文章时，Hexo 会根据文章的模板文件 /scaffolds/post.md 对新建文件进行初始化，可以根据需要自行修改。初始化后的文章头部除了可以设置文章标题、发布日期等基础信息外，还可以对文章添加标签、分类等，常用设置如下：</div> 
@@ -284,8 +277,8 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   * 脚注 ：使用 \[^name] 定义，用来解释专业词汇等
 
 
-### 内嵌Html标签  
-<div style="text-indent: 2em">Markdown本身不支持修改字体、字号与颜色等功能，但是可以通过内嵌Html标签使普通文本内容具有一定的格式，常用如下：</div> 
+### 内嵌 Html 标签  
+  <div style="text-indent: 2em">Markdown本身不支持修改字体、字号与颜色等功能，但是可以通过内嵌Html标签使普通文本内容具有一定的格式，常用如下：</div> 
 
   * <font face="微软雅黑" color="red" size="3">字体及字体颜色和大小</font>
   * 换行<br/>
@@ -293,53 +286,17 @@ description: Hexo 是一个快速、简洁且高效的博客框架
   * <span align="left">文本对齐</span>
   * <span style="text-indent: 2em">首行缩进</span> 
 
----
 
 
-## 图片引用方式
+## 插入图片方式
 
-### 本地引用
-  * __绝对路径__  
-    <div style="text-indent: 2em">将图片统一放在主题目录下 source/images 文件夹中，通过markdown语法访问它们，如 `![](/images/icon.png)`。这些图片既可以在首页内容中访问到，也可以在文章正文中访问到。</div>
-  * __相对路径__
-    <div style="text-indent: 2em">将图片放在文章目录中。首先配置博客根目录下的_config.yml来生成文章目录 ： `post_asset_folder: true`，然后执行命令 $ hexo new title，在 source/_posts 中会生成文章 title.md 和同名文件夹 title。</div>
-    <div style="text-indent: 2em">我们只需将待添加的图片放进title文件夹中，然后在文章中通过 Markdown 语法进行引用即可，如 `![示例图片](example.png "示例图片") 添加图片`。但这些图片却无法在首页中正常显示，如果希望图片在文章和首页中同时显示，可以使用标签插件语法 ：
-    ```
-    {% asset_img example.png This is an image %}
-    ```
-    
-    
-
-### CDN引用
-<div style="text-indent: 2em; margin-bottom: 20px">除了在本地存储图片，还可以将图片上传到一些免费的CDN服务中。因国内访问github速度较慢，所以将图片放到国内图床上，然后引用外链是常用的方法。</div>
-> 图床，也就是专门提供存储图片的地方，我们只要通过图床提供的 API 接口，把图片上传上去，就可以通过外链访问了，根本不用操心图片是怎么存的，硬盘空间不够了，硬盘坏了，访问速度比较慢等等问题，这些图床都会帮我们搞定，他们会用各种技术帮我们做图片相关的优化和服务，比如多机互备、CDN 加速、图片处理、图片鉴黄、文本识别等等。
-
-> 当然，图床也是有缺点的，当所有人都把图片存在同一个图床上，万一有一天图床真挂了，那所有图片就都无法访问了，虽然这种情况的概率很低，但并不等于不会发生。
-
-> 目前图床可以分为两种，一种是公共图床，一种是自建图床。公共图床也就是利用公共服务的图片上传接口，来提供图片外链的服务，比如新浪微博。自建图床，也就是利用各大云服务商提供的存储空间或者自己在 VPS 上使用开源软件来搭建图床，存储图片，生成外链提供访问，比如七牛、Lychee 开源自建图床方案。
-
-
-  1. 微博图床（Chrome浏览器有个“新浪微博图床”插件，可以自动生成markdown链接）简单方便
-  2. 七牛：需要注册且实名认证等太麻烦，放弃
-  3. 腾讯云等云存储服务，需要先将照片放到云盘，然后找到超链接，然后粘贴到文章。太麻烦，放弃。
-  4. ipic 工具【强烈推荐】，支持监控剪贴板，一键上传到微博图床，免费版默认是微博图床，支持七牛云等，下载地址：https://itunes.apple.com/cn/app/id1101244278?mt=12
-
-
-### 使用github存储博客图片  
-  1. blog/source/ 创建图片文件夹
-  2. 更新博客仓库，执行 hexo g -d
-  3. github 仓库的图片位置点击 download，复制图片的链接
-  4. 将链接插入文章
-
-
-### 直接插入 base64 编码的图片
-  1. 在线压缩：http://www.bejson.com/ui/compress_img/ 
-  2. 在线编码：http://imgbase64.duoshitong.com/ 
-  3. 复制到本地后使用
-    * 直接使用：`![img](data:image/png;base64,iVBORw0...) `
-    * 引用式：`![img][img_name]、[img_name]:data:image/png;base64,iVBORw0...`
-
-
-
+* Markdown 语法
+  * 本地图片：`![图片描述](/images/icon.png)`，注意需要将图片统一放在主题目录 source/images
+  * 网络图片：`![图片描述](http://baidu.com/pic/doge.png)`
+    * 国内访问 github 速度较慢，所以将图片上传到一些国内图床 (专门提供存储图的免费 CDN 服务器)。
+    * 图床可以分为 __公共图床__ (利用公共服务的图片上传接口，比如新浪微博)、__自建图床__ (利用各大云服务商提供的存储空间或者自己在 VPS 上使用开源软件来搭建图床，存储图片并生成外链提供访问，比如七牛、Lychee 开源自建图床方案)。
+* Hexo 语法
+  * 直接插入：`{% asset_img blog.jpg 图片描述 %}`，注意须使用相对路径、hexo3 以上版本。
+  * 通过插件：`npm install hexo-asset-image –save、![图片描述](file/icon.png)`，注意安装插件后 hexo 新建博文时会新增 md 文件的同名文件夹用于存放图片。
 
 

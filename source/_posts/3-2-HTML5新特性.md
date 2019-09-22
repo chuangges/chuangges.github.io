@@ -7,7 +7,7 @@ top: false
 keywords:
   - html
 date: 2019-03-07 22:50:40
-description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏、存储
+description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏、数据存储
 ---
 
 
@@ -665,8 +665,146 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   ```
   
 
-# 八、存储方式
-> 客户端存储方式：localStorage、sessionStorage、cookie、UserData、webSQL、indexeddb、HTML5 离线存储等
+# 八、数据储存
+> 客户端存储方式：localStorage、sessionStorage、cookie、UserData、webSQL、IndexedDB、HTML5 离线存储等。
+
+
+## cookie
+> 随着每次 http 请求头信息一起发送，无形中增加了网络流量，而且能存储的数据容量较小，适用于购物车、客户端登录等场景
+
+  * 优点
+    * 可控制过期时间 
+    * 可扩展、可用性比较好
+    * 可加密减少 cookie 被破解的可能性
+  * 缺点
+    * 在请求头上携带数据安全性差
+    * 数量和长度有限制，最多 20 条，最长不能超过 40k
+  * API
+    * 存储：`document.cookie = "键=值"`
+    * 读取：`var val = document.cookie`         
+    * 删除：
+      * `var date = new Date()`
+      * `document.cookie = "key=value;expires=" + date.toGMTString()`  
+
+
+  ```js
+  export const setCookie = (name, value, expiredays) => {
+      var exdate = new Date();　　　　
+      exdate.setDate(exdate.getDate() + expiredays);　　　　
+      document.cookie = name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+  }
+
+  export const getCookie = name => {
+      var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if (arr = document.cookie.match(reg))
+          return (arr[2]);
+      else
+          return null;
+  }
+
+  export const delCookie = name => {
+      var exp = new Date();
+      exp.setTime(exp.getTime() - 1);
+      var cval = this.getCookie(name);
+      if (cval != null)
+      document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+  }
+  ```
+
+
+## localStorage
+> 本地存储方式可以长期存储数据，没有时间限制，而且可以储存电话本等大量数据
+
+  * 特点：同源策略限制、只在本地存储、永久保存、同浏览器共享
+  * 优点
+    * 扩展了 cookie 的 4k 限制
+    * 可以将请求数据直接存储到本地，节约带宽
+    * 遵循同源策略，不同网站之间不能直接共用
+  * 缺点
+    * 需要手动删除，否则长期存在
+    * 浏览器大小不一，版本的支持也不一样
+    * 只支持存储 string 类型的数据，JSON 对象需要转换
+    * 本质是对字符串的读取，如果存储内容多则会消耗内存空间而导致页面变卡
+  * 应用场景
+    * 多页面访问共同数据：可以在多个标签页中共享数据
+    * 数据比较大的临时保存方案：比如在线编辑文章时的自动保存
+  * API
+    * 存储：`localStorage.setItem(key, value)`
+    * 读取
+      * 单个：`localStorage.getItem(key)`
+      * 全部：`localStorage.valueOf()`
+    * 删除
+      * 单个：`localStorage.removeItem(key)`
+      * 全部：`localStorage.clear()`
+
+
+  ```js
+  export const setStore = (name, content) => {
+    if (!name) return;
+    if (typeof content !== 'string') {
+      content = JSON.stringify(content);
+    }
+    window.localStorage.setItem(name, content);
+  }
+  export const getStore = name => {
+    if (!name) return;
+    return window.localStorage.getItem(name);
+  }
+  export const removeStore = name => {
+    if (!name) return;
+    window.localStorage.removeItem(name);
+  }
+  ```
+
+
+## sessionStorage
+> 会话存储，关闭浏览器之后数据就会消失。非常适合单页应用程序，便于各业务模块之间的传值
+
+  * 特点
+    * __同源策略限制__ 
+    * __单标签页限制__：同一个标签页中的同源页面共享数据
+    * __只在本地存储__：数据只会在存储在本地，并在标签页关闭后清除
+    * __存储方式__：采用键值对的方式，注意 value 值必须为字符串类型
+    * __存储上限限制__：不同的浏览器存储的上限不同，但大多数限制在 5MB 以下
+  * API
+    * 存储：`sessionStorage.setItem(key, value)`
+    * 读取
+      * 单个：`sessionStorage.getItem(key)`
+      * 全部：`sessionStorage.valueOf()`
+    * 删除
+      * 单个：`sessionStorage.removeItem(key)`
+      * 全部：`sessionStorage.clear()`
+
+ 
+## 以上区别
+  * 传递
+    * cookie 数据通常经过加密，而且会在浏览器和服务器间来回传递
+    * 后两个不会自动把数据发给服务器，仅在本地保存。
+  * 存储大小
+    * cookie 数据大小不能超过4k，始终在同源的 http 请求中携带
+    * 后两个虽然也有存储大小的限制但比 cookie 大得多，可以达到 5M 及以上
+  * 生命周期
+    * cookie 数据只在过期时间之前一直有效
+    * localStorage存储持久数据，不要不主动删除数据就有效有效
+    * sessionStorage数据在当前浏览器窗口关闭后自动删除
+  * 作用域    
+    * sessionStorage 不在不同浏览器窗口中共享
+    * 另外两个在所有同源窗口中都共享
+
+
+## 临时数据
+> html 标签上添加自定义属性来存储和操作数据，注意 js 可以动态添加和删除，但不能删除行内添加的
+
+  * html：`div data-name="值"`，name 为自定义属性名
+  * 注意：`data-e-name：eName, data-myName：myname`
+  * 原生 js
+    * 获取：`div.dataset.name`
+    * 设置：`div.dataset.name = new`
+    * 删除：`div.dataset.name = null`
+  * jQuery
+    * 获取：`$("div").data("name")`
+    * 设置：`$("div").data("name", "new")`
+    * 删除：`$("div").removeDate("name")`
 
 
 ## 离线存储
@@ -679,23 +817,6 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   * 使用
     * html 标签添加 manifest 属性：html manifest="./js/demo.manifest"
     * 编写 manifest 文件：用于告知浏览器需要缓存和不需要缓存的内容
-
-  ```
-  CACHE MANIFEST
-  #version 1.1   // 版本号
-  CACHE:
-      html/index.html   // 首次下载后需要缓存的文件
-  NETWORK:
-      js/jquery.js      // 需要与服务器的连接，不需要缓存的文件
-  FALLBACK: 
-      html/index.html   // 当页面无法访问时的回退页面
-  ```
-
-
-## IndexedDB
-> Indexed Database API，是在浏览器中保存结构化数据的一种数据库
-
-  * 有需要再研究：https://www.cnblogs.com/best/p/6084209.html
 
 
 
@@ -717,11 +838,5 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
     * 功能：实现无刷新更新地址
     * API：`history.pushState、history.replaceState`
    
-
-
-
-
-
-
 
 

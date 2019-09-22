@@ -1,16 +1,16 @@
 ---
-title: 移动端新科技应用
+title: Web 新技术的应用
 tags:
-  - 移动端
-categories: 移动端
+  - 项目开发
+categories: 项目开发
 top: false
 keywords:
-  - 移动端
-date: 2019-07-04 20:12:36
-description: OCR 文字识别和人脸识别、Video 自定义样式和视频通话功能
+  - 技术
+date: 2019-02-28 21:02:57
+description: OCR 识别、Video 视频
 ---
 
-# 一、OCR
+# 一、OCR 识别
 
 ## 基础理解
 
@@ -151,9 +151,7 @@ description: OCR 文字识别和人脸识别、Video 自定义样式和视频通
   ```
 
 
-# 二、Video
-
-
+# 二、Video 视频
 
 ## 标签属性
   ```
@@ -578,6 +576,15 @@ description: OCR 文字识别和人脸识别、Video 自定义样式和视频通
   }
   </style>
   ```
+
+
+
+
+
+
+
+
+
 
 
 
