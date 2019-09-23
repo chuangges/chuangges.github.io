@@ -7,7 +7,7 @@ top: false
 keywords:
   - React
 date: 2019-08-17 22:05:46
-description: 入门简介、项目开发、JSX 表达式、组件化编程
+description: 入门简介、项目开发、JSX 表达式、组件化开发
 ---
 
 # 一、入门简介
@@ -99,10 +99,8 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
 
 ## 实现原理
   
-### 虚拟 DOM 
-
-  <div style="text-indent: 2em;">复杂或频繁的 DOM 操作通常是性能瓶颈产生的原因，所以 React 为了尽可能减少对DOM的操作，提供了 Virtual DOM 机制代替直接的 DOM 操作：`在浏览器端通过 Js 实现了一套 DOM API 来创建一个描述 dom 结构和样式的对象 (即虚拟 DOM)，并用来管理真实 DOM 的状态更新`。为什么通过这多一层的 Virtual DOM 操作就能更快呢？这是因为 `React 有个 diff 算法`。</div>
-  <div style="text-indent: 2em;">每当数据变化时，React 都会重新构建整个 DOM 树，然后 React 通过 diff 算法将当前整个 DOM 树和上一次的 DOM 树进行对比，计算出最小的步骤更新真实的浏览器 DOM。而且 React 能够批处理虚拟 DOM 的刷新，在一个事件循环内的两次数据变化会被合并。尽管每一次都需要构造完整的虚拟 DOM 树，但是因为虚拟 DOM 是内存数据，性能极高，而对实际 DOM 进行操作的仅仅是 Diff 部分，因而能达到提高性能的目的。</div>
+### 虚拟 DOM
+> 在浏览器端创建一个描述 dom 结构和样式的对象（虚拟 DOM）来管理真实 DOM。每当数据变化时 React 就会重新构建整个 DOM 树，通过 diff 算法对比前后两个对象的差异并计算出最小的步骤来更新真实 DOM，最终只把变化的部分重新渲染，而且虚拟 DOM 是内存数据而性能极高，提高了渲染的效率和性能，而原生 dom 更新时需要遍历所有属性并大多与渲染无关。
 
   ```js
   // 方法一
@@ -128,91 +126,8 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
 
 
 ### 组件化
+> 组件就是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合或者嵌套的方式构成大的组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为 commponent (一个完整抽象的组件)`，components 的存在让计算 DOM diff 效率更高。
 
-  <div style="text-indent: 2em;">虚拟 DOM 不仅带来了简单的UI开发逻辑，同时也带来了组件化开发的思想，组件就是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合或者嵌套的方式构成大的组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上则称为 commponent，Virtual DOM 的节点就是一个完整抽象的组件`，components 的存在让计算 DOM diff 更高。</div>
-
-
-  * 页面功能
-  ```xml
-  <div class='wrapper'>
-    <button class='like-btn'>
-      <span class='like-text'>点赞</span>
-      <span>👍</span>
-    </button>
-  </div>
-
-  <script>
-    const button = document.querySelector('.like-btn')
-    const buttonText = button.querySelector('.like-text')
-    let isLiked = false
-    button.addEventListener('click', () => {
-      isLiked = !isLiked
-      buttonText.innerHTML = isLiked ? '取消' : '点赞'
-    }, false)
-  </script>
-  ```
-  * 封装组件
-  ```js
-  // 公共父类
-  class Component {
-
-    constructor (props = {}) {
-      // 自定义配置数据
-      this.props = props
-    }
-
-    setState (state) {
-      const oldEl = this.el
-      this.state = state
-      this._renderDOM()
-      if (this.onStateChange) this.onStateChange(oldEl, this.el)
-    }
-
-    _renderDOM () {
-      this.el = createDOMFromString(this.render())
-      if (this.onClick) {
-        this.el.addEventListener('click', this.onClick.bind(this), false)
-      }
-      return this.el
-    }
-  }
-
-  // mount 方法：将组件的 DOM 元素插入页面，并在 setState 时更新页面
-  const mount = (component, wrapper) => {
-    wrapper.appendChild(component._renderDOM())
-    component.onStateChange = (oldEl, newEl) => {
-      wrapper.insertBefore(newEl, oldEl)
-      wrapper.removeChild(oldEl)
-    }
-  }
-
-
-  class LikeButton extends Component {
-    constructor (props) {
-      super(props)
-      this.state = { isLiked: false }
-    }
-
-    onClick () {
-      this.setState({
-        isLiked: !this.state.isLiked
-      })
-    }
-
-    render () {
-      return `
-        <button class='like-btn' style="background-color: ${this.props.bgColor}">
-          <span class='like-text'>
-            ${this.state.isLiked ? '取消' : '点赞'}
-          </span>
-          <span>👍</span>
-        </button>
-      `
-    }
-  }
-
-  mount(new LikeButton({ bgColor: 'red' }), wrapper)
-  ```
 
 
 
@@ -318,7 +233,7 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
 
 
 # 二、JSX 语法
-> 全称 `JavaScript XML`，是 react 定义的一种类似于 XML 的 JS 扩展语法：`XML + JS`。用于创建 react 虚拟 DOM 对象，即 JSX 最终会被解析编译为合法的 JS 对象，基本规则为：< 开头的代码以标签的语法解析、{ 开头的代码以 JS 语法解析。
+> 全称 `JavaScript XML`，是 react 定义的一种类似于 XML 的 JS 扩展语法：`XML + JS`。用于创建 react 虚拟 DOM 对象，即 JSX 最终会被解析编译为合法的 JS 对象，基本规则为：`< 开头的代码以标签的语法解析、{ 开头的代码以 JS 语法解析`。
 
 
 ## 实现原理
@@ -380,7 +295,7 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
 
 
 
-# 组件化开发
+# 四、组件化开发
 
 ## 创建组件
 > 组件名称的首字母都必须大写，因为通过 babel 转换 JSX 语法时调用了 `React.createElement()`，它需要接收三个参数 `type、config、children`。第一个参数声明了元素类型，当组件名的首字母小写时 babel 会在转义时将它当成了一个字符串传入，当首字母大写时则会传入一个变量。如果传入一个字符串，在创建虚拟 DOM 对象时 React 会认为这是一个原生的 HTML 标签而导致报错，传入变量则会被看作组件。
@@ -534,9 +449,9 @@ description: 入门简介、项目开发、JSX 表达式、组件化编程
 ## 组件 API
 > npm install react 时得到组件及其 API。组件接收 props 输入并返回描述(声明)用户界面 (UI) 的 React 元素。这就是 React 被称为声明性 API 的原因，因为 React 通过你输入的内容告诉它所希望的 UI 外观，而 React 负责其余的工作。
 
-  
-
 ### render
+> 用于将模板转为 HTML 语言并插入指定的 DOM 节点。它接受三个参数：要渲染的元素、元素要放在什么容器里面，第三个是回调函数
+
 
 
 
