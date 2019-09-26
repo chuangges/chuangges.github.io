@@ -7,7 +7,7 @@ top: false
 keywords:
   - 技术
 date: 2019-02-28 21:02:57
-description: OCR 识别、Video 视频
+description: OCR 图像识别、Video 视频播放、Agora 视频通话
 ---
 
 # 一、OCR 识别
@@ -151,138 +151,10 @@ description: OCR 识别、Video 视频
   ```
 
 
-# 二、Video 视频
+# 二、Video 视频播放
+> 自定义封装视频控件的样式和功能
 
-## 标签属性
-  ```
-  src：视频的URL
-  poster：视频封面，没有播放时显示的图片
-  preload：预加载
-  autoplay：自动播放
-  loop：循环播放
-  controls：浏览器自带的控制条
-  width：视频宽度
-  height：视频高度
-  webkit-playsinline="true" IOS下防止全屏播放
-  playsinline="true" 同上
-  x-webkit-airplay="true" 支持ios的AirPlay功能
-  x5-video-player-type="h5" 启用同层H5播放器
-  x5-video-player-fullscreen="true" 全屏设置
-  x5-video-orientation="portraint" 竖屏
-  style="object-fit:fill" 封面铺满
-  muted="true" 静音播放
-  ```
-
-
-## 标签样式
-> chrome 调试方式：F12、右上方三个点、setting、Perferences、勾选 Show user agent shadow Dom，然后就可以查看 video 标签的控制栏 dom 结构。
-
-  ```scss
-  // 全屏按钮
-  video::-webkit-media-controls-fullscreen-button { }
-
-  // 播放按钮
-  video::-webkit-media-controls-play-button { }
-
-  // 进度条
-  video::-webkit-media-controls-timeline { }
-
-  // 观看的当前时间
-  video::-webkit-media-controls-current-time-display { }
-
-  // 剩余时间
-  video::-webkit-media-controls-time-remaining-display { }
-
-  // 音量按钮
-  video::-webkit-media-controls-mute-button { }
-  video::-webkit-media-controls-toggle-closed-captions-button { }
-
-  // 音量的控制条
-  video::-webkit-media-controls-volume-slider { }
-
-  //所有控件
-  video::-webkit-media-controls-enclosure { }
-  ```
-
-
-## 对象属性
-
-### 错误状态
-  ```js
-  $video.error;      // null: 正常  
-  $video.error.code; // 1.用户终止 2.网络错误 3.解码错误 4.URL无效 
-  ```
-
-### 网络状态
-  ```js
-  $video.currentSrc;         // 当前资源的 URL  
-  $video.src = value;        // 设置当前资源的 URL  
-  $video.canPlayType(type);  // 是否能播放某种格式的资源  
-  $video.networkState;       // 视频的当前网络状态
-  $video.buffered;           // 获取已缓冲区域
-  $video.buffered.end(0)     // 获取最后一刻的数据
-  $video.load();             // 重新加载 src 指定的资源 
-  $video.preload;            // 是否预加载视频
-  ```
-
-### 准备状态
-  ```js
-  $video.readyState;    // 视频是否已准备好播放
-  $video.seeking;       // 是否正在寻址 
-  ```
-
-### 播放状态
-  ```js
-  $video.currentTime = value; // 当前播放位置  
-  $video.duration;            // 当前资源长度  
-  $video.paused;              // 是否暂停  
-  $video.defaultPlaybackRate = value;  // 默认的回放速度
-  $video.playbackRate = value;         // 当前播放速度 
-  $video.seekable;    // 返回可以寻址的区域 
-  $video.ended;       // 是否结束  
-  $video.autoPlay;    // 是否自动播放  
-  $video.loop;        // 是否循环播放  
-  $video.play();      // 播放  
-  $video.pause();     //暂停  
-  ```
-
-### 相关控制
-  ```js
-  $video.controls;         // 是否有默认控制条  
-  $video.volume = value;   // 音量  
-  $video.muted = value;    // 静音
-  ```
-
-
-## 对象方法
-  ```js
-  loadstart         // 客户端开始请求数据  
-  *progress         // 客户端正在请求数据  
-  suspend           // 延迟下载  
-  abort             // 客户端主动终止下载（不是因为错误引起） 
-  *error            // 请求数据时遇到错误  
-  stalled           // 网速失速  
-  *play             // 开始播放时触发  
-  *pause            // 暂停时触发  
-  loadedmetadata    // 成功获取资源长度  
-  *waiting          // 等待数据，并非错误  
-  *playing          // 开始回放  
-  canplay           // 可以播放，但中途可能因为加载而暂停  
-  *canplaythrough   // 可以播放  
-  seeking           // 资源寻找中  
-  seeked            // 资源寻找完毕  
-  *timeupdate       // 播放时间改变  
-  *ended            // 播放结束  
-  ratechange        // 播放速率改变  
-  durationchange    // 资源长度改变  
-  *volumechange     // 音量改变         
-  ```
-
-
-## 自定义视频组件
-
-### 组件封装
-> video 控件的样式和功能封装
+## 组件封装
 
   ```html
   <template>
@@ -617,8 +489,32 @@ description: OCR 识别、Video 视频
   ```
 
 
+# 三、Agora 视频通话
+
+## Agora 声网
+> 为开发者提供实时音视频 API
 
 
+## 小程序音视频
+`<live-pusher> 和 <live-player>`
+
+### 音视频技术
+> 可以实现连麦直播和视频通话。
+
+1. 小程序源码，通过和两个组件提供音视频能力；
+2. JSBridge 基础库，向上提供小程序的基础能力；
+3. 最底层是音视频组件，包括音频引擎，视频引擎，传输引擎，还有两个标签对应的两个组件：CTX LivePlayer 和 CTX LivePusher 。
+
+（ Live-pusher 推流端和 Live-player 拉流端），他们都有两种运作模式 —— RTC 模式和 Live 模式。在进行视频通话或者连麦直播的情况下，使用 RTC 模式；在视频直播的观众端采用 Live 模式。
+
+
+## 在线直播
+
+### 内部原理
+
+  * 主播端使用 `<live-pusher>`，它在小程序的内部是一个推流引擎，它负责对手机摄像头和麦克风的数据进行采集和编码，并通过 url 参数指定的 rtmp 推流地址上传到云端。
+  * 云端的作用类似信号放大器，它负责将来自主播端的一路音视频流数据进行放大，将数据实时并且无差异的负责并扩散到全国各地，从而解决主播和观众端之间距离太远（比如，跨地区和跨运营商）的问题。
+  * 观众端使用 `<live-player>` 进行播放，它在小程序的内部是一个在线播放器，负责从云端实时拉取音视频数据并进行解码和渲染。由于云端的放大效应，每一个观众都能在离自己比较近的云服务器上拉取到实时且流畅的音视频流。
 
 
 

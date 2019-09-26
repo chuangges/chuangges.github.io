@@ -14,8 +14,6 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 # 一、audio、video  
 > 支持的格式：Ogg、MP3、WAV
 
-## 基础使用
-
   ```html
   <!-- 
       src：地址、preload：预加载、autoplay：自动播放
@@ -39,59 +37,129 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   </video>
   ```
        
-  ```js
-  // var audio = new Audio("test.mp3");
-  var audio = document.getElementById("audio");
 
-  // 资源属性
-  audio.load()         // 重新加载
-  audio.currentSrc     // 当前资源地址
-  audio.src = value      // 设置当前资源地址
-  audio.canPlayType(type)  // 是否能播放某种格式的资源
+## Video
 
-  // 播放状态属性
-  audio.currentTime = value  // 当前播放的位置
-  audio.startTime/duration/loop/autoPlay
-  audio.played/paused/ended/
-  
-  // 状态控制
-  audio.play();          // 播放
-  audio.pause();         // 暂停
-  audio.controls;        // 默认控制条
-  audio.volume = value;  // 音量
-  audio.muted = value;   // 静音
-
-  // 事件：loadstart、progress
-  
-  
-  // 监听开始播放
-  audio.addEventListener('pause', function (e) {
-      console.log('开始播放')
-  })
-  // 监听暂停播放
-  audio.addEventListener('pause', function (e) {
-      console.log('暂停播放')
-  })
-  // 监听媒体数据已经加载完成，
-  audio.addEventListener('loadedmetadata', function (e) {
-      console.log('音频时长：'+ e.target.duration)
-  });
-  // 监听时间改变，durationchange 资源长度，volumechange 音量
-  audio.addEventListener('timeupdate', function (e) {
-      let t = e.target
-      console.log('剩余时长：'(t.duration - t.currentTime))
-  }, false);  
-  // 监听播放完成
-  audio.addEventListener('ended', function (e) {
-      console.log('播放完成')
-  }, false);   
-
-
-  var video = document.getElementById('video');
-  // 事件：play、pause、progress、error
-  video.addEventListener('play',function(){ });
+### 标签属性
+  ```
+  src：视频的URL
+  poster：视频封面，没有播放时显示的图片
+  preload：预加载
+  autoplay：自动播放
+  loop：循环播放
+  controls：浏览器自带的控制条
+  width：视频宽度
+  height：视频高度
+  webkit-playsinline="true" IOS下防止全屏播放
+  playsinline="true" 同上
+  x-webkit-airplay="true" 支持ios的AirPlay功能
+  x5-video-player-type="h5" 启用同层H5播放器
+  x5-video-player-fullscreen="true" 全屏设置
+  x5-video-orientation="portraint" 竖屏
+  style="object-fit:fill" 封面铺满
+  muted="true" 静音播放
   ```
 
+
+### 标签样式
+> chrome 调试方式：F12、右上方三个点、setting、Perferences、勾选 Show user agent shadow Dom，然后就可以查看 video 标签的控制栏 dom 结构。
+
+  ```scss
+  // 全屏按钮
+  video::-webkit-media-controls-fullscreen-button { }
+
+  // 播放按钮
+  video::-webkit-media-controls-play-button { }
+
+  // 进度条
+  video::-webkit-media-controls-timeline { }
+
+  // 观看的当前时间
+  video::-webkit-media-controls-current-time-display { }
+
+  // 剩余时间
+  video::-webkit-media-controls-time-remaining-display { }
+
+  // 音量按钮
+  video::-webkit-media-controls-mute-button { }
+  video::-webkit-media-controls-toggle-closed-captions-button { }
+
+  // 音量的控制条
+  video::-webkit-media-controls-volume-slider { }
+
+  //所有控件
+  video::-webkit-media-controls-enclosure { }
+  ```
+
+
+### 对象属性
+
+  * 错误状态
+    ```js
+    $video.error;      // null: 正常  
+    $video.error.code; // 1.用户终止 2.网络错误 3.解码错误 4.URL无效 
+    ```
+  * 网络状态
+    ```js
+    $video.currentSrc;         // 当前资源的 URL  
+    $video.src = value;        // 设置当前资源的 URL  
+    $video.canPlayType(type);  // 是否能播放某种格式的资源  
+    $video.networkState;       // 视频的当前网络状态
+    $video.buffered;           // 获取已缓冲区域
+    $video.buffered.end(0)     // 获取最后一刻的数据
+    $video.load();             // 重新加载 src 指定的资源 
+    $video.preload;            // 是否预加载视频
+    ```
+  * 准备状态
+    ```js
+    $video.readyState;    // 视频是否已准备好播放
+    $video.seeking;       // 是否正在寻址 
+    ```
+  * 播放状态
+    ```js
+    $video.currentTime = value; // 当前播放位置  
+    $video.duration;            // 当前资源长度  
+    $video.paused;              // 是否暂停  
+    $video.defaultPlaybackRate = value;  // 默认的回放速度
+    $video.playbackRate = value;         // 当前播放速度 
+    $video.seekable;    // 返回可以寻址的区域 
+    $video.ended;       // 是否结束  
+    $video.autoPlay;    // 是否自动播放  
+    $video.loop;        // 是否循环播放  
+    $video.play();      // 播放  
+    $video.pause();     //暂停  
+    ```
+  * 相关控制
+    ```js
+    $video.controls;         // 是否有默认控制条  
+    $video.volume = value;   // 音量  
+    $video.muted = value;    // 静音
+    ```
+
+
+### 对象方法
+  ```js
+  loadstart         // 客户端开始请求数据  
+  *progress         // 客户端正在请求数据  
+  suspend           // 延迟下载  
+  abort             // 客户端主动终止下载（不是因为错误引起） 
+  *error            // 请求数据时遇到错误  
+  stalled           // 网速失速  
+  *play             // 开始播放时触发  
+  *pause            // 暂停时触发  
+  loadedmetadata    // 成功获取资源长度  
+  *waiting          // 等待数据，并非错误  
+  *playing          // 开始回放  
+  canplay           // 可以播放，但中途可能因为加载而暂停  
+  *canplaythrough   // 可以播放  
+  seeking           // 资源寻找中  
+  seeked            // 资源寻找完毕  
+  *timeupdate       // 播放时间改变  
+  *ended            // 播放结束  
+  ratechange        // 播放速率改变  
+  durationchange    // 资源长度改变  
+  *volumechange     // 音量改变         
+  ```
 
 
 ## 自动播放

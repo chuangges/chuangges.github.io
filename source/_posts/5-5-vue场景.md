@@ -7,7 +7,7 @@ top: false
 keywords:
   - vue
 date: 2019-04-14 23:11:50
-description: 路由控制、数据加密、数据更新、页面刷新、页面缓存、UI 框架
+description: 路由控制、数据加密、数据更新、页面刷新、页面缓存、页面跳转、UI 框架
 ---
 
 # 一、路由控制
@@ -544,7 +544,31 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
 
 
 
-# 六、UI 框架
+# 六、页面跳转
+> 只要用户从一个页面切换到另一个页面就会发生 unload 事件，一般用于清除引用，避免内存泄漏。
+
+  ```js
+  export default {
+    created() {
+      window.addEventListener("unload", this.stopTest);
+    },
+    destroyed() {
+      this.stopTest();
+      window.removeEventListener("unload", this.stopTest);
+    }
+  }
+  function stopTest() {
+    const stop = function(stream) {
+      stream && stream.getTracks().forEach(item => item.stop());
+    };
+    stop(this.audioStream);
+    stop(this.videoStream);
+  }
+  ```
+
+
+
+# 七、UI 框架
 
 ## ElementUI
 
