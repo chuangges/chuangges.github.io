@@ -24,10 +24,10 @@ description: 简单介绍
 
 ## 主要优势
 
-  * 代码的可读性和可维护性：类型声明本身是最好查阅的文档。
-  * 静态类型检查：可以避免很多不必要的错误，不用在调试时才发现问题。
   * 代码提示：ts 搭配 vscode，代码提示非常友好。
+  * 类型检查：可以避免很多不必要的错误，不用在调试时才发现问题。
   * 代码重构：例如全项目更改某个变量名，JS 不能实现而 TS 可以轻松做到。
+  * 代码的可读性和可维护性：类型声明本身是最好查阅的文档，而且 TS 对 ECMAScript 新特性支持的更全面，不需要安装插件即可直接使用。
 
 
 ## 使用原因
@@ -48,19 +48,97 @@ description: 简单介绍
 
 
 ## 安装配置
-> 如果项目中有 loader 配置(例如 vue)，完全不用选择编译成 js，有webpack帮忙完成此任务。
+> 编辑器中可以手动配置每次都自动编译，但在一些支持 ts 语法的框架中可以直接使用而不需要配置，因为项目的 vue loader 配置会让 webpack 打包时完成编译任务。
 
-  * 安装编译：`npm install -g typescript && sc test.ts`
-  * vscode 集成
-    1. 项目目录下新建 tsconfig.json 文件：tsc --init
+  * 安装编译：`npm install -g typescript`
+  * 手动编译：`tsc test.ts`
+  * vscode 自动编译
+    * 构建任务：`ctrl + shift + b`
+    * 运行任务：编译 (编译一次)、监控 (变动就编译)
+  * 项目集成
+    1. 项目根目录新建 tsconfig.json：`tsc --init`
     2. 配置编译选项：注意必须配置 outDir，常用项如下
-      * target：编译后生成的 JS 文件标准（es3、es5、es2015、ES2016)。
-      * module：遵循的 JS 模块规范 (commonjs、AMD、es2015)。
-      * outDir：编译后生成的 JS 文件存放的文件夹。
+      * target：编译后生成的 JS 标准（es3、es5、es2015、ES2016)。
+      * module：代码模块加载器 (commonjs、AMD、es2015)。
+      * outDir：编译后生成的 JS 文件的存放目录。
       * include、exclude：编译时需要包含/剔除的文件夹。
-    3. 运行构建任务：ctrl+shift+b
-      * 编译 ts 文件：一次编译
-      * 监控 ts 文件：变动就编译
+    3. webpack 配置打包时编译：需要先安装 ts-loader
+      ```js
+      // webpack.config.js：
+      module.exports = {
+          entry: "./src/index.ts",
+          output: {
+            filename: "./dist/bundle.js",
+          },
+          resolve: {
+            extensions: ['.ts', '.js', '.json']
+          },
+          devtool: "source-map",
+          module: {
+            rules: [{
+              test: /\.tsx?$/,
+              loader: 'ts-loader'
+            }]
+          }
+      }
+      ```
+
+
+# 二、基础语法
+
+## 基础类型
+> 为了使代码更加的规范，ts 增加了类型的校验，它支持的基础类型有：`Boolean、Number、String、Array、Tuple(元组)、enum(枚举)、any(任意值)、void(空值)、Null、Undefined、Never(永不存在的值)`。
+
+  ```ts
+  let num: number;
+  let str: string;
+  let isDone: boolean = false;
+
+  num = '123';     // 错误
+  str = 123;       // 错误
+
+  // 数组：各元素的类型必须相同
+  var arr:boolean[] = [true, false];  // 通过元素类型后面添加 []
+  var arr:Array<number> = [6, 2, 3];  // 使用数组泛型：Array<类型>
+
+  // 元组：一个已知元素数量和类型的数组，各元素的类型不必相同
+  let x: [string, number];
+  x = ['hello', 10];  // OK
+  x = [10, 'hello'];  // Error
+  x[3] = 'world';     // OK，访问越界元素时使用联合类型(str、num)
+
+  // 枚举：可以定义带名字的常量，ts 仅支持基于数字的和字符串的枚举
+  enum Color {Red = 1, Green, Blue};
+  let c: Color = Color.Green;  // 枚举值 2，默认从 0 开始递增
+  console.log(Color[3]);       // 根据枚举值获取名字
+
+  // 任意值：赋值时自动判断类型，相当于关闭类型检查
+  let notSure: any = 4;
+  notSure = false;
+  let list: any[] = [1, true, "free"];
+  list[1] = 100;
+
+  // 空值：表示没有任何类型，比如函数没有返回值时返回值类型为 Void
+  function warnUser(): void {
+    console.log("This is my warning message");
+  }
+  let msg: void = undefined;   // 只能赋值 undefined、null
+
+  // null、undefined：默认是所有类型的子类型，可以赋值给任意类型
+  let u: number = undefined
+  let n: null = null
+
+  // never：所有类型的子类型，返回它的函数必须有无法被执行到的终点
+  function error(message: string): never {
+    throw new Error(message);
+  }
+  function move(direction: "up" | "down") {
+    return direction === "up" ? 1 :
+          direction === "down" ? -1 :
+          error("永远不会执行到");
+  }
+  ```
+
 
 
 
