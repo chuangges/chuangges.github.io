@@ -86,8 +86,8 @@ description: 简单介绍
 
 # 二、基础语法
 
-## 基础类型
-> 为了使代码更加的规范，ts 增加了类型的校验，它支持的基础类型有：`Boolean、Number、String、Array、Tuple(元组)、enum(枚举)、any(任意值)、void(空值)、Null、Undefined、Never(永不存在的值)`。
+## 数据类型
+> 为了使代码更加的规范，ts 增加了类型的校验，它支持的数据类型有：`Boolean、Number、String、Array、Tuple(元组)、enum(枚举)、any(任意值)、void(空值)、Null、Undefined、Never(永不存在的值)`。
 
   ```ts
   let num: number;
@@ -128,14 +128,14 @@ description: 简单介绍
   let u: number = undefined
   let n: null = null
 
-  // never：所有类型的子类型，返回它的函数必须有无法被执行到的终点
+  // never：总会抛出异常或不会有返回值的函数返回值类型，是所有类型的子类型
   function error(message: string): never {
     throw new Error(message);
   }
   function move(direction: "up" | "down") {
     return direction === "up" ? 1 :
-          direction === "down" ? -1 :
-          error("永远不会执行到");
+        direction === "down" ? -1 :
+        error("永远不会执行到");
   }
   ```
 
