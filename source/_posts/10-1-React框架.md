@@ -51,49 +51,44 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 
 
 ## 主要特点
-
-  * __声明式编程__
-    * 编程范式：命令式编程、声明式编程、函数式编程、面向对象编程
-    * 优点
-      * 更加简洁、易懂，利于大型项目代码的维护
-      * 无须使用变量，避免了创建和修改状态
-    ```js
-    // 命令式编程描述代码如何工作，告诉计算机一步步地执行、先做什么后做什么
-    const toLowerCase = arr => {
-        const res = [];
-        for (let i = 0, len = arr.length; i < len; i++) {
-            res.push(arr[i].toLowerCase());
-        }
-        return res;
-    }
-     
-    // 声明式编程表明想要实现什么目的，应该做什么，但是不指定具体怎么做
-    const toLowerCase = arr => arr.map(
-        value => value.toLowerCase();
-    )
-
-    // 命令式编程实现带有标记的地图
-    const map = new Map.map(document.getElementById('map'), {
-        zoom: 4,
-        center: {lat,lng}
-    })
-    const marker = new Map.marker({
-        position: {lat, lng},
-        title: 'Hello Marker'
-    })
-    marker.setMap(map)
-
-    // React 组件中显示地图
-    <Map zoom={4} center={lat, lng}>
-        <Marker position={lat, lng} title={'Hello Marker'}/>
-    </Map>
-    ```
+  
   * __单向数据流__：减少了重复代码，比较简单
-  * __高效__
-    * virtual DOM：最大限度的减少直接操作 DOM
-    * DOM Diff 算法：最小化页面重绘，减少重排重绘的次数
   * __组件化开发__：高内聚、低耦合，注意使用 Js 编写而非模板
-  * __支持客户端与服务器渲染__：可以实现 服务端渲染 (Node)、APP (ReactNative)
+  * __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)。
+  * __高效__：virtual DOM 避免了直接操作元素、DOM Diff 算法减少了页面重绘次数。
+  * __声明式编程__：简洁易懂而有利于代码维护、无须使用变量而避免了创建和修改状态。
+
+  ```js
+  // 命令式编程描述代码如何工作，告诉计算机一步步地执行、先做什么后做什么
+  const toLowerCase = arr => {
+      const res = [];
+      for (let i = 0, len = arr.length; i < len; i++) {
+          res.push(arr[i].toLowerCase());
+      }
+      return res;
+  }
+    
+  // 声明式编程表明想要实现什么目的，应该做什么，但是不指定具体怎么做
+  const toLowerCase = arr => arr.map(
+      value => value.toLowerCase();
+  )
+
+  // 命令式编程实现带有标记的地图
+  const map = new Map.map(document.getElementById('map'), {
+      zoom: 4,
+      center: {lat,lng}
+  })
+  const marker = new Map.marker({
+      position: {lat, lng},
+      title: 'Hello Marker'
+  })
+  marker.setMap(map)
+
+  // React 组件中显示地图
+  <Map zoom={4} center={lat, lng}>
+      <Marker position={lat, lng} title={'Hello Marker'}/>
+  </Map>
+  ```
 
 
 
@@ -105,30 +100,30 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
   ```js
   // 方法一
   // 创建虚拟 DOM 对象并渲染到页面
-  const vDom1 = React.createElement('p',{id: 'myId1', className: 'myClass1'}, '珂朵莉',vDom3);
-  ReactDOM.render(vDom1, document.getElementById('app')); 
+  const p = React.createElement('p', {
+    id: 'box', 
+    className: 'a'
+  }, '茉莉花', tDom);
+  ReactDOM.render(p, document.getElementById('app')); 
 
-  //方法二
-  const id = 'myId2';
-  const content = '我永远喜欢珂朵莉';
-  const vDom3 = React.createElement('span', {}, 'daisiki');
-  const vDom2 = <div><h2 id={id } className="myClass2">{content}</h2>{vDom3}</div>
-  // 将虚拟DOM对象插入到页面的指定容器中
-  ReactDOM.render(vDom2, document.getElementById('test2'));
+  // 方法二
+  const id = 'box2' , msg = '这朵茉莉花';
+  const s = React.createElement('span', {}, '我喜欢');
+  const d = <div><h2 id={id} className="b">{msg}</h2>{s}</div>
+  // 将虚拟 DOM 对象插入到页面的指定容器
+  ReactDOM.render(d, document.getElementById('test2'));
   const list = ['1', '2', '3', '4'];
   ReactDOM.render(
     <ul>
-        { list.map(( item,index) => <li key={index}>{item}</li> ) }
+        {list.map((item,index) => <li key={index}>{item}</li>)}
     </ul>
-    ,document.getElementById('app')
+    , document.getElementById('app')
   )
   ```
 
 
 ### 组件化
 > 组件就是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合或者嵌套的方式构成大的组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为 commponent (一个完整抽象的组件)`，components 的存在让计算 DOM diff 效率更高。
-
-
 
 
 ## 基础使用
@@ -426,7 +421,7 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
       }
 
       render() {
-        return (<div onClick={this.inct}>{this.props.children(this.state)}</div>)
+        return (<p onClick={this.inct}>{this.props.children(this.state)}</p>)
       }
     }
 
@@ -450,7 +445,8 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 > npm install react 时得到组件及其 API。组件接收 props 输入并返回描述(声明)用户界面 (UI) 的 React 元素。这就是 React 被称为声明性 API 的原因，因为 React 通过你输入的内容告诉它所希望的 UI 外观，而 React 负责其余的工作。
 
 ### render
-> 用于将模板转为 HTML 语言并插入指定的 DOM 节点。它接受三个参数：要渲染的元素、元素要放在什么容器里面，第三个是回调函数
+> 它接受三个参数 (渲染元素、插入节点、回调函数)，用于将模板转为 HTML 语言并插入指定的 DOM 节点，是使用 class 创建组件时必须实现的方法 (否则会直接抛出错误)。
+
 
 
 
