@@ -11,7 +11,7 @@ description: 简单介绍
 ---
 
 # 一、简单介绍
-> TypeScript 是微软推出的一种静态强类型语言，设计初衷就是为了帮助 JavaScript 的开发人员能够像 c#、Java 等高级语言那样编写代码，比如使用高级语言的强类型、面向对象、语法检查、代码编译等特性。它是 JavaScript 的超集(基于 JS 并拓展了其语法)，填充了 JS 作为动态弱类型语言的缺点，能够对代码中的错误及时反馈，而且包含一个编译器可以将 TS 代码转换为原生 JS，非常适用于需要团队合作的大型项目和封装库文件 (比较严谨)。
+<div style="text-indent: 2em">TypeScript 是微软推出的一种静态强类型语言，设计初衷就是为了`帮助 JavaScript 的开发人员能够像 c#、Java 等高级语言那样编写代码`，比如使用高级语言的强类型、面向对象、语法检查、代码编译等特性。它是 JavaScript 的超集(基于 JS 并拓展了其语法)，填充了 JS 作为动态弱类型语言的缺点，能够对代码中的错误及时反馈，而且包含一个编译器可以将 TS 代码转换为原生 JS，非常适用于需要团队合作的大型项目和封装库文件 (比较严谨)。</div>
 
 
 ## 语言类型
@@ -24,13 +24,13 @@ description: 简单介绍
 
 ## 主要优势
 
-  * 代码提示：ts 搭配 vscode，代码提示非常友好。
-  * 类型检查：可以避免很多不必要的错误，不用在调试时才发现问题。
-  * 代码重构：例如全项目更改某个变量名，JS 不能实现而 TS 可以轻松做到。
-  * 代码的可读性和可维护性：类型声明本身是最好查阅的文档，而且 TS 对 ECMAScript 新特性支持的更全面，不需要安装插件即可直接使用。
+  * __代码质量__：编译期的静态类型检查加上 IDE 的智能提示，可以尽可能的将 BUG 消灭在编译器，线上运行时质量更稳定可控。
+  * __开发效率__：代码重构时更改某个全局变量名，JS 不能实现而 TS 可以轻松做到。
+  * __代码可读性__：类型声明本身是最好查阅的文档，适合团队协作。
+  * __代码可维护性__：TS 对 ECMAScript 新特性支持的更全面，不需要安装插件即可直接使用。
 
 
-## 使用原因
+## 出现原因
 
   1. __JavaScript 发展迅速__
   2. __我们需要强类型的 JavaScript__
@@ -47,15 +47,17 @@ description: 简单介绍
     * TypeScript 紧跟 JS 的发展，比如 ES7、ES8、ES9 的新特性都支持，比浏览器支持的速度更快。这就意味着你能用最新的语言特性，编写质量更高的 JS。
 
 
-## 安装配置
-> 编辑器中可以手动配置每次都自动编译，但在一些支持 ts 语法的框架中可以直接使用而不需要配置，因为项目的 vue loader 配置会让 webpack 打包时完成编译任务。
+## 使用方式
+> 通过编辑器可以配置自动编译，通过 vue 等支持 ts 的框架可以通过 loader 配置让 webpack 打包时编译。
 
-  * 安装编译：`npm install -g typescript`
-  * 手动编译：`tsc test.ts`
-  * vscode 自动编译
+  * __手动编译__
+    * 安装工具：`npm install -g typescript`
+    * 本地编译：`tsc test.ts`
+  * __使用 IDE__
+    * 工具：vscode (已全局安装 typescript)
     * 构建任务：`ctrl + shift + b`
     * 运行任务：编译 (编译一次)、监控 (变动就编译)
-  * 项目集成
+  * __项目集成__
     1. 项目根目录新建 tsconfig.json：`tsc --init`
     2. 配置编译选项：注意必须配置 outDir，常用项如下
       * target：编译后生成的 JS 标准（es3、es5、es2015、ES2016)。
@@ -87,58 +89,95 @@ description: 简单介绍
 # 二、基础语法
 
 ## 数据类型
-> 为了使代码更加的规范，ts 增加了类型的校验，它支持的数据类型有：`Boolean、Number、String、Array、Tuple(元组)、enum(枚举)、any(任意值)、void(空值)、Null、Undefined、Never(永不存在的值)`。
+> 类型只是一组值。JS 的所有类型都是动态的，你可以在运行时使用它们。TS 为 JS 额外带来了静态类型，可以在编译期间进行静态检查而无需运行代码。
 
-  ```ts
-  let num: number;
-  let str: string;
-  let isDone: boolean = false;
+  * JS 类型
+    * Undefined：唯一元素 undefined(未定义) 的集合
+    * Null：唯一元素 null(空) 的集合
+    * Boolean：两个元素 false、true 的集合。
+    * Number：所有数字的集合。
+    * String：所有字符串的集合。
+    * Symbol：所有符号的集合。
+    * Object：所有非原始类型的集合(包括函数和数组)。
+  * TS 类型
+    * JS 类型：`Boolean、Number、String、Array、Null、Undefined、Object`。
+    * 新增类型：`Tuple(元组)、Enum(枚举)、Any(任意值)、Void(空值)、Never(永不存在的值)`。
+    ```ts
+    let num: number;
+    let str: string;
+    let isDone: boolean = false;
 
-  num = '123';     // 错误
-  str = 123;       // 错误
+    num = '123';     // 错误
+    str = 123;       // 错误
 
-  // 数组：各元素的类型必须相同
-  var arr:boolean[] = [true, false];  // 通过元素类型后面添加 []
-  var arr:Array<number> = [6, 2, 3];  // 使用数组泛型：Array<类型>
+    // Array：各元素的类型必须相同
+    var arr:boolean[] = [true, false];  // 通过元素类型后面添加 []
+    var arr:Array<number> = [6, 2, 3];  // 使用数组泛型：Array<类型>
 
-  // 元组：一个已知元素数量和类型的数组，各元素的类型不必相同
-  let x: [string, number];
-  x = ['hello', 10];  // OK
-  x = [10, 'hello'];  // Error
-  x[3] = 'world';     // OK，访问越界元素时使用联合类型(str、num)
+    // Tuple：一个有不同数据类型的数组，参数和类型一一对应 (不能缺少)
+    let x:[string, number];
+    x = ['hello', 10];  // OK
+    x = [10, 'hello'];  // Error
+    x[3] = 'world';     // OK，访问越界元素时使用联合类型(str、num)
 
-  // 枚举：可以定义带名字的常量，ts 仅支持基于数字的和字符串的枚举
-  enum Color {Red = 1, Green, Blue};
-  let c: Color = Color.Green;  // 枚举值 2，默认从 0 开始递增
-  console.log(Color[3]);       // 根据枚举值获取名字
+    // Enum：通过语义化的单词来代表某一状态，相比数值更加直观和易读
+    // 枚举值为 数字或字符串，默认从 0 开始递增，赋值后后面的值递增
+    enum Status {success = 1, error = 2, cancel, wait};
+    let flag:Status = Status.success;  // 枚举值 1
+    console.log(Status[2]);            // 根据枚举值获取变量名
 
-  // 任意值：赋值时自动判断类型，相当于关闭类型检查
-  let notSure: any = 4;
-  notSure = false;
-  let list: any[] = [1, true, "free"];
-  list[1] = 100;
+    // Any：相当于关闭类型检查，尽量不用
+    let notSure:any = 4;
+    notSure = false;
+    let list:any[] = [1, true, "free"];
+    list[1] = 100;
 
-  // 空值：表示没有任何类型，比如函数没有返回值时返回值类型为 Void
-  function warnUser(): void {
-    console.log("This is my warning message");
-  }
-  let msg: void = undefined;   // 只能赋值 undefined、null
+    // Void：只能用于函数的返回值，表示该函数没有返回值
+    function warnUser():void {
+      console.log("This is my warning message");
+    }
 
-  // null、undefined：默认是所有类型的子类型，可以赋值给任意类型
-  let u: number = undefined
-  let n: null = null
+    // Null、Undefined：默认是所有类型的子类型，可以赋值给任意类型
+    let u: number = undefined
+    let n: null = null
 
-  // never：总会抛出异常或不会有返回值的函数返回值类型，是所有类型的子类型
-  function error(message: string): never {
-    throw new Error(message);
-  }
-  function move(direction: "up" | "down") {
-    return direction === "up" ? 1 :
-        direction === "down" ? -1 :
-        error("永远不会执行到");
-  }
-  ```
+    // Never：抛出异常或没有返回值的函数返回值类型，是所有类型的子类型
+    function error(message: string): never {
+      throw new Error(message);
+    }
+    function move(direction: "up" | "down") {
+      return direction === "up" ? 1 :
+          direction === "down" ? -1 :
+          error("永远不会执行到");
+    }
 
+    // Object：表示非原始类型
+    let obj:object = { name: 'Wang', age: 25 };
+    let obj:{ name: string, age: number } = { 
+      name: "Wang", 
+      age: 25
+    }
+    ```
+  * 类型断言
+    * 告诉编译器跳过数据检查。
+    * 使用 JSX 时只允许 as 语法断言。
+    ```ts
+    // 一、“尖括号”语法
+    let someValue: any = "this is a string";
+    let strLength: number = (<string>someValue).length;
+
+    // 二：as 语法
+    let someValue: any = "this is a string";
+    let strLength: number = (someValue as string).length;
+    ```
+  * 变量声明
+    * var：可以重复声明和赋值、变量提升、函数作用域。
+    * let：可以重复赋值、暂时性死区、块级作用域。
+    * const：不能重新赋值、暂时性死区、块级作用域。
+
+
+
+## 接口
 
 
 
