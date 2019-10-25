@@ -200,8 +200,6 @@ description: 简单介绍
 。ts 的接口类型主要有属性、函数、可索引和类等，接口的作用就是为这些类型命名和为(第三方)代码定义契约。</div>
 
 
-## 接口和类
-
 * 接口 Interfaces：它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implements）
 
 * 接口：可以声明一个类的结构，包含属性和方法，但它只是给出一个声明，没有访问修饰符，没有具体的方法实现，没有构造函数，也不可以被实例化。
@@ -304,54 +302,73 @@ description: 简单介绍
 
 
 ### 类类型
-> 一个类只能继承自另一个类，有时不同类之间可以有一些共有的特性，这时就可以把特性提取成接口（interfaces），用 implements 关键字来实现。
 
+1. 实现接口：一个类只能继承自另一个类，有时不同类之间存在一些共有的特性，这时就可以把特性提取成接口用来约束类必须存在的属性和方法。
   ```ts
+  // TS 只会检查类的公共属性和方法，不会检查私有部分
+  interface Animall {
+    curTime: Date;
+  }
+  class Clock implements ClockInterface {
+    currentTime: Date     // 注释后会报错
+    constructor(h: number, n: number) {
+    }
+    setTime(d: Date) {
+      this.curTime = d;
+    }
+  }
+
+  // TS 只会检查类的实例部分，而不会检查静态部分(构造器)
   interface ClockConstructor {
-    new (hour: number, minute: number): ClockInterface;
+    // 接口匹配不到任何类型，会报错
+    new (hour: number, minute: number);
   }
-  interface ClockInterface {
-    tick();
-  }
-  function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
-    return new ctor(hour, minute);
-  }
-  class DigitalClock implements ClockInterface {
+  class Clock implements ClockConstructor {
+    currentTime: Date;
     constructor(h: number, m: number) { }
-    tick() {
-      console.log("beep");
-    }
   }
-  let digital = createClock(DigitalClock, 12, 17);
-
-
-  // 实现接口
-  interface Animall{
-    name: string;
-    eat(str:string): void;
+  ```
+2. 继承接口：实现接口的分割和重用
+  ```ts
+  interface Shape {
+    color: string;
   }
-  class Dog implements Animall{
-    name: string;
-    constructor(name:string){
-      this.name = name;
-    }
-    eat(food:string){
-      console.log(this.name + '吃' + food)
-    }
+  interface PenStroke {
+    penWidth: number;
   }
-  var d = new Dog('小黑');
-  d.eat("粮食");
+  interface Square extends Shape, PenStroke {
+    sideLen: number;
+  }
+  let square = <Square>{};
+  square.color = "blue";
+  square.sideLen = 10;
+  square.penWidth = 5.0;
+  ```
+3. 混合类型：一个对象可以为函数和变量使用
+  ```ts
+  // Counter 接口既服务于 getCounter 方法，也服务于 counter 对象
+  interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+  }
+  function getCounter(): Counter {
+    let counter = <Counter>function (start: number) { };
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+  }
 
-  // 继承接口：实现接口的分割和重用
+  let c = getCounter();
+  c(10);
+  c.reset();
+  c.interval = 5.0;
   ```
 
 
 
-
-
-
-
-
+http://www.ptbird.cn/typescript-interface-class-type-extend-interface.html
+https://segmentfault.com/a/1190000019780468?utm_source=tag-newest
 
 
 

@@ -745,6 +745,11 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   git checkout 远程分支名
   git stash pop             // 将所做的更改移到当前分支上
 
+
+  // 更新代码：推荐后者
+  git pull = git fetch + git merge
+  git pull --rebase = git fetch + git rebase
+
   // 提交代码
   git add .
   git commint -m ""
