@@ -87,7 +87,7 @@ description: 简单介绍
 
 
 # 二、数据类型
-> 类型只是一组值。JS 的所有类型都是动态的，你可以在运行时使用它们。TS 为 JS 额外带来了静态类型，可以在编译期间进行静态检查而无需运行代码。
+> 类型只是一组值。JS 的所有类型都是动态的，你可以在运行时使用它们。TS 为 JS 额外带来了静态类型，可以在编译期间对值所具有的结构进行类型检查而无需运行代码。
 
 ## JS 类型
   * Undefined：唯一元素 undefined(未定义) 的集合。
@@ -164,8 +164,8 @@ description: 简单介绍
 ## 类型方法
 
 * __类型断言__
-  * 用来手动指定一个值的类型，注意指定的必须是其子类型，比如不能指定数字为 string。
-  * 类似其他语言的类型转换但并不进行数据检查和解构，它只在编译阶段起作用而在运行时没有影响。
+  * 用来指定一个值的类型，注意指定的必须是其子类型，比如不能指定数字为 string。
+  * 类似类型转换但并不进行数据检查和解构，它只在编译阶段起作用而运行时没影响。
   ```ts
   // 两种实现方式如下，注意使用 JSX 时只允许 as 语法
   let val: any = "hello";
@@ -195,22 +195,11 @@ description: 简单介绍
 
 
 # 三、接口
-<div style="text-indent: 2em">在面向对象的编程中，接口 Interfaces 是一种规范的定义，它定义了行为和动作的规范，在程序设计里面，接口起到一种限制和规范的作用。
+> 接口是一个对外的规范和约定，作用是为属性、函数等类型命名和(第三方)代码定义契约。
 
-。ts 的接口类型主要有属性、函数、可索引和类等，接口的作用就是为这些类型命名和为(第三方)代码定义契约。</div>
-
-
-* 接口 Interfaces：它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implements）
-
-* 接口：可以声明一个类的结构，包含属性和方法，但它只是给出一个声明，没有访问修饰符，没有具体的方法实现，没有构造函数，也不可以被实例化。
-接口是一个对外的协商、约定。继承后才可以实例化，继承的时候必须实现声明。可以多重继承。
-类是也是声明一个类的结构，包含属性和方法，有访问修饰符，有具体的方法实现，有构造函数，可以实例化（抽象类下面说）。继承的时候，可以覆盖，也可以继承使用父类实现。
-抽象类也是类，不过它可以包含接口类似的特性：普通方法包含实现，抽象方法是不包含实现的；抽象类不能实例化。继承后才可以实例化，继承的时候必须实现抽象声明，其他声明和普通类一样。
-
-
-## 分类
+## 类型分类
 ### 属性类型
-> 对传入对象的约束。
+> 对对象属性的约束。
 
   ```ts
   // 确定属性：变量的个数和类型必须和接口的完全匹配
@@ -302,77 +291,107 @@ description: 简单介绍
 
 
 ### 类类型
+> 一个类只能继承自另一个类，有时不同类之间存在一些共有的特性，这时就可以把特性提取成接口用来约束类必须存在的属性和方法。
 
-1. 实现接口：一个类只能继承自另一个类，有时不同类之间存在一些共有的特性，这时就可以把特性提取成接口用来约束类必须存在的属性和方法。
-  ```ts
-  // TS 只会检查类的公共属性和方法，不会检查私有部分
-  interface Animall {
-    curTime: Date;
-  }
-  class Clock implements ClockInterface {
-    currentTime: Date     // 注释后会报错
-    constructor(h: number, n: number) {
+  1. 实现接口：接口约束类的属性或方法，类具体实现接口规范。
+    ```ts
+    // TS 只会检查类的公共属性和方法，不会检查私有部分
+    interface Animall {
+      curTime: Date;
     }
-    setTime(d: Date) {
-      this.curTime = d;
+    class Clock implements ClockInterface {
+      currentTime: Date     // 注释后会报错
+      constructor(h: number, n: number) {
+      }
+      setTime(d: Date) {
+        this.curTime = d;
+      }
     }
-  }
 
-  // TS 只会检查类的实例部分，而不会检查静态部分(构造器)
-  interface ClockConstructor {
-    // 接口匹配不到任何类型，会报错
-    new (hour: number, minute: number);
-  }
-  class Clock implements ClockConstructor {
-    currentTime: Date;
-    constructor(h: number, m: number) { }
-  }
-  ```
-2. 继承接口：实现接口的分割和重用
-  ```ts
-  interface Shape {
-    color: string;
-  }
-  interface PenStroke {
-    penWidth: number;
-  }
-  interface Square extends Shape, PenStroke {
-    sideLen: number;
-  }
-  let square = <Square>{};
-  square.color = "blue";
-  square.sideLen = 10;
-  square.penWidth = 5.0;
-  ```
-3. 混合类型：一个对象可以为函数和变量使用
-  ```ts
-  // Counter 接口既服务于 getCounter 方法，也服务于 counter 对象
-  interface Counter {
-    (start: number): string;
-    interval: number;
-    reset(): void;
-  }
-  function getCounter(): Counter {
-    let counter = <Counter>function (start: number) { };
-    counter.interval = 123;
-    counter.reset = function () { };
-    return counter;
-  }
+    // TS 只会检查类的实例部分，而不会检查静态部分(构造器)
+    interface ClockConstructor {
+      // 接口匹配不到任何类型，会报错
+      new (hour: number, minute: number);
+    }
+    class Clock implements ClockConstructor {
+      currentTime: Date;
+      constructor(h: number, m: number) { }
+    }
+    ```
+  2. 继承接口：实现接口的分割和重用
+    ```ts
+    interface Shape {
+      color: string;
+    }
+    interface PenStroke {
+      penWidth: number;
+    }
+    interface Square extends Shape, PenStroke {
+      sideLen: number;
+    }
+    let square = <Square>{};
+    square.color = "blue";
+    square.sideLen = 10;
+    square.penWidth = 5.0;
+    ```
+  3. 混合类型：一个对象可以为函数和变量使用
+    ```ts
+    // Counter 接口既服务于 getCounter 方法，也服务于 counter 对象
+    interface Counter {
+      (start: number): string;
+      interval: number;
+      reset(): void;
+    }
+    function getCounter(): Counter {
+      let counter = <Counter>function (start: number) { };
+      counter.interval = 123;
+      counter.reset = function () { };
+      return counter;
+    }
 
-  let c = getCounter();
-  c(10);
-  c.reset();
-  c.interval = 5.0;
-  ```
+    let c = getCounter();
+    c(10);
+    c.reset();
+    c.interval = 5.0;
+    ```
+  4. 接口继承类：接口可以继承类的成员但是不会去实现。
+    ```ts
+    // 只有子类才能去实现私有属性 state 
+    class Control {
+      private state: any;
+    }
+    // 其他类如果要实现 SelectableControl 接口，必须是 Control 的子类
+    interface SelectableControl extends Control {
+      select(): void;
+    }
+
+    class Button extends Control implements SelectableControl {
+      select() { }
+    }
+
+    class TextBox extends Control {
+      select() { }
+    }
+
+    // 错误：Image 类型缺少 state 属性
+    class Image implements SelectableControl {
+      select() { }
+    }
+
+    class Location {
+
+    }
+    ```
 
 
-
-http://www.ptbird.cn/typescript-interface-class-type-extend-interface.html
-https://segmentfault.com/a/1190000019780468?utm_source=tag-newest
-
+## 接口和类
+  https://segmentfault.com/a/1190000019780468?utm_source=tag-newest
 
 
-
+  接口可以声明一个类的结构，包含属性和方法，但它只是给出一个声明，没有访问修饰符，没有具体的方法实现，没有构造函数，也不可以被实例化。
+  接口是一个对外的协商、约定。继承后才可以实例化，继承的时候必须实现声明。可以多重继承。
+  类是也是声明一个类的结构，包含属性和方法，有访问修饰符，有具体的方法实现，有构造函数，可以实例化（抽象类下面说）。继承的时候，可以覆盖，也可以继承使用父类实现。
+  抽象类也是类，不过它可以包含接口类似的特性：普通方法包含实现，抽象方法是不包含实现的；抽象类不能实例化。继承后才可以实例化，继承的时候必须实现抽象声明，其他声明和普通类一样。
 
 
 
