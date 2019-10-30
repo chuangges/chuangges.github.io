@@ -731,6 +731,9 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   git clone -b BranchName url    // 拉取指定分支代码到本地
   git remote -v                  // 查询当前远程的版本
 
+  // 切换代码库网址
+  git remote set-url origin url
+
   // 从远程仓库获取最新代码到本地当前分支
   git pull
   git pull origin master

@@ -410,6 +410,17 @@ description: 简单介绍
 # 四、类
 > 类是抽象的，它描述了一些属性和方法，比如猫类。类通过实例化之后生成具体的对象，比如加菲猫
 
+  * __类 Class__：定义了一件事物的抽象特点，包含它的属性和方法。
+  * __对象 Object__：类的实例，类通过 new 实例化之后生成的具体对象。
+  * __封装 Encapsulation__：将对数据的操作细节隐藏起来而只暴露对外的接口，外部只通过对外接口就能访问该对象，这样保证了对象内部的数据不会被外部任意更改。
+  * __继承 Inheritance__：子类(派生类) 通过 extends 继承 父类(基类)，子类可以拥有除了父类的私有成员和构造函数之外的所有特性，而且还有自身特性。注意 TS 不支持一次继承多个类，但支持多重继承（A 继承 B，B 继承 C）
+  * __多态 Polymorphism__：由继承而产生的不同子类，它们对同一个方法可以有不同的响应。
+  * __修饰符 Modifiers__：一些用于限定成员性质的关键字。
+  * __存取器 getter、setter__：用于改变属性的读取和赋值行为。
+  * __抽象类 Abstract Class__：供其他派生类继承的基类，它不允许被实例化，它的抽象方法不包含具体实现并且必须在派生类中实现。
+  * __接口 Interfaces__：不同类之间公有的属性或方法可以抽象成一个接口。接口可以被类实现（implements）。一个类只能继承自另一个类，但是可以实现多个接口。
+
+
 ## 定义
   ```ts
   class Person{ 
@@ -421,55 +432,157 @@ description: 简单介绍
     }
     // 类的方法
     getInfo(age:number=20):string{ 
-      return `$(this.name): $(age)`;
+      return this.name + ": " + age;
     }
   }
   // 实例化创建一个对象
   var p = new Person("龙梅子");
-  resMsg = p.getInfo();
+  console.log(p.getInfo());
   ```
 
+
 ## 继承
-> 创建类时可以继承一个已存在的类，已存在的类称为父类(基类)，继承它的类称为子类(派生类)。类继承使用关键字 extends，子类除了不能继承父类的私有成员(方法和属性)和构造函数，其他的都可以继承。TS 一次只能继承一个类，不支持继承多个类，但支持多重继承（A 继承 B，B 继承 C）。
 
-```ts
-// 不使用 constructor
-class Person{
-  name:string;
-}
-class Student extends Person{
-  // 重写继承的方法
-  getInfo(age:number){
-    return `$(this.name): $(this.age)`;
+  ```ts
+  // 不使用 constructor
+  class Person{
+    name:string;
   }
-}
-var s = new Student();
-s.name = '李四';
-console.log(s.getInfo(20));
+  class Student extends Person{
+    getInfo(age:number=20){
+      return this.name + ": " + age;
+    }
+  }
+  var s = new Student();
+  s.name = '李四';
+  console.log(s.getInfo());
 
-// 使用 constructor
-class Person{
-  name:string;
-  constructor(name:string){
-    this.name = name;
+  // 使用 constructor + super (父类有，则子类必须有)
+  class Person{
+    name:string;
+    constructor(name:string){
+      this.name = name;
+    }
+    getInfo(){
+      return this.name;
+    }
   }
-  getInfo(){
-    return this.name;
+  class Student extends Person{
+    age:number;
+    constructor(name:string, age:number){
+      super(name);
+      this.age = age;
+    }
+    getInfo(){
+        let superMsg = super.getInfo();
+        return superMsg + ":" + this.age;
+    }
   }
-}
-class Student extends Person{
-  // Person 有构造方法，子类则必须有
-  constructor(name, age:number){
-    super(name);
-    this.age = age;
-  }
-  getInfo(){
-    return `$(this.name): $(this.age)`;
-  }
-}
-var s = new Student(20);
-```
+  var s = new Student("李四", 20);
+  console.log(s.getInfo());
+  ```
 
 
-https://www.cnblogs.com/lilz/p/10814802.html#_label1
-https://www.jianshu.com/p/3ad5830b081a
+## 修饰符
+
+  1. 访问
+    * __private__：私有，只能在当前类的内部访问。
+    * __protected__：受保护，只能在当前类内部及其子类可以访问。
+    * __public__：公有(默认)，在当前类内部、子类、类外部都可以访问。
+    ```ts
+    class Person{
+      private name:string;
+      protected sex:string;
+      age:number;
+      constructor(name:string, age:number, sex:string){
+        this.name=name;
+        this.age=age;
+        this.sex=sex;
+      }
+      run(){
+        return `我是${this.name}我${this.age}岁`
+      }
+    }
+    class Student extends Person{
+      constructor(name:string, age:number, sex:string){
+        super(name, age, sex)
+      }
+      run1(){
+        console.log(this.name);   // 报错
+        console.log(this.sex);    // 正确
+        console.log(this.age);    // 正确
+      }
+    }
+    var p = new Person("张三", 23, "男");
+    console.log(p.name);     // 报错
+    console.log(p.sex);      // 报错
+    console.log(p.age);      // 正确
+    ```
+  2. 只读 readonly
+    ```ts
+    // 设置的只读属性必须在声明时或构造函数里被初始化，并且值不能被修改。
+    class Person { 
+      readonly name: string;
+      readonly age: number=23;
+      constructor(name:string) {
+        this.name = name;
+      }
+    }
+    let p = new Person("yzq");
+    p.name = "Lisa";   // 错误
+    p.age = 24;        // 错误
+    ```
+  3. 静态 static
+    ```ts
+    // 静态属性和方法存在于类本身而非实例上，所以访问时需要直接通过类名。
+    class Person {
+      static name: String; 
+      static age: number;
+      constructor(name: String, age: number){ 
+        this.name = name; 
+        this.age = age; 
+      }
+      // 静态方法不能访问类里面的非静态属性
+      static printInfo() {
+        console.log(Person.name + ": " + Person.age)
+      }
+    }
+    Person.printInfo()
+    ```
+
+
+## 存取器
+  ```ts
+  // 自定义存取数据之前的业务逻辑
+  class Person {
+    private age: number;
+    get age() {
+      return this._age;
+    }
+    set age(inputAge: number=20) {
+      if (inputAge > 0 && inputAge <> 100) {
+          this._age = inputAge;
+      }
+    }
+  }
+  let p = new Person()
+  p.age = 200
+  console.log(p.age)  // 20
+  ```
+
+
+## 抽象类
+    ```ts
+    // abstract 用于定义抽象类和其中的抽象方法
+
+    ```
+
+
+
+
+
+  
+
+
+
+
