@@ -1,5 +1,5 @@
 ---
-title: TypeScript 入门
+title: TypeScript 基础语法
 tags:
   - TypeScript
 categories: TypeScript
@@ -7,10 +7,10 @@ top: false
 keywords:
   - typescript
 date: 2019-04-10 14:04:28
-description: 简单介绍
+description: 入门简介、数据类型、接口、类、函数
 ---
 
-# 一、简单介绍
+# 一、入门简介
 <div style="text-indent: 2em">TypeScript 是微软推出的一种静态强类型语言，设计初衷就是为了`帮助 JavaScript 的开发人员能够像 c#、Java 等高级语言那样编写代码`，比如使用高级语言的强类型、面向对象、语法检查、代码编译等特性。它是 JavaScript 的超集(基于 JS 并拓展了其语法)，填充了 JS 作为动态弱类型语言的缺点，能够对代码中的错误及时反馈，而且包含一个编译器可以将 TS 代码转换为原生 JS，非常适用于需要团队合作的大型项目和封装库文件 (比较严谨)。</div>
 
 
@@ -602,10 +602,146 @@ description: 简单介绍
   ```
 
 
+## 高级技巧
+
+### 构造函数
+> 通过 typeof 获取 Greeter 类的类型，即构造函数的类型而不是实例的类型，这个类型包含了类的所有静态成员和构造函数。
+
+  ```ts
+  class Greeter {
+    static greeting = 'Hello, there'
+    greet() {
+      return Greeter.greeting
+    }
+  }
+
+  let g: Greeter
+  g = new Greeter()
+  console.log(g.greet())  // Hello, there
+
+  // 
+  let greeterMaker: typeof Greeter = Greeter
+  greeterMaker.greeting = 'Hey there'
+  let g2 = new greeterMaker()
+  console.log(g2.greet())     // Hey there
+  ```
+
+### 把类当做接口使用
+> 类定义会创建两个东西：类的实例类型和一个构造函数，类可以创建出类型而可以在允许使用接口的地方使用类。
+
+  ```ts
+  class Point {
+    x: number
+    y: number
+  }
+  // extends 使子类可以共享父类的属性
+  interface Point3d extends Point {
+    z: number
+  }
+
+  let p: Point3d = {x: 1, y: 2, z: 3}
+  ```
+
+
+# 五、函数
+
+## 定义
+> 函数的类型由传入参数和返回值组成，它们都需要指定数据类型。参数类型只要匹配即可而不会验证参数名是否正确，没有返回值时必须指定类型为 void 而不能留空。
+
+  ```ts
+  // 函数声明
+  function sum(x: number, y: number): number{
+    return x + y;
+  }
+
+  // 函数表达式
+  let sum = function(x: number): number {
+    return x + 1;
+  }
+
+  // 完整函数类型: => 表示函数的定义，左右两侧分别是输入和输出类型
+  let sum: (a: number) => number = function(x: number): number {
+    return x + 1;
+  }
+  ```
+
+## 分类
+  ```ts
+  // 没有参数没有返回值
+  function run1():void{
+    console.log(1)
+  }
+
+  // 没有参数有返回值
+  function run2():string{
+    return '2'
+  }
+
+  // 有参有返回值
+  function run3(name:string, age:number):string{
+    return `${name}: ${age}`
+  }
+
+  // 有参没有返回值
+  function run4(name:string,):void{
+    console.log(name)
+  }
+  ```
+
+
+## 参数
+  ```ts
+  // 可选参数：必须放在最后面
+  function fn(firstName: string, lastName?: string){
+    if(lastName){
+      return firstName + lastName;
+    }else{
+      return firstName;
+    }
+  }
+
+  // 默认参数：不用放到最后
+  function fn(name: string, age:number=20){
+    return `${name}: ${age}`
+  }
+
+  // 剩余参数：ES6 规定 rest 参数只能是最后一个参数
+  function sum2(...list: number[]): number{
+    var sum = 0;
+    for(var i =0;i<list.length;i++){
+      sum += list[i]
+    }
+    return sum;
+  }
+  ```
+
+## 重载
+> `允许一个函数接受不同数量或类型的参数，并作出不同的处理`。TS 会优先从最前面的函数定义开始匹配，所以多个函数定义如果有包含关系，需要优先把精确的定义写在前面 (输入数字则输出数字)。
+
+  ```ts
+  // 反转数字或字符串
+  function reverse(x: number): number;
+  function reverse(x: string): string;
+  function reverse(x: number | string): number | string{
+    if(typeof x === 'number'){
+      return Number(x.toString().split('').reverse().join(''));
+    }else if(typeof x === 'string'){
+      return x.split('').reverse().join('');
+    }
+  }
+  ```
+
+
+# 六、泛型
+> 
 
 
 
-  
+
+
+
+
+
 
 
 
