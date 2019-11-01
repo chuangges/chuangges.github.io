@@ -47,43 +47,86 @@ description: 入门简介、数据类型、接口、类、函数
     * TypeScript 紧跟 JS 的发展，比如 ES7、ES8、ES9 的新特性都支持，比浏览器支持的速度更快。这就意味着你能用最新的语言特性，编写质量更高的 JS。
 
 
-## 使用方式
-> 通过编辑器可以配置自动编译，通过 vue 等支持 ts 的框架可以通过 loader 配置让 webpack 打包时编译。
+## 开发调试
 
-  * __手动编译__
-    * 安装工具：`npm install -g typescript`
-    * 本地编译：`tsc test.ts`
-  * __使用 IDE__
-    * 工具：vscode (已全局安装 typescript)
-    * 构建任务：`ctrl + shift + b`
-    * 运行任务：编译 (编译一次)、监控 (变动就编译)。
-  * __项目集成__
-    1. 项目根目录新建 tsconfig.json：`tsc --init`
-    2. 配置编译选项：注意必须配置 outDir，常用项如下：
-      * target：编译后生成的 JS 标准（es3、es5、es2015、ES2016)。
-      * module：代码模块加载器 (commonjs、AMD、es2015)。
-      * outDir：编译后生成的 JS 文件的存放目录。
-      * include、exclude：编译时需要包含/剔除的文件夹。
-    3. webpack 配置打包时编译：需要先安装 ts-loader。
-      ```js
-      // webpack.config.js：
-      module.exports = {
-          entry: "./src/index.ts",
-          output: {
-            filename: "./dist/bundle.js",
-          },
-          resolve: {
-            extensions: ['.ts', '.js', '.json']
-          },
-          devtool: "source-map",
-          module: {
-            rules: [{
-              test: /\.tsx?$/,
-              loader: 'ts-loader'
-            }]
-          }
+  1. __安装工具__
+    * IDE：推荐使用 `VSCode`
+    * TS：`npm install -g typescript`
+  2. __编译方式__
+    * 手动编译：`tsc test.ts`
+    * 自动编译：可以通过 vscode 配置直接编译、webpack/gulp 配置打包时编译。
+    ```js
+    // 1、vscode
+    构建任务：ctrl + shift + b
+    运行任务：build (编译一次)、watch (变动就编译)
+
+    // 2、webpack.config.js：需要先安装 ts-loader
+    module.exports = {
+      entry: "./src/index.ts",
+      output: {
+        filename: "./dist/bundle.js",
+      },
+      resolve: {
+        extensions: ['.ts', '.js', '.json']
+      },
+      devtool: "source-map",
+      module: {
+        rules: [{
+          test: /\.tsx?$/,
+          loader: 'ts-loader'
+        }]
       }
-      ```
+    }
+    ```
+  3. __配置编译选项__
+    ```js
+    // tsconfig.json：项目根目录执行 `tsc --init`
+    {
+      "compilerOptions": {
+        // 编译后生成的 JS 标准（es3、es5、es2015、ES2016)
+        "target": "es6",
+        // 代码模块加载器 (commonjs、AMD、es2015)
+        "module": "commonjs",
+        // 编译 js 时删除注释
+        "removeComments": false,
+        // false：编译器无法判断变量使用判断类型时使用 any 类型
+        // true：进行强类型检查，编译器无法判断出变量类型时会报错
+        "noImplicitAny": false,
+        // 生成的 js、js.map 的目录
+        "outDir": "./dist",
+        // 允许在 ts 文件中打断点
+        "sourceMap": true,
+        // 允许编译 js 文件
+        "allowJs": true
+      },
+      // 需要排除编译的目录
+      "exclude": ["node_modules"],
+      // 需要编译的 ts 文件：* 表示文件匹配、** 表示忽略文件的深度问题
+      "include": [
+        "./src/*.ts",
+        "./src/**/*.ts"
+      ]
+    }
+    ```
+  4. __配置调试环境__
+    * 编辑 `.vscode/launch.json`：点击左侧第三个图标、设置按钮
+    * 文件左侧添加断点，选择 launch.json 对应的 name，点击启动按钮
+    * 原理分析：启动调试时，VSCode 首先执行 preLaunchTask，将 ts 编译成 js、sourcemap，然后根据 program、outFiles 参数找到编译后的待调试 js 文件执行。至于 ts、js 的断点信息，则是根据 sourcemap 相互定位的。
+    ```json
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Typescript",
+        "program": "${workspaceFolder}/src/index.ts",
+        "preLaunchTask": "tsc: build - tsconfig.json",
+        "sourceMaps": true,
+        "outFiles": [
+          "${workspaceFolder}/**/*.js"
+        ]
+      }
+    ]
+    ```
 
 
 # 二、数据类型
@@ -409,8 +452,8 @@ description: 入门简介、数据类型、接口、类、函数
 
 # 四、类
 
-  * __类 Class__：定义了一件事物的抽象特点，描述了它的属性和方法，比如猫类。
-  * __对象 Object__：类的实例，类通过 new 实例化之后生成的具体事物，比如加菲猫。
+  * __类 Class__：由静态部分和实例部分组成，定义了一件事物的抽象特点，描述了它的属性和方法，比如猫类。
+  * __对象 Object__：继承了类所有属性和方法的实例对象，它是类通过 new 实例化之后生成的具体事物，比如加菲猫。
   * __封装 Encapsulation__：将对数据的操作细节隐藏起来而只暴露对外的接口，外部只通过对外接口就能访问该对象，这样保证了对象内部的数据不会被外部任意更改。
   * __继承 Inheritance__：子类(派生类) 通过 extends 继承 父类(基类)，子类可以拥有除了父类的私有成员和构造函数之外的所有特性，而且还有自身特性。注意 TS 不支持一次继承多个类，但支持多重继承（A 继承 B，B 继承 C）
   * __多态 Polymorphism__：由继承而产生的不同子类，它们对同一个方法可以有不同的响应。
@@ -730,11 +773,191 @@ description: 入门简介、数据类型、接口、类、函数
     }
   }
   ```
-
+泛型就是解决 类 接口 方法的复用性、
 
 # 六、泛型
-> 
+> 一种约束宽泛的类型，它在定义函数、接口或类时不指定参数的数据类型而在使用时指定，用来创建支持不定数据类型的可复用代码 (泛型函数、泛型接口，泛型类)。
 
+## 泛型变量
+> 变量名可以自定义，数量和使用方式对应即可。
+
+  ```ts
+  // 定义一个类型变量
+  function info<T>(arg: T): T {
+    return arg;
+  }
+
+  // 定义多个类型变量
+  function info<N, A>(name: N, age: A): [N, A] {
+    return [name, age];
+  }
+  ```
+
+
+## 泛型函数
+> 实现返回和参数相同类型的值：
+
+  ```ts
+  // 使用 any：返回任意类型，放弃了类型教验
+  function getData(value:any):any{
+    return value;
+  }
+  // 使用泛型：返回相同类型，
+  function getData<T>(value:T):T{
+    return value;
+  }
+  ```
+
+
+## 泛型接口
+
+  ```ts
+  // 写法一
+  interface ConfigFn{
+    <T>(value:T):T;
+  }
+  var getData:ConfigFn = function<T>(value:T):T{
+    return value;
+  }
+  getData<string>('张三');
+  getData<string>(1243);    //错误
+
+  // 写法二
+  interface ConfigFn<T>{
+    (value:T):T;
+  }
+  function getData<T>(value:T):T{
+    return value;
+  }
+  var myGetData:ConfigFn<string> = getData;
+  myGetData('20');
+  myGetData(200);     // 错误
+  ```
+
+
+## 泛型类
+> 指类实例部分的类型，所以类的静态属性不能使用类名后的泛型类型。使用泛型实现获取数组最小值时只需要定义一个类：
+
+  ```ts
+  class MinClass<T>{
+    public list:T[]=[];
+    add(num:T):void{
+      this.list.push(num);
+    }
+    min():T{
+      var minNum = this.list[0];
+      for(var i =0; i<this.list.length; i++){
+        if(minNum > this.list[i]){
+          minNum = this.list[i]
+        }
+      }
+      return minNum;
+    }
+  }
+  var m = new MinClass<number>();
+  m.add(1);
+  m.add(6);
+  m.add(2);
+  console.log(m.min());
+  var s = new MinClass<string>();
+  s.add('a');
+  s.add('f');
+  s.add('b');
+  console.log(s.min());
+  ```
+
+
+## 泛型约束
+
+  ```ts
+  // 1、泛型继承接口
+
+  // 直接实现无法保证所有的参数都有 length 方法
+  function getLen<T>(arg:T):T{
+    return arg.length
+  }
+  // 增加接口来约束泛型：没有 length 属性的参数在函数调用前编译无法通过
+  interface lengthRequire{
+    length:number
+  }
+  function newGetLen<T extends lengthRequire>(arg:T):T{
+    return arg.length
+  }
+
+  // 2、使用类型参数：改写 getProperty
+  function getProperty<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key]
+  }
+  let x = {a:1, b:2, c:3, d:4};
+  getProperty(x, "a");   // 正常
+  getProperty(x, "m");   // 异常
+
+  // 3、使用类类型
+  function create<T> (c: {new(): T;}): T {
+    return new c();
+  }
+  ```
+
+
+# 七、枚举
+> 可以声明一组带名字的常量，用于取值被限定在一定范围内的场景，比如一周只能有七天、颜色限定为红绿蓝等。
+
+## 定义
+
+```ts
+enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
+Days[0] === 'Sun'    // true
+Days['Sat'] === 6    // true
+
+enum Days {Sun=7, Mon, Tue, Wed=1, Thu, Fri, Sat};
+```
+
+## 分类
+
+### 数字枚举
+> 枚举成员是常量而非变量，所以不能对其进行赋值但可以初始化。它们经过编译后会生成反向映射表，即除了生成键值对的集合，还会生成值键对的集合。
+
+  * __不带初始化器__：枚举成员默认从 0 开始并依次递增
+    ```ts
+    enum Days { Sun, Mon, Tue, Wed, Thu, Fri, Sat };
+    Days[0] === 'Sun'    // true
+    Days['Sat'] === 6    // true
+
+    // 编译结果
+    { 
+      0: "Sun", 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu",
+      5: "Fri", 6: "Sat", Fri: 5, Mon: 1, Sat: 6, Sun: 0,
+      Thu: 4, Tue: 2, Wed: 3 
+    }
+    ```
+  * __使用初始化器__：后面的枚举成员从初始值依次递增
+    ```ts
+    enum Days { Sun=7, Mon, Tue, Wed=1, Thu, Fri, Sat };
+
+    // 编译结果
+    { 
+      1: "Wed", 2: "Thu", 3: "Fri", 4: "Sat", 7: "Sun", 
+      8: "Mon", 9: "Tue", Sun: 7, Mon: 8, Tue: 9, Wed: 1, 
+      Thu: 2, Fri: 3, Sat: 4, Sun: 7, Mon: 8, Tue: 9 
+    }
+
+    // 初始值：常数、常量表达式(结果为常数)，不能是变量
+    enum Days_1 { one = 2, two }
+    enum Days_2 { one = Days_1.Sun, two = 2 * one }
+    function returnNum (x: number): number {
+      return x
+    }
+    enum Days_3 {
+      one = returnNum(10) * Days_2.one,
+      two = (function () { return 1 })()
+    }
+    // 报错
+    const first = 10
+    enum Days_4 { one = first, two, three }
+    ```
+
+
+### 字符串枚举
 
 
 
