@@ -144,15 +144,15 @@ description: 入门简介、数据类型、接口、类、函数
 
 ## TS 类型
   * JS 类型：Boolean、Number、String、Array、Null、Undefined、Object。
-  * 新增类型：Tuple(元组)、Enum(枚举值)、Any(任意值)、Void(空值)、Never(永远不会存在的值)。
+  * 新增类型：Tuple(元组)、Enum(枚举)、Any(任意)、Void(空值)、Never(永不存在的值)。
 
   ```ts
     let num: number;
     let str: string;
     let isDone: boolean = false;
 
-    num = '123';     // 错误
-    str = 123;       // 错误
+    num = '123';     // 报错
+    str = 123;       // 报错
 
     // Array：各元素的类型必须相同
     var arr:boolean[] = [true, false];  // 通过元素类型后面添加 []
@@ -204,11 +204,13 @@ description: 入门简介、数据类型、接口、类、函数
     ```
 
 
-## 类型方法
 
-* __类型断言__
+# 三、类型方法
+
+## 类型断言
   * 用来指定一个值的类型，注意指定的必须是其子类型，比如不能指定数字为 string。
   * 类似类型转换但并不进行数据检查和解构，它只在编译阶段起作用而运行时没影响。
+
   ```ts
   // 两种实现方式如下，注意使用 JSX 时只允许 as 语法
   let val: any = "hello";
@@ -225,9 +227,12 @@ description: 入门简介、数据类型、接口、类、函数
     }
   }
   ```
-* 类型判断
+
+
+## 类型判断
   * typeof：判断变量类型。
   * instanceof：判断方法或接口类型。
+
   ```ts
   var s: string = 'great';
   console.log(typeof s === 'string');
@@ -236,8 +241,53 @@ description: 入门简介、数据类型、接口、类、函数
   ```
 
 
+## 类型推论
+> TS 会在没有明确的指定类型时推测出一个类型。
 
-# 三、接口
+  ```ts
+  // 报错：变量类型推断为 string
+  let x = 3;
+  x = '3';
+
+  // 正确：变量类型推断为 any
+  let y;
+  y = 'seven';
+  y = 7;
+
+  // 最佳通用类型：根据赋值推论 (number | null)[]
+  const x = [0, 1, null];
+
+  // 上下文类型：根据变量所在位置的上下文进行推论
+  window.onmousedown = function(mouseEvent: any) {
+    // 编译通过，如果不指定 mouseEvent 类型则会报错
+    console.log(mouseEvent.button);
+  }
+  ```
+
+
+## 类型兼容性
+> 基于结构子类型，而结构类型是一种只使用其成员来描述类型的方式，它与名义类型形成对比。在基于名义类型的类型系统中，数据类型的兼容性或等价性是通过明确的声明或类型名称来决定的，而结构性类型系统是基于类型的组成结构，它并不要求明确地声明。
+
+
+## 基本规则
+> 具有相同的属性：如果 x 要兼容 y，那么 y 至少具有与 x 相同的属性。
+
+  ```ts
+  // 基于结构类型系统的 TS 会检查成功，Java 则会报错
+  interface Named {
+    name: string;
+  }
+  class Person {
+    name: string;
+    age: number;
+  }
+  let p: Named;
+  p = new Person();  // 正确
+  ```
+
+
+
+# 四、接口
 > 接口是一个对外的规范和约定，作用是为属性、函数等类型命名和(第三方)代码定义契约。
 
 ## 属性类型
@@ -280,7 +330,7 @@ description: 入门简介、数据类型、接口、类、函数
     readonly y: number;
   }
   let p1: Point = { x: 10, y: 20 };
-  p1.x = 5;     // 错误
+  p1.x = 5;     // 报错
   ```
 
 
@@ -314,21 +364,21 @@ description: 入门简介、数据类型、接口、类、函数
     [index:number]:string
   }
   var arr:UserArr = ['1', '4'];   // 正确
-  var arr:UserArr = [2, 'bb'];    // 错误
+  var arr:UserArr = [2, 'bb'];    // 报错
 
   // 只读数组
   interface ReadonlyArr {
     readonly [index: number]: string;
   }
   let arr: ReadonlyArr = ["Alice", "Bob"];
-  arr[2] = "Mallory";     // 错误
+  arr[2] = "Mallory";     // 报错
 
   // 约束对象
   interface UserObj{
     [index:string]:string;
   }
   var arr:UserObj = {name: 'li'};  // 正确
-  var arr:UserObj = {age: 20};     // 错误
+  var arr:UserObj = {age: 20};     // 报错
   ```
 
 
@@ -441,7 +491,7 @@ description: 入门简介、数据类型、接口、类、函数
     select() { }
   }
 
-  // 错误：Image 类型缺少 state 属性
+  // 报错：Image 类型缺少 state 属性
   class Image implements SelectableControl {
     select() { }
   }
@@ -450,7 +500,7 @@ description: 入门简介、数据类型、接口、类、函数
   ```
 
 
-# 四、类
+# 五、类
 
   * __类 Class__：由静态部分和实例部分组成，定义了一件事物的抽象特点，描述了它的属性和方法，比如猫类。
   * __对象 Object__：继承了类所有属性和方法的实例对象，它是类通过 new 实例化之后生成的具体事物，比如加菲猫。
@@ -571,8 +621,8 @@ description: 入门简介、数据类型、接口、类、函数
       }
     }
     let p = new Person("yzq");
-    p.name = "Lisa";   // 错误
-    p.age = 24;        // 错误
+    p.name = "Lisa";   // 报错
+    p.age = 24;        // 报错
     ```
   3. 静态 static
     ```ts
@@ -686,7 +736,7 @@ description: 入门简介、数据类型、接口、类、函数
   ```
 
 
-# 五、函数
+# 六、函数
 
 ## 定义
 > 函数的类型由传入参数和返回值组成，它们都需要指定数据类型。参数类型只要匹配即可而不会验证参数名是否正确，没有返回值时必须指定类型为 void 而不能留空。
@@ -705,6 +755,15 @@ description: 入门简介、数据类型、接口、类、函数
   // 完整函数类型: => 表示函数的定义，左右两侧分别是输入和输出类型
   let sum: (a: number) => number = function(x: number): number {
     return x + 1;
+  }
+
+  // 通过接口定义
+  interface Search {
+    (source: string, name: string): boolean
+  }
+  let s: Search;
+  s = function(source: string, name: string) {
+    return source.search(name) !== -1
   }
   ```
 
@@ -728,6 +787,11 @@ description: 入门简介、数据类型、接口、类、函数
   // 有参没有返回值
   function run4(name:string,):void{
     console.log(name)
+  }
+
+  // 函数永远不会返回
+  function bar(): never {
+    throw new Error('never reach');
   }
   ```
 
@@ -775,7 +839,7 @@ description: 入门简介、数据类型、接口、类、函数
   ```
 泛型就是解决 类 接口 方法的复用性、
 
-# 六、泛型
+# 七、泛型
 > 一种约束宽泛的类型，它在定义函数、接口或类时不指定参数的数据类型而在使用时指定，用来创建支持不定数据类型的可复用代码 (泛型函数、泛型接口，泛型类)。
 
 ## 泛型变量
@@ -820,7 +884,7 @@ description: 入门简介、数据类型、接口、类、函数
     return value;
   }
   getData<string>('张三');
-  getData<string>(1243);    //错误
+  getData<string>(1243);    // 报错
 
   // 写法二
   interface ConfigFn<T>{
@@ -831,7 +895,7 @@ description: 入门简介、数据类型、接口、类、函数
   }
   var myGetData:ConfigFn<string> = getData;
   myGetData('20');
-  myGetData(200);     // 错误
+  myGetData(200);     // 报错
   ```
 
 
@@ -899,20 +963,10 @@ description: 入门简介、数据类型、接口、类、函数
   ```
 
 
-# 七、枚举
+# 八、枚举
 > 可以声明一组带名字的常量，用于取值被限定在一定范围内的场景，比如一周只能有七天、颜色限定为红绿蓝等。
 
-## 定义
-
-```ts
-enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
-Days[0] === 'Sun'    // true
-Days['Sat'] === 6    // true
-
-enum Days {Sun=7, Mon, Tue, Wed=1, Thu, Fri, Sat};
-```
-
-## 分类
+## 根据枚举成员分类
 
 ### 数字枚举
 > 枚举成员是常量而非变量，所以不能对其进行赋值但可以初始化。它们经过编译后会生成反向映射表，即除了生成键值对的集合，还会生成值键对的集合。
@@ -920,14 +974,20 @@ enum Days {Sun=7, Mon, Tue, Wed=1, Thu, Fri, Sat};
   * __不带初始化器__：枚举成员默认从 0 开始并依次递增
     ```ts
     enum Days { Sun, Mon, Tue, Wed, Thu, Fri, Sat };
-    Days[0] === 'Sun'    // true
-    Days['Sat'] === 6    // true
+    let d: string = Days[0];     // Sun
+    let i: number = Days.Sat;    // 6
 
     // 编译结果
     { 
       0: "Sun", 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu",
       5: "Fri", 6: "Sat", Fri: 5, Mon: 1, Sat: 6, Sun: 0,
       Thu: 4, Tue: 2, Wed: 3 
+    }
+
+    // 报错：不带初始化器的枚举需要被放在第一位置或初始化的枚举后面
+    enum E {
+      A = getValue(),
+      B
     }
     ```
   * __使用初始化器__：后面的枚举成员从初始值依次递增
@@ -941,14 +1001,14 @@ enum Days {Sun=7, Mon, Tue, Wed=1, Thu, Fri, Sat};
       Thu: 2, Fri: 3, Sat: 4, Sun: 7, Mon: 8, Tue: 9 
     }
 
-    // 初始值：常数、常量表达式(结果为常数)，不能是变量
+    // 初始值：常数、常量表达式，不能是变量、NaN、Infinity
     enum Days_1 { one = 2, two }
     enum Days_2 { one = Days_1.Sun, two = 2 * one }
-    function returnNum (x: number): number {
+    function getNum (x: number): number {
       return x
     }
     enum Days_3 {
-      one = returnNum(10) * Days_2.one,
+      one = getNum(10) * Days_2.one,
       two = (function () { return 1 })()
     }
     // 报错
@@ -958,6 +1018,73 @@ enum Days {Sun=7, Mon, Tue, Wed=1, Thu, Fri, Sat};
 
 
 ### 字符串枚举
+> 需要使用字符串字面量或者之前定义的字符串枚举成员来初始化，注意它不会生成反向映射表。
+
+  ```ts
+  // 全部使用字符串字面量来初始化
+  enum StrEnum1 {
+    one = 'one',
+    two = 'two'
+  }
+
+  // 全部使用其他枚举成员的字面量初始化
+  enum StrEnum2 {
+    one = StrEnum1.one,
+    two = StrEnum1.two
+  }
+
+  // 报错：不能将这初始化方式混写
+  enum StrEnum3 {
+    one = 'first',
+    two = StrEnum1.two
+  }
+  ```
+
+
+### 异构枚举
+> 混合字符串和数字成员，一般不推荐使用。
+
+  ```ts
+  enum BooleanLike {
+    No = 0,
+    Yes = "YES"
+  }
+  ```
+
+
+## 根据声明方式分类
+
+  * __普通枚举__：可以生成反向映射表。
+  * __常量枚举__：不会生成反向映射，节省了代码量但只能通过成员访问。
+  * __外部枚举__：不会生成反向映射，主要用于防止枚举的命名冲突和成员冲突。
+  * __外部常量枚举__：和常量枚举没有区别，只是会提示是否有枚举命名冲突和成员冲突。
+
+  ```ts
+  // 普通枚举：关键词 + 枚举名称
+  enum NumEnum { a, b c }
+
+  // 常量枚举：const + 关键词 + 枚举名称 
+  const enum Color { Red, Green, Blue }
+  Color['0']     // 报错
+  Color.Green    // 1
+
+  // 外部枚举：declear + 关键词 + 枚举名称
+  declear enum Animal { cat, dog, tiger }
+  console.log(Animal)       // 报错：不存在
+  console.log(Animal.cat)   // 报错
+
+  // 外部常量枚举：declear + const + 关键词 + 枚举名称
+  // 声明语 + 修饰符 + 关键词 + 枚举名称
+  declear const enum Animal2 { cat=1, dog, tiger }
+  Animal2.tiger      // 3
+  ```
+
+
+
+
+
+
+
 
 
 
