@@ -228,7 +228,9 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 
 
 # 二、JSX 语法
-> 全称 `JavaScript XML`，是 react 定义的一种类似于 XML 的 JS 扩展语法：`XML + JS`。用于创建 react 虚拟 DOM 对象，即 JSX 最终会被解析编译为合法的 JS 对象，基本规则为：`< 开头的代码以标签的语法解析、{ 开头的代码以 JS 语法解析`。
+https://baijiahao.baidu.com/s?id=1590888048668184361&wfr=spider&for=pc
+
+## 常用语法
 
 
 ## 实现原理
