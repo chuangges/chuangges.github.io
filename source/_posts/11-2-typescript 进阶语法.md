@@ -12,6 +12,7 @@ description: 类型检查、高级类型、命名空间、声明合并、装饰�
 
 
 # 一、类型检查
+> TS 的类型约束对象为变量、函数的参数和返回值，比如字面量类型约束变量、void 和 never 约束函数返回值等。
 
 ## 类型断言
   * 实现：`<类型> 值、值 as 类型`，注意使用 JSX 时只允许 as 语法。
@@ -86,7 +87,7 @@ description: 类型检查、高级类型、命名空间、声明合并、装饰�
 
 
 ### 兼容实例
-> 当一个类型 Y 可以被赋值给另一个类型 X 时，就认为类型 X 兼容 Y，X 为目标类型，Y 为源类型。
+> 如果类型 Y 可以被赋值给类型 X 时，则认为 X 兼容 Y，X 为目标类型，Y 为源类型。
 
   * 函数
     ```ts
@@ -168,7 +169,7 @@ description: 类型检查、高级类型、命名空间、声明合并、装饰�
 
 
 ## 类型保护
-> TS 能够在特定的区块中保证变量属于某种确定的类型，从而可以在此区块中放心地访问此类型的属性和方法。如果不使用类型保护，每次访问变量前都需要使用类型断言，这种方式是不可取的，TS 支持以下四种类型保护的方式：
+> 通过类型判断等方式在特定语句块中确定变量的类型，从而可以放心地访问它的属性和方法。TS 支持的四种方式如下：
 
   * in：判断一个属性/方法是否属于某对象，比如 `a in obj`。
   * typeof：判断基本类型，比如 `typeof b === 'number'`。
@@ -177,25 +178,64 @@ description: 类型检查、高级类型、命名空间、声明合并、装饰�
 
   ```ts
   // 自定义类型保护函数
-  let pet = getSmallPet();
-  if ((<Fish>pet).swim) {
-      (<Fish>pet).swim();
-  }
-  else {
-      (<Bird>pet).fly();
+  let name: string | undefined;
+  if(typeof name === "string") {
+      console.log(name.length)
   }
 
-  // 类型保护：类型谓词为 pet is Fish (name is Type)
+  // 类型保护函数：类型谓词为 name is Type
   function isFish(pet: Fish | Bird): pet is Fish {
     return (<Fish>pet).swim !== undefined;
   }
-  // 变量调用 isFish 时，TS 将变量缩减为那个具体的类型
-  if (isFish(pet)) {  // if 分支：pet 是 Fish 类型
+  if (isFish(pet)) {  // pet 是 Fish 类型
       pet.swim();
   }
-  else {              // else 分支：pet 是 Bird 类型
+  else {
       pet.fly();
   }
+  ```
+
+## 类型别名
+> 对已知的一些类型通过 type 定义新名字以避免重复。它和接口的区别如下：
+
+  * 类型别名不能使用 extends、implement。
+  * 接口创建了一个新名字，可以在其他任何地方使用。类型别名并不创建新名字。
+  * 如果无法通过接口描述一个类型而需要使用联合/元组类型，则一般可以选择类型别名。
+
+  ```ts
+  type Name = string;
+  type NameResolver = () => string;
+  type NameOrResolver = Name | NameResolver;
+  function getName(n: NameOrResolver): Name {
+    if (typeof n === 'string') {
+        return n;
+    }
+    else {
+        return n();
+    }
+  }
+
+  // 泛型
+  type Container <T> =  {value: T};
+
+  // 属性中引用
+  type Tree <T> = {
+    value: T;
+    left: Tree <T>;   
+    right: Tree <T>;
+  }
+
+  // 配合交叉类型使用
+  type LinkedList <T> = T & { next: LinkedList <T> };
+  interface Person {
+    name: string
+  }
+  var people: LinkedList<Person>;
+  var s = people.name;
+  var s = people.next.name;
+
+  // 报错：类型别名不能出现在声明右侧的任何地方
+  type Yikes = Array<Yikes>;
   ```
 
 
@@ -341,7 +381,6 @@ description: 类型检查、高级类型、命名空间、声明合并、装饰�
     ```
 
 
-
 ## 可以为 null 的类型
 > TS 有两种特殊的类型 `null、undefined`，类型检查器默认它们可以赋值给任意类型。`--strictNullChecks` 标记可以解决此错误：当声明一个变量时，它不会自动包含 null、undefined，但是可以使用联合类型明确的包含它们：
 
@@ -404,87 +443,25 @@ description: 类型检查、高级类型、命名空间、声明合并、装饰�
   ```
 
 
-## 类型别名
-> 通过 type 创建来给一个类型起个新名字，常用于联合类型。它和接口的区别如下：
-
-  * 类型别名不能使用 extends、implement。
-  * 接口创建了一个新名字，可以在其他任何地方使用。类型别名并不创建新名字。
-  * 如果无法通过接口描述一个类型而需要使用联合/元组类型，则一般可以选择类型别名。
+## 字面量类型
+> 分为字符串、数字字面量类型，通过指定一个固定值实现类型约束或区分函数重载
 
   ```ts
-  type Name = string;
-  type NameResolver = () => string;
-  type NameOrResolver = Name | NameResolver;
-  function getName(n: NameOrResolver): Name {
-    if (typeof n === 'string') {
-        return n;
-    }
-    else {
-        return n();
-    }
+  let gender: "男"| "女";   // 只能为是男或女
+  let a:"A";               // 只能为 A
+  let user: {              // 必须有 name、age
+      name: string,
+      age: number
   }
 
-  // 泛型
-  type Container <T> =  {value: T};
+  let b:1;
+  function getNum(): 1 | 2 | 3 | 4 { }
 
-  // 属性中引用
-  type Tree <T> = {
-    value: T;
-    left: Tree <T>;   
-    right: Tree <T>;
-  }
-
-  // 配合交叉类型使用
-  type LinkedList <T> = T & { next: LinkedList <T> };
-  interface Person {
-    name: string
-  }
-  var people: LinkedList<Person>;
-  var s = people.name;
-  var s = people.next.name;
-
-  // 报错：类型别名不能出现在声明右侧的任何地方
-  type Yikes = Array<Yikes>;
+  // 区分函数重载
+  function createElement(tagName: "img"): HTMLImageElement;
+  function createElement(tagName: "input"): HTMLInputElement;
+  function createElement(tagName: string): Element { }
   ```
-
-
-## 字面量类型
-
-  * 字符串字面量类型：可以指定字符串必须的固定值，还可以用于区分函数重载。
-    ```ts
-    // 实现类似枚举类型的字符串
-    type Easing = "ease-in" | "ease-out" | "ease-in-out";
-    class UIElement {
-      animate(dx: number, dy: number, easing: Easing) {
-        if (easing === "ease-in") {}
-        else if (easing === "ease-out") { }
-        else if (easing === "ease-in-out") { }
-        else {
-            // 抛出错误
-        }
-      }
-    }
-    let button = new UIElement();
-    button.animate(0, 0, "ease-in");
-    button.animate(0, 0, "uneasy");    // 报错
-
-    // 区分函数重载
-    function createElement(tagName: "img"): HTMLImageElement;
-    function createElement(tagName: "input"): HTMLInputElement;
-    function createElement(tagName: string): Element { }
-    ```
-  * 数字字面量类型
-    ```ts
-    // 直接使用
-    function getNum(): 1 | 2 | 3 | 4 { }
-
-    // 缩小调试 bug 的范围
-    function foo(x: number) {
-      if (x !== 1 || x !== 2) {
-          // 报错：x 与 2 进行比较时值必须为 1，检查非法
-      }
-    }
-    ```
 
 
 ## 可辨识联合
