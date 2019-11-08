@@ -7,53 +7,54 @@ top: false
 keywords:
   - vue
 date: 2019-04-12 00:32:55
-description: 入门简介、SPA、SSR、模块引用、基础配置、打包问题、静态服务
+description: 框架、SPA、SSR、模块引用、常用配置、性能优化、打包问题、静态服务
 ---
 
-# 一、入门简介
-
-  <div style="text-indent: 2em">Vue 是一套构建用户界面的渐进式 js 框架，它不是一个全能框架而只聚焦于视图层，容易学习和与其它库或已有项目整合。Vue 框架是一个轻量高效的前端组件化方案，它通过简洁的 API 提供高效的数据驱动的组件系统，通过操作数据来实现页面的更新与展示。</div> 
-
-  * 核心思想：`数据驱动的组件系统`
-  * 开发理念：`渐进式开发、只关注视图层、组件化、响应式`
-    * 渐进式开发：先构建基础的用户界面，然后再根据需求灵活添加功能
-    * 响应式：一个网页，根据不同的分辨率改变网页大小
-    * 适应式：多个不同的网页，根据不同的分辨率自动选择不同页面
-  * [开源项目库](https://segmentfault.com/p/1210000008583242/read?from=timeline)
+# 一、JS 框架
 
 
-## MVVM 模式
-  * __Model__：对应 js 对象的数据部分
-  * __View__：对应 DOM 元素的视图部分
-  * __Viewmodel__：绑定数据和 DOM 的中间件
+## 基础介绍
 
-  <div align="center"> 
-    ![Vue MVVM](/images/vue/vue_bing.png) 
-  </div> 
+  * __核心思想__：`数据驱动的组件系统、轻量高效的前端组件化方案`
+  * __开发理念__
+    * `渐进式开发`：先构建基础的用户界面，然后再根据需求灵活添加功能。
+    * `聚焦视图层`：它不是一个全能框架而只关注视图层，容易学习和集成其它 [开源库](https://segmentfault.com/p/1210000008583242/read?from=timeline)。
+    * `组件化`：通过简洁 API 提供高效的数据驱动的组件系统，通过操作数据来更新页面。
+    * `响应式`：页面根据不同分辨率改变大小，适应式则是根据分辨率去选择不同的页面。
+  * __MVVM 模式__
+    * `Model`：对应 js 对象的数据部分
+    * `View`：对应 DOM 元素的视图部分
+    * `Viewmodel`：绑定数据和 DOM 的中间件
 
+    <div align="center"> 
+      ![Vue MVVM](/images/vue/vue_bing.png) 
+    </div> 
 
 
 ## 双向绑定
 
 ### 实现方式
 
-  * __发布者-订阅者模式__：一般通过 sub、pub 的方式实现数据和视图的绑定监听
-    * 更新数据方式通常是 `vm.set('property', value)`，但这种方式现在比较 low 
-    * 我们更希望通过 `vm.property = value` 更新数据，同时自动更新视图，于是有了下面两种方式
-  * __脏值检查__： angular.js 是通过脏值检测的方式比对数据是否有变更来决定是否更新视图
-    * 最简单的方式就是通过 setInterval() 定时轮询检测数据变动
-    * angular 只有在指定的事件触发时进入脏值检测：DOM 事件、XHR 响应事件等
-  * __数据劫持__：vue.js 采用数据劫持结合发布者-订阅者模式的方式
-    * 通过 `Object.defineProperty()` 来劫持各个属性的 setter、getter
+  * __发布者-订阅者模式__
+    * 一般通过 sub、pub 的方式实现数据和视图的绑定监听。
+    * 更新数据方式通常是 `vm.set('property', value)`，但这种方式现在比较 low。
+    * 我们更希望通过 `vm.property = value` 更新数据，同时自动更新视图，于是有了下面两种方式。
+  * __脏值检查__
+    * angular 通过脏值检测的方式比对数据是否有变更来决定是否更新视图。
+    * 最简单的方式是通过 setInterval() 定时轮询检测数据变动。
+    * angular 只有在指定事件触发时进入脏值检测：DOM 事件、XHR 响应事件等。
+  * __数据劫持__
+    * vue 采用数据劫持结合发布者-订阅者模式的方式
+    * 通过 `Object.defineProperty()` 来劫持各个属性的 setter、getter。
     * 在数据变动时发布消息给订阅者，触发相应的监听回调。
 
 
-### vue 实现原理
+### vue 实现
 
-  1. 实现一个数据监听器 __Observer__，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者
-  2. 实现一个指令解析器 __Compile__，对每个元素节点的指令进行扫描和解析，并根据初始化模板 data 数据和相应的订阅器
-  3. 实现一个 __Watcher__，作为连接 Observer 和 Compile 的桥梁，能够订阅并收到每个属性变动的通知，然后执行相应回调函数，从而更新视图
-  4. mvvm __入口函数__，整合以上三者
+  1. 实现一个数据监听器 __Observer__，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者。
+  2. 实现一个指令解析器 __Compile__，对每个元素节点的指令进行扫描和解析，并根据初始化模板 data 数据和相应的订阅器。
+  3. 实现一个 __Watcher__，作为连接 Observer 和 Compile 的桥梁，能够订阅并收到每个属性变动的通知，然后执行相应回调函数，从而更新视图。
+  4. mvvm __入口函数__，整合以上三者。
 
 
   <div align="center"> 
@@ -67,23 +68,23 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
   ```js
   // Observer.js
   function defineReactive(data, key, val) {
-      observe(val); // 监听子属性
-      Object.defineProperty(data, key, {
-          enumerable: true, // 可枚举
-          configurable: false, // 不能再 define
-          get: function() {
-              // 由于需要在闭包内添加 watcher，所以通过 Dep 定义一个全局 
-              // target 属性来暂存 watcher, 添加完移除
-              if (Dep.target) dep.addSub(Dep.target)
-              return val;
-          },
-          set: function(newVal) {
-              if (val === newVal) return
-              val = newVal
-              // 通知所有订阅者
-              dep.notify()   
-          }
-      })
+    observe(val); // 监听子属性
+    Object.defineProperty(data, key, {
+      enumerable: true, // 可枚举
+      configurable: false, // 不能再 define
+      get: function() {
+        // 由于需要在闭包内添加 watcher，所以通过 Dep 定义一个全局 
+        // target 属性来暂存 watcher, 添加完移除
+        if (Dep.target) dep.addSub(Dep.target)
+        return val;
+      },
+      set: function(newVal) {
+        if (val === newVal) return
+        val = newVal
+        // 通知所有订阅者
+        dep.notify()   
+      }
+    })
   }
   ```
 
@@ -561,7 +562,7 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
 									
 
  
-# 五、基础配置
+# 五、常用配置
 
 ## 快捷键
   ```json
@@ -647,7 +648,24 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
   ```
 
 
-# 六、打包问题
+# 六、性能优化
+
+  * 路由懒加载：`const login = resolve => require(['common/Login.vue'], resolve)`。
+  * 首屏加载
+    * 页面内容加载完成前使用 loading、进度条、骨架屏 可以提升用户体验。
+    * 骨架屏：vue-skeleton 使用一些空白内容的图形来展示未加载内容。
+  * 通过 CDN 引入资源，减小服务器带宽压力
+    * 项目依赖会被全部打包到 vender.js，文件很大时首屏加载较慢
+    * 使用 cdn 文件代替就不会被打包进去，加载速度较快
+  * 使用 v-if 减少不必要的组件加载：显示时才渲染弹窗等组件
+  * 将图片等一些静态资源放到云服务器，减小服务器压力
+  * 需加载三方资源：按需引入 ElementUI 等组件库
+  * 若首屏为登录页则可做成多入口
+  * webpack 开启 gzip 压缩
+
+
+
+# 七、打包问题
 > npm run build 执行打包操作后生成 dist 文件夹  
 
 ## 资源路径
@@ -715,7 +733,7 @@ description: 入门简介、SPA、SSR、模块引用、基础配置、打包问�
   * index.html：`link rel="shortcut icon" type="image/x-icon" href="favicon.ico"`
 
 
-# 七、静态服务
+# 八、静态服务
 > 打包后快速搭建静态服务器
 
   * 全局安装：`npm install -g live-server / http-server`

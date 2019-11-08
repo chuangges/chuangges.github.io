@@ -37,27 +37,31 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
 
 
 # 二、程序员网站       
-  1. __常用__
-    * [印记中文](https://www.docschina.org/)：教程中文版
-    * [站长工具](http://tool.chinaz.com/tools/openweb.aspx/)：代码整理和测试
-    * [在线工具](http://tool.lu/)：代码处理工具合集
-    * [Github](https://github.com/)：代码托管
-    * [Stack Overflow](https://stackoverflow.com/)：技术问答社区
-    * [Learn Anything](https://stackoverflow.com/)：思维导图形式学习技术
-  2. __提升__
-    * [百度脑图](http://naotu.baidu.com/)：思维导图          
-    * [ProcessOn](https://slides.com/)：脑图工具         
-    * [Slides](https://www.processon.com/)：WebPPT 编辑器        
-    * [CanIuse](https://caniuse.com/)：浏览器兼容         
-    * [Overapi](http://overapi.com/)：API速查手册  
-    * [RunJS](https://runjs.cn/)：JS在线编辑和分享         
-    * [Standardjs](https://standardjs.com/)：JS编码规范   
-    * [Faviconer](https://www.favicon-generator.org/)：图标生成器                    
-  3. __了解__
-    * [零花钱](https://github.com/easychen/howto-make-more-money)：接单网站 
-    * [Electron](https://electronjs.org/)：跨平台程序  
-    * [.gitignore](https://github.com/github/gitignore)：不同语言项目 
-    * [墨刀](https://modao.cc/)：在线制作移动应用原型 
+
+## 基础
+  * [印记中文](https://www.docschina.org/)：教程中文版
+  * [站长工具](http://tool.chinaz.com/tools/openweb.aspx/)：代码整理和测试
+  * [在线工具](http://tool.lu/)：代码处理工具合集
+  * [码云](https://gitee.com/)：代码托管中文网站
+  * [Github](https://github.com/)：代码托管全球网站
+  * [Stack Overflow](https://stackoverflow.com/)：技术问答社区
+  * [Learn Anything](https://stackoverflow.com/)：思维导图形式学习技术
+
+## 提升
+  * [百度脑图](http://naotu.baidu.com/)：思维导图          
+  * [ProcessOn](https://slides.com/)：脑图工具         
+  * [Slides](https://www.processon.com/)：WebPPT 编辑器        
+  * [CanIuse](https://caniuse.com/)：浏览器兼容         
+  * [Overapi](http://overapi.com/)：API速查手册  
+  * [RunJS](https://runjs.cn/)：JS在线编辑和分享         
+  * [Standardjs](https://standardjs.com/)：JS编码规范   
+  * [Faviconer](https://www.favicon-generator.org/)：图标生成器                    
+
+## 拓展
+  * [零花钱](https://github.com/easychen/howto-make-more-money)：接单网站 
+  * [Electron](https://electronjs.org/)：跨平台程序  
+  * [.gitignore](https://github.com/github/gitignore)：不同语言项目 
+  * [墨刀](https://modao.cc/)：在线制作移动应用原型 
 
 
 
@@ -692,74 +696,6 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
   <div align="center"> 
     ![移动端优化](/images/mobile/optimization.png) 
   </div>
-
-
-
-## 常见应用
-
-### JS 节流和防抖
-> 在网页实际运行的某些场景下，有些事件是会被不间断的被触发的，而不是我们认为的滚动一次触发一次。这种情况下，由于过于频繁地 DOM 操作和资源加载，严重影响了网页性能，甚至会造成浏览器崩溃。两者都是某个行为持续地触发，区别在于只需要判断是要优化到减少它的执行次数还是只执行一次。
-
-
-  * __节流__
-    * 基础理解：一个水龙头在滴水，可能一次性会滴很多滴，但是我们只希望它每隔 500ms 滴一滴水并保持这个频率。即我们希望函数以一个可以接受的频率重复调用，通过节流函数减少回调函数的执行次数。
-    * 应用场景：拖拽元素时 `drag` 事件、监听滚动时 `scroll` 事件、鼠标移动时 `mousemove` 事件、手指滑动时 `touchmove` 事件
-  * __防抖__
-    * 基础理解：将一个弹簧按下，继续加压，继续按下，但只会在最后放手的一瞬反弹。即我们希望回调函数即使在设定时间内反复调用，也只会在间隔时间超过设定时间后调用一次，通过防抖函数让回调函数实现延时执行。
-    * 应用场景：搜索框输入内容时 `keyup` 事件、浏览器窗口调整大小时 `resize` 事件
-
-
-  ```js
-  // 节流：首次不执行
-  function throttle(callback, duration=200){
-    let timer = null;
-    return function(){
-      if(timer) return;
-      timer = setTimeout(()=>{
-        callback.apply(this,arguments);
-        timer = null;
-      }, duration);
-    }
-  }
-  let handleScroll = throttle(handleScroll)
-  window.addEventListener("touchmove", handleScroll);
-
-  // 防抖：首次不执行
-  function debounce(callback, delay=200){
-    let timer = null;
-    return function(){
-      if(timer) clearTimeout(timer);
-      timer = setTimeout(()=>{
-        callback.apply(this,arguments);
-        timer = null;
-      }, delay);
-    }
-  }
-  let handleSeach = debounce(seachAjax, 500)
-  input.addEventListener("keyup", e=>{ handleSeach(e.target.value)})
-  ```
-
-    
-### vue 首屏加载
-
-  * 首屏加载效果
-    * 页面内容加载完成前使用 loading、进度条、骨架屏 可以提升用户体验
-    * 骨架屏：vue-skeleton 使用一些空白内容的图形来展示未加载内容  
-  * 路由懒加载
-    * `const login = resolve => require(['common/Login.vue'], resolve)`
-  * 使用 v-if 减少不必要的组件加载：显示时才渲染弹窗等组件
-  * 通过 CDN 引入资源，减小服务器带宽压力
-    * 项目依赖会被全部打包到 vender.js，文件很大时首屏加载较慢
-    * 使用 cdn 文件代替就不会被打包进去，加载速度较快
-  * 将图片等一些静态资源放到云服务器，减小服务器压力
-  * 需加载三方资源：按需引入 ElementUI 等组件库
-  * 若首屏为登录页则可做成多入口
-  * webpack 开启 gzip 压缩
-
- 
-
-
-
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: Web 新技术的应用
+title: Web 视频功能
 tags:
   - 项目开发
 categories: 项目开发

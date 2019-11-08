@@ -1,5 +1,5 @@
 ---
-title: web 常用的插件合集
+title: web 常用插件
 tags:
   - 项目开发
 categories: 项目开发
