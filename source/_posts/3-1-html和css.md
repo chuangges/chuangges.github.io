@@ -104,7 +104,70 @@ description: HTML、CSS
   * IE 条件注释语句：解决 IE 兼容问题
 
 
-# 七、CSS3
+# 七、组件样式
+> 只在当前组件生效，不影响全局样式。
+
+## Scoped
+> 缺点：可能影响其它相同类名的组件样式而不能完全避免冲突、增加了每个样式的权重而导致必须全局修改、增加了标签渲染时间。
+
+  ```html
+  <!-- 在元素中添加了一个唯一属性用来区分 -->
+  <style scoped>
+  h1 {
+    color: #f00;
+  }
+
+  h1[data-v-4c3b6c1c] {
+    color: #f00;
+  }
+  </style>
+  ```
+
+## Modules
+> CSS 模块化的一种方式而并非官方标准和浏览器的特性，它重新生成类名而有效避开了 css 权重和类名重复的问题。注意它需要安装 css-loader 插件并进行配置 (Vue 等框架已经集成)，所有类名都要通过 :class 进行绑定。
+
+  ```html
+  <template>
+    <div :class="css.wrap">
+      <input :class="css.input" type="text">
+    </div>
+  </template>
+  <style module="css" lang="scss">
+    .wrap {
+      color: #999;
+      .input { }
+    }
+  </style>
+  ```
+  ```js
+  // css-loader 默认配置
+  {
+    modules: true,
+    importLoaders: 1,
+    localIdentName: '[hash:base64]'
+  }
+
+  // 通过 vue-loader 自定义配置
+  module: {
+    rules: [
+      {
+        test: '\.vue$',
+        loader: 'vue-loader',
+        options: {
+          cssModules: {
+            // 格式化类名：当前文件名、当前类名、hash 字符串
+            localIdentName: '[name]__[local]-[hash:base64:5]',
+            // only 只支持驼峰绑定类名，true 支持驼峰和中括号
+            camelCase: true
+          }
+        }
+      }
+    ]
+  }
+  ```
+
+
+# 八、CSS3
 
 ## 引用字体文件
   ```css
@@ -172,7 +235,6 @@ description: HTML、CSS
           backface-visibility: hidden;
       }
   }
-
   ```
 
 
@@ -183,16 +245,15 @@ description: HTML、CSS
 
   ```css
   .box {
-      width: 100px;
-      height: 20px;
-      background-color: orange;
-      /* transition: width 1s ease-in, backgroundColor 1s ease-in; */
-      transition: all 1s ease-in .2s;
+    width: 100px;
+    height: 20px;
+    background-color: orange;
+    /* transition: width 1s ease-in, backgroundColor 1s ease-in; */
+    transition: all 1s ease-in .2s;
   }
-
   .box:hover {
-      width: 300px;
-      background-color: red;
+    width: 300px;
+    background-color: red;
   }
   ```
 
@@ -206,22 +267,21 @@ description: HTML、CSS
 
   ```css
   .box { 
-      color: #f00; 
-      font-size: 36px; 
-      font-weight: bold;
-      animation: change 1s ease-in infinite; 
-      /* animation-play-state: paused; */
+    color: #f00; 
+    font-size: 36px; 
+    font-weight: bold;
+    animation: change 1s ease-in infinite; 
+    /* animation-play-state: paused; */
   }
   @keyframes change {
-      0%   { text-shadow: 0 0 4px #f00 }
-      50%  { text-shadow: 0 0 40px #f00 }
-      100% { text-shadow: 0 0 4px #f00 }
+    0%   { text-shadow: 0 0 4px #f00 }
+    50%  { text-shadow: 0 0 40px #f00 }
+    100% { text-shadow: 0 0 4px #f00 }
   }
   ```
-  
 
 
-# 八、PC 端开发常用样式
+# 九、PC 端开发常用样式
 ## 初始化
   ```css
   /* reset.css  */
@@ -278,49 +338,49 @@ description: HTML、CSS
   ```css
   /* 块中块元素 */
   .div-child {
-      margin: 0 auto;  
+    margin: 0 auto;  
   }
   .div-parent {
-      display: table-cell;   
-      vertical-align: middle; 
+    display: table-cell;   
+    vertical-align: middle; 
   }
 
   /* 块中内联元素 */
   .div-parent {
-      text-align: center;   
-      height: 100px;
-      line-height: 100px;  
-      
-      /* 其它方法垂直居中 */
-      display: table-cell;    
-      vertical-align: middle;
+    text-align: center;   
+    height: 100px;
+    line-height: 100px;  
+    
+    /* 其它方法垂直居中 */
+    display: table-cell;    
+    vertical-align: middle;
   }
 
   /* 不定宽高的水平、垂直居中 */
   /* 1.定位 */
   .parent {
-      position: relative;
+    position: relative;
   }
   .child { 
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-left: -100px;   /* 自身宽度一半 */
-      margin-top: -50px;    /* 自身高度一半 */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;   /* 自身宽度一半 */
+    margin-top: -50px;    /* 自身高度一半 */
   }
   /* 2.CSS3 */
   .wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 3;
-      transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%,-50%);
   }
   /* 3.flexbox方法 (设置父元素，让子元素水平居中) */
   .parent {       
-      display:-webkit-flex;
-      justify-content:center;  
-      align-items:center;      
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
   }  
   ```
 
@@ -329,53 +389,53 @@ description: HTML、CSS
   ```css
   /* 左边固定右边自适应的两列布局（定位和flex方式略） */
   .parent::after {
-      content: "";            
-      display: block;
-      height: 0;               
-      visibility: hidden;     
-      clear: both;
+    content: "";            
+    display: block;
+    height: 0;               
+    visibility: hidden;     
+    clear: both;
   }
   .parent {  
-      *zoom : 1      
+    *zoom : 1      
   }
   .left {
-      float: left;
-      width: 100px;
+    float: left;
+    width: 100px;
   }
   .right {
-      margin-left: 120px;  
+    margin-left: 120px;  
   }
 
   /* 两边固定中间自适应的三列布局 (浮动和定位略) */
   .parent {
-      display: flex;
+    display: flex;
   }
   .left,.right {
-      width: 100px;
-      height: 100px;
+    width: 100px;
+    height: 100px;
   }
   .middle {
-      flex: 1;
-      margin: 0 200px; 
+    flex: 1;
+    margin: 0 200px; 
   }
 
   /* 移动端窗口居中布局 */
   .text_box span {
-      color: #eff1f2;
-      display: block;
-      position: absolute;
-      left: 50vw;
-      top: 50vh;
-      transform: translate(-50%, -50%);  
+    color: #eff1f2;
+    display: block;
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);  
   }
   .text_box div {
-      position: absolute;
-      left: 50vw;
-      top: 50vh;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: 1px solid #fff;
-      opacity: 0;
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid #fff;
+    opacity: 0;
   }
   ```
 
@@ -386,29 +446,29 @@ description: HTML、CSS
   ```css
   /* 大层 */
   .container {
-      width: 100%;
-      margin: 0 auto;
+    width: 100%;
+    margin: 0 auto;
   }
 
   /* 瀑布流层 */
   .waterfall {
-      column-count: 4;
-      column-gap: 1em;
+    column-count: 4;
+    column-gap: 1em;
   }
 
   /* 一个内容层 */
   .item { 
-      padding: 20px;
-      -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-      page-break-inside: avoid;  /* Firefox */
-      break-inside: avoid;       /* IE 10+ */
-      border: 1px solid #000;
-      height: 100%;
-      overflow: auto;
+    padding: 20px;
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+    page-break-inside: avoid;  /* Firefox */
+    break-inside: avoid;       /* IE 10+ */
+    border: 1px solid #000;
+    height: 100%;
+    overflow: auto;
   }
   .item img {
-      width: 100%;
-      margin-bottom:10px;
+    width: 100%;
+    margin-bottom:10px;
   }
   ```
 
@@ -417,7 +477,7 @@ description: HTML、CSS
   ```css
   /* 清除默认框 */
   input{
-      border: none / 0 ;  
+    border: none / 0 ;  
   }
   /* 清除下拉框默认选择样式 */
   select{
@@ -430,25 +490,25 @@ description: HTML、CSS
 
   /* 应用于有焦点的元素(输入框, 超链接)具有焦点的时间内*/
   a:focus, a:hover{ 
-      outline: 1px  dotted red; 
-      opacity: 0.6;
+    outline: 1px  dotted red; 
+    opacity: 0.6;
   }
   input:focus{ 
-      background: yellow; 
+    background: yellow; 
   }
 
   /* placeholder 颜色 */
   ::-webkit-input-placeholder{  
-      color: #d3d3d3; 
+    color: #d3d3d3; 
   } 
   :-moz-placeholder{  
-      color: #d3d3d3; 
+    color: #d3d3d3; 
   } 
   ::-moz-placeholder{ 
-      color: #d3d3d3;
+    color: #d3d3d3;
   } 
   :-ms-input-placeholder{  
-      color: #d3d3d3; 
+    color: #d3d3d3; 
   } 
   ```
 
@@ -583,101 +643,101 @@ description: HTML、CSS
 
   // <div class="title" data-title="hello world">title悬浮框</div>
   .title {
-      margin-top: 100px;
-      margin-left: 100px;
-      position: relative;
+    margin-top: 100px;
+    margin-left: 100px;
+    position: relative;
   }
   .title:hover::after {
-      content: attr(data-title);
-      display: inline-block;
-      padding: 10px 14px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      position: absolute;
-      top: -50px;
-      left: -30px;
+    content: attr(data-title);
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    position: absolute;
+    top: -50px;
+    left: -30px;
   }
 
   // 半圆
   .semi-circle {
-      width: 100px;
-      height: 50px;
-      background: red;
-      border-radius: 50px 50px 0 0;
+    width: 100px;
+    height: 50px;
+    background: red;
+    border-radius: 50px 50px 0 0;
   }
   // 半椭圆
   .semiellipse {
-      margin-top: 30px;
-      width: 100px;
-      height: 50px;
-      background: red;
-      border-radius: 100% 0 0 100% /50%;
+    margin-top: 30px;
+    width: 100px;
+    height: 50px;
+    background: red;
+    border-radius: 100% 0 0 100% /50%;
   }
   // 椭圆
   .ellipse {
-      width: 100px;
-      height: 50px;
-      background: red;
-      border-radius: 50px/25px;
+    width: 100px;
+    height: 50px;
+    background: red;
+    border-radius: 50px/25px;
   }
 
   // 梯形
   .echelon {
-      width: 600px;
-      border: 100px solid;
-      border-color: transparent transparent #c00;
+    width: 600px;
+    border: 100px solid;
+    border-color: transparent transparent #c00;
   }
 
   // 三栏
   .three-cols {
-      width: 150px;
-      height: 30px;
-      padding: 15px 0;
-      border-top: 30px solid;
-      border-bottom: 30px solid;
-      background-color: currentColor;
-      background-clip: content-box;
+    width: 150px;
+    height: 30px;
+    padding: 15px 0;
+    border-top: 30px solid;
+    border-bottom: 30px solid;
+    background-color: currentColor;
+    background-clip: content-box;
   }
 
   // 多层阴影
   .shadows {
-      width: 100px;
-      height: 100px;
-      background-color: #fff;
-      border: 5px solid black;
-      box-shadow: 0 0 0 5px green,0 0 0 10px red;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 5px solid black;
+    box-shadow: 0 0 0 5px green,0 0 0 10px red;
   }
 
   // 眼睛
   .eye {
-      width: 150px;
-      height: 150px;
-      padding: 10px;
-      border: 10px solid;
-      border-radius: 50%;
-      background-color: currentColor;
-      background-clip: content-box;
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+    border: 10px solid;
+    border-radius: 50%;
+    background-color: currentColor;
+    background-clip: content-box;
   }
 
   // 放大镜
   .magnifier {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 5px solid #333;
-      position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 5px solid #333;
+    position: relative;
   }
   .magnifier::after {
-      content: '';
-      display: block;    
-      width: 8px;    
-      height: 60px;    
-      border-radius: 5px;    
-      background: #333;    
-      position: absolute;    
-      right: -22px;    
-      top: 38px;    
-      transform: rotate(-45deg);
+    content: '';
+    display: block;    
+    width: 8px;    
+    height: 60px;    
+    border-radius: 5px;    
+    background: #333;    
+    position: absolute;    
+    right: -22px;    
+    top: 38px;    
+    transform: rotate(-45deg);
   }
   ```
 

@@ -59,7 +59,7 @@ description: 入门简介、基本类型、接口、类、函数、泛型、枚�
 ## 开发调试
 
   1. __安装工具__
-    * IDE：推荐使用 `VSCode`
+    * IDE：推荐使用 `VSCode + ESLint`
     * TS：`npm install -g typescript`
   2. __编译方式__
     * 手动编译：`tsc test.ts`

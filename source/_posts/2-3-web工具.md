@@ -124,7 +124,8 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
     * __Bracket Pair Colorizer__：每一对括号用不同颜色区别
     * __Open-In-Browser__：直接在浏览器中打开文件的快捷菜单 `alt + b`
   * 辅助编辑类
-    * __ESlint__：检测js
+    * __ESlint__：检测 js、ts
+    * __Stylelint__：检测 css、scss
     * __Prettier__：代码格式化 `alt + shift + F`
     * __CSS Peek__：追踪至定义处（右键选择前两个选项）
     * __Path Intellisense__：自动补全路径
@@ -150,14 +151,13 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
     * __Debugger for chrome__：调试 Debug
 
 
-
 ### 常用配置
 
   ```js
-  // 用户配置：文件 --> 首选项 --> 设置 --> User Settings
+  // 用户配置：文件、首选项、设置、User Settings
 
-  // 解决 vscode 卡顿
-  "search.followSymlinks": false,  // cpu 占用过高
+  // 解决 vscode 卡顿 (cpu git 占用过高)
+  "search.followSymlinks": false,
   "git.enabled": false,
   "git.autorefresh:: false,
 
@@ -173,7 +173,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   "editor.fontSize": 16,
   // 代码缩进
   "editor.tabSize": 2,
-  // eslint 验证语言
+  // eslint 验证和自动修复
   "eslint.validate": [  
     "javascript",       
     "javascriptreact",       
@@ -188,7 +188,6 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
       "autoFix": true       
     }
   ],
-  // 保存时自动修复 eslint 错误
   "eslint.autoFixOnSave": true,
   // 保存时自动格式化
   "editor.formatOnSave": true
