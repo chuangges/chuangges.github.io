@@ -14,12 +14,11 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 >  Facebook 开源的一个可用于动态构建用户界面的 JavaScript 库(框架)
 
   * 单向的从数据到视图的渲染，非双向数据绑定。
-  * 一个用于构建页面组件的 UI 库而不是一个 MVC 框架，可认为是 MVC 中的 View。
-  * 对虚拟 DOM 进行编程而不是直接操作 DOM 对象，并通过 diff 算法以最小步骤作用到真正的浏览器 DOM。
   * 可以使用 JSX 但不能用模板，JSX 最终会被编译为合法的 JS 语句调用。
-  * 服务器端渲染只是一个锦上添花的功能而并非核心出发点，官方站点几乎没有提及其在服务器端的应用。
-  * 在实际项目中，它并不能解决所有问题，需要结合 Redux、React-router 等其它库来协助提供完整的解决方法。
-
+  * 一个用于构建页面组件的 UI 库而不是一个 MVC 框架，可认为是 MVC 中的 View。
+  * 对虚拟 DOM 进行编程，并通过 diff 算法以最小步骤作用到真正 DOM (不是直接操作)。
+  * 服务器端渲染只是锦上添花的功能而并非核心，官方站点几乎没有其在服务器端的应用。
+  * 它在实际项目中并不能解决所有问题，需要结合 Redux、React-router 等其它库来协助。
 
 
 ## 对比 Vue
@@ -27,33 +26,22 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 ### 相同点
   * 数据驱动视图
   * 都支持服务器端渲染
-  * 都有支持 native 的方案：React 的 React native、Vue 的 weex
-  * 都有 Virtual DOM、组件化开发，通过 props 参数进行父子组件数据的传递，都实现 webComponent 规范
+  * 都有支持 native 的方案：React 的 React native、Vue 的 weex。
+  * 都有 Virtual DOM、webComponent 规范(组件化)，通过 props 实现父子通信。
 
 
 ### 不同点
-  * __框架模式__
-    * Vue 则是 MVVM 模式
-    * React 严格上只针对 MVC 的 view 层
-  * __virtual DOM__
-    * vue 会跟踪每一个组件的依赖关系而不需要重新渲染整个组件树
-    * React 则是每当应用的状态被改变时全部组件都会重新渲染，需要 shouldComponentUpdate 进行控制
-  * __组件写法__
-    * React 推荐的做法是 JSX + inline style，即把 HTML、CSS 全都写进 Js
-    * Vue 推荐的做法是 webpack + vue-loader 的单文件组件格式，即 html、css、js 写在同一个文件
-  * __数据绑定__
-    * vue 实现了数据的双向绑定
-    * react 数据流动是单向的
-  * __state 对象__
-    * react 应用中是不可变的，需要使用 setState 更新状态
-    * vue 中并不是必须的，数据由 data 属性在 vue 对象中管理
-
+  * __框架模式__：Vue 是 `MVVM` 模式，React 则只针对 `MVC view 层`。
+  * __数据绑定__：vue 实现了数据的双向绑定，react 的数据流动则是单向的。
+  * __state 对象__：vue 不是必须的，react 应用状态则是不可变的并需要使用 setState 更新。
+  * __virtual DOM__：vue 会跟踪每个组件的依赖关系而`不需要重新渲染整个组件树`，React 则是每当应用状态被改变时`重新渲染全部组件`，需要 shouldComponentUpdate 控制。
+  * __组件写法__：Vue 推荐使用 `webpack + vue-loader` 的单文件组件，即把 html、css、js 写在同一文件。React 则推荐 `JSX + inline style`，即把 html、css 全部写进 Js。
 
 
 ## 主要特点
   
-  * __单向数据流__：减少了重复代码，比较简单
-  * __组件化开发__：高内聚、低耦合，注意使用 Js 编写而非模板
+  * __单向数据流__：减少了重复代码，比较简单。
+  * __组件化开发__：高内聚、低耦合，注意使用 Js 编写而非模板。
   * __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)。
   * __高效__：virtual DOM 避免了直接操作元素、DOM Diff 算法减少了页面重绘次数。
   * __声明式编程__：简洁易懂而有利于代码维护、无须使用变量而避免了创建和修改状态。
@@ -95,7 +83,7 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 ## 实现原理
   
 ### 虚拟 DOM
-> 在浏览器端创建一个描述 dom 结构和样式的对象（虚拟 DOM）来管理真实 DOM。每当数据变化时 React 就会重新构建整个 DOM 树，通过 diff 算法对比前后两个对象的差异并计算出最小的步骤来更新真实 DOM，最终只把变化的部分重新渲染，而且虚拟 DOM 是内存数据而性能极高，提高了渲染的效率和性能，而原生 dom 更新时需要遍历所有属性并大多与渲染无关。
+  <div style="text-indent: 2em">在浏览器端创建一个描述 dom 结构和样式的对象（虚拟 DOM）来管理真实 DOM。每当数据变化时 React 就会重新构建整个 DOM 树，通过 diff 算法对比前后两个对象的差异并计算出最小的步骤来更新真实 DOM，最终只把变化的部分重新渲染，而且虚拟 DOM 是内存数据而提高了渲染的效率和性能，而原生 dom 更新时需要遍历所有属性并大多与渲染无关。</div>
 
   ```js
   // 方法一
@@ -123,8 +111,7 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 
 
 ### 组件化
-> 组件就是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合或者嵌套的方式构成大的组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为 commponent (一个完整抽象的组件)`，components 的存在让计算 DOM diff 效率更高。
-
+  <div style="text-indent: 2em">组件是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每个功能相对独立的模块定义成组件，然后将小组件通过组合或嵌套的方式构成大组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件，组件化让计算 DOM diff 效率更高。</div>
 
 ## 基础使用
 
