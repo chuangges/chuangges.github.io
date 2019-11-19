@@ -102,10 +102,8 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
   ReactDOM.render(d, document.getElementById('test2'));
   const list = ['1', '2', '3', '4'];
   ReactDOM.render(
-    <ul>
-        {list.map((item,index) => <li key={index}>{item}</li>)}
-    </ul>
-    , document.getElementById('app')
+    <ul>{list.map((item,index) => <li key={index}>{item}</li>)}</ul>, 
+    document.getElementById('app')
   )
   ```
 
@@ -215,14 +213,16 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 
 
 # 二、JSX 语法
-https://baijiahao.baidu.com/s?id=1590888048668184361&wfr=spider&for=pc
+> Facebook 专门为 react 发明的一种新的类似于 XML 格式的语言，它是 JS 的语法拓展。它使用 XML 标记的方式去直接声明界面，然后利用编译器转换成 JS 语言。
 
-## 常用语法
-https://www.cnblogs.com/ly2019/p/11210407.html
+## 优点
+  * 编写模板更加快速。
+  * 渲染时输出虚拟 dom，执行更快。
+  * 类型安全，在编译过程中就能发现错误。
+
 
 ## 实现原理
-
-### 具体实现
+> JSX 不会直接渲染为 DOM：1. 元素可能需要渲染到 页面（react-dom）、canvas（react-canvas）、原生 App（ReactNative），2. 当数据变化而需要更新组件时，可以通过快速算法操作 Js 对象而不用操作 DOM，这样可以尽量减少浏览器重排而极大地优化性能。
 
   <div align="center"> 
     ![JSX 实现原理](/images/react/jsx.png)
@@ -244,7 +244,6 @@ https://www.cnblogs.com/ly2019/p/11210407.html
     <Header />,
     document.getElementById('root')
   )
-
 
   // 编译后
   class Header extends Component {
@@ -270,12 +269,7 @@ https://www.cnblogs.com/ly2019/p/11210407.html
   )
   ```
 
-
-### 原理解析
-> 为什么不直接从 JSX 直接渲染构造 DOM 结构呢
-
-  * 元素可能需要渲染到 页面（react-dom）、canvas（react-canvas）、原生 App（ReactNative）
-  * 当数据变化时需要更新组件时，可以通过快速算法操作 Js 对象而不用直接操作页面 DOM，这样可以尽量少的减少浏览器重排，极大地优化性能。
+https://www.cnblogs.com/ly2019/p/11210407.html
 
 
 
@@ -304,7 +298,7 @@ https://www.cnblogs.com/ly2019/p/11210407.html
   ```js
   // 函数组件：写法简洁，但是功能单一
   function MyCom(props){
-  　　return (<h1>mycomponent</h1>)
+    return (<h1>mycomponent</h1>)
   }
 
   // ES5 原生
@@ -324,19 +318,19 @@ https://www.cnblogs.com/ly2019/p/11210407.html
 
   // 类组件：官方推荐，可以维护状态变量和实现复杂功能
   class MyCom extends React.Component{
-      // 继承：extends + super
-      constructor(props){
-          super(props);    
-          this.state = { name: "" }
-      }
-      componentDidMount() {
-        this.setState(() => {
-          return { name: "William" }
-        })
-      }
-      render(){
-          return (<h1>this.state.name</h1>)
-      }
+    // 继承：extends + super
+    constructor(props){
+      super(props);    
+      this.state = { name: "" }
+    }
+    componentDidMount() {
+      this.setState(() => {
+        return { name: "William" }
+      })
+    }
+    render(){
+      return (<h1>this.state.name</h1>)
+    }
   }
   ```
 
@@ -419,9 +413,7 @@ https://www.cnblogs.com/ly2019/p/11210407.html
         return (
           <Counter>
             {state => (
-              <div>
-                <h1>The count is: {state.count}</h1>
-              </div>
+              <h1>The count is: {state.count}</h1>
             )}
           </Counter>
         )
@@ -435,9 +427,6 @@ https://www.cnblogs.com/ly2019/p/11210407.html
 
 ### render
 > 它接受三个参数 (渲染元素、插入节点、回调函数)，用于将模板转为 HTML 语言并插入指定的 DOM 节点，是使用 class 创建组件时必须实现的方法 (否则会直接抛出错误)。
-
-
-
 
 
 ### state
@@ -461,32 +450,32 @@ https://www.cnblogs.com/ly2019/p/11210407.html
 
   ```js
   class App extends React.Component {
-      constructor(props) {
-          super(props)
-          this.state = { msg: "hello" }
-          // 1
-          this.logMsg = this.logMsg.bind(this)
-      }
-      logMsg() {
-          console.log(this.state.msg)
-      }
-      _logMsg = () => {
-        console.log(this.state.message)
-      }
-      render() {
-          return (
-            // 1
-            <div onClick={this.logMsg}>点击</div>
+    constructor(props) {
+      super(props)
+      this.state = { msg: "hello" }
+      // 1
+      this.logMsg = this.logMsg.bind(this)
+    }
+    logMsg() {
+      console.log(this.state.msg)
+    }
+    _logMsg = () => {
+      console.log(this.state.message)
+    }
+    render() {
+      return (
+        // 1
+        <div onClick={this.logMsg}>点击</div>
 
-            // 2
-            <input type="button" value="Log" onClick={this.logMsg.bind(this)} />
+        // 2
+        <input type="button" value="Log" onClick={this.logMsg.bind(this)} />
 
-            // 3、ES6 写法
-            <input type="button" value="Log" onClick={() => this.logMsg()} />
-            // 3、ES7 写法
-            <input type="button" value="Log" onClick={this._logMsg} />
-          )
-      }
+        // 3、ES6 写法
+        <input type="button" value="Log" onClick={() => this.logMsg()} />
+        // 3、ES7 写法
+        <input type="button" value="Log" onClick={this._logMsg} />
+      )
+    }
   }
   ```
 
