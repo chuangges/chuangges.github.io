@@ -742,11 +742,18 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   git checkout -b 本地分支名 origin/远程分支名  
 
   // 从远程仓库里拉取一条本地不存在的分支到本地
-  git stash                 // 保存所做的更改
+  git stash                 // 保存本地修改
   git pull
   git checkout 远程分支名
-  git stash pop             // 将所做的更改移到当前分支上
-
+  git stash pop              // 将最新修改合并移到当前分支并删除
+  
+  git stash pop "stash@{n}"  // 合并修改并删除 stash
+  git stash apply            // 合并修改但不删除 stash
+  git stash apply "stash@{n}"
+  git stash drop             // 删除 stash
+  git stash clear             // 清空 stash
+  git stash show             // 展示最新 stash
+  git stash show "stash@{n}"
 
   // 更新代码：推荐后者
   git pull = git fetch + git merge

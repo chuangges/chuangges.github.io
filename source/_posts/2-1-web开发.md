@@ -550,55 +550,61 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
 
 # 八、项目开发规范
 
-## 接口规范 Restful
-  <div style="text-indent: 2em">RESTful 是一种架构的规范与约束、原则而并非架构或标准，符合这种规范的架构就是 RESTful架构。基于这个风格设计的软件可以更简洁，更有层次，更容易实现缓存等机制，常用于客户端和服务器交互类的软件。</div>
+## Restful 接口
+> Restful 是一种架构风格的规范和约束而并非标准，基于这种风格设计的软件可以更简洁，更有层次，更容易实现缓存等机制，常用于客户端和服务器交互类的软件。常用架构以下：
 
-### 架构
-  * RESTful 架构：面向资源的架构，即针对资源设计接口。客户端操作通过资源对应的 URL 进行操作，从而访问服务器端资源。
-  * SOA 架构：面向服务的体系结构。SOA将不同的功能组件视为一种服务并分别封装，降低了组件之间的耦合程度，增加了代码的复用程度。
+  * __RESTful 架构__：面向资源的架构，即针对资源设计接口。客户端操作通过资源对应的 URL 进行操作，从而访问服务器端资源。
+  * __SOA 架构__：面向服务的体系结构。SOA 将不同的功能组件视为一种服务并分别封装，降低了组件之间的耦合程度，增加了代码的复用程度。
 
 
 ### 特点
-  * 资源；作为资源的标识，比如 html / jpg / json
-  * URI：统一资源定位符，即每个 URI 对应一个特定的资源
-  * 无状态：所有资源都可以通过 URI 去定位，而不与其他资源产生耦合
-  * 统一接口：数据元操作CURD 分别对应http的 get、post、put、delete
+  * __资源__；作为资源的标识，比如 html / jpg / json。
+  * __URI__：统一资源定位符，即每个 URI 对应一个特定资源。
+  * __无状态__：所有资源都可以通过 URI 去定位，而不与其他资源产生耦合。
+  * __统一接口__：数据元操作 CURD 分别对应 http 的 get、post、put、delete。
 
 
 ### URI 
   1. __区别 URL__
+    * 联系：URL 是属于 URI 的一部分。
     * URI：统一资源定位符，对应具体的资源。
-    * URL：统一资源标识符，对应具体的资源的地址
-    * 联系：URL 是属于 URI 的一部分 
+    * URL：统一资源标识符，对应具体的资源地址。
   2. __规范__
     * 不用大写
     * 用中杠 - 不用下杠 _ 
     * 参数列表要 encode
-    * 名词表示资源集合，资源集合时使用复数形式如 zoos/1/animals 
-    * 每个网址代表一种资源，所以网址中不能有动词，一般只能有名词，而且所用的名词往往与数据库的表格名对应
+    * 名词表示资源集合，资源集合时使用复数形式如 zoos/1/animals。
+    * 每个网址代表一种资源，所以网址中一般只能有名词并对应数据库的表格名。
   3. __版本__
-   <div style="text-indent: 2em">应该将API的版本号放入到URI中：/api.example.com/v1/zoos</div>
+    * API 的版本号应该放入到 URI，比如 /api.example.com/v1/zoos。
   4. __通信__
-    * 前后端统一使用 json 数据
-    * 客户端通过url中的 `？& ,` 实现过滤、搜索等复杂操作
-    * 客户端通过标准的 HTTP 方法（`GET获取、POST新建、PUT更新、DELETE删除`）对应服务器端资源 CRUD（数据元操作，包括 `SELECT、CREATE、UPDATE、DELETE`）
+    * 前后端统一使用 json 数据。
+    * 客户端通过 url 中的 `？& ,` 实现过滤、搜索等复杂操作。
+    * 客户端通过 http 方法（`GET获取、POST新建、PUT更新、DELETE删除`）对应服务器端数据元操作 (`SELECT、CREATE、UPDATE、DELETE`)。
 
 
-## 代码规范 EditorConfig
-> EditorConfig 是根目录一个名称为 .editorconfig 的自定义文件，用于在基本代码库中维持一致的编码风格和设置，例如缩进样式、选项卡宽度、行尾字符以及编码等，而无需考虑使用的编辑器或 IDE，这在多人合作开发项目时十分有用而且必要。
+## 代码规范工具
+> EditorConfig 统一编辑器风格 (写代码前起作用)、Prettier 统一项目风格 (保存代码后起作用)，ESlint 实时检查代码。具体使用时可以体验区别：editorConfig、prettiter 空格分别设置为 4、2，则代码编辑时回车为 4 格，保存后变成 2 格。
 
-  ```js
-  // .editorconfig：项目根目录下新建
-  root = true
+  * __EditorConfig__：用于实现跨编辑器开发项目时保持一致的代码风格，使用前需要在编辑器添加插件 `EditorConfig for VS Code`，并在项目根目录添加配置文件 `.editorconfig`。
+    ```
+    # .editorconfig
+    root = true
 
-  [*]
-  indent_style = space
-  indent_size = 2
-  charset = utf-8
-  trim_trailing_whitespace = false
-  insert_final_newline = false
-  ```
+    [*]
+    charset = utf-8
+    indent_style = space
+    indent_size = 2
+    end_of_line = lf                    # 换行符格式
+    insert_final_newline = true         # 是否在文件最后插入一个空行
+    trim_trailing_whitespace = true     # 是否删除行尾的空格
 
+    [*.md]
+    max_line_length = 0                 # 强制在指定字符数之后换行
+    trim_trailing_whitespace = false    # md 会用尾空格表示换行，不自动移除
+    ```
+  * __Prettier__：用于实现格式化当前文件，可以通过自定义配置实现运行命令批量修改或者文件保存时自动格式化 (`"editor.formatOnSave": true`)。使用前需要安装插件 `Prettier-Code formatter`，如果项目根目录含有 `.prettierrc` 则会覆盖内置配置。
+  * __ESlint__：代码静态分析工具，用于发现不符合规范的代码。可以通过编辑器的插件安装和用户自定义配置实现自动检查，代码编写时实时发现错误。
 
 
 # 九、H5 性能优化

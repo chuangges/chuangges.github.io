@@ -49,11 +49,11 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
   ```js
   // 命令式编程描述代码如何工作，告诉计算机一步步地执行、先做什么后做什么
   const toLowerCase = arr => {
-      const res = [];
-      for (let i = 0, len = arr.length; i < len; i++) {
-          res.push(arr[i].toLowerCase());
-      }
-      return res;
+    const res = [];
+    for (let i = 0, len = arr.length; i < len; i++) {
+        res.push(arr[i].toLowerCase());
+    }
+    return res;
   }
     
   // 声明式编程表明想要实现什么目的，应该做什么，但是不指定具体怎么做
@@ -80,26 +80,20 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 
 
 
-## 实现原理
+## 核心实现
   
 ### 虚拟 DOM
   <div style="text-indent: 2em">在浏览器端创建一个描述 dom 结构和样式的对象（虚拟 DOM）来管理真实 DOM。每当数据变化时 React 就会重新构建整个 DOM 树，通过 diff 算法对比前后两个对象的差异并计算出最小的步骤来更新真实 DOM，最终只把变化的部分重新渲染，而且虚拟 DOM 是内存数据而提高了渲染的效率和性能，而原生 dom 更新时需要遍历所有属性并大多与渲染无关。</div>
 
   ```js
-  // 方法一
-  // 创建虚拟 DOM 对象并渲染到页面
+  // 方法一：静态数据
   const p = React.createElement('p', {
     id: 'box', 
     className: 'a'
   }, '茉莉花', tDom);
   ReactDOM.render(p, document.getElementById('app')); 
 
-  // 方法二
-  const id = 'box2' , msg = '这朵茉莉花';
-  const s = React.createElement('span', {}, '我喜欢');
-  const d = <div><h2 id={id} className="b">{msg}</h2>{s}</div>
-  // 将虚拟 DOM 对象插入到页面的指定容器
-  ReactDOM.render(d, document.getElementById('test2'));
+  // 方法二：动态数据
   const list = ['1', '2', '3', '4'];
   ReactDOM.render(
     <ul>{list.map((item,index) => <li key={index}>{item}</li>)}</ul>, 
@@ -107,16 +101,14 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
   )
   ```
 
-
 ### 组件化
-  <div style="text-indent: 2em">组件是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每个功能相对独立的模块定义成组件，然后将小组件通过组合或嵌套的方式构成大组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件，组件化让计算 DOM diff 效率更高。</div>
+  <div style="text-indent: 2em">组件是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每个功能相对独立的模块定义成组件，然后将小组件通过组合或嵌套的方式构成大组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件`，组件化让计算 DOM diff 效率更高。</div>
 
 ## 基础使用
 
   * React 的核心库：`react.development.js`
   * 提供操作 DOM 的 react 扩展库：`react-dom.development.js`
   * 解析 JSX 语法代码转为纯 JS 语法代码的库：`babel.min.js`
-
 
   ```xml
   <div id="root"></div>
