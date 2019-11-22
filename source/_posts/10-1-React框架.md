@@ -7,18 +7,11 @@ top: false
 keywords:
   - React
 date: 2019-08-17 22:05:46
-description: 入门简介、项目开发、JSX 表达式、组件化开发
+description: 基础介绍、项目开发、JSX 表达式、组件化开发
 ---
 
-# 一、入门简介
->  Facebook 开源的一个可用于动态构建用户界面的 JavaScript 库(框架)
-
-  * 单向的从数据到视图的渲染，非双向数据绑定。
-  * 可以使用 JSX 但不能用模板，JSX 最终会被编译为合法的 JS 语句调用。
-  * 一个用于构建页面组件的 UI 库而不是一个 MVC 框架，可认为是 MVC 中的 View。
-  * 对虚拟 DOM 进行编程，并通过 diff 算法以最小步骤作用到真正 DOM (不是直接操作)。
-  * 服务器端渲染只是锦上添花的功能而并非核心，官方站点几乎没有其在服务器端的应用。
-  * 它在实际项目中并不能解决所有问题，需要结合 Redux、React-router 等其它库来协助。
+# 一、基础介绍
+>  Facebook 开源的一个用于动态构建用户界面的 UI 库，它不是一个 MVC 框架而只针对 View，不能解决实际项目的所有问题，需要结合 Redux、React-router 等其它库。
 
 
 ## 对比 Vue
@@ -40,112 +33,106 @@ description: 入门简介、项目开发、JSX 表达式、组件化开发
 
 ## 主要特点
   
-  * __单向数据流__：减少了重复代码，比较简单。
-  * __组件化开发__：高内聚、低耦合，注意使用 Js 编写而非模板。
-  * __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)。
-  * __高效__：virtual DOM 避免了直接操作元素、DOM Diff 算法减少了页面重绘次数。
-  * __声明式编程__：简洁易懂而有利于代码维护、无须使用变量而避免了创建和修改状态。
+  1. __单向数据__：单向的从数据到视图的渲染，减少了重复代码。
+  2. __高效渲染__
+    * __virtual DOM__：浏览器端创建的一个描述 dom 结构和样式的 js 对象，组件状态改变时操作内存数据而避免了直接遍历元素的所有属性，极大提高了渲染的效率和性能。
+    * __DOM Diff__：对比改变前后两个对象差异的算法，用于计算出更新真实 DOM 的最小步骤，最终只把变化的部分重新渲染。
+  3. __组件化开发__
+    * DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件。
+    * 组件就是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发推荐使用 JSX 而不能用模板。
+  4. __声明式编程__：简洁易懂而有利于代码维护、无须使用变量而避免了创建和修改状态。
+  5. __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)，但这只是拓展功能。
 
   ```js
-  // 命令式编程描述代码如何工作，告诉计算机一步步地执行、先做什么后做什么
-  const toLowerCase = arr => {
-    const res = [];
-    for (let i = 0, len = arr.length; i < len; i++) {
-        res.push(arr[i].toLowerCase());
-    }
-    return res;
-  }
-    
-  // 声明式编程表明想要实现什么目的，应该做什么，但是不指定具体怎么做
-  const toLowerCase = arr => arr.map(
-      value => value.toLowerCase();
-  )
-
-  // 命令式编程实现带有标记的地图
-  const map = new Map.map(document.getElementById('map'), {
-      zoom: 4,
-      center: {lat,lng}
-  })
-  const marker = new Map.marker({
-      position: {lat, lng},
-      title: 'Hello Marker'
-  })
-  marker.setMap(map)
-
-  // React 组件中显示地图
-  <Map zoom={4} center={lat, lng}>
-      <Marker position={lat, lng} title={'Hello Marker'}/>
-  </Map>
-  ```
-
-
-
-## 核心实现
-  
-### 虚拟 DOM
-  <div style="text-indent: 2em">在浏览器端创建一个描述 dom 结构和样式的对象（虚拟 DOM）来管理真实 DOM。每当数据变化时 React 就会重新构建整个 DOM 树，通过 diff 算法对比前后两个对象的差异并计算出最小的步骤来更新真实 DOM，最终只把变化的部分重新渲染，而且虚拟 DOM 是内存数据而提高了渲染的效率和性能，而原生 dom 更新时需要遍历所有属性并大多与渲染无关。</div>
-
-  ```js
-  // 方法一：静态数据
+  // 2、虚拟 DOM：标签不加引号
   const p = React.createElement('p', {
     id: 'box', 
     className: 'a'
   }, '茉莉花', tDom);
   ReactDOM.render(p, document.getElementById('app')); 
 
-  // 方法二：动态数据
   const list = ['1', '2', '3', '4'];
   ReactDOM.render(
-    <ul>{list.map((item,index) => <li key={index}>{item}</li>)}</ul>, 
+    `<ul>{list.map((item,index) => <li key={index}>{item}</li>)}</ul>`, 
     document.getElementById('app')
   )
+
+  // 4、命令式编程和声明式编程
+  const map = new Map.map(document.getElementById('map'), {
+    zoom: 4,
+    center: {lat,lng}
+  })
+  const marker = new Map.marker({
+    position: {lat, lng},
+    title: 'Hello Marker'
+  })
+  marker.setMap(map)
+
+  <Map zoom={4} center={lat, lng}>
+    <Marker position={lat, lng} title={'Hello Marker'}/>
+  </Map>
   ```
 
-### 组件化
-  <div style="text-indent: 2em">组件是封装起来的具有独立功能的 UI 部件。React 推荐以组件的方式去重新思考 UI 构成，将 UI 上每个功能相对独立的模块定义成组件，然后将小组件通过组合或嵌套的方式构成大组件，最终完成整体 UI 的构建。`DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件`，组件化让计算 DOM diff 效率更高。</div>
-
-## 基础使用
-
-  * React 的核心库：`react.development.js`
-  * 提供操作 DOM 的 react 扩展库：`react-dom.development.js`
-  * 解析 JSX 语法代码转为纯 JS 语法代码的库：`babel.min.js`
-
-  ```xml
-  <div id="root"></div>
-  <script src="js/react.development.js"></script>
-  <script src="js/react-dom.development.js"></script>
-  <script src="js/babel.min.js"></script>
-
-  <!-- script标签的类型必须为 text/babel：声明需要 babel 处理 -->
-  <script type="text/babel">
-    ReactDOM.render(<h1>hello world</h1>, document.getElementById('root'))
-  </script>
-  ```
-
-
-# 二、项目开发
 
 ## 技术栈
+
   * __Babel__：编译工具
   * __Redux__：状态管理工具
   * __React-router__：路由工具
   * __create-react-app__：脚手架工具
 
 
+# 二、项目开发
+
 ## 初始化目录
 > 相关文件：index.html (入口模板)、manifest.json (应用配置)、index.js (应用入口)、serviceWorker.js (生产环境缓存资源)
 
   ```js
+  // localhost:3000
   npm install -g create-react-app
   create-react-app my-app
   cd my-app
   npm start
+  npm run build
 
   // 自定义目录
   cd src
   rm App.* index.css logo.svg
   mkdir coms pages style tool
   ```
+
+
+## 项目配置
+> 脚手架创建的目录默认隐藏配置文件，修改配置项有两种方法：1、暴露配置文件后直接修改运行命令 npm run eject 生成的 config 目录(不可逆)，2、安装 react-app-rewired 并进行配置如下：
+
+  ```js
+  // 安装
+  npm install react-app-rewired --save
+
+  // 修改 package.json
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  }
+
+  // 根目录新建 config-overrides.js：项目启动时候会优先读取并整合到配置项
+  const { injectBabelPlugin } = require('react-app-rewired');
+  module.exports = function override(config, env) {
+      config = injectBabelPlugin([
+          'import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }
+      ], config)
+      config = injectBabelPlugin([
+          "@babel/plugin-proposal-decorators", { "legacy": true }
+      ], config)
+      return config;
+  }
+  ```
+
+
+https://segmentfault.com/a/1190000016342792#articleHeader10
+
   
 
 ## 路由功能
