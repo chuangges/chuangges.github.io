@@ -11,32 +11,14 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 ---
 
 # 一、基础介绍
->  Facebook 开源的一个用于动态构建用户界面的 UI 库，它不是一个 MVC 框架而只针对 View，不能解决实际项目的所有问题，需要结合 Redux、React-router 等其它库。
-
-
-## 对比 Vue
-
-### 相同点
-  * 数据驱动视图
-  * 都支持服务器端渲染
-  * 都有支持 native 的方案：React 的 React native、Vue 的 weex。
-  * 都有 Virtual DOM、webComponent 规范(组件化)，通过 props 实现父子通信。
-
-
-### 不同点
-  * __框架模式__：Vue 是 `MVVM` 模式，React 则只针对 `MVC view 层`。
-  * __数据绑定__：vue 实现了数据的双向绑定，react 的数据流动则是单向的。
-  * __state 对象__：vue 不是必须的，react 应用状态则是不可变的并需要使用 setState 更新。
-  * __virtual DOM__：vue 会跟踪每个组件的依赖关系而`不需要重新渲染整个组件树`，React 则是每当应用状态被改变时`重新渲染全部组件`，需要 shouldComponentUpdate 控制。
-  * __组件写法__：Vue 推荐使用 `webpack + vue-loader` 的单文件组件，即把 html、css、js 写在同一文件。React 则推荐 `JSX + inline style`，即把 html、css 全部写进 Js。
-
+>  Facebook 开源的一个用于动态构建用户 UI 界面的 JS 库，它不是一个 MVC 框架而只针对 View，不能解决实际项目的所有问题，需要结合 Redux、React-router 等其它库。
 
 ## 主要特点
   
   1. __单向数据__：单向的从数据到视图的渲染，减少了重复代码。
   2. __高效渲染__
-    * __virtual DOM__：浏览器端创建的一个描述 dom 结构和样式的 js 对象，组件状态改变时操作内存数据而避免了直接遍历元素的所有属性，极大提高了渲染的效率和性能。
-    * __DOM Diff__：对比改变前后两个对象差异的算法，用于计算出更新真实 DOM 的最小步骤，最终只把变化的部分重新渲染。
+    * __virtual DOM__：浏览器端创建的一个描述 dom 结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性，极大提高了渲染性能。
+    * __DOM Diff__：对比改变前后两个对象差异的算法，用于计算出更新真实 DOM 的最小步骤并最终只把变化的部分重新渲染，极大减少了与 DOM 的交互。
   3. __组件化开发__
     * DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件。
     * 组件就是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发推荐使用 JSX 而不能用模板。
@@ -72,6 +54,21 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
     <Marker position={lat, lng} title={'Hello Marker'}/>
   </Map>
   ```
+
+## 对比 Vue
+
+### 相同点
+  * 数据驱动视图
+  * 都支持服务器端渲染
+  * 都有支持 native 的方案：React 的 React native、Vue 的 weex。
+  * 都有 Virtual DOM、webComponent 规范(组件化)，通过 props 实现父子通信。
+
+### 不同点
+  * __框架模式__：Vue 是 `MVVM` 模式，React 则只针对 `MVC view 层`。
+  * __数据绑定__：vue 实现了数据的双向绑定，react 的数据流动则是单向的。
+  * __state 对象__：vue 不是必须的，react 应用状态则是不可变的并需要使用 setState 更新。
+  * __virtual DOM__：vue 会跟踪每个组件的依赖关系而`不需要重新渲染整个组件树`，React 则是每当应用状态被改变时`重新渲染全部组件`，需要 shouldComponentUpdate 控制。
+  * __组件写法__：Vue 推荐使用 `webpack + vue-loader` 的单文件组件，即把 html、css、js 写在同一文件。React 则推荐 `JSX + inline style`，即把 html、css 全部写进 Js。
 
 
 ## 技术栈
@@ -131,7 +128,6 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   ```
 
 
-https://segmentfault.com/a/1190000016342792#articleHeader10
 
   
 
