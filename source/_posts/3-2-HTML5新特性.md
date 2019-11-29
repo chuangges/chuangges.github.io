@@ -1,15 +1,59 @@
 ---
-title: HTML5 新特性
+title: HTML5 元素及其特性
 tags:
-  - HTML + CSS
+  - HTML
 categories: HTML + CSS
 top: false
 keywords:
   - html
-date: 2019-03-07 22:50:40
+date: 2019-03-06 22:50:40
 description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏、数据存储
 ---
 
+
+# 入门基础
+
+## 元素分类
+  * 行内元素：一行可放多个、宽高不可设置、宽度包裹内容。常用的有：`i、a、span、label、strong`。
+  * 块级元素：独占一行、可设宽高、不设宽度时默认是其父元素的 100%。6个属性：`width、height、background、border、padding、margin`。常用的有：`h、p、ul、div、table`。
+  * 行内块元素：一行多个、可设宽高。常用的有：`img、input、button`。
+
+
+## 布局模型
+> 整体布局用浮动、局部布局用定位。
+
+  1. 流动模型：浏览器默认文档流。块级元素自下而上、内联元素自左而右按顺序排列。
+  2. 层模型：定位流。父元素相对定位，子元素绝对/固定定位，z-index 定义堆叠顺序。
+  3. 浮动模型：浮动流。浮动元素脱离文档流而释放空间，但不遮挡后面内容。
+    * float：设计初衷是文字环绕效果，主要特性有包裹性、破坏性。
+    * 清除浮动：清除对后面元素的影响，但父元素有浮动/绝对定位时不需要。
+    * 清除方法：`给父元素指定高度、在浮动元素后面添加 clear: both、给浮动元素父元素添加 overflow: hidden/auto、底部添加伪元素 after`。
+    ```css
+    /* 清除浮动经典方法 */
+    div::after {
+      content: "";       /* 添加内容为空 */   
+      display: block;
+      height: 0;           /* 不占空间 */
+      visibility: hidden;  /* 不可见  */   
+      clear: both
+    }
+    div {  
+      *zoom : 1;   /* 兼容低版本浏览器 */   
+    }
+    ```
+
+
+## 小知识
+  * __文件引入优先级__：就近原则，距离相应代码近的引入方式优先级高。
+  * __浏览器读取规则__：从右向左，因为相比从左到右匹配更快、性能更优。
+  * __元素隐藏方法__：display、Opacity、visibility、hide、遮罩等。
+  * __伪类和伪元素__
+    * 伪类：`:hover、:link`等用于向已有元素添加特殊效果
+    * 伪元素：`::before、::after`等用于新建抽象元素并添加样式而实现特殊效果。
+
+
+---------
+以下为 HTML5 新特性：
 
 # 一、audio、video  
 > 支持的格式：Ogg、MP3、WAV
@@ -64,7 +108,7 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 ### 标签样式
 > chrome 调试方式：F12、右上方三个点、setting、Perferences、勾选 Show user agent shadow Dom，然后就可以查看 video 标签的控制栏 dom 结构。
 
-  ```scss
+  ```js
   // 全屏按钮
   video::-webkit-media-controls-fullscreen-button { }
 
@@ -94,47 +138,43 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 ### 对象属性
 
-  * 错误状态
-    ```js
-    $video.error;      // null: 正常  
-    $video.error.code; // 1.用户终止 2.网络错误 3.解码错误 4.URL无效 
-    ```
-  * 网络状态
-    ```js
-    $video.currentSrc;         // 当前资源的 URL  
-    $video.src = value;        // 设置当前资源的 URL  
-    $video.canPlayType(type);  // 是否能播放某种格式的资源  
-    $video.networkState;       // 视频的当前网络状态
-    $video.buffered;           // 获取已缓冲区域
-    $video.buffered.end(0)     // 获取最后一刻的数据
-    $video.load();             // 重新加载 src 指定的资源 
-    $video.preload;            // 是否预加载视频
-    ```
-  * 准备状态
-    ```js
-    $video.readyState;    // 视频是否已准备好播放
-    $video.seeking;       // 是否正在寻址 
-    ```
-  * 播放状态
-    ```js
-    $video.currentTime = value; // 当前播放位置  
-    $video.duration;            // 当前资源长度  
-    $video.paused;              // 是否暂停  
-    $video.defaultPlaybackRate = value;  // 默认的回放速度
-    $video.playbackRate = value;         // 当前播放速度 
-    $video.seekable;    // 返回可以寻址的区域 
-    $video.ended;       // 是否结束  
-    $video.autoPlay;    // 是否自动播放  
-    $video.loop;        // 是否循环播放  
-    $video.play();      // 播放  
-    $video.pause();     //暂停  
-    ```
-  * 相关控制
-    ```js
-    $video.controls;         // 是否有默认控制条  
-    $video.volume = value;   // 音量  
-    $video.muted = value;    // 静音
-    ```
+  ```js
+  // 错误状态
+  $video.error;      // null: 正常  
+  $video.error.code; // 1.用户终止 2.网络错误 3.解码错误 4.URL无效 
+
+  // 网络状态
+  $video.currentSrc;         // 当前资源的 URL  
+  $video.src = value;        // 设置当前资源的 URL  
+  $video.canPlayType(type);  // 是否能播放某种格式的资源  
+  $video.networkState;       // 视频的当前网络状态
+  $video.buffered;           // 获取已缓冲区域
+  $video.buffered.end(0)     // 获取最后一刻的数据
+  $video.load();             // 重新加载 src 指定的资源 
+  $video.preload;            // 是否预加载视频
+
+  // 准备状态
+  $video.readyState;    // 视频是否已准备好播放
+  $video.seeking;       // 是否正在寻址 
+
+  // 播放状态
+  $video.currentTime = value; // 当前播放位置  
+  $video.duration;            // 当前资源长度  
+  $video.paused;              // 是否暂停  
+  $video.defaultPlaybackRate = value;  // 默认的回放速度
+  $video.playbackRate = value;         // 当前播放速度 
+  $video.seekable;    // 返回可以寻址的区域 
+  $video.ended;       // 是否结束  
+  $video.autoPlay;    // 是否自动播放  
+  $video.loop;        // 是否循环播放  
+  $video.play();      // 播放  
+  $video.pause();     //暂停  
+
+  // 相关控制
+  $video.controls;         // 是否有默认控制条  
+  $video.volume = value;   // 音量  
+  $video.muted = value;    // 静音
+  ```
 
 
 ### 对象方法
@@ -163,14 +203,13 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 
 ## 自动播放
-> ios、Android、微信为了节省流量而规定忽视 autoplay 属性
+> ios、Android、微信为了节省流量而规定忽视 autoplay 属性。
 
   ```js
-  // ios、Android：循环播放失效时方案相似，
+  // ios、Android：循环播放失效时方案相似
   document.addEventListener('touchstart', function () {
     document.getElementById('audio').play();
   })
-
 
   // 微信
   document.addEventListener('WeixinJSBridgeReady', function() {
@@ -195,7 +234,7 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 
 ## 用户权限
-> navigator.getUserMedia 可以提示用户需要权限去使用像摄像头、麦克风等媒体设备
+> navigator.getUserMedia 可以提示用户需要权限去使用像摄像头、麦克风等媒体设备。
 
   ```js
   // 兼容写法
@@ -243,7 +282,7 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 
 # 二、Canvas
-> 提供了一系列绘图方法的对象
+> 提供了一系列绘图方法的对象。
 
 ## 绘制图形
   ```js
@@ -374,19 +413,19 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   var y = 15;
   var speed = 5;
   function animation() {
-      window.requestAnimationFrame(animate);
-      x += speed;
-      if(x <= 0 || x >= 475){
-          speed = -speed;
-      }
-      draw()
+    window.requestAnimationFrame(animate);
+    x += speed;
+    if(x <= 0 || x >= 475){
+        speed = -speed;
+    }
+    draw()
   }
   function draw() {
-      var canvas = document.getElementById("canvas");
-      var context = canvas.getContext("2d");
-      context.clearRect(0, 0, 500, 170);
-      context.fillStyle = "#ff00ff";
-      context.fillRect(x, y, 25, 25);
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    context.clearRect(0, 0, 500, 170);
+    context.fillStyle = "#ff00ff";
+    context.fillRect(x, y, 25, 25);
   }
   animation()
   ```
@@ -408,27 +447,20 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 # 三、WebSocket
   ```js
-  // 创建实例
   var socket = new WebSocket('ws://localhost:8080');
 
-  // 打开 socket
   socket.onopen = function(event) {
+    socket.send('hello HTML5')
 
-      // 发送消息
-      socket.send('hello HTML5')
+    socket.onmessage = function(event) {
+      console.log('receive a message', event)
+    };
 
-      // 监听消息
-      socket.onmessage = function(event) {
-          console.log('receive a message', event)
-      };
+    socket.onclose = function(ev) {
+      console.log('socket has closed', event)
+    };
 
-      // 监听关闭
-      socket.onclose = function(ev) {
-          console.log('socket has closed', event)
-      };
-
-      // 关闭 socket
-      socket.close()
+    socket.close()
   }
   ```
 
@@ -496,22 +528,20 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 ## 应用场景
 
   * 用来进行处理大量的复杂计算而不挂起主线程
-  * 可以在 worker 中通过 `importScripts(url) `加载其它脚本文件
-  * 可以使用 `setTimeout()、clearTimeout()、setInterval()、clearInterval()`
-  * 可以使用 `XMLHttpRequest` 来发送请求
-  * 可以访问 `navigator、location` 对象
+  * 可以在 worker 中通过 `importScripts(url) `加载其它脚本文件。
+  * 可以使用 `setTimeout、clearTimeout、setInterval、clearInterval`。
+  * 可以使用 `XMLHttpRequest` 来发送请求。
+  * 可以访问 `navigator、location` 对象。
 
 
 ## 操作限制
 > Worker 线程脚本
 
-  * __脚本限制__：无法调用 alert、confirm 等函数
-  * __同源限制__：不能跨域加载脚本文件，它必须与主线程的脚本文件同源
-  * __通信限制__：Worker 线程和主线程不在同一个上下文环境，它们不能直接通信
-  * __文件限制__：无法读取本地文件，所加载的脚本必须 来自网络或通过服务器打开
-  * __DOM 限制__
-    * 无法访问 DOM 节点
-    * 无法访问 window、document 等全局变量
+  * __脚本限制__：无法调用 alert、confirm 等函数。
+  * __同源限制__：不能跨域加载脚本文件，它必须与主线程的脚本文件同源。
+  * __通信限制__：Worker 线程和主线程不在同一个上下文环境，它们不能直接通信。
+  * __文件限制__：无法读取本地文件，所加载的脚本必须 来自网络或通过服务器打开。
+  * __DOM 限制__：无法访问 DOM 节点、无法访问 window、document 等全局变量。
 
 
 ## 分类
@@ -528,14 +558,14 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   var worker = new Worker("worker.js"); 
   worker.postMessage("hello world");      // 发送数据
   worker.onmessage = function (event) {   // 接收数据
-      console.log(event.data);             
-      worker.terminate();
+    console.log(event.data);             
+    worker.terminate();
   }
   
   // 子线程：worker.js 
   onmessage = function (event){          // 接收数据
-      var d = event.data;    
-      postMessage("已收到：" + d);        // 发送数据
+    var d = event.data;    
+    postMessage("已收到：" + d);        // 发送数据
   }
 
   // 通过服务器打开文件：直接打开会报错
@@ -549,14 +579,14 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   
   // 子线程 
   addEventListener('connect', function(event){
-      var port = event.ports[0]
-      // 接收
-      port.onmessage = function(event){
-          console.log(event.data);
-      };
-      // 发送
-      port.postMessage("data");
-      port.start();
+    var port = event.ports[0]
+    // 接收
+    port.onmessage = function(event){
+        console.log(event.data);
+    };
+    // 发送
+    port.postMessage("data");
+    port.start();
   })
   ```
 
@@ -566,22 +596,15 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 ## 事件
 > 事件对象为 被拖拽的元素、放置的目标元素 (拖放范围)
 
-  * 拖拽元素
-    * __dragstart__：拖拽开始时触发 
-    * __drag__：拖拽过程中连续触发
-    * __dragend__：拖拽结束时触发
-  * 目标元素
-    * __dragenter__：拖入元素时触发
-    * __dragover__：拖拽元素时连续触发
-    * __dragleave__：元素拖出时触发
-    * __drop__：拖入后释放鼠标时触发
+  * 拖拽元素：dragstart、drag、dragend
+  * 目标元素：dragenter、dragover (拖拽)、dragleave (拖出)、drop (拖入后释放鼠标)
   * 执行顺序
     * drop 触发：`dragstart、drag、dragenter、dragover、drop、dragend`
     * drop 不触发：`dragstart、drag、dragenter、dragover、dragleave、dragend`
 
 
 ## dataTransfer 对象
-> 拖动时回调函数接受的事件参数。注意火狐浏览器下必须设置它的 setData 方法才可以拖拽除图片外的其他标签
+> 拖动时回调函数接受的事件参数。注意火狐浏览器下必须设置它的 setData 方法才可以拖拽除图片外的其他标签。
 
   * 属性
     * __dropEffect__：元素行为和相应光标
@@ -594,78 +617,68 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
     * __setDragImage__：指定拖动时显示的图像
     * __addElement__：添加元素和被拖拽元素一同被拖拽
 
-  ```js
-  img,ondragstart = event => {
-      event.dataTransfer.setData("text/plain", event.target.id)
-  }
-  div.drop = event => {
-      event.preventDefault();
-      var imgId = event.dataTransfer.getData("text/plain")
-  }
-  ```
-
 
 ## 拖拽上传预览图片
   ```js
   window.onload = function(){
-      var list = document.getElementById('list');
-      var box = document.getElementById('box');
-      box.ondragenter = function(){
-          this.innerHTML = '可以释放';
-      };
-      box.ondragover = function(e){
-          e.preventDefault();
-      };
-      box.ondragleave = function(){
-          this.innerHTML = '请拖拽到此区域';
-      };
-      box.ondrop = function(event){
-          // 连续触发事件阻止冒泡
-          event.preventDefault(); 
+    var list = document.getElementById('list');
+    var box = document.getElementById('box');
+    box.ondragenter = function(){
+      this.innerHTML = '可以释放';
+    }
+    box.ondragover = function(e){
+      e.preventDefault();
+    }
+    box.ondragleave = function(){
+      this.innerHTML = '请拖拽到此区域';
+    }
+    box.ondrop = function(event){
+      // 连续触发事件阻止冒泡
+      event.preventDefault(); 
 
-          // 获取数据对象
-          var fs = event.dataTransfer.files;
-          for(var i=0; i > fs.length; i++){
+      // 获取数据对象
+      var fs = event.dataTransfer.files;
+      for(var i=0; i > fs.length; i++){
 
-              // 读取文件信息的接口对象
-              var fr = new FileReader();  
-              if( fs[i].type.indexOf('image')!=-1 ){
-                  fr.readAsDataURL( fs[i] );
-                  fr.onload = function(){
-                      var oLi = document.createElement('li');
-                      var oImg = document.createElement('img');
-                      oImg.src = this.result;
-                      oLi.appendChild( oImg );
-                      list.appendChild( oLi );
-                  }
-              }else{
-                  alert('请拖放图片指定格式');
-              }
-          }
+        // 读取文件信息的接口对象
+        var fr = new FileReader();  
+        if( fs[i].type.indexOf('image')!=-1 ){
+            fr.readAsDataURL( fs[i] );
+            fr.onload = function(){
+              var oLi = document.createElement('li');
+              var oImg = document.createElement('img');
+              oImg.src = this.result;
+              oLi.appendChild( oImg );
+              list.appendChild( oLi );
+            }
+        }else{
+            alert('请拖放图片指定格式');
+        }
       }
+    }
   }
   ```
 
 
 # 六、地理定位 
-> 常用的地理位置定位方式：HTML5、百度地图、高德地图
+> 常用的地理位置定位方式：HTML5、百度地图、高德地图。
         
   ```js
   // HTML5 定位
   function getLocation() {
       var options = {
-            enableHighAccuracy: true,  // 是否要求高精度
-            maximumAge: 1000           // 应用缓存时间
+          enableHighAccuracy: true,  // 是否要求高精度
+          maximumAge: 1000           // 应用缓存时间
       }
       if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(position =>  {
-              var latitude = position.coords.latitude;    
-              var longitude = position.coords.longitude;  
-              console.log(`纬度：${latitude}, 经度：${longitude}`)
+            var latitude = position.coords.latitude;    
+            var longitude = position.coords.longitude;  
+            console.log(`纬度：${latitude}, 经度：${longitude}`)
 
           }, error => {
-              console.log(error)
-              // 常见错误：需要用户授权、仅限 HTTPS、需要翻墙 (谷歌浏览器)
+            console.log(error)
+            // 常见错误：需要用户授权、仅限 HTTPS、需要翻墙 (谷歌浏览器)
           }, options);
 
       } else {

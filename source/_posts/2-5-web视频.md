@@ -259,7 +259,11 @@ description: Video 视频播放、Agora 视频通话、视频编辑
         @contextmenu="handleContext"
         @fullscreenchange="handleFullScreenChange"
       ></video>
-      <img :class="{'shown': isPaused}" width="60" src="images/icon-play.png" @click="playVideo" />
+      <img 
+        width="60" 
+        src="images/icon-play.png" 
+        @click="playVideo" 
+        class="{'shown': isPaused}" />
       <video-control v-if="video" :video="video" />
     </div>
   </template>

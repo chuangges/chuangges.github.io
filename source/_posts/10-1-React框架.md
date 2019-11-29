@@ -190,6 +190,10 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 # 二、JSX 语法
 > Facebook 专门为 react 发明的一种新的类似于 XML 格式的语言，它是 JS 的语法拓展。它使用 XML 标记的方式去直接声明界面，然后利用编译器转换成 JS 语言。
 
+如果是字符串变量中包含\n换行符，只需在css样式中加入whiteSpace: 'pre-wrap'即可实现解析\n换行符。例如：
+
+空标签  React.Fragment
+
 ## 优点
   * 编写模板更加快速。
   * 渲染时输出虚拟 dom，执行更快。
