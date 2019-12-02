@@ -2,11 +2,12 @@
 title: Three.js 绘图插件
 tags:
   - 插件
-categories: 常用插件
+  - 项目开发
+categories: 项目开发
 top: false
 keywords:
   - 插件
-date: 2019-11-15 13:06:46
+date: 2019-03-15 13:06:46
 description: WebGL、Three.js
 ---
 

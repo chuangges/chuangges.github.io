@@ -1,5 +1,5 @@
 ---
-title: PC 端开发常用标签和样式
+title: CSS 样式
 tags:
   - HTML + CSS
 categories: HTML + CSS
@@ -7,41 +7,30 @@ top: false
 keywords:
   - html
   - css
-date: 2019-03-07 22:32:08
-description: HTML、CSS
+date: 2019-05-08 22:32:08
+description: CSS3 要点、开发常用样式、动画
 
 ---
 
-# 一、重点小知识
-  
+# 一、浏览器兼容
 
-## 浏览器兼容
-
-### 标签问题
-  * __img 之间出现间距__：浮动
-  * __上下 margin 重合问题__：上下选一个
-  * __opacity、placeholder、outline、伪元素、z-index__  
-  * __子元素的 margin-top,会出现在父元素的上方__
-    * 给父元素加 overflow: hidden
-    * 能用 padding-top 替代时就替代
-    * 给父元素设置 border: 1px solid transparent
-  * __li 元素使用 display: inline-block 时会出现缝隙__
-    * 使用浮动
-    * 给li重新设置字号 font-size: 0 
+## 常见问题
+  * img 之间出现间距：浮动。
+  * 上下 margin 重合问题：上下选一个。
+  * opacity、placeholder、outline、伪元素、z-index：`css hack`。
+  * li 元素使用 display: inline-block 时会出现缝隙：`浮动、font-size: 0`。
+  * 子元素的 margin-top 会出现在父元素的上方：父元素 `overflow: hidden / border: 1px solid transparent / padding-top`。
 
 
-### css hack
-> 针对不同的浏览器写不同的 CSS 来解决浏览器兼容
+## css hack
+> 针对不同的浏览器写不同的 CSS 来解决浏览器兼容。
 
   * 选择器前缀法：@media screen
   * CSS 属性前缀法：-webkit-、-moz-、-ms-、-o-
   * IE 条件注释语句：解决 IE 兼容问题
 
 
-
-
-
-# 四、CSS3
+# 二、CSS3
 
 ## css 单位
   * __rem__: 相对于根元素字体尺寸
@@ -56,11 +45,11 @@ description: HTML、CSS
   * vmin / vmax：vw和vh中较 小/大 的那个
 
 
-## 引用字体文件
+## 引用字体
   ```css
   @font-face {                       
     font-family: ArtifaktBlod;     
-    src: url('fonts/ArtifaktElementOfc-Bold.ttf');  /* 引入字体资源 */    
+    src: url('fonts/ArtifaktElementOfc-Bold.ttf');    
   }  
   div {
     font-family: ArtifaktBlod;          
@@ -68,7 +57,7 @@ description: HTML、CSS
   ```
 
 
-## transform 
+## transform
   1. __转换属性__
     * transform-origin：指定元素变换的中心点
     * transform-style：指定场景为 2D 或 3D
@@ -125,7 +114,7 @@ description: HTML、CSS
   ```
 
 
-## transition
+## transition 过渡
 
   1. __过渡效果__：默认样式中定义元素的初始样式和过渡函数，然后定义过渡后的元素样式
   2. __缩写语法__：`transition：过渡属性 过渡时间 [过渡曲线] [时间延迟]`
@@ -145,10 +134,10 @@ description: HTML、CSS
   ```
 
 
-## animation
+## animation 动画
 
   1. __动画效果__：通过 animation 绑定 @keyframes 定义的动画，自动实现一种或多种形态同时变化的效果
-  2. __动画定义__：`@keyframes 动画名{ //百分比 或 from、to }`
+  2. __动画定义__：`@keyframes 动画名{ 百分比 或 from、to }`
   3. __动画绑定__：`animation: 动画名 时间 动画曲线 延迟时间 播放次数 是否逆向播放 [非动画时间的状态]`
   4. __动画暂停__：`animation-play-state: paused;`
 
@@ -157,18 +146,22 @@ description: HTML、CSS
     color: #f00; 
     font-size: 36px; 
     font-weight: bold;
-    animation: change 1s ease-in infinite; 
-    /* animation-play-state: paused; */
   }
   @keyframes change {
     0%   { text-shadow: 0 0 4px #f00 }
     50%  { text-shadow: 0 0 40px #f00 }
     100% { text-shadow: 0 0 4px #f00 }
   }
+  .box:hover {
+    animation: change 1s ease-in infinite;
+  }
+  .box.stop {
+    animation-play-state: paused;
+  }
   ```
 
 
-# 五、组件样式
+# 三、组件样式
 > 只在当前组件生效，不影响全局样式。
 
 ## Scoped
@@ -231,7 +224,7 @@ description: HTML、CSS
   ```
 
 
-# 六、PC 常用样式
+# 四、PC 端样式
 ## 初始化
   ```css
   /* reset.css  */
@@ -692,5 +685,456 @@ description: HTML、CSS
   ```
 
 
+# 五、移动端样式
+
+## reset.css
+  ```css
+  html{
+    -webkit-text-size-adjust: none;
+    /* 禁用长按选中、复制文本功能 */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    /* 取消可点击元素点击时的背景色 */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body{
+    font-size: 14px;
+    background: #fbfbfb;
+    -webkit-overflow-scrolling: touch;  /* 滚动条上下拉动时卡顿 */
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+  }
+
+  body,h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,pre,form,input,textarea,th,td,select{
+    margin: 0; 
+    padding: 0; 
+    text-indent: 0;
+    font-weight: normal;
+  }
+  a{
+    text-decoration: none;
+  }
+  /* 取消聚焦高亮效果 */
+  a:focus, button:focus, input:focus, textarea:focus{
+    outline: 0;
+  }
+  ol,ul,li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  img, input, button{
+    border: none;
+  }
+  textarea{ 
+    resize: none; 
+    overflow: auto;
+  }
+  button:disabled {
+    opacity: .65;    
+  }
+
+  input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{
+    color:#999;
+  }
+  input:-moz-placeholder,textarea:-moz-placeholder{
+    color:#999;
+  }
+  input::-moz-placeholder,textarea::-moz-placeholder{
+    color:#999;
+  }
+  input:-ms-input-placeholder,textarea:-ms-input-placeholder{
+    color:#999;
+  }
+
+  button,input,textarea{
+    color: inherit;
+    font: inherit;
+  }
+  input:disabled, textarea:disabled {
+    -webkit-text-fill-color: #666;
+    -webkit-opacity: 1;
+    color: #000;
+  }
+
+  .shadow{
+    box-shadow: 0px 6px 6px #c8c8c8;
+  }
+
+  /* 隐藏滚动条 */
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  /* 开启硬件加速，解决页面闪白，保证动画流畅 */
+  .animation { 
+    transform: translate3d(0, 0, 0);
+  }
+  ```
+
+
+## 媒体查询
+  ```css
+  /* rem 配置 */
+  html{
+    font-size: 10px
+  }
+  @media screen and (min-width:321px) and (max-width:375px){
+    html{ font-size: 11px }
+  }
+  @media screen and (min-width:376px) and (max-width:414px){
+    html{ font-size: 12px }
+  }
+  @media screen and (min-width:415px) and (max-width:639px){
+    html{ font-size: 15px }
+  }
+  @media screen and (min-width:640px) and (max-width:719px){
+    html{ font-size: 20px }
+  }
+  @media screen and (min-width:720px) and (max-width:749px){
+    html{ font-size: 22.5px }
+  }
+  @media screen and (min-width:750px) and (max-width:799px){
+    html{ font-size: 23.5px }
+  }
+  @media screen and (min-width:800px){
+    html{ font-size: 25px } 
+  }
+
+  /* 竖屏时的样式 */
+  @media all and (orientation:portrait){   }
+
+  /* 横屏时的样式 */
+  @media all and (orientation:landscape){   }
+  ```
+
+
+
+## 表单标签
+  ```css
+  /* input placeholder 出现文本位置偏上 */
+  input{
+    line-height: normal;
+  }
+
+  /* 输入框 placeholder 的颜色值改变 */
+  ::-webkit-input-placeholder {  
+    color: #999; 
+  }
+  :-moz-placeholder {  
+    color: #999; 
+  }
+  ::-moz-placeholder {  
+    color: #999; 
+  }
+  :-ms-input-placeholder {  
+    color: #999; 
+  }
+  input:focus::-webkit-input-placeholder{ 
+    color: #999; 
+  }
+
+  /* IOS Input Disabled 默认样式问题 */
+  input:disabled, textarea:disabled {
+    -webkit-text-fill-color: #000;
+    -webkit-opacity: 1;
+    color: #000;
+  }
+
+  /* 改变选中内容的背景颜色：字体颜色换成 color */
+  ::selection { 
+    background: #FFF; 
+    color: #333; 
+  } 
+  ::-moz-selection { 
+    background: #FFF; 
+    color: #333; 
+  } 
+  ::-webkit-selection { 
+    background: #FFF; 
+    color: #333; 
+  } 
+
+  /* 禁用 select 默认下拉箭头 */
+  select::-ms-expand {
+    display: none;
+  }
+
+  /* 禁用 radio 和 checkbox 默认样式 */
+  input[type=radio]::-ms-check, 
+  input[type=checkbox]::-ms-check
+  {
+    display: none;
+  }
+
+  /* 禁用表单输入框默认清除按钮 */
+  input[type=text]::-ms-clear,
+  input[type=tel]::-ms-clear,
+  input[type=number]::-ms-clear
+  {
+    display: none;
+  }
+
+  /* 重置默认外观 */
+  input, select { 
+    /* 清除默认内阴影 */
+    -webkit-appearance:none; 
+    appearance: none; 
+  }
+
+  /* 禁止winphone默认触摸事件 (e.preventDefault无效) */
+  html{
+    -ms-touch-action: none;
+  }
+  ```
+
+## 1px border
+  ```scss
+  .hair-line {
+    position: relative;
+  }
+  .hair-line::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    left: 0;
+    top: 0;
+    border-color: #dcdcdc;
+    border-style: solid;
+    border-width: 0;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+  }
+  .hair-line--b::after {
+    border-bottom-width: 1px;
+  }
+  .hair-line--t::after {
+    border-top-width: 1px;
+  }
+  .hair-line--r::after {
+    border-right-width: 1px;
+  }
+  .hair-line--l::after {
+    border-left-width: 1px;
+  }
+  .hair-line--a::after {
+    border-width: 1px;
+  }
+
+  @mixin all-border-1px($color: #999, $radius: 10px) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid $color;
+    border-radius: $radius * 2;
+    box-sizing: border-box;
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    transform-origin: left top;
+  }
+  .border-1px::after{
+    @include all-border-1px();
+  }
+  ```
+
+
+# 六、动画效果
+
+## 实现方式
+
+### JS
+  1. 通过定时器 `setTimeout、setIterval` 间隔改变元素样式，但经常导致页面频繁性重排重绘而消耗性能。
+  2. 通过浏览器用于定时循环操作的接口 `requestAnimationFrame` 实现最佳动画效果：它可看作一个性能优化版的 setTimeout，但并不指定回调函数运行时间而是跟着浏览器内建的刷新频率来执行回调。
+  3. 复杂动画交互建议使用 RAF、setInterval/setTimeout 降级处理。
+
+
+### CSS3
+> `transition、animation` 摆脱了 js 的控制，并且可以利用硬件加速以及实现复杂动画效果。比如在移动端开发时使用 transition 会让页面变慢甚至卡顿，通过添加 `transform: translate3D(0,0,0) / translateZ(0)` 来开启移动端动画的 GPU 加速可以让动画过程更加流畅。
+
+### HTML5
+
+  * `svg`：使用 XML 格式定义基于矢量的图形并嵌入到 HTML 使用。
+  * `canvas`：可用于实现复杂动画，可通过 js 渲染控制动画的执行。
+  * `WebGL`：可看作是浏览器提供的接口，门槛较高而一般使用封装后的 Three.js。
+
+
+## 常用的库
+
+  * `Animate.css`：CSS3 动画库，运动元素添加类名。
+  * `Tween.js`：包含各种经典算法的补间动画，以平滑效果变化。
+  * `Three.js`：实现 3D 程序的 js 类库，封装了 webgl 接口。
+  * `swiper.animate.js`：移动端触摸滑块类库，初始化回调中使用并在运动元素添加类名。
+
+
+## 加载动画
+> 素材网站：https://www.eyuyun.com/127.html
+
+  ```html
+  <!-- 图标 -->
+  <style>
+    .loading-box{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, .6);
+      text-align: center;
+    }
+    .loading-box img{
+      width: 120px;
+      margin-top: 40vh;
+      margin-bottom: 20px;
+      animation: rotating 1s steps(12, end) infinite;
+    }
+    @keyframes rotating {
+      0% {
+          transform: rotate(0deg);
+      }
+      100% {
+          transform: rotate(1turn);
+      }
+    }
+  </style>
+  <div class="loading-box">
+      <img src="images/mobile/loading.png" alt="">
+      <p>loading...</p>
+  </div>
+
+  <!-- 圆环 -->
+  <style>
+    .app_loading {
+      position: fixed;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      background: #0c0d22;
+      opacity: 1;
+      transition: opacity 1s;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .text_box span {
+      color: #eff1f2;
+      display: block;
+      position: absolute;
+      left: 50vw;
+      top: 50vh;
+      transform: translate(-50%, -50%);
+    }
+    .text_box div {
+      position: absolute;
+      left: 50vw;
+      top: 50vh;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid #fff;
+      opacity: 0;
+    }
+    .text_box div:nth-of-type(1) {
+      width: 25vh;
+      height: 25vh;
+      animation: box_fade 3s 0s ease-in infinite;
+    }
+    .text_box div:nth-of-type(2) {
+      width: 45vh;
+      height: 45vh;
+      animation: box_fade 3s .4s ease-in infinite;
+    }
+    .text_box div:nth-of-type(3) {
+      width: 65vh;
+      height: 65vh;
+      animation: box_fade 3s .8s ease-in infinite;
+    }
+    .text_box div:nth-of-type(4) {
+      width: 85vh;
+      height: 85vh;
+      animation: box_fade 3s 1.2s ease-in infinite;
+    }
+    @keyframes box_fade {
+      0% {
+        opacity: 0;
+      }
+      30% {
+        opacity: .6;
+      }
+      60% {
+        opacity: .2;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    .starline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      /* background: pink; */
+    }
+    .starline div {
+      position: absolute;
+      width: 100px;
+      height: 2px;
+      border-radius: 1px;
+      background-image: -webkit-linear-gradient(right, rgba(225, 225, 225, 0), rgba(225, 225, 225, 1));
+    }
+    .starline div:nth-child(1) {
+      top: -10px;
+      right: -30px;
+      animation: xmove 12s ease-out infinite;
+      transform: rotateZ(-45deg) translate3d(-0, 0, 0);
+        }
+    @keyframes xmove {
+      to {
+        transform: rotateZ(-45deg) translate3d(-800px, 0, 0)
+      }
+    }
+    .starline div:nth-child(2) {
+      top: 200px;
+      right: -120px;
+      animation: ymove 8s ease-out infinite;
+      transform: rotateZ(-45deg) translate3d(-0, 0, 0);
+    }
+    @keyframes ymove {
+      to {
+        transform: rotateZ(-45deg) translate3d(-800px, 0, 0)
+      }
+    }
+    .starline div:nth-child(3) {
+      top: 100px;
+      right: -100px;
+      animation: zmove 16s ease-out infinite;
+      transform: rotateZ(-45deg) translate3d(-0, 0, 0)
+    }
+    @keyframes zmove {
+      to {
+        transform: rotateZ(-45deg) translate3d(-800px, 0, 0)
+      }
+    }
+  </style>
+  <div class="app_loading">
+    <div class="text_box">
+      <span>loading...</span>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="starline">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  ```
 
 

@@ -6,7 +6,7 @@ categories: Vue.js
 top: false
 keywords:
   - vue
-date: 2019-04-14 17:14:11
+date: 2019-06-08 17:14:11
 description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 ---
 

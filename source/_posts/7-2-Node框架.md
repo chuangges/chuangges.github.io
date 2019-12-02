@@ -6,7 +6,7 @@ categories: Node.js
 top: false
 keywords:
   - node
-date: 2019-04-18 00:23:49
+date: 2019-06-20 00:23:49
 description: Express、Koa、Egg 
 ---
 
@@ -80,7 +80,7 @@ description: Express、Koa、Egg
 
   // 错误处理
   app.use((err, req, res, next) => {
-      res.status(500).send('Something broke')
+    res.status(500).send('Something broke')
   })
 
   // 内置中间件 
@@ -126,24 +126,23 @@ description: Express、Koa、Egg
   ```js
   // localhost:3000/tom/24：tom, 24
   app.get('/:name/:age', (req, res)=>{
-      console.log(req.params.name, req.params.age)
-      res.send()
+    console.log(req.params.name, req.params.age)
+    res.send()
   })
 
   // localhost:3000/a#?name=tom 
   app.get('/a', (req, res)=>{
-      res.send('success')
+    res.send('success')
   })
-
 
   // localhost:3000/admin/login：只执行第一个
   app.get('/:username/:method', (req, res)=>{
-      console.log(1)
-      res.end()  // 此处如果执行 next() 则会第二个
+    console.log(1)
+    res.end()  // 此处如果执行 next() 则会第二个
   })
   app.get('/admin/login', (req, res)=>{
-      console.log(2)
-      res.end()
+    console.log(2)
+    res.end()
   })
   ```
 
@@ -154,17 +153,17 @@ description: Express、Koa、Egg
   ```js
   // 匹配根路径的请求
   app.get('/', function (req, res) {
-      res.send('root');
+    res.send('root');
   })
 
   // 匹配 /about 路径的请求
   app.get('/about', function (req, res) {
-      res.send('about');
+    res.send('about');
   })
 
   // 匹配 /random.text 路径的请求
   app.get('/random.text', function (req, res) {
-      res.send('random.text');
+    res.send('random.text');
   })
   ```
 
@@ -173,27 +172,27 @@ description: Express、Koa、Egg
   ```js
   // 匹配 /user、/user/5，去掉 ? 则只匹配 /user/5
   app.get('/user/:id?', function(req, res) {
-      res.send('/users/:id?')
+    res.send('/users/:id?')
   })
 
   // 匹配 acd 和 abcd
   app.get('/ab?cd', function(req, res) {
-      res.send('ab?cd')
+    res.send('ab?cd')
   })
 
   // 匹配 /abe 和 /abcde
   app.get('/ab(cd)?e', function(req, res) {
-      res.send('ab(cd)?e')
+    res.send('ab(cd)?e')
   })
 
   // 匹配 abcd、abbcd、abbbcd等
   app.get('/ab+cd', function(req, res) {
-      res.send('ab+cd')
+    res.send('ab+cd')
   })
 
   // 匹配 abcd、abxcd、abRABDOMcd、ab123cd等
   app.get('/ab*cd', function(req, res) {
-      res.send('ab*cd')
+    res.send('ab*cd')
   })
   ```
 
@@ -202,12 +201,12 @@ description: Express、Koa、Egg
   ```js
   // 匹配任何路径中含有 a 的路径：
   app.get(/a/, function(req, res) {
-      res.send('/a/')
+    res.send('/a/')
   })
 
   // 匹配 butterfly、dragonfly，不匹配 butterflyman、dragonfly man等
   app.get(/.*fly$/, function(req, res) {
-      res.send('/.*fly$/')
+    res.send('/.*fly$/')
   })
   ```
 
@@ -215,7 +214,7 @@ description: Express、Koa、Egg
   ```js
   // 匹配 /abcd、/xyza、/lmnand、/pqr
   app.use(['/abcd', '/xyza', /\/lmn|\/pqr/], function (req, res, next) {
-      next()
+    next()
   })
   ```
 
@@ -224,13 +223,13 @@ description: Express、Koa、Egg
   ```js
   // 一个回调函数
   app.get('/example/a', function (req, res) {
-      res.send('Hello from A')
+    res.send('Hello from A')
   })
   // 多个回调函数
   app.get('/example/b', function (req, res, next) {
-      next()
+    next()
   }, function (req, res) {
-      res.send('Hello')
+    res.send('Hello')
   });
 
   // 回调函数数组
@@ -241,9 +240,9 @@ description: Express、Koa、Egg
 
   // 混合使用
   app.get('/example/d', [a, b], function (req, res, next) {
-      next()
+    next()
   }, function (req, res) {
-      res.send('Hello from D');
+    res.send('Hello from D');
   })
   ```
 
@@ -258,19 +257,19 @@ description: Express、Koa、Egg
   ```js
   // user/10
   app.get("user/:id", function (req, res) {
-      res.send(req.params["id"])
+    res.send(req.params["id"])
   });
 
   // user/?id=10
   app.get("/user", function (req, res) {
-      res.send(req.query["id"])
+    res.send(req.query["id"])
   })
-  
+
   // 通过 body-parser 模块获取 post 请求数据
   let bodyParser=require('body-parser')
   app.use(bodyParser.urlencoded({ extended: true }))
   app.post("/login", function (req, res) {
-      res.send(req.body.name, req.body.password)
+    res.send(req.body.name, req.body.password)
   })
   ```
 
@@ -279,11 +278,11 @@ description: Express、Koa、Egg
   ```js
   // 验证或处理 路径参数
   router.param('id', function (req, res, next, id) {
-      req.name = name
-      next()
+    req.name = name
+    next()
   })
   router.get('/user/:id', function (req, res) {
-      res.send('hello ' + req.name)
+    res.send('hello ' + req.name)
   })
 
 
@@ -305,20 +304,20 @@ description: Express、Koa、Egg
 
   ```js
   app.get('/', function (req, res) {
-      console.log(1)
-      next()           
-      // 结果：1234，替换为next('route')则结果：1234
-      
+    console.log(1)
+    next()           
+    // 结果：1234，替换为next('route')则结果：1234
+    
   }, function (req, res) {
-      console.log(2)
-      next('route')
+    console.log(2)
+    next('route')
   })
 
   app.get('/', function (req, res) {
-      console.log(3)
-      next()
+    console.log(3)
+    next()
   }, function (req, res) {
-      console.log(4)
+    console.log(4)
   })
   ```
 
@@ -349,11 +348,11 @@ description: Express、Koa、Egg
   // 动态渲染页面：npm install koa-views ejs
   let views = require('koa-views');
   app.use(views(__dirname,{
-      extension:'ejs' //指定用ejs模板
+    extension:'ejs' //指定用ejs模板
   }))
   app.use(async (ctx, next)=>{
-      // 渲染 index.ejs
-      await ctx.render('index', {name:'cgp', age:9})
+    // 渲染 index.ejs
+    await ctx.render('index', {name:'cgp', age:9})
   })
 
   app.listen(3000)
@@ -379,10 +378,10 @@ description: Express、Koa、Egg
   ```js
   // 通过 ctx.request.path 获取用户请求的路径
   app.use(ctx => {
-      if (ctx.request.path == '/') {
-          // ctx.response.body的简写 
-          ctx.body = '<p>Hello World</p>'
-      }
+    if (ctx.request.path == '/') {
+      // ctx.response.body的简写 
+      ctx.body = '<p>Hello World</p>'
+    }
   })
   ```
 
@@ -397,31 +396,31 @@ description: Express、Koa、Egg
 
   // 基础用法：常用 get、post、all
   router.get('/', async (ctx, next)=>{
-      ctx.body = 'hello people';
-      await next()
+    ctx.body = 'hello people';
+    await next()
   });
   router.get('/list', async (ctx, next)=>{
-      ctx.body = 'list';
+    ctx.body = 'list';
   });
 
 
   // 传递参数
   router.get('/home', (ctx,next)=>{ 
-      console.log('/home?id=1 传递参数：', ctx.query);
-      next();
+    console.log('/home?id=1 传递参数：', ctx.query);
+    next();
   });
   router.get('/user/:name', (ctx, next) => {
-      console.log('/user/tom 传递参数：', ctx.params.name);
-      next();
+    console.log('/user/tom 传递参数：', ctx.params.name);
+    next();
   });
   router.post('/user/register',async(ctx, next)=>{
-      console.log(ctx.request.body)
+    console.log(ctx.request.body)
   })
 
 
   // 重定向
   router.get('/login', async (ctx, next) => {
-      ctx.redirect('/user')
+    ctx.redirect('/user')
   })
 
 
@@ -434,7 +433,7 @@ description: Express、Koa、Egg
   });
   let user = new Router();
   user.get('/list', async(ctx)=>{
-      ctx.body = "User list";
+    ctx.body = "User list";
   });
 
 
@@ -462,27 +461,27 @@ description: Express、Koa、Egg
 
   // 错误处理中间件
   app.use(async (ctx, next) => {
-      try {
-          await next()
-      } catch (error) {
-          ctx.response.body = {
-          code: '404',
-          message: '服务器异常',
-          desc: error.message
-      }
+    try {
+      await next()
+    } catch (error) {
+      ctx.response.body = {
+      code: '404',
+      message: '服务器异常',
+      desc: error.message
+    }
   })
 
   // 应用级中间件
   app.use(async (ctx, next) => {
-      await next();
-      if(ctx.status === 404){
-          ctx.body = "404页面"
-      }
+    await next();
+    if(ctx.status === 404){
+      ctx.body = "404页面"
+    }
   })
 
   // 路由级中间件
   router.get('/', async ctx => {
-      ctx.body = 'hello koa';
+    ctx.body = 'hello koa';
   })
 
   // 启动路由
@@ -498,20 +497,20 @@ description: Express、Koa、Egg
 
   ```js
   app.use(async (ctx, next) => {
-      console.log('1')
-      await next();
-      console.log('7')
+    console.log('1')
+    await next();
+    console.log('7')
   })
 
   app.use(async (ctx, next) => {
-      console.log('2');
-      await next();
-      console.log('4')
+    console.log('2');
+    await next();
+    console.log('4')
   })
 
   router.get('/user', async (ctx, next) => {
-      console.log('3')
-      ctx.body = 'Hello Koa';
+    console.log('3')
+    ctx.body = 'Hello Koa';
   })
   ```
 
@@ -523,7 +522,6 @@ description: Express、Koa、Egg
   * __koa-bodyparse__：处理post请求的数据
 
 
-
 ## 常用功能
 
 ### Cookies
@@ -533,13 +531,13 @@ description: Express、Koa、Egg
   // 设置中文时报错解决
   app.use(async (ctx, next) => {
 
-      // 使用new Buffer().toString('base64')转换
-      this.cookies.set('test', new Buffer('你好').toString('base64'))
-      const test = new Buffer(ctx.cookies.get('test'), 'base64').toString()
+    // 使用 new Buffer().toString('base64') 转换
+    this.cookies.set('test', new Buffer('你好').toString('base64'))
+    const test = new Buffer(ctx.cookies.get('test'), 'base64').toString()
 
-      // 使用encodeURIComponent()转换
-      ctx.cookies.set('name', encodeURIComponent('李'))
-      const name = decodeURIComponent(ctx.cookies.get('name'))
+    // 使用 encodeURIComponent() 转换
+    ctx.cookies.set('name', encodeURIComponent('李'))
+    const name = decodeURIComponent(ctx.cookies.get('name'))
   })
   ```
 
@@ -551,9 +549,9 @@ description: Express、Koa、Egg
   app.use(bodyParser()); 
   
   router.post('/add', async (ctx)=>{
-      // 获取表单提交的数据
-      const body = ctx.request.body
-      ctx.body = { name: body.name }
+    // 获取表单提交的数据
+    const body = ctx.request.body
+    ctx.body = { name: body.name }
   })
   ```
 
@@ -572,67 +570,67 @@ description: Express、Koa、Egg
   // 引入：npm install koa-body --save
   const koaBody = require('koa-body');
   app.use(koaBody({
-      multipart: true,
-      formidable: {
-          maxFileSize: 200*1024*1024  // 设置文件最大限制，默认 2M
-      }
+    multipart: true,
+    formidable: {
+      maxFileSize: 200*1024*1024  // 设置文件最大限制，默认 2M
+    }
   }));
 
 
   // 上传图片
   router.post('/file_upload', async (ctx) => {
-      // 获取上传图片
-      const data = ctx.request.body.files.data;
-      // 创建可读流
-      const savePath = path.join(`./files`, data.name)
-      const reader = fs.createReadStream(data.path)
-      // 创建可写流
-      const writer = fs.createWriteStream(savePath)
+    // 获取上传图片
+    const data = ctx.request.body.files.data;
+    // 创建可读流
+    const savePath = path.join(`./files`, data.name)
+    const reader = fs.createReadStream(data.path)
+    // 创建可写流
+    const writer = fs.createWriteStream(savePath)
 
-      
-      const pro = new Promise( (resolve, reject) => {
-          // 可读流通过管道写入可写流
-          var stream = reader.pipe(writer);
 
-          // 图片上传成功后返回服务器地址，实时显示服务器图片
-          stream.on('finish', function () {
-              resolve(`http://当前服务器地址${data.name}`);
-          });
+    const pro = new Promise( (resolve, reject) => {
+      // 可读流通过管道写入可写流
+      var stream = reader.pipe(writer);
+
+      // 图片上传成功后返回服务器地址，实时显示服务器图片
+      stream.on('finish', function () {
+        resolve(`http://当前服务器地址${data.name}`);
       })
-      ctx.response.body =  await pro
+    })
+    ctx.response.body =  await pro
   })
 
 
   // 上传单个文件
   router.post('/uploadfile', async (ctx, next) => {
-      // 获取上传文件
-      const file = ctx.request.files.file; 
-      // 创建可读流
-      const reader = fs.createReadStream(file.path);
-      let filePath = path.join(__dirname, 'public/upload/') + `/${file.name}`;
-      // 创建可写流
-      const upStream = fs.createWriteStream(filePath);
-      // 可读流通过管道写入可写流
-      reader.pipe(upStream);
-      return ctx.body = "上传成功！";
+    // 获取上传文件
+    const file = ctx.request.files.file; 
+    // 创建可读流
+    const reader = fs.createReadStream(file.path);
+    let filePath = path.join(__dirname, 'public/upload/') + `/${file.name}`;
+    // 创建可写流
+    const upStream = fs.createWriteStream(filePath);
+    // 可读流通过管道写入可写流
+    reader.pipe(upStream);
+    return ctx.body = "上传成功！";
   })
 
   
   // 上传多个文件
   router.post('/uploadfiles', async (ctx, next) => {
-      // 获取上传文件，旧版本通过 ctx.request.body.files
-      const files = ctx.request.files.file; 
-      for (let file of files) {
-        // 创建可读流
-        const reader = fs.createReadStream(file.path);
-        // 获取上传文件扩展名
-        let filePath = path.join(__dirname, 'public/upload/') + `/${file.name}`;
-        // 创建可写流
-        const upStream = fs.createWriteStream(filePath);
-        // 可读流通过管道写入可写流
-        reader.pipe(upStream);
-      }
-      return ctx.body = "上传成功！";
+    // 获取上传文件，旧版本通过 ctx.request.body.files
+    const files = ctx.request.files.file; 
+    for (let file of files) {
+      // 创建可读流
+      const reader = fs.createReadStream(file.path);
+      // 获取上传文件扩展名
+      let filePath = path.join(__dirname, 'public/upload/') + `/${file.name}`;
+      // 创建可写流
+      const upStream = fs.createWriteStream(filePath);
+      // 可读流通过管道写入可写流
+      reader.pipe(upStream);
+    }
+    return ctx.body = "上传成功！";
   })
   ```
 
@@ -643,10 +641,10 @@ description: Express、Koa、Egg
   // koa-compose：将多个中间件合成为一个
   const compose = require('koa-compose')
   const first = asycn (ctx, next) => {
-      await next()
+    await next()
   }
   const second = async ctx => {
-      ctx.body = 'Hello'
+    ctx.body = 'Hello'
   }
   const middle = compose([first, second])
   app.use(middle)
@@ -660,12 +658,9 @@ description: Express、Koa、Egg
 
 
 ## 框架体系
-  * 核心体系：egg-core 模块
-    * 以 Koa.js 为基类，利用它的 中间件机制 和 HTTP服务机制 作为框架基础
-    * 以 Loader 机制作为 Egg.js 各分层机制的约定基础
-  * 辅助体系：egg-script、egg-bin 等模块
-    * 支持 开发模式、生产模式、多线程模式
-  * 生态体系：中间件、插件、框架
+  * 核心体系：egg-core 模块。以 Koa.js 为基类并利用它的 中间件机制 和 HTTP服务机制 作为框架基础，以 Loader 机制作为 Egg.js 各分层机制的约定基础。
+  * 辅助体系：egg-script、egg-bin 等模块：支持 开发模式、生产模式、多线程模式。
+  * 生态体系：中间件、插件、框架。
 
 
 ## 主要特点
@@ -690,12 +685,12 @@ description: Express、Koa、Egg
 
 
 ## 项目运行
-  * 绿色虚线框中的所有组件组成了一个实际执行代码逻辑的进程
-  * request 进来后先穿过中间件，自定义中间件放在 app/middleware 并在 config 中启用
-  * 静态资源（project/app/public）经过内置的 egg-static 中间件时会直接响应给客户端，其它资源则会穿越所有中间件并到达路由文件 router.js
-  * 路由文件一般没有任何逻辑而只起到目录和索引的作用，它会直接指向一个处理请求的 controller（app/controller）
-  * Controller 负责调用并组合 Service（app/service），最后将响应提交给客户端。Service 负责调用 Model 处理具体的业务逻辑
-  * 除此之外，Worker 中还有定时任务（app/schedule）
+  * 绿色虚线框中的所有组件组成了一个实际执行代码逻辑的进程。
+  * request 进来后先穿过中间件，自定义中间件放在 app/middleware 并在 config 中启用。
+  * 静态资源（project/app/public）经过内置的 egg-static 中间件时会直接响应给客户端，其它资源则会穿越所有中间件并到达路由文件 router.js。
+  * 路由文件一般没有任何逻辑而只起到目录和索引的作用，它会直接指向一个处理请求的 controller（app/controller）。
+  * Controller 负责调用并组合 Service（app/service），最后将响应提交给客户端。Service 负责调用 Model 处理具体的业务逻辑。
+  * 除此之外，Worker 中还有定时任务（app/schedule）。
 
   <div align="center"> 
     ![Egg Run](/images/nodejs/egg-run.png)
@@ -703,7 +698,7 @@ description: Express、Koa、Egg
 
 
 ## 原理分析
-> 要分析框架的实现原理，直接从所有源码开始分析比较难。但是可以先将其精简到最小功能系统，然后针对各个功能进行分析和叠加 
+> 要分析框架的实现原理，直接从所有源码开始分析比较难。但是可以先将其精简到最小功能系统，然后针对各个功能进行分析和叠加。
 
 ### 模块架构
   <div align="center"> 
@@ -724,36 +719,16 @@ description: Express、Koa、Egg
 
 
 ### 执行流程
-  1. 应用初始化
-    * 加载所有 loader
-    * 加载所有中间件、插件等内容
-    * 路由注册
-  2. 服务启动
-    * 提供 http 服务
-    * 执行路由处理
+  1. 应用初始化：加载所有 loader、加载所有中间件和插件等内容、路由注册
+  2. 服务启动：提供 http 服务、执行路由处理
 
 
 ### 代码逻辑
-  1. EggApplication 
-    * 继承：EggCore
-    * 构建：按照顺序加载所有中间件、插件、路由等内容，this.loader.loadAll()
-
+  1. EggApplication：继承 EggCore，按照顺序加载所有中间件、插件、路由等内容。
   2. EggCore
-    * 继承：Koa
-    * 功能
-      * 服务器的底层逻辑
-      * 工程项目文件的加载器
-      * 提供底层的中间件、插件、路由等机制
-    * 构建
-      * AppWorkerLoader
-        * 继承：EggLoader
-        * 加载器初始化：this.loader = new EggLoader()
-      * Router
-        * 继承：Koa-router
-        * 路由初始化：this.router = new Router()
-        * 路由方法注入：将路由方法注册到对象属性
-  3. EggLoader
-    * 构建：注入各种加载器方法
+    * 继承 Koa，实现功能：服务器的底层逻辑、工程项目文件的加载器、提供底层的中间件、插件、路由等机制。
+    * 构建 AppWorkerLoader：初始化 加载器(继承EggLoader) 和路由(继承 Koa-router)。
+  3. EggLoader：注入各种加载器方法
               
 
 ### 路由优化
@@ -761,7 +736,6 @@ description: Express、Koa、Egg
   * RESTFul 实现
   * Controller 句柄使用
   * Generator Function 兼容
-
 
 
 ### RESTFul
@@ -783,35 +757,34 @@ description: Express、Koa、Egg
   const { Controller } = require('egg');
 
   class UsersController extends Controller {
-
-      async create() {
-          const { ctx } = this;
-          this.ctx.body = '创建';
-      }
-      async destroy() {
-          const { ctx } = this;
-          this.ctx.body = '删除';
-      }
-      async update() {
-          const { ctx } = this;
-          this.ctx.body = '修改';
-      }
-      async show() {
-          const { ctx } = this;
-          this.ctx.body = '查询';
-      }
-      async index() {
-          const { ctx } = this;
-          this.ctx.body = '列表';
-      }
-      async new() {
-          const { ctx } = this;
-          this.ctx.body = '创建页面';
-      }
-      async edit() {
-          const { ctx } = this;
-          this.ctx.body = '修改页面';
-      }
+    async create() {
+      const { ctx } = this;
+      this.ctx.body = '创建';
+    }
+    async destroy() {
+      const { ctx } = this;
+      this.ctx.body = '删除';
+    }
+    async update() {
+      const { ctx } = this;
+      this.ctx.body = '修改';
+    }
+    async show() {
+      const { ctx } = this;
+      this.ctx.body = '查询';
+    }
+    async index() {
+      const { ctx } = this;
+      this.ctx.body = '列表';
+    }
+    async new() {
+      const { ctx } = this;
+      this.ctx.body = '创建页面';
+    }
+    async edit() {
+      const { ctx } = this;
+      this.ctx.body = '修改页面';
+    }
   }
 
   module.exports = UsersController;

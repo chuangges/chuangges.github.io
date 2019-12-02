@@ -6,7 +6,7 @@ categories: Vue.js
 top: false
 keywords:
   - vue
-date: 2019-04-14 23:11:50
+date: 2019-06-14 23:11:50
 description: 路由控制、数据加密、数据更新、页面刷新、页面缓存、页面跳转、UI 框架
 ---
 
@@ -24,47 +24,47 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
   ```js
   // 前端路由验证
   const router = new VueRouter({
-      routes: [{
-          path: '/',
-          component: require('./views/Home'),
-          meta: { requiresAuth: true  }
-      }]
+    routes: [{
+      path: '/',
+      component: require('./views/Home'),
+      meta: { requiresAuth: true  }
+    }]
   })
   router.beforeEach((to, from, next) => {
-      if (to.meta.requireAuth) {    
-          if (store.state.token) {  
-              next();
-          } else {
-              // 记录目标路由，用于登录成功后直接跳转
-              next({
-                  path: '/login',
-                  query: {redirect: to.fullPath}
-              })
-          }
-      }else{
-          next()
-      }
+    if (to.meta.requireAuth) {    
+        if (store.state.token) {  
+            next();
+        } else {
+            // 记录目标路由，用于登录成功后直接跳转
+            next({
+              path: '/login',
+              query: {redirect: to.fullPath}
+            })
+        }
+    }else{
+        next()
+    }
   })
 
   // 服务端验证
   axios.interceptors.request.use(
     config => {
-        if (store.state.token) {  
-            config.headers['Token'] = store.state.token
-        }
-        return config;
+      if (store.state.token) {  
+          config.headers['Token'] = store.state.token
+      }
+      return config;
     })
   axios.interceptors.response.use(
     error => {
-        if (error.res.status == 401) {
-            // 清除 token 信息并跳转到登录页面
-            store.commit("token_clear");
-            router.replace({
-                path: 'login',
-                query: {redirect: router.currentRoute.fullPath}
-            })
-        }
-        return Promise.reject(error.response.data)   
+      if (error.res.status == 401) {
+          // 清除 token 信息并跳转到登录页面
+          store.commit("token_clear");
+          router.replace({
+            path: 'login',
+            query: {redirect: router.currentRoute.fullPath}
+          })
+      }
+      return Promise.reject(error.response.data)   
     })
   ```
 
@@ -112,27 +112,27 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
   // vuex 添加路由表
   const mutations = {
     [ADD_ROUTES](state, addrouter) {
-        let routes = []
-        generaRouter(routes, addRouter)
-        router.addRoutes(routes)  
-        router.push('/')
+      let routes = []
+      generaRouter(routes, addRouter)
+      router.addRoutes(routes)  
+      router.push('/')
     }
   }
   const actions = {
     add_Routes({commit}, addrouter) {
-        commit(ADD_ROUTES, addrouter)
+      commit(ADD_ROUTES, addrouter)
     }
   }
 
   function generaRouter(routers, data){
     data.forEach((item)=>{
-        let menu = Object.assign({}, item)
-        menu.component = () => import(`@/components/${menu.component}.vue`)
-        if(item.children){
-            menu.children = []
-            generaRouter(menu.children,item.children)
-        }
-        routers.push(menu)
+      let menu = Object.assign({}, item)
+      menu.component = () => import(`@/components/${menu.component}.vue`)
+      if(item.children){
+          menu.children = []
+          generaRouter(menu.children,item.children)
+      }
+      routers.push(menu)
     })
   }
 
@@ -162,36 +162,37 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
 ## 加密算法
 
 ### 对称加密算法
-> 加密与解密密钥相同，可分为序列算法（对明文的一个单位运算）、分组算法（对明文的一组运算）
+> 加密与解密密钥相同，可分为序列算法（对明文的一个单位运算）、分组算法（对明文的一组运算）。
 
-  * `DES`：一种分组密码，以 64 位为分组对数据加密，密钥长度是 56 位
-  * `3DES`：基于 DES 的对称算法，对一块数据用三个不同的密钥进行三次加密，强度更高
-  * `AES`：密码学中的高级加密标准，它采用对称分组密码体制，密钥长度的最少支持为 128、192、256 ，分组长度 128 位，算法应易于各种硬件和软件实现
+  * `DES`：一种分组密码，以 64 位为分组对数据加密，密钥长度是 56 位。
+  * `3DES`：基于 DES 的对称算法，对一块数据用三个不同的密钥进行三次加密，强度更高。
+  * `AES`：密码学中的高级加密标准，它采用对称分组密码体制，密钥长度的最少支持为 128、192、256 ，分组长度 128 位，算法应易于各种硬件和软件实现。
 
 
 ### 非对称算法
-> 加密密钥与解密密钥不同
-  * `RSA`：目前最有影响力的公钥加密算法，可用于签名和加密
-  * `DSA`：基于整数有限域离散对数难题，主要特点是两个素数公开，只用于签名
+> 加密密钥与解密密钥不同。
+
+  * `RSA`：目前最有影响力的公钥加密算法，可用于签名和加密。
+  * `DSA`：基于整数有限域离散对数难题，主要特点是两个素数公开，只用于签名。
 
 
 ### 散列算法
-  * `MD5`：单向加密的消息摘要算法（不可以解密），常用于密码认证、钥匙识别、登陆认证
-  * `SHA1`：一种比 MD5 安全性强的消息摘要算法，主要用于标准的数字签名算法
+  * `MD5`：单向加密的消息摘要算法（不可以解密），常用于密码认证、钥匙识别、登陆认证。
+  * `SHA1`：一种比 MD5 安全性强的消息摘要算法，主要用于标准的数字签名算法。
 
 
 ### 其它
-> 不需要密钥
-  
-  * `Base64`：并非真正的加密算法，是一种用于传输 8bit 字节代码的数据编码方式，可用于 http 传递较长的标识信息
+> 不需要密钥。
+
+  * `Base64`：并非真正的加密算法，是一种用于传输 8bit 字节代码的数据编码方式，可用于 http 传递较长的标识信息。
     
 
 
 ## AES 加密
-> 项目要求使用的加密算法
+> 项目要求使用的加密算法。
 
 ### 加密流程
-> 密钥是用来加密明文的密码，不可以直接在网络上传输
+> 密钥是用来加密明文的密码，不可以直接在网络上传输。
 
   <div align="center"> 
     ![Vue 生命周期](/images/vue/crypto.png)
@@ -199,11 +200,11 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
 
 
 ### 加密参数
-  * `key length`：密钥位数、密码长度
-  * `key`：密钥、密码
-  * `IV`：初始向量（密钥偏移量），加密和解密需要相同值
-  * `mode`：加密模式，分为 ECB、CBC、CFB 等，只有 ECB 由于没有使用 IV 而不太安全
-  * `padding`：填充方式，分为 PKCS5、PKCS7、NOPADDING，加密和解密需要相同的模式
+  * `key length`：密钥位数、密码长度。
+  * `key`：密钥、密码。
+  * `IV`：初始向量（密钥偏移量），加密和解密需要相同值。
+  * `mode`：加密模式，分为 ECB、CBC、CFB 等，只有 ECB 由于没有使用 IV 而不太安全。
+  * `padding`：填充方式，分为 PKCS5、PKCS7、NOPADDING，加密和解密需要相同的模式。
 
 
 ## vue 前端
@@ -282,12 +283,12 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
   };
   // BASE64
   const base64 = {
-      en: (data) => CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data)),
-      de: (data) => CryptoJS.enc.Base64.parse(data).toString(CryptoJS.enc.Utf8)
+    en: (data) => CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data)),
+    de: (data) => CryptoJS.enc.Base64.parse(data).toString(CryptoJS.enc.Utf8)
   };
   // SHA256
   const sha256 = (data) => {
-      return CryptoJS.SHA256(data).toString();
+    return CryptoJS.SHA256(data).toString();
   };
   // MD5
   const md5 = (data) => {
@@ -341,31 +342,31 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
 
   // 请求拦截器
   service.interceptors.request.use(
-      config => {
-          const KP = {
-              key: randomWord(true, 16, 20),  // 秘钥
-              iv: randomWord(true, 16, 20)    // 偏移量
-          };
-          // 加密
-          config.data = aes.en(config.data)
-      
-          // 设置表头  'application/json'
-          config.headers = {
-            "Content-Type": "application/json;charset=utf-8",
-            url: config.url,
-            method: config.method,
-            shareKey: KP.key,
-            shareIv: KP.iv,
-            timestamp: new Date().getTime(),  // 时间戳
-            token: store.state.token,
-            requestStr: random(100, 1)
-          }
-
-          return config
-      },
-      error => {
-          return Promise.reject(error)
+    config => {
+      const KP = {
+          key: randomWord(true, 16, 20),  // 秘钥
+          iv: randomWord(true, 16, 20)    // 偏移量
+      };
+      // 加密
+      config.data = aes.en(config.data)
+  
+      // 设置表头  'application/json'
+      config.headers = {
+        "Content-Type": "application/json;charset=utf-8",
+        url: config.url,
+        method: config.method,
+        shareKey: KP.key,
+        shareIv: KP.iv,
+        timestamp: new Date().getTime(),  // 时间戳
+        token: store.state.token,
+        requestStr: random(100, 1)
       }
+
+      return config
+    },
+    error => {
+      return Promise.reject(error)
+    }
   )
 
 
@@ -376,20 +377,20 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
   * @param level 0：无加密，1：参数加密，2：签名+时间戳，默认0
   */
   function _request (url, methods, data = undefined, params = {}, level = 0) {
-      return new Promise((resolve, reject) => {
-          service({
-              method: methods,
-              url: url,
-              data: data,
-              params: Object.assign(params),
-              headers: { level }
-              
-          }).then((response) => {
-              return resolve(response.data)
-          }).catch((error) => {
-              return reject(error)
-          })
+    return new Promise((resolve, reject) => {
+      service({
+        method: methods,
+        url: url,
+        data: data,
+        params: Object.assign(params),
+        headers: { level }
+          
+      }).then((response) => {
+          return resolve(response.data)
+      }).catch((error) => {
+          return reject(error)
       })
+    })
   }
   ```
 
@@ -407,12 +408,8 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
 ## 更新路由变化后的数据
 > 路由变化后页面数据并未更新，原因是跳转前后使用同一个组件，vue-router 默认复用组件而没有执行 created 等生命周期钩子。
 
-  * 普通方案
-    * 监听 $route 变化来初始化数据 
-    * `watch: { '$route': {handler: 'resetData',immediate: true} }`
-  * 简单方案
-    * 监听路由地址变化来重新创建组件  
-    * `<router-view :key="$route.fullPath"></router-view>`
+  * 普通方案：监听 $route 变化来初始化数据 `watch: { '$route': {handler: 'resetData',immediate: true} }`。
+  * 简单方案：监听路由地址变化来重新创建组件 `<router-view :key="$route.fullPath"></router-view>`。
 
 
 # 四、页面刷新
@@ -452,9 +449,9 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
       export default {
         inject: ['reload'],
         method: {
-            fn(){
-                this.reload()
-            }
+          fn(){
+            this.reload()
+          }
         }
       }
       ```
@@ -481,7 +478,6 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
 
   * 更新对象：`this.$set(obj, key, value)`
   * 更新数组：`this.$set(arr, index, value)`
-
 
 
 # 五、页面缓存

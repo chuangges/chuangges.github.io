@@ -1,13 +1,13 @@
 ---
-title: HTML5 元素及其特性
+title: HTML 元素
 tags:
   - HTML
 categories: HTML + CSS
 top: false
 keywords:
   - html
-date: 2019-03-06 22:50:40
-description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏、数据存储
+date: 2019-05-06 22:50:40
+description: audio、Canvas、WebSocket、Worker<br/>拖放操作、地理定位、全屏模式、数据存储
 ---
 
 
@@ -218,16 +218,16 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   // 针对苹果的手机微信端
   function autoPlayVideo(){
     wx.config({
-        debug:false,
-        appId:"",
-        timestamp:1,
-        nonceStr:"",
-        signature:"",
-        jsApiList:[]
-    });
+      debug:false,
+      appId:"",
+      timestamp:1,
+      nonceStr:"",
+      signature:"",
+      jsApiList:[]
+    })
     wx.ready(function(){
-        var autoplayVideo = document.getElementById("audio");
-        autoplayVideo.play()
+      var autoplayVideo = document.getElementById("audio");
+      autoplayVideo.play()
     })
   }
   ```
@@ -391,14 +391,14 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   let image = new Image();
   image.onload = function() {
       
-      // 图片绘制
-      // ctx.drawImage(image, 0, 0)
+    // 图片绘制
+    // ctx.drawImage(image, 0, 0)
 
-      // 图片裁剪
-      ctx.beginPath(); 
-      ctx.arc(100, 100, 100, 0, Math.PI*2, true); 
-      ctx.clip();          
-      ctx.drawImage(image, 0, 0);
+    // 图片裁剪
+    ctx.beginPath(); 
+    ctx.arc(100, 100, 100, 0, Math.PI*2, true); 
+    ctx.clip();          
+    ctx.drawImage(image, 0, 0);
   }
   image.src = './mobile-type.png';
 
@@ -527,7 +527,7 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 ## 应用场景
 
-  * 用来进行处理大量的复杂计算而不挂起主线程
+  * 用来进行处理大量的复杂计算而不挂起主线程。
   * 可以在 worker 中通过 `importScripts(url) `加载其它脚本文件。
   * 可以使用 `setTimeout、clearTimeout、setInterval、clearInterval`。
   * 可以使用 `XMLHttpRequest` 来发送请求。
@@ -545,12 +545,8 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
 
 ## 分类
-  * __专用线程__
-    * 特点：只能被创建它的页面访问，随当前页面的关闭而结束
-    * 通信：通过 onmessage()、postmessage()
-  * __共享线程__
-    * 特点：可以被多个页面访问
-    * 通信：connect 后通过 port 属性
+  * __专用线程__：只能被创建它的页面访问，随当前页面的关闭而结束，通信通过 onmessage()、postmessage()。
+  * __共享线程__：可以被多个页面访问，connect 后通过 port 属性实现通信。
 
   ```js
   // ---------- 专用线程 -----------
@@ -594,28 +590,20 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 # 五、拖放操作
 
 ## 事件
-> 事件对象为 被拖拽的元素、放置的目标元素 (拖放范围)
+> 事件对象为 被拖拽的元素、放置的目标元素 (拖放范围)。
 
   * 拖拽元素：dragstart、drag、dragend
   * 目标元素：dragenter、dragover (拖拽)、dragleave (拖出)、drop (拖入后释放鼠标)
-  * 执行顺序
-    * drop 触发：`dragstart、drag、dragenter、dragover、drop、dragend`
-    * drop 不触发：`dragstart、drag、dragenter、dragover、dragleave、dragend`
+  * 执行顺序：drop 是否触发分类
+    * 触发：`dragstart、drag、dragenter、dragover、drop、dragend`
+    * 不触发：`dragstart、drag、dragenter、dragover、dragleave、dragend`
 
 
 ## dataTransfer 对象
 > 拖动时回调函数接受的事件参数。注意火狐浏览器下必须设置它的 setData 方法才可以拖拽除图片外的其他标签。
 
-  * 属性
-    * __dropEffect__：元素行为和相应光标
-    * __effectAllowed__：允许拖动元素的光标样式
-    * __files__：被拖放文件的 FileList 对象
-  * 方法
-    * __getData__：读取对象中的数据
-    * __setData__：在对象上储存数据
-    * __clearData__：清除对象中的数据
-    * __setDragImage__：指定拖动时显示的图像
-    * __addElement__：添加元素和被拖拽元素一同被拖拽
+  * 属性：dropEffect(元素行为和相应光标)、effectAllowed(允许拖动元素的光标样式)、files(被拖放的文件对象)。
+  * 方法：getData、setData、clearData、setDragImage(指定拖动时显示的图像)、addElement(添加被拖拽元素)。
 
 
 ## 拖拽上传预览图片
@@ -666,37 +654,37 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   ```js
   // HTML5 定位
   function getLocation() {
-      var options = {
-          enableHighAccuracy: true,  // 是否要求高精度
-          maximumAge: 1000           // 应用缓存时间
-      }
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(position =>  {
-            var latitude = position.coords.latitude;    
-            var longitude = position.coords.longitude;  
-            console.log(`纬度：${latitude}, 经度：${longitude}`)
+    var options = {
+      enableHighAccuracy: true,  // 是否要求高精度
+      maximumAge: 1000           // 应用缓存时间
+    }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position =>  {
+          var latitude = position.coords.latitude;    
+          var longitude = position.coords.longitude;  
+          console.log(`纬度：${latitude}, 经度：${longitude}`)
 
-          }, error => {
-            console.log(error)
-            // 常见错误：需要用户授权、仅限 HTTPS、需要翻墙 (谷歌浏览器)
-          }, options);
+        }, error => {
+          console.log(error)
+          // 常见错误：需要用户授权、仅限 HTTPS、需要翻墙 (谷歌浏览器)
+        }, options);
 
-      } else {
-          // 浏览器不支持
-      }
+    } else {
+        // 浏览器不支持
+    }
   }
 
   // 百度地图：申请密钥之后以参数形式引入，然后即可调用
-  // script src="http://api.map.baidu.com/api?v=2.0&ak=wmwHFMPxi66GlPBVUrdgEhDzbLUqlSrM"
+  // script src="http://api.map.baidu.com/api?v=2.0&ak=zbLUqlSrM"
 
   var map = new BMap.Map("allmap"); // 创建Map实例
   var point = new BMap.Point(116.404, 39.915)
-  map.centerAndZoom(point, 15); // 初始化地图，设置中心点坐标和地图级别
-  // map.centerAndZoom("上海",15);  
+  map.centerAndZoom(point, 15)   // 初始化地图，设置中心点坐标和地图级别
+  // map.centerAndZoom("上海",15)
 
-  map.addControl(new BMap.MapTypeControl()); // 添加地图类型控件
-  map.setCurrentCity("北京");      // 设置地图显示的城市
-  map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+  map.addControl(new BMap.MapTypeControl())    // 添加地图类型控件
+  map.setCurrentCity("北京")                   // 设置地图显示的城市
+  map.enableScrollWheelZoom(true)             // 开启鼠标滚轮缩放
   ```
 
 
@@ -710,22 +698,22 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
   cancelFullscreen(); 
 
   function launchFullScreen(element) {  
-      if(element.requestFullScreen) {  
-          element.requestFullScreen();  
-      } else if(element.mozRequestFullScreen) {  
-          element.mozRequestFullScreen();  
-      } else if(element.webkitRequestFullScreen) {  
-          element.webkitRequestFullScreen();  
-      }  
+    if(element.requestFullScreen) {  
+        element.requestFullScreen();  
+    } else if(element.mozRequestFullScreen) {  
+        element.mozRequestFullScreen();  
+    } else if(element.webkitRequestFullScreen) {  
+        element.webkitRequestFullScreen();  
+    }  
   }  
   function cancelFullscreen() {  
-      if(document.cancelFullScreen) {  
-          document.cancelFullScreen();  
-      } else if(document.mozCancelFullScreen) {  
-          document.mozCancelFullScreen();  
-      } else if(document.webkitCancelFullScreen) {  
-          document.webkitCancelFullScreen();  
-      }  
+    if(document.cancelFullScreen) {  
+        document.cancelFullScreen();  
+    } else if(document.mozCancelFullScreen) {  
+        document.mozCancelFullScreen();  
+    } else if(document.webkitCancelFullScreen) {  
+        document.webkitCancelFullScreen();  
+    }  
   }  
 
  
@@ -753,70 +741,57 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 ## cookie
 > 随着每次 http 请求头信息一起发送，无形中增加了网络流量，而且能存储的数据容量较小，适用于购物车、客户端登录等场景
 
-  * 优点
-    * 可控制过期时间 
-    * 可扩展、可用性比较好
-    * 可加密减少 cookie 被破解的可能性
-  * 缺点
-    * 在请求头上携带数据安全性差
-    * 数量和长度有限制，最多 20 条，最长不能超过 40k
-  * API
-    * 存储：`document.cookie = "键=值"`
-    * 读取：`var val = document.cookie`         
-    * 删除：
-      * `var date = new Date()`
-      * `document.cookie = "key=value;expires=" + date.toGMTString()`  
-
+  * 优点：可控制过期时间、可扩展和可用性比较好、可加密而减少被破解的可能性。
+  * 缺点：在请求头上携带数据而安全性差、数量和长度有限制(最多 20 条、最长 40k)。
 
   ```js
-  export const setCookie = (name, value, expiredays) => {
-      var exdate = new Date();　　　　
-      exdate.setDate(exdate.getDate() + expiredays);　　　　
-      document.cookie = name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+  function setCookie(key, value, expireTime) {
+    var cookie = key + '=' + encodeURIComponent(value);
+    if (typeof expireTime !== 'undefined') {
+      var expire = new Date();
+      expire.setTime(expire.getTime() + expireTime);
+      cookie += ';expires=' + expire.toUTCString();
+    }
+
+    document.cookie = cookie + ';domain=' + location.hostname + ';path=/';
   }
 
-  export const getCookie = name => {
-      var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-      if (arr = document.cookie.match(reg))
-          return (arr[2]);
-      else
-          return null;
+  function getCookie(key) {
+    var cookie = document.cookie.replace(/;\s*/g, ';');
+    cookie = parseParam(cookie, ';');
+    return cookie[key];
   }
 
-  export const delCookie = name => {
-      var exp = new Date();
-      exp.setTime(exp.getTime() - 1);
-      var cval = this.getCookie(name);
-      if (cval != null)
-      document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+  function delCookie(key) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = this.getCookie(key);
+    if (cval != null)
+    document.cookie = key + "=" + cval + ";expires=" + exp.toGMTString();
   }
   ```
 
 
 ## localStorage
-> 本地存储方式可以长期存储数据，没有时间限制，而且可以储存电话本等大量数据
+> 本地存储方式可以长期存储数据，没有时间限制，而且可以储存电话本等大量数据。
 
-  * 特点：同源策略限制、只在本地存储、永久保存、同浏览器共享
+  * 特点：同源策略限制、只在本地存储、永久保存、同浏览器共享。
   * 优点
-    * 扩展了 cookie 的 4k 限制
-    * 可以将请求数据直接存储到本地，节约带宽
-    * 遵循同源策略，不同网站之间不能直接共用
+    * 扩展了 cookie 的 4k 限制。
+    * 可以将请求数据直接存储到本地，节约带宽。
+    * 遵循同源策略，不同网站之间不能直接共用。
   * 缺点
-    * 需要手动删除，否则长期存在
-    * 浏览器大小不一，版本的支持也不一样
-    * 只支持存储 string 类型的数据，JSON 对象需要转换
-    * 本质是对字符串的读取，如果存储内容多则会消耗内存空间而导致页面变卡
+    * 需要手动删除，否则长期存在。
+    * 浏览器大小不一，版本的支持也不一样。
+    * 只支持存储 string 类型的数据，JSON 对象需要转换。
+    * 本质是对字符串的读取，如果存储内容多则会消耗内存空间而导致页面变卡。
   * 应用场景
-    * 多页面访问共同数据：可以在多个标签页中共享数据
-    * 数据比较大的临时保存方案：比如在线编辑文章时的自动保存
+    * 多页面访问共同数据：可以在多个标签页中共享数据。
+    * 数据比较大的临时保存方案：比如在线编辑文章时的自动保存。
   * API
-    * 存储：`localStorage.setItem(key, value)`
-    * 读取
-      * 单个：`localStorage.getItem(key)`
-      * 全部：`localStorage.valueOf()`
-    * 删除
-      * 单个：`localStorage.removeItem(key)`
-      * 全部：`localStorage.clear()`
+    * 存储：`localStorage.setItem(key, value)`。
+    * 读取：`localStorage.getItem(key)`(单个)、`localStorage.valueOf()`(全部)。
+    * 删除：`localStorage.removeItem(key)`(单个)、`localStorage.clear()`(全部)。
 
 
   ```js
@@ -843,10 +818,10 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
 
   * 特点
     * __同源策略限制__ 
-    * __单标签页限制__：同一个标签页中的同源页面共享数据
-    * __只在本地存储__：数据只会在存储在本地，并在标签页关闭后清除
-    * __存储方式__：采用键值对的方式，注意 value 值必须为字符串类型
-    * __存储上限限制__：不同的浏览器存储的上限不同，但大多数限制在 5MB 以下
+    * __单标签页限制__：同一个标签页中的同源页面共享数据。
+    * __只在本地存储__：数据只会在存储在本地，并在标签页关闭后清除。
+    * __存储方式__：采用键值对的方式，注意 value 值必须为字符串类型。
+    * __存储上限限制__：不同的浏览器存储的上限不同，但大多数限制在 5MB 以下。
   * API
     * 存储：`sessionStorage.setItem(key, value)`
     * 读取
@@ -859,22 +834,22 @@ description: audio、Canvas、WebSocket、Web Worker、拖放、定位、全屏�
  
 ## 以上区别
   * 传递
-    * cookie 数据通常经过加密，而且会在浏览器和服务器间来回传递
+    * cookie 数据通常经过加密，而且会在浏览器和服务器间来回传递。
     * 后两个不会自动把数据发给服务器，仅在本地保存。
   * 存储大小
-    * cookie 数据大小不能超过4k，始终在同源的 http 请求中携带
-    * 后两个虽然也有存储大小的限制但比 cookie 大得多，可以达到 5M 及以上
+    * cookie 数据大小不能超过4k，始终在同源的 http 请求中携带。
+    * 后两个虽然也有存储大小的限制但比 cookie 大得多，可以达到 5M 及以上。
   * 生命周期
-    * cookie 数据只在过期时间之前一直有效
-    * localStorage存储持久数据，不要不主动删除数据就有效有效
-    * sessionStorage数据在当前浏览器窗口关闭后自动删除
+    * cookie 数据只在过期时间之前一直有效。
+    * localStorage存储持久数据，不要不主动删除数据就有效有效。
+    * sessionStorage数据在当前浏览器窗口关闭后自动删除。
   * 作用域    
-    * sessionStorage 不在不同浏览器窗口中共享
-    * 另外两个在所有同源窗口中都共享
+    * sessionStorage 不在不同浏览器窗口中共享。
+    * 另外两个在所有同源窗口中都共享。
 
 
 ## 临时数据
-> html 标签上添加自定义属性来存储和操作数据，注意 js 可以动态添加和删除，但不能删除行内添加的
+> html 标签上添加自定义属性来存储和操作数据，注意 js 可以动态添加和删除，但不能删除行内添加的。
 
   * html：`div data-name="值"`，name 为自定义属性名
   * 注意：`data-e-name：eName, data-myName：myname`

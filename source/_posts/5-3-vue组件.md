@@ -6,7 +6,7 @@ categories: Vue.js
 top: false
 keywords:
   - vue
-date: 2019-04-14 18:26:43
+date: 2019-06-10 18:26:43
 description: 实例对象、全局方法、组件编写、插件开发
 ---
 

@@ -2,11 +2,12 @@
 title: Echarts 图表插件
 tags:
   - 插件
-categories: 常用插件
+  - 项目开发
+categories: 项目开发
 top: false
 keywords:
   - 插件
-date: 2019-11-17 22:06:14
+date: 2019-03-22 22:06:14
 description: 图表类 (echarts)
 ---
 

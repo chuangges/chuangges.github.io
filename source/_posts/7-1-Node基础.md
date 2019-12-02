@@ -6,7 +6,7 @@ categories: Node.js
 top: false
 keywords:
   - node
-date: 2019-04-16 00:49:49
+date: 2019-06-16 00:49:49
 description: 主要特点、运行机制、安装配置、核心模块
 ---
 
