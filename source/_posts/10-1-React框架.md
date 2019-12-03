@@ -126,9 +126,6 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
       return config;
   }
   ```
-
-
-
   
 
 ## 路由功能
@@ -187,21 +184,124 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   ```
 
 
-# 二、JSX 语法
-> Facebook 专门为 react 发明的一种新的类似于 XML 格式的语言，它是 JS 的语法拓展。它使用 XML 标记的方式去直接声明界面，然后利用编译器转换成 JS 语言。
+# 二、JSX 表达式
+> 基于 ECMAScript 的一种语法拓展而并非一种新语言，用于创建虚拟 DOM。
 
-如果是字符串变量中包含\n换行符，只需在css样式中加入whiteSpace: 'pre-wrap'即可实现解析\n换行符。例如：
 
-空标签  React.Fragment
-
-## 优点
-  * 编写模板更加快速。
+## 主要优点
+  * 编写组件时比较简单快速。
   * 渲染时输出虚拟 dom，执行更快。
   * 类型安全，在编译过程中就能发现错误。
+  * 防注入攻击：React DOM 在渲染之前默认会过滤所有传入的值并将所有内容转换为字符串，这样可以有效地防止 XSS（跨站脚本）攻击。
+
+
+## 使用规则
+
+  * 表格标签必须添加 tbody。
+  * 最外层有且只有一个标签，但可以是空标签。
+  * 对大小写敏感，区分是组件还是 html 标签。
+  * 所有的标签必须闭合，单标签必须有末尾反斜杠。
+  * 标签内放`<`会报错，因为他会按照 html 来解析。
+  * 在标签内部的注释需要写入 `{}`，在标签外的的注释则不需要。
+  * `{}` 不可插入： 函数声明、对象、for 循环、if 语句、while 语句。
+  * `{}` 可插入：变量、简单运算、JS 内置函数、函数执行、三元运算符、自定义组件。
+  * 属性名：小驼峰命名，不能使用关键字：`class - classNmae、for - htmlFor`。
+  * 属性值：字符串加引号，变量加 `{}`。如果包含换行符 `\n`，则需要设置 css 样式才能生效 `whiteSpace: 'pre-wrap'`。
+
+
+  ```js
+  // 空标签：<React.Fragment/> 的语法糖
+  class Columns extends React.Component {
+    render() {
+      return (
+        <>
+          <td>Hello</td>
+          <td>World</td>
+        </>
+      )
+    }
+  }
+
+  // 属性值
+  <div tabIndex="0"></div>
+  <img src = {`images/${star}.png`} />
+  <span className={`tab ${index===this.state.cIndex?"active":null}`}>标签</span>
+  const props = {
+    name: "Jack",
+    age: 20,
+    children: []
+  }
+  <span {...props}></span>
+
+  // 行内样式：双大括号，标准 JSON，省略 px，名字性驼峰
+  <p style={{"width" : 200, "height" : 200, "backgroundColor" : "red"}}></p>
+  <p style={{display: (index===this.state.cIndex) ? "block" : "none"}}>标签</p>
+
+  // 条件渲染
+  const isBtn = this.state.isBtn
+  <div>{ isBtn && <Button onClick={this.handleClick} />}</div>
+  <div>{ isBtn ? <Button /> : <span>内容</span> }</div>
+  if (isBtn) { return <div><Button /></div> }
+
+  function Render ({ if: cond, children }) {
+    return cond ? children : null
+  }
+  <Render if={status === 'loading'} >加载</Render>
+
+  // 表达式
+  function formatName(user) {
+    return user.firstName + ' ' + user.lastName;
+  }
+  render () {
+    return (
+      <div className="wrap">
+        <h1>{parseInt(Math.random() * 100)}年</h1>
+        <h2>{formatName(this.state.user)}</h2>
+      </div>
+    )
+  }
+
+  // 数组
+  <ul>
+    {arr.map((item,index)=> <li key={index}> {item} </li>)}
+  </ul>
+
+  // 事件
+  import cn from 'classnames';
+  export default function CustomIcon(props) {
+    const { type, className, active=false, onClick } = props;
+    const cls = cn('cc-custom-icon', className, `cc-custom-icon__${type}`, {
+      'cc-custom-icon--active': active
+    });
+    return <i className={cls} onClick={onClick}></i>
+  }
+
+  import { CustomIcon } from '@C/_common'
+  export default function DeletableBlock(props) {
+    const { title, children, index, onDelete } = props;
+
+    return (
+      <div className='cc-delete-block'>
+        <CustomIcon type="delete" onClick={() => handleDelete(index)} />
+        {/* 注释：子组件 */}
+        {children}
+      </div>
+    )
+
+    function handleDelete(index) {
+      onDelete(index)
+    }
+  }
+  ```
 
 
 ## 实现原理
-> JSX 不会直接渲染为 DOM：1. 元素可能需要渲染到 页面（react-dom）、canvas（react-canvas）、原生 App（ReactNative），2. 当数据变化而需要更新组件时，可以通过快速算法操作 Js 对象而不用操作 DOM，这样可以尽量减少浏览器重排而极大地优化性能。
+
+  * 本质：`React.createElement` 的语法糖
+  * 解析规则：`< 开头的标签使用 HTML 规则解析、{ 开头的使用 JS 规则解析`。
+  * JSX 为什么不会直接渲染为 DOM
+    * react 需要根据需求通过不同库将元素渲染到对应场景：`react-dom -> 页面、react-canvas -> canvas、ReactNative -> 原生 App`。
+    * 当数据变化而需要更新组件时，可以通过快速算法操作 Js 对象而不用操作 DOM，这样可以尽量减少浏览器重排而极大地优化性能。
 
   <div align="center"> 
     ![JSX 实现原理](/images/react/jsx.png)
@@ -212,11 +312,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   // 编译前
   class Header extends Component {
     render () {
-      return (
-        <div>
-          <h1 className='title'>React 小书</h1>
-        </div>
-      )
+      return (<div><h1 className='title'>React</h1></div>)
     }
   }
   ReactDOM.render(
@@ -228,50 +324,37 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   class Header extends Component {
     render () {
       return (
-        // 构建一个 Js 对象描述 HTML 的结构和信息
-        React.createElement(
-            "div",
-            null,
+        // 构建虚拟 DOM：一个描述 HTML 结构和信息的 Js 对象
+        React.createElement("div", null,
             React.createElement(
-              "h1",
-              { className: 'title' },
-              "React 小书"
+              "h1", { className: 'title' }, "React"
             )
           )
         )
     }
   }
   ReactDOM.render(
-    // 渲染组件并且构造 DOM 树，然后插入到页面的特定元素
     React.createElement(Header, null), 
     document.getElementById('root')
   )
   ```
 
-https://www.cnblogs.com/ly2019/p/11210407.html
-
-
 
 # 四、组件化开发
 
-## 创建组件
-> 组件名称的首字母都必须大写，因为通过 babel 转换 JSX 语法时调用了 `React.createElement()`，它需要接收三个参数 `type、config、children`。第一个参数声明了元素类型，当组件名的首字母小写时 babel 会在转义时将它当成了一个字符串传入，当首字母大写时则会传入一个变量。如果传入一个字符串，在创建虚拟 DOM 对象时 React 会认为这是一个原生的 HTML 标签而导致报错，传入变量则会被看作组件。
+## 组件创建
+> 组件名的首字母必须大写，因为 JSX 转换时会调用 `React.createElement(type, config, children)`。type 声明了元素类型：首字母大写时会被 babel 看作一个组件而传入变量，小写时则看作一个 html 标签而传入字符串。
 
 
-  * __创建方式__
-    * __函数式定义方式__ (无状态组件)
-      * 组件不会被实例化，整体渲染性能较好，应尽量使用
-      * 组件不能操作 state，不能访问生命周期函数和 this
-    * __ES5 原生方式__ (正在逐渐废弃)
-      * 每一个成员函数的 this 都会自动由 React 绑定，导致不必要的性能开销
-      * 创建组件时可以添加 mixins 属性，并将可供混合的类的集合以数组形式赋给 mixins
-    * __ES6 类的方式__（有状态组件)
-      * 成员函数不会自动绑定 this，需要开发者手动绑定，否则 this 不能获取当前组件实例对象
-      * state 是在 constructor 中实现初始化，props 属性类型和组件默认属性作为组件类的属性而不是组件实例的属性，所以使用类的静态属性配置。
-  * __构造函数__
-    * __使用场景__：constructor 构造函数是子类继承父类时的构造方法，默认返回实例对象 this。主要用于初始化数据、绑定属性和方法，注意必须调用 super() 继承父类的属性和方法。
-    * __为什么必须调用 super__：子类必须在 constructor 方法中调用 super 方法，否则新建实例时会报错。这是因为子类自己的 this 对象必须先通过父类的构造函数完成塑造，得到父类同样的实例属性和方法，然后再对其进行加工，加上子类自己的属性和方法。如果不调用 super 方法，子类就得不到 this 对象。
-    * __为什么可以省略__：由于 ES6 的继承规则，不管子类写不写 constructor，new 实例的过程都会自动给补上 constructor。
+  * __函数式__：无状态组件
+    * 组件不会被实例化，整体渲染性能较好，应尽量使用。
+    * 组件不能操作 state，不能访问生命周期函数和 this。
+  * __ES5 原生方式__：正在逐渐废弃
+    * 每一个成员函数的 this 都会自动由 React 绑定，导致不必要的性能开销。
+    * 创建组件时可以添加 mixins 属性，并将可供混合的所有类的数组形式赋给它。
+  * __ES6 类的方式__：有状态组件
+    * 成员函数不会自动绑定 this，开发者不手动绑定则 this 不能获取当前组件的实例对象。
+    * state 是在 constructor 中实现初始化，props 属性类型和组件默认属性作为组件类的属性而不是组件实例的属性，所以使用类的静态属性配置。
 
 
   ```js
@@ -315,26 +398,24 @@ https://www.cnblogs.com/ly2019/p/11210407.html
 
 
 ## 组件类型
-> 根据不同划分依据可以将组件分为不同类型
 
   * __组件分类__
-    * 组件的职责：`展示组件、容器组件`
-    * 组件的定义方式：`函数组件、类组件`
-    * 组件内部是否维护 state：`无状态组件、有状态组件`
+    * 根据组件的职责：`展示组件、容器组件`。
+    * 根据组件的定义方式：`函数组件、类组件`。
+    * 根据组件内部是否维护 state：`无状态组件、有状态组件`。
   * __区别与联系__
     * 函数组件、无状态组件和展示型组件主要关注 UI 展现，类组件、有状态组件和容器型组件主要关注数据逻辑。
     * 函数组件一定是无状态组件，展示型组件一般是无状态组件。类组件可以是有状态组件、无状态组件，容器型组件一般是有状态组件。
 
 
-
 ## 组件模式
-> 即使用 React 的最佳实践，最初是为了将数据逻辑和 UI 表现层进行分离而引入。通过在组件之间划分职责，可以创建更多可重用的、内聚的组件，这些组件可用于组合复杂的 UI，这在构建可扩展的应用程序时尤其重要。
+> React 组件使用的最佳方式，最初是为了将数据逻辑和 UI 表现层进行分离而引入。通过在组件之间划分职责而创建可重用、高内聚的组件，这些组件可用于组合复杂的 UI，这在构建可扩展的应用程序时尤其重要。
 
 
-  * __展示组件__：使用纯函数来简化表述的无状态组件
-  * __容器组件__：获取数据并渲染子组件的有状态组件
+  * __展示组件__：使用纯函数来简化表述的无状态组件。
+  * __容器组件__：获取数据并渲染子组件的有状态组件。
   * __高阶组件__
-    * 本质：一个接收一个组件作为参数并进行修改，然后返回一个新组件的函数
+    * 本质：一个接收一个组件作为参数并进行修改，然后返回一个新组件的函数。
     * 应用：使用 react-router-v4 之后就可以使用 `withRouter()` 来继承以 props 形式传递给组件的各种方法。使用了 redux 之后就可以使用 `connect({})()` 方法来将展示组件和 store 中的数据进行连接。
     ```js
     import {withRouter} from 'react-router-dom';
@@ -416,15 +497,12 @@ https://www.cnblogs.com/ly2019/p/11210407.html
 
 
 ## 绑定 this
-> bind 返回一个新的函数对象
 
   1. __constructor + bind__：只需要在构造函数中预先绑定一次
   2. __render + bind__：每次渲染时都需要重新绑定，存在性能问题
   3. __箭头函数__
-    * ES6 写法：只能在 render 添加，存在性能问题且不能移除监听事件
-    * ES7 写法：可以在 Class 中直接赋值，是 ES6 写法的问题优化方案
-      * 安装：`npm install --save-dev babel-preset-stage-2`
-      * 配置：`.babelrc："presets":["react","env","stage-2"]`
+    * ES6 写法：只能在 render 添加，存在性能问题且不能移除监听事件。
+    * ES7 写法：ES6 的优化方案，可以在 Class 中直接赋值。需要安装 babel-preset-stage-2 并进行配置  `.babelrc："presets":["react","env","stage-2"]`。
 
 
   ```js

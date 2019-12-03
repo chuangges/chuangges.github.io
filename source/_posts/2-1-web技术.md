@@ -1,5 +1,5 @@
 ---
-title: web 项目开发
+title: web 技能
 tags:
   - 项目开发
 categories: 项目开发
@@ -11,14 +11,15 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
 ---
 
 # 一、技术栈
-> web 开发就是呈现用户可理解的界面并响应用户操作
+> web 开发就是呈现用户可理解的界面并响应用户操作。
 
-## 前端基础技能
+## 基础技能
   <div align="center">
   ![前端技能图](/images/web/technology.png)
   </div>
 
 
+## 拓展技能
 ## wget 扒取网站源码
 >  wget 是一个 Linux 用户用在命令行下下载文件的工具
 
