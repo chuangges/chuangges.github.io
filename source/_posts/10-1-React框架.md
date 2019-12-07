@@ -15,9 +15,9 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 ## 主要特点
   
-  1. __单向数据__：单向的从数据到视图的渲染，减少了重复代码。
+  1. __单向数据__：数据只能从父组件流向子组件，减少了重复代码。
   2. __高效渲染__
-    * __virtual DOM__：浏览器端创建的一个描述 dom 结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性，极大提高了渲染性能。
+    * __virtual DOM__：描述 DOM 元素结构结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性，极大提高了渲染性能。
     * __DOM Diff__：对比改变前后两个对象差异的算法，用于计算出更新真实 DOM 的最小步骤并最终只把变化的部分重新渲染，极大减少了与 DOM 的交互。
   3. __组件化开发__
     * DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件。
@@ -80,6 +80,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 
 # 二、项目开发
+https://www.ituring.com.cn/article/507688
 
 ## 初始化目录
 > 相关文件：index.html (入口模板)、manifest.json (应用配置)、index.js (应用入口)、serviceWorker.js (生产环境缓存资源)
@@ -100,7 +101,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 
 ## 项目配置
-> 脚手架创建的目录默认隐藏配置文件，修改配置项有两种方法：1、暴露配置文件后直接修改运行命令 npm run eject 生成的 config 目录(不可逆)，2、安装 react-app-rewired 并进行配置如下：
+> 两种方法：1、脚手架创建的目录默认隐藏配置目录 config，暴露则需要执行 npm run eject (不可逆)，2、安装 react-app-rewired 并配置如下：
 
   ```js
   // 安装
@@ -114,16 +115,16 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
     "eject": "react-app-rewired eject"
   }
 
-  // 根目录新建 config-overrides.js：项目启动时候会优先读取并整合到配置项
+  // 根目录新建 config-overrides.js：项目启动时会优先读取并整合到配置项
   const { injectBabelPlugin } = require('react-app-rewired');
   module.exports = function override(config, env) {
-      config = injectBabelPlugin([
-          'import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }
-      ], config)
-      config = injectBabelPlugin([
-          "@babel/plugin-proposal-decorators", { "legacy": true }
-      ], config)
-      return config;
+    config = injectBabelPlugin([
+      'import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }
+    ], config)
+    config = injectBabelPlugin([
+      "@babel/plugin-proposal-decorators", { "legacy": true }
+    ], config)
+    return config;
   }
   ```
   
@@ -174,9 +175,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
     }
 
     render () {
-      return (
-        <div className="index">indexPage</div>
-      )
+      return <div className="index">indexPage</div>
     }
   }
 
@@ -297,8 +296,8 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 ## 实现原理
 
-  * 本质：`React.createElement` 的语法糖
-  * 解析规则：`< 开头的标签使用 HTML 规则解析、{ 开头的使用 JS 规则解析`。
+  * __本质__：`React.createElement` 的语法糖。
+  * __解析规则__：`< 开头的标签使用 HTML 规则解析、{ 开头的使用 JS 规则解析`。
   * JSX 为什么不会直接渲染为 DOM
     * react 需要根据需求通过不同库将元素渲染到对应场景：`react-dom -> 页面、react-canvas -> canvas、ReactNative -> 原生 App`。
     * 当数据变化而需要更新组件时，可以通过快速算法操作 Js 对象而不用操作 DOM，这样可以尽量减少浏览器重排而极大地优化性能。
@@ -309,34 +308,56 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 
   ```js
-  // 编译前
-  class Header extends Component {
-    render () {
-      return (<div><h1 className='title'>React</h1></div>)
-    }
-  }
-  ReactDOM.render(
-    <Header />,
-    document.getElementById('root')
+  // 编译前：JSX 表达式
+  <div class="input-wrap">
+    <input 
+      type="text" 
+      autocomplete="off" 
+      value="" 
+      id="mq" 
+      class="input" 
+      title="请输入搜索文字" />
+    <button>搜索</button>
+  </div>
+
+  // 编译过程：执行 React.createElement
+  React.createElement("div", {className: 'input-wrap'},
+    React.createElement(
+      "input",
+      { type:'text',
+        autocomplete:"off",
+        value:"",
+        id:"mq",
+        class:"input",
+        title:"请输入搜索文字" 
+      }
+    ),
+    React.createElement('button', null, "搜索")
   )
 
-  // 编译后
-  class Header extends Component {
-    render () {
-      return (
-        // 构建虚拟 DOM：一个描述 HTML 结构和信息的 Js 对象
-        React.createElement("div", null,
-            React.createElement(
-              "h1", { className: 'title' }, "React"
-            )
-          )
-        )
-    }
+  // 编译结果：虚拟 DOM
+  {
+    tagName: 'div',
+    attribute: { className: 'input-wrap'},
+    children: [
+    {
+      tagName: 'input',
+      attribute: {
+        type: "text",
+        autocomplete:"off",
+        value:"",
+        id:"mq",
+        class:"input",
+        title:"请输入搜索文字"
+        }
+    },
+    {
+      tagName: "button",
+      attribute: null,
+      children: '搜索'
+      }
+    ]
   }
-  ReactDOM.render(
-    React.createElement(Header, null), 
-    document.getElementById('root')
-  )
   ```
 
 
@@ -350,10 +371,10 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
     * 组件不会被实例化，整体渲染性能较好，应尽量使用。
     * 组件不能操作 state，不能访问生命周期函数和 this。
   * __ES5 原生方式__：正在逐渐废弃
-    * 每一个成员函数的 this 都会自动由 React 绑定，导致不必要的性能开销。
+    * 每个成员函数的 this 都会由 React 自动绑定，导致不必要的性能开销。
     * 创建组件时可以添加 mixins 属性，并将可供混合的所有类的数组形式赋给它。
   * __ES6 类的方式__：有状态组件
-    * 成员函数不会自动绑定 this，开发者不手动绑定则 this 不能获取当前组件的实例对象。
+    * 成员函数需要开发者手动绑定，否则 this 不能获取当前组件的实例对象。
     * state 是在 constructor 中实现初始化，props 属性类型和组件默认属性作为组件类的属性而不是组件实例的属性，所以使用类的静态属性配置。
 
 
@@ -417,36 +438,31 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   * __高阶组件__
     * 本质：一个接收一个组件作为参数并进行修改，然后返回一个新组件的函数。
     * 应用：使用 react-router-v4 之后就可以使用 `withRouter()` 来继承以 props 形式传递给组件的各种方法。使用了 redux 之后就可以使用 `connect({})()` 方法来将展示组件和 store 中的数据进行连接。
-    ```js
-    import {withRouter} from 'react-router-dom';
+  * __渲染回调__：主要用于共享或重用组件逻辑。虽然许多开发人员倾向于使用高阶组件的可重用逻辑，但是渲染回调减少了命名空间冲突并更好地说明了逻辑来源。
 
+    ```js
+    // 高阶组件
+    import {withRouter} from 'react-router-dom';
     class App extends React.Component {
       constructor() {
         super();
         this.state = {path: ''}
       }
-      
       componentDidMount() {
-        let pathName = this.props.location.pathname;
+        let path = this.props.location.pathname;
         this.setState(() => {
-          return {
-            path: pathName
-          }
+          return { path }
         })
       }
-      
       render() {
         return (<h1>rendering at: {this.state.path}</h1>)
       }
     }
-
     // 使用了 withRouter 则可以直接访问 this.props.locationlocation
     // 而不需要将 location 作为 props 直接传入，非常方便。
     export default withRouter(App)
-    ```
-  * 渲染回调：主要用于共享或重用组件逻辑。虽然许多开发人员倾向于使用高阶组件的可重用逻辑，但是渲染回调减少了命名空间冲突并更好地说明了逻辑来源。
-    ```js
-    // 本质是暴露了 children 这个外部属性
+
+    // 渲染回调：本质是暴露了外部属性 children
     class Counter extends React.Component {
       constructor(props) {
         super(props);
@@ -454,7 +470,6 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
           count: 0
         }
       }
-
       inct = () => {
         this.setState(prevState => {
           return {
@@ -462,38 +477,16 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
           }
         })
       }
-
       render() {
-        return (<p onClick={this.inct}>{this.props.children(this.state)}</p>)
+        return <p onClick={this.inct}>{this.props.children(this.state)}</p>
       }
     }
-
     class App extends React.Component {
       render() {
-        return (
-          <Counter>
-            {state => (
-              <h1>The count is: {state.count}</h1>
-            )}
-          </Counter>
-        )
+        return  <Counter>{state => (<h1>The count is: {state.count}</h1> )}</Counter>
       }
     }
     ```
-
-
-## 组件 API
-> npm install react 时得到组件及其 API。组件接收 props 输入并返回描述(声明)用户界面 (UI) 的 React 元素。这就是 React 被称为声明性 API 的原因，因为 React 通过你输入的内容告诉它所希望的 UI 外观，而 React 负责其余的工作。
-
-### render
-> 它接受三个参数 (渲染元素、插入节点、回调函数)，用于将模板转为 HTML 语言并插入指定的 DOM 节点，是使用 class 创建组件时必须实现的方法 (否则会直接抛出错误)。
-
-
-### state
-### props
-### context
-### lifecycle events
-
 
 
 ## 绑定 this
@@ -503,7 +496,6 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   3. __箭头函数__
     * ES6 写法：只能在 render 添加，存在性能问题且不能移除监听事件。
     * ES7 写法：ES6 的优化方案，可以在 Class 中直接赋值。需要安装 babel-preset-stage-2 并进行配置  `.babelrc："presets":["react","env","stage-2"]`。
-
 
   ```js
   class App extends React.Component {
@@ -537,9 +529,181 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   ```
 
 
+## 组件 API
+> npm install react 时得到组件及其 API。组件接收 props 输入并返回描述(声明)用户界面的 React 元素。这就是 React 被称为声明性 API 的原因，因为 React 通过传入参数即可渲染出对应的 UI 外观。
+
+### render
+> class 创建组件时用于实例化 React 组件(转换 Jsx 并插入到指定节点)。当组件 props、state 被改变时会重新执行，shouldComponentUpdate 返回 false 时则不会执行。
+
+  ```js
+  // 三个参数：渲染元素、插入节点、回调函数
+  ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+  )
+  ReactDOM.render(
+    React.createElement(App),  
+    document.getElementById('root')
+  )
+  ```
 
 
+### state
+> 管理组件自身数据的对内接口，更新数据时通过异步方法 `this.setState()`。
 
+  ```js
+  export default class MyCom extends React.Component {
+    constructor(){
+      super();
+      this.state={
+        name: "张三",
+        age: 20
+      }
+    }
+
+    handleDelete = () => {
+      this.setState({
+        name: "",
+        age: 0
+      })
+    }
+
+    // 属性为变量时加 []
+    handleClick (option, value){
+      this.setState({
+        [option]: value
+      })
+    }
+
+    render() {
+      return (
+        <div>
+          <button onDelete={this.handleDelete}></button>
+          <button onClick={ () => this.handleClick("name")}>点击</button>
+        </div>
+      )
+    }
+  }
+  ```
+
+
+### props
+> 实现父子组件通信的对外接口，数据是只读的但可以在子组件限制其类型和默认值。
+
+  ```js
+  // 传递数据和事件
+  export default function Block (){
+    const name = "Mary"
+    const handleDelete = () => { }
+    return (
+      <>
+        <Name name={name} />
+        <DeletableBlock onDelete={handleDelete} />
+      </>
+    )
+  }
+
+  export default function Name ({name}){
+    return <span>{name}</span>
+  }
+  export default function DeletableBlock(props) {
+    const { children, onDelete } = props;
+    return <button type="delete" onClick={() => onDelete()}>清空</button>
+  }
+
+  // 限制类型和默认值：ES5、ES6
+  import PropTypes from 'prop-types';
+  Name.propTypes = {
+    name: PropTypes.string
+  }
+  Name.defaultProps = {
+    name: 'Mary'
+  }
+
+  export default class List extends React.Component {
+    static defaultProps = {
+      list: [123, 123, 123]
+    }
+    static propTypes = {
+      list: PropTypes.array,
+    }
+
+    constructor(props){
+      super(props);         
+    }
+    render() {
+      return (
+        this.props.list.map((item,index)=><li key={index}>item.name</li>)
+      )
+    }
+  }
+  ```
+
+
+### Context
+
+* __功能__：通过上下文对象实现跨层级组件通信，避免了在每个层级都需要手动传递 props。
+* __实现原理__：基于生产者消费者模式。首先通过 `React.createContext` 创建一个包含两个组件的上下文对象：Provider (生产者：定义数据的一个父组件)、Consumer (消费者：使用数据的一个或多个子组件)。
+* __应用场景__：不建议在 App 中使用，但如果开发组件时可以确保组件不会破坏组件树的依赖关系而且影响范围小，可以考虑使用 Context 解决一些问题。
+
+  ```js
+  // index.js：父组件
+  import React from 'react';
+  import Son from './son';
+  export const {Provider,Consumer} = React.createContext("value默认值");
+  export default class App extends React.Component {
+    render() {
+      let name ="context 通信"
+      return (<Provider value={name}> <Son /> </Provider>)
+    }
+  }
+
+  // son.js：子组件、孙组件
+  import React from 'react';
+  import { Consumer } from "./index";
+  export default function Son(props) {
+    return (<Consumer>{ name => <div>子组件获取的值:{name}</div> }</Consumer>)
+  }
+  ```
+
+
+### 生命周期
+
+  <div align="center"> 
+    ![生命周期执行顺序](/images/react/life_cycle.png)
+  </div>
+
+
+  ```js
+  class A extends React.Component {
+    // 用于初始化 state、绑定事件
+    constructor() {}
+    
+    // 在初始化和更新时触发并返回新对象 state，不更新则可返回 null
+    static getDerivedStateFromProps(nextProps, prevState) {}
+
+    // 判断是否需要更新组件，常用于组件性能优化
+    shouldComponentUpdate(nextProps, nextState) {}
+
+    // 组件挂载后调用，常用于 axios 请求、setState 数据、操作 dom
+    componentDidMount() {}
+
+    // 最新渲染输出（提交到 DOM 节点）之前前被调用，用于获取最新数据
+    getSnapshotBeforeUpdate() {}
+
+    // 组件即将销毁，可用于移除事件监听、定时器等
+    componentWillUnmount() {}
+
+    // 组件销毁后调用
+    componentDidUnMount() {}
+
+    // 组件更新后调用
+    componentDidUpdate() {}
+
+    // 渲染组件函数
+    render() {}
+  }
+  ```
 
 
 
