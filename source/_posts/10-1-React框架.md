@@ -15,15 +15,17 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 ## 主要特点
   
-  1. __单向数据__：数据只能从父组件流向子组件，减少了重复代码。
-  2. __高效渲染__
-    * __virtual DOM__：描述 DOM 元素结构结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性，极大提高了渲染性能。
-    * __DOM Diff__：对比改变前后两个对象差异的算法，用于计算出更新真实 DOM 的最小步骤并最终只把变化的部分重新渲染，极大减少了与 DOM 的交互。
-  3. __组件化开发__
+  
+  1. __声明式设计__：采用简洁易懂的声明范式，可以轻松描述应用。
+  2. __单向数据流__：推崇一种单向的数据流动模式，减少了重复代码。
+  3. __高效渲染__：通过组件构建虚拟 DOM ，最大限度地减少了与 DOM 的交互。
+    * __virtual DOM__：描述 dom 元素结构结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性。
+    * __DOM Diff__：对比改变前后两个 js 对象差异的算法，用于计算出更新的最小步骤并最终只把变化的部分重新渲染到真实 dom。
+  4. __组件化开发__
     * DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件。
-    * 组件就是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发推荐使用 JSX 而不能用模板。
-  4. __声明式编程__：简洁易懂而有利于代码维护、无须使用变量而避免了创建和修改状态。
+    * 组件是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发推荐使用 JSX 而不能用模板。
   5. __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)，但这只是拓展功能。
+
 
   ```js
   // 2、虚拟 DOM：标签不加引号
@@ -71,40 +73,37 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   * __组件写法__：Vue 推荐使用 `webpack + vue-loader` 的单文件组件，即把 html、css、js 写在同一文件。React 则推荐 `JSX + inline style`，即把 html、css 全部写进 Js。
 
 
-## 技术栈
+## Flux 架构
+> 由于 React 只涉及 UI 层的处理，所以构建大型应用时需要搭配一种架构模式才能使后期维护成本相对较小。Flux 正是 Facebook 官方提出的一套前端应用架构模式，它只是一种架构思想而非具体的框架。
 
-  * __Babel__：编译工具
-  * __Redux__：状态管理工具
-  * __React-router__：路由工具
-  * __create-react-app__：脚手架工具
+  * __Flux 模式__：代码结构比较简单，它将一个应用分成以下四个部分，核心思想是单向数据流：`Action、Dispatcher、Store`，核心流程是 Dispatcher。
+    <div align="center"> 
+      ![Flux 模式](/images/react/flux.png)
+    </div>
+  * __MVC 模式__：处理多数据和复杂业务时可能会变得非常混乱，因为很多 view 都具备修改多个 model 的能力。单个修改行为可以称之为一个 Action，一个 Action 的产生可能是用户行为或一个 Ajax 请求。解决方法是可以将多个 model 抽象成一个 model，但会造成代码冗余和多余的性能损耗。
+    <div align="center"> 
+      ![MVC 模式](/images/react/mvc.png)
+    </div>
 
 
-# 二、项目开发
-https://www.ituring.com.cn/article/507688
+# 二、构建工具
 
-## 初始化目录
-> 相关文件：index.html (入口模板)、manifest.json (应用配置)、index.js (应用入口)、serviceWorker.js (生产环境缓存资源)
+## create-react-app
+> 简陋的官方脚手架，使用门槛相对较高。
 
   ```js
   // localhost:3000
-  npm install -g create-react-app
-  create-react-app my-app
+  npx create-react-app my-app
   cd my-app
-  npm start
-  npm run build
-
-  // 自定义目录
-  cd src
-  rm App.* index.css logo.svg
-  mkdir coms pages style tool
+  
+  yarn、npm start
+  yarn、npm run build
   ```
 
-
-## 项目配置
-> 两种方法：1、脚手架创建的目录默认隐藏配置目录 config，暴露则需要执行 npm run eject (不可逆)，2、安装 react-app-rewired 并配置如下：
-
+### 项目配置
+> 两种方法：1、npm run eject 暴露默认隐藏的配置目录 (不可逆)，2、安装 react-app-rewired 覆盖默认配置。
+  
   ```js
-  // 安装
   npm install react-app-rewired --save
 
   // 修改 package.json
@@ -127,65 +126,89 @@ https://www.ituring.com.cn/article/507688
     return config;
   }
   ```
-  
 
-## 路由功能
-
-### react-router
-> `react-router-v4` 称为 “第四代 react-router“，主要有三个包：`react-router(core)、react-router-dom(for web)、react-router-native(for #native)`。react-router 实现了路由的核心功能，react-router-dom/native 都是基于 react-router 并添加了对应运行环境的特定功能，它们通过 npm 安装时都会将 react-router 作为依赖安装。
-
-
-
-### 代码实现
-> https://www.jianshu.com/p/dcdb3884d73c
+### less
 
   ```js
-  // 安装工具
-  cnpm i react-router-dom -S
+  // 法一：webpack.config.dev.js、webpack.config.prod.js 
+  yarn add less less-loader
 
-  // 修改 src/index.js
-  import './style/style.scss';
-  import App from './router/App';
+  {
+    test: /\.(css|less)$/,   // 划重点
+    use: [
+      require.resolve( 'style-loader' ),
+      {
+        loader: require.resolve( 'css-loader' ),
+        options: {
+        importLoaders: 1,
+      },
+      ...
+      {
+        loader: require.resolve( 'less-loader' ),  // 划重点
+      }
+    ],              
+  },
 
+  // 法二：config-overrides.js
+  yarn add less-loader less --save-dev
 
-  // 新建 src/router.js：存放路由
-  import React, { Component } from 'react'
-  import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-  import SiteIndex from './pages/index'
+  const { injectBabelPlugin } = require('react-app-rewired');
+  + const rewireLess = require('react-app-rewire-less');
+  module.exports = function override(config, env) {
+    config = injectBabelPlugin(['import', { 
+      libraryName: 'antd', 
+      libraryDirectory: 'es', 
+      style: 'css' 
+    }], config);
 
-  export default class App extends Component {
-    render () {
-      return (
-        <Router basename="/">
-          <Switch>
-            <Route exact path='/' component={SiteIndex} />
-          </Switch>
-        </Router>
-      )
-    }
+    + config = rewireLess.withLoaderOptions({
+      modifyVars: {
+        "@primary-color": "#1DA57A"
+      }
+    })(config, env);
+
+    return config;
   }
-
-  // 新建页面：pages/index.jsx
-  import React, { Component } from 'react'
-
-  export default class Index extends Component {
-    constructor (props) {
-      super(props)
-      this.state = {}
-    }
-
-    render () {
-      return <div className="index">indexPage</div>
-    }
-  }
-
-  // 新建 style/index.css：存放全局样式
   ```
 
 
-# 二、JSX 表达式
-> 基于 ECMAScript 的一种语法拓展而并非一种新语言，用于创建虚拟 DOM。
+## umi
+> dva 开发者云谦编写的一个企业级 react 应用框架，也是一个开箱即用的脚手架工具。它可以看作是一个专注性能的类似 next.js 的前端框架，通过约定、自动生成和解析代码等方式来辅助开发，减少了开发者的代码量。
 
+  * __react 开发问题__
+    * 项目做大的时候，开发调试的启动和热更新时间会变得很长。
+    * 大应用下，网站打开很慢，有没有办法基于路由做到按需加载。
+    * dva model 每次都要手写载入，能否一开始就同项目初始化好。
+  * __umi 优势__
+    * 开箱即用，内置 less、react、react-router 等。
+    * 类 next.js 且功能完备的路由约定，同时支持配置的路由方式。
+    * 完善的插件体系，覆盖从源码到构建产物的每个生命周期。
+    * 高性能，通过插件支持 PWA、以路由为单元的 code splitting 等。
+    * 支持静态页面导出，适配各种环境，比如无线业务、支付宝钱包等。
+    * 支持一键开启 dll、hard-source-webpack-plugin 等。
+    * 一键兼容到 IE9，基于 umi-plugin-polyfills。
+    * 完善的 TypeScript 支持，包括 d.ts 定义和 umi test。
+    * 深入融合 dva 数据流，可用来处理数据流、响应一些复杂交互。
+  * __基础使用__
+    ```js
+    // 安装 umi、脚手架
+    cnpm install -g umi create-umi
+    umi -v
+
+    // 初始化目录：选择 app、 antd / dva 
+    create-umi
+
+    // 新建页面
+    umi g page user  
+
+    // 运行和打包
+    npm start、umi dev
+    npm run build、umi build
+    ```
+
+
+# 三、JSX 表达式
+> 基于 ECMAScript 的一种语法拓展而并非一种新语言，用于创建虚拟 DOM。
 
 ## 主要优点
   * 编写组件时比较简单快速。
@@ -361,7 +384,227 @@ https://www.ituring.com.cn/article/507688
   ```
 
 
-# 四、组件化开发
+# 三、路由功能
+
+## 相关库
+> react-router-4.0 (以下简称 RR4) 采用单代码仓库模型架构，包含了若干相互独立的包。注意：react-router-dom/native 已经包含了 react-router 的依赖，使用时不需要安装和引用 react-router。
+
+  * `react-router`：核心公用组件和方法。具体有：MemoryRouter、Prompt、Redirect、Route、RouterStaticRouter、 Switch、matchPath、withRouter。
+  * `react-router-dom`：用于 web 环境开发，提供了 dom 操作控制路由的主要方法有 BrowserRouter、 HashRouter、 Link 、NavLink。
+  * `react-router-native`：用于给 native 相关应用提供路由支持，主要有 NativeRouter、 Link、 DeepLinkingAndroidBackButton。
+  * `react-router-redux`：React Router 和 Redux 的集成。
+  * `react-router-config`：集中配置静态路由，主要有 matchRoutes、renderRoutes。
+  
+
+## 路由组件
+> 所有与路由有关的组件（Link、NavLink、Route、Switch）必须包裹在容器组件中，容器组件有且只能有一个子元素。
+
+  * 容器组件
+    * `<BrowserRouter>`：浏览器自带的 H5 API，restful 风格。需要添加服务器配置 (node/nginx)，让前端发送的请求映射到对应的 html 文件。
+    * `<HashRouter>`：使用 hash 方式在前端完成路由切换。`#` 后面的内容不会发送到服务器端，对于后端来说路由地址始终不变。
+    * `<MemoryRouter>`：在内存中管理 history，地址栏不会变化。用于 reactNative。
+    * `<NativeRouter>`
+    * `<StaticRouter>`
+  * 相关组件
+    * `<Link>`：react-router 提供，用于点击时切换路由。
+    * `<NavLink>`：Link 的加强版，可以自定义选中状态和钩子函数。
+    * `<Switch>`：用于嵌套 Route 组件，多个路径相同时只匹配第一个。
+    * `<Route>`：用于实现 RR4 动态路由的嵌套。
+    * `<Redirect>`：用于路由重定向。
+    
+
+  ```js
+  <Link 
+    to="/about" 
+    replace={true}         // 覆盖当前路径
+  >关于</Link> 
+
+  <Link to={{
+    pathname: '/courses',
+    search: '?sort=name',  // 下个页面取值：props.location.state
+    hash: '#the-hash',
+    state: { fromDashboard: true }
+  }}/>
+
+  // 当 event id 为奇数的时候，激活链接
+  const activeEvent = (match, location) => {
+    if (!match) {
+      return false
+    }
+    const eventID = parseInt(match.params.eventID)
+    return !isNaN(eventID) && eventID % 2 === 1
+  }
+  <NavLink
+    to="/home?ask" 
+    exact  // 是否严格匹配
+    activeClassName="selected" 
+    activeStyle={{ color: 'green', fontWeight: 'bold' }}
+    isActive={activeEvent}  // 判断链接是否激活的额外逻辑
+  >问答</NavLink>
+
+  <Route 
+    exact                // 是否完全匹配
+    strict               // path 有结尾斜线只能匹配有斜线的路径
+    path="/peoples/"     // 路由匹配路径 (不能匹配 /peoples)
+    component={Peoples}  // URL、Route 匹配时渲染的组件
+  ><Route/>
+
+  <Switch>
+    {/* 进入客户管理页面，默认展示 List 区域内容，或者使用重定向 */}
+    <Route path='/custom' exact component={List}></Route>
+    <Route path='/custom/list' component={List}></Route>
+    <Route path='/custom/create' component={Create}></Route>
+    <Route path='/custom/Detail/:id' component={Detail}></Route>
+    {/* <Redirect from='/custom' to='/custom/list'></Redirect> */}
+  </Switch>
+
+  <Redirect
+    to={{
+      pathname: "/login",
+      search: "?name=Mike",
+      state: { id: 1 }
+    }}
+  />
+  ```
+
+
+## 路由对象
+> 被 Route 绑定的渲染组件，总是被传入三个属性（对象）：history、location、match。在渲染组件中也会有很多其他组件，这些组件内部如果想要获取三个对象，需要 withRouter（通过装饰器或函数调用的形式都可以）。
+
+  ```js
+  // history：用于编程式导航
+  let { history } = this.props
+  history.push()       // 追加一条记录   
+  history.replace()    // 不会追加记录   
+  history.goback()     // 回退
+  history.goforward()  // 前进
+  history.go(n)
+
+  // loaction：指当前位置
+  let { location: { pathname, search, state} } = this.props;
+  <Link to={location} />
+  <NaviveLink to={location} />
+  <Redirect to={location />
+  history.push(location)
+  history.replace(location)
+
+  // match：包含了路由匹配的信息
+  let { match: { params } } = this.props;
+  console.log(params.id)
+  ```
+
+
+## 路由传参
+> 不推荐：localstroage、redux（页面刷新后会丢失数据）。
+
+  ```js
+  // 1、params
+  <Route path='/user/:id' component={User} />  // 路由设置
+
+  <Link to='/user/2' />                 // 传值一
+  this.props.history.push("/user/2");   // 传值2二
+
+  this.props.match.params.id     // 获取值
+
+
+  // 2、URL参数
+  <Route path='/user' component={User} />
+  <Link to='/user?id=2' />
+  this.props.location.query.id
+
+
+  // 3、location 对象（哈希路由不支持）
+  <Route path='/user' component={User}></Route>
+  <Link to={{ 
+    pathname:' /user',
+    state: {id: 123},
+    search:'?sort=name',
+    hash:'#the-hash'
+  }} />
+  this.props.location.state.id
+  ```
+
+
+## 基础使用
+
+  * __静态路由__：在应用渲染前的初始化阶段配置好路由信息，应用于 RR4 之前的版本。
+  * __动态路由__：随着应用渲染而起作用，无需事先配置路由。核心设计理念是一切都是组件，这更符合 React 组件化的思想。
+  * __嵌套路由__：Route 渲染的组件内部定义新的 Route，实现页面的局部变换，比如说标题栏不变，内容根据路由引入不同模块。
+  * __响应式路由__：手机端访问 /admin，竖屏模式下只展示导航栏，横屏时展示导航栏和内容。PC 端根据屏幕大小展示不同内容。
+
+  ```js
+  cnpm i react-router-dom -S
+
+  import React, { Component } from 'react';
+  import { Route, Redirect } from 'react-router'
+  import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+  // 动态路由
+  <div id="app">
+    <Router>
+      <Route path="/" exact component={Home}/>
+      <Route path="/detail/:id" exact component={Detail}/>
+    </Router>
+  </div>
+
+
+  // 嵌套路由
+  const About = ({ match }) => (
+    <div>
+      <Route path={match.url + '/other'} component={Other} />
+    </div>
+  )
+  const App = () => (
+    <Router>
+      // 路由重定向
+      <Route path="/" render={()=> ( <Redirect to="/home" />) }></Route>
+      <Route path="/home" component={Home} />
+      <Route path="/about" component={About} /> 
+    </Router>
+  )
+
+  // 响应式路由
+  const App = () => (
+    <AppLayout>
+      <Route path="/admin" component={Admin} />
+    </AppLayout>
+  )
+  const Admin = () => (
+    <Layout>
+      <Nav />
+      <Media query={PRETTY_SMALL}>
+        {screenIsSmall => screenIsSmall
+          ? <Switch>
+              <Route exact path="/admin/dashboard" component={Dashboard}/>
+              <Route path="/admin/other" component={Other} />
+            </Switch>
+          : <Switch>
+              <Route exact path="/admin/dashboard" component={Dashboard}/>
+              <Route path="/admin/other" component={Other} />
+              <Redirect from="/admin" to="/admin/dashboard" />
+            </Switch>
+        }
+      </Media>
+    </Layout>
+  )
+  ```
+
+
+# 四、状态管理
+MobX 架构
+MobX 的核心是观察者模式。
+
+Store 是被观察者（observable）
+组件是观察者（observer）
+一旦Store有变化，会立刻被组件观察到，从而引发重新渲染。
+
+
+  * __MobX__：响应式管理，state 是可变对象，适合中小型项目。
+  * __Redux__：函数式管理，state 是不可变对象，适合大型项目。
+
+
+
+# 五、组件化开发
 
 ## 组件创建
 > 组件名的首字母必须大写，因为 JSX 转换时会调用 `React.createElement(type, config, children)`。type 声明了元素类型：首字母大写时会被 babel 看作一个组件而传入变量，小写时则看作一个 html 标签而传入字符串。
@@ -440,54 +683,72 @@ https://www.ituring.com.cn/article/507688
     * 应用：使用 react-router-v4 之后就可以使用 `withRouter()` 来继承以 props 形式传递给组件的各种方法。使用了 redux 之后就可以使用 `connect({})()` 方法来将展示组件和 store 中的数据进行连接。
   * __渲染回调__：主要用于共享或重用组件逻辑。虽然许多开发人员倾向于使用高阶组件的可重用逻辑，但是渲染回调减少了命名空间冲突并更好地说明了逻辑来源。
 
-    ```js
-    // 高阶组件
-    import {withRouter} from 'react-router-dom';
-    class App extends React.Component {
-      constructor() {
-        super();
-        this.state = {path: ''}
-      }
-      componentDidMount() {
-        let path = this.props.location.pathname;
-        this.setState(() => {
-          return { path }
-        })
-      }
-      render() {
-        return (<h1>rendering at: {this.state.path}</h1>)
+  ```js
+  // 高阶组件
+  import {withRouter} from 'react-router-dom';
+  class App extends React.Component {
+    constructor() {
+      super();
+      this.state = {path: ''}
+    }
+    componentDidMount() {
+      let path = this.props.location.pathname;
+      this.setState(() => {
+        return { path }
+      })
+    }
+    render() {
+      return (<h1>rendering at: {this.state.path}</h1>)
+    }
+  }
+  // 使用了 withRouter 则可以直接访问 this.props.locationlocation
+  // 而不需要将 location 作为 props 直接传入，非常方便。
+  export default withRouter(App)
+
+  // 渲染回调：本质是暴露了外部属性 children
+  class Counter extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: 0
       }
     }
-    // 使用了 withRouter 则可以直接访问 this.props.locationlocation
-    // 而不需要将 location 作为 props 直接传入，非常方便。
-    export default withRouter(App)
-
-    // 渲染回调：本质是暴露了外部属性 children
-    class Counter extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {
-          count: 0
+    inct = () => {
+      this.setState(prevState => {
+        return {
+          count: prevState.count + 1
         }
-      }
-      inct = () => {
-        this.setState(prevState => {
-          return {
-            count: prevState.count + 1
-          }
-        })
-      }
-      render() {
-        return <p onClick={this.inct}>{this.props.children(this.state)}</p>
-      }
+      })
     }
-    class App extends React.Component {
-      render() {
-        return  <Counter>{state => (<h1>The count is: {state.count}</h1> )}</Counter>
-      }
+    render() {
+      return <p onClick={this.inct}>{this.props.children(this.state)}</p>
     }
-    ```
+  }
+  class App extends React.Component {
+    render() {
+      return  <Counter>{state => (<h1>The count is: {state.count}</h1> )}</Counter>
+    }
+  }
+  ```
 
+## 组件渲染
+
+  ```js
+  // 1、component：属性值是一个组件，URL、Route 匹配时就会被渲染
+  <Route path='/foo' component={FOO} />
+
+  // 2、render：属性值是一个返回 jsx 元素的函数
+  <Route path='/foo' render={props=>(
+    <Foo {...props} data={extraProps} />
+  )} />
+
+  // 3、children：属性值同上，但返回的组件一定会被渲染，但不匹配时 match: null
+  <Route path='/foo' children={props=>(
+    <div className={props.match ? 'active' : ''}>
+        <Foo />
+    </div>
+  )} />
+  ```
 
 ## 绑定 this
 
@@ -537,14 +798,11 @@ https://www.ituring.com.cn/article/507688
 
   ```js
   // 三个参数：渲染元素、插入节点、回调函数
-  ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-  )
-  ReactDOM.render(
-    React.createElement(App),  
-    document.getElementById('root')
-  )
+  import ReactDOM from "react-dom"
+  let app = document.getElementById('root')
+
+  ReactDOM.render(<App />, app)
+  ReactDOM.unmountComponentAtNode(app)
   ```
 
 

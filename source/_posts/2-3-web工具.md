@@ -281,18 +281,20 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
 
 
   
-# 五、安装工具 NPM
-## 使用场景
-  * 从NPM服务器下载别人编写的三方包到本地使用
-  * 从NPM服务器下载并安装别人编写的命令行程序到本地使用
-  * 将自己编写的包或命令行程序上传到NPM服务器供别人使用
+# 五、包管理工具
+
+## Npm
+
+  * 从 npm 服务器下载别人编写的三方包到本地使用。
+  * 从 npm 服务器下载并安装别人编写的命令行程序到本地使用。
+  * 将自己编写的包或命令行程序上传到 npm 服务器供别人使用。
 
 
-## 常用命令
   ```js
-  npm -v                    //查看npm版本
-  npm list                  //当前目录已安装插件
-  npm init                  //生成package.json文件
+  // 常用命令
+  npm -v                    // 查看版本
+  npm list                  // 当前目录已安装插件
+  npm init                  // 生成 package.json 文件
 
   npm i <name> -g           //安装包
   npm uninstall <name>      //卸载包
@@ -307,11 +309,9 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
 
   npm run script-key        // 执行package.json中 "scripts" 选项对应的js 
   npm start                 // 比较特殊
-  ```
 
-## 发布npm包
-
-  ```js
+  
+  // 发布 npm 包
   cd test                 // 选择目标文件夹
   npm init                // 配置包的相关信息
   module.exports = 1      // 编辑包 test/index.js
@@ -324,6 +324,45 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
 
   // 撤销发布的包要用force强制删除。超过24小时就不能删除了
   npm --force unpublish 包名    
+  ```
+
+
+## Npx
+> 如果你把 NPM 升级到最新版本 npm@5.2.0，它就会安装一个新的包 npx，它用来代替 npm 来直接执行包（package）命令。
+
+  ```js
+  // 升级
+  npm i npm@latest -g
+  npm i cnpm -g --registry=https://registry.npm.taobao.org
+
+  // npm 使用 create-react-app
+  npm init
+  npm install -g create-react-app
+  create-react-app my-app
+
+  // npx 直接使用，包不存在时会自动下载
+  npx create-react-app my-app
+  ```
+
+
+## Yarn
+> Facebook 等公司开发的用于替换 npm 的包管理工具，它解决了 npm 存在的问题：1、安装时无法保证速度和版本统一，2、安装时允许运行代码而不能保证安全。
+
+  ```js
+  // 常用命令
+  yarn -v
+  yarn init
+
+  yarn === npm install
+  yarn add lodash === npm i lodash --save 
+  yarn add lodash --dev === npm i lodash --save-dev
+  yarn global add lodash === npm i lodash -g
+  npm uninstall lodash --save === yarn remove lodash
+  rm -rf node_modules && npm install === yarn upgrade
+
+  // 更新淘宝源
+  yarn config get registry
+  yarn config set registry https://registry.npm.taobao.org
   ```
 
 
@@ -510,7 +549,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
     })
     ```
 
-  3. __运行gulp__
+  3. __运行 gulp__
     ```json
     // 定义 package.json 文件中的 scripts
     "scripts": {
