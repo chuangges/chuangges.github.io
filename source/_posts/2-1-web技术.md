@@ -162,24 +162,17 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
 
 # 五、框架模式
 
-## 框架和库
+* 框架和库
   * 类库：一个有组织的功能集合，用于提供特定功能的接口并被调用
   * 框架：构建应用程序的整体架构，使开发者可以专注于逻辑处理而提高开发效率
   * 联系：框架一般会集成大量库并在合适地方调用，有时也可称为库，区别在于思考角度
+* 框架分类
+  * 可视化组件：Echarts
+  * UI 框架：Bootstrap、EasyUI、ElementUI
+  * JS 框架：jQuery、Zepto.js、NodeJs、requirejs、VueJs、angularJS、reactJS
 
 
-## 框架模式
-
-### MVC
-  * 实现思路：所有的终端用户请求被发送到 Controller，Controller 依赖请求去选择加载哪个模型并附加到对应 View，最终 View 作为响应发送给终端用户。
-  * 缺陷：包含大量的业务逻辑后，代码就会难以阅读和维护。
-
-  <div align="center"> 
-    ![MVC](/images/web/mvc.png) 
-  </div> 
-
-
-### MVP
+## MVP
   * 实现思路：切断的 View 和 Model 的联系, 让 View 只和 Presenter（原Controller）交互，减少在需求变化中需要维护的对象的数量，相比 MVC 成本更低而且更容易理解。
   * 缺陷：最接近用户的界面是需要根据需求变化而频繁更改的。
 
@@ -188,7 +181,7 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
   </div> 
 
 
-### MTV
+## MTV
   * 实现思路：Model 负责业务对象和数据库的关系映射(ORM)，Template 负责如何把页面展示给用户(html)，View 负责业务逻辑并在适当时候调用 Model和Template。此外，通过一个URL分发器将一个个URL的页面请求分发给不同的View处理，View再调用相应的Model和Template。
 
   <div align="center">
@@ -196,7 +189,18 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
   </div> 
 
 
-### MVVM
+## MVC
+  * 实现思路：所有的终端用户请求被发送到 Controller，Controller 依赖请求去选择加载哪个模型并附加到对应 View，最终 View 作为响应发送给终端用户。
+  * 缺陷：处理多数据和复杂业务时可能会变得非常混乱，因为很多 view 都具备修改多个 model 的能力。可以通过将多个 model 抽象为一个解决问题，但会造成代码冗余和多余的性能损耗。
+
+  <div align="center"> 
+    ![MVC](/images/web/mvc.png) 
+  </div> 
+
+
+## MVVM
+> Vue 的官方架构模式，核心思想是双向绑定。
+
   * 实现思路：View 接收用户交互请求并发给ViewModel --> ViewModel 操作 Model 数据更新 --> Model 更新后通知 ViewModel 数据化 --> ViewModel 更新 View 数据。这样开发者只需关注业务逻辑，不需要手动操作DOM和关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理，完美解决了复杂交互导致代码难以维护的问题。
   * 优点
     * 独立开发（可专注于业务逻辑和数据）
@@ -213,11 +217,16 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
   </div> 
 
 
-## 框架分类
-  * 可视化组件：Echarts
-  * UI 框架：Bootstrap、EasyUI、ElementUI
-  * JS 框架：jQuery、Zepto.js、NodeJs、requirejs、VueJs、angularJS、reactJS
+## Flux
+> React 官方提出的类似 MVC、MVVM 的一种架构模式而非具体架构，它根据__单向数据流__的核心思想提出了一些基本概念，所有框架都可以具体实现。
 
+  * Store 用来存放数据和处理 Action 来更新数据的具体方法，可以有多个。
+  * Action 本质是一个纯声明式的数据结构，只提供对事件的描述而没有处理逻辑。
+  * Dispatcher 用于接收所有 Action，然后分发 (dispatch) 事件改变 Store。
+
+  <div align="center"> 
+    ![Flux 模式](/images/react/flux.png)
+  </div>
 
 
 # 六、浏览器渲染机制

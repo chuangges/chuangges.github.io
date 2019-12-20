@@ -478,11 +478,14 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
   * __module__：划分为不同模块管理 (方便维护大型项目)
 
 
-## 单向数据流  
-  <div style="text-indent: 2em">通过 vue Devtools 调试工具可以轻松查看状态变化，用户界面负责触发动作 Action 进而改变对应状态 State，从而反映到视图 View 上，所以 State 数据的流向为：`View --> Actions --> mutators --> State --> View`</div>
+## 主要特点  
+
+  * 只能应用于 Vue，通过响应式机制更新视图。
+  * 单一数据源：全局只有一个 Store 实例。
+  * 单向数据流：`View、Action、Mutation、State`。
 
   <div align="center"> 
-    ![Vuex 实现原理](/images/vue/vuex_base.png)
+    ![Vuex 单向数据流](/images/vue/vuex_base.png)
   </div> 
           
       

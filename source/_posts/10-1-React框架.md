@@ -15,7 +15,6 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 ## 主要特点
   
-  
   1. __声明式设计__：采用简洁易懂的声明范式，可以轻松描述应用。
   2. __单向数据流__：推崇一种单向的数据流动模式，减少了重复代码。
   3. __高效渲染__：通过组件构建虚拟 DOM ，最大限度地减少了与 DOM 的交互。
@@ -73,22 +72,9 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   * __组件写法__：Vue 推荐使用 `webpack + vue-loader` 的单文件组件，即把 html、css、js 写在同一文件。React 则推荐 `JSX + inline style`，即把 html、css 全部写进 Js。
 
 
-## Flux 架构
-> 由于 React 只涉及 UI 层的处理，所以构建大型应用时需要搭配一种架构模式才能使后期维护成本相对较小。Flux 正是 Facebook 官方提出的一套前端应用架构模式，它只是一种架构思想而非具体的框架。
+## 项目构建
 
-  * __Flux 模式__：代码结构比较简单，它将一个应用分成以下四个部分，核心思想是单向数据流：`Action、Dispatcher、Store`，核心流程是 Dispatcher。
-    <div align="center"> 
-      ![Flux 模式](/images/react/flux.png)
-    </div>
-  * __MVC 模式__：处理多数据和复杂业务时可能会变得非常混乱，因为很多 view 都具备修改多个 model 的能力。单个修改行为可以称之为一个 Action，一个 Action 的产生可能是用户行为或一个 Ajax 请求。解决方法是可以将多个 model 抽象成一个 model，但会造成代码冗余和多余的性能损耗。
-    <div align="center"> 
-      ![MVC 模式](/images/react/mvc.png)
-    </div>
-
-
-# 二、构建工具
-
-## create-react-app
+### create-react-app
 > 简陋的官方脚手架，使用门槛相对较高。
 
   ```js
@@ -98,13 +84,12 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   
   yarn、npm start
   yarn、npm run build
-  ```
 
-### 项目配置
-> 两种方法：1、npm run eject 暴露默认隐藏的配置目录 (不可逆)，2、安装 react-app-rewired 覆盖默认配置。
-  
-  ```js
-  npm install react-app-rewired --save
+  /**
+  * @title 项目配置
+  * @description 法一：npm run eject 暴露默认隐藏的配置目录 (不可逆)
+  * @description 法二：npm i react-app-rewired -D 安装工具并配置如下覆盖默认
+  */
 
   // 修改 package.json
   "scripts": {
@@ -127,52 +112,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   }
   ```
 
-### less
-
-  ```js
-  // 法一：webpack.config.dev.js、webpack.config.prod.js 
-  yarn add less less-loader
-
-  {
-    test: /\.(css|less)$/,   // 划重点
-    use: [
-      require.resolve( 'style-loader' ),
-      {
-        loader: require.resolve( 'css-loader' ),
-        options: {
-        importLoaders: 1,
-      },
-      ...
-      {
-        loader: require.resolve( 'less-loader' ),  // 划重点
-      }
-    ],              
-  },
-
-  // 法二：config-overrides.js
-  yarn add less-loader less --save-dev
-
-  const { injectBabelPlugin } = require('react-app-rewired');
-  + const rewireLess = require('react-app-rewire-less');
-  module.exports = function override(config, env) {
-    config = injectBabelPlugin(['import', { 
-      libraryName: 'antd', 
-      libraryDirectory: 'es', 
-      style: 'css' 
-    }], config);
-
-    + config = rewireLess.withLoaderOptions({
-      modifyVars: {
-        "@primary-color": "#1DA57A"
-      }
-    })(config, env);
-
-    return config;
-  }
-  ```
-
-
-## umi
+### umi
 > dva 开发者云谦编写的一个企业级 react 应用框架，也是一个开箱即用的脚手架工具。它可以看作是一个专注性能的类似 next.js 的前端框架，通过约定、自动生成和解析代码等方式来辅助开发，减少了开发者的代码量。
 
   * __react 开发问题__
@@ -207,7 +147,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
     ```
 
 
-# 三、JSX 表达式
+# 二、JSX 表达式
 > 基于 ECMAScript 的一种语法拓展而并非一种新语言，用于创建虚拟 DOM。
 
 ## 主要优点
@@ -385,8 +325,6 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 
 # 三、路由功能
-
-## 相关库
 > react-router-4.0 (以下简称 RR4) 采用单代码仓库模型架构，包含了若干相互独立的包。注意：react-router-dom/native 已经包含了 react-router 的依赖，使用时不需要安装和引用 react-router。
 
   * `react-router`：核心公用组件和方法。具体有：MemoryRouter、Prompt、Redirect、Route、RouterStaticRouter、 Switch、matchPath、withRouter。
@@ -591,24 +529,96 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 
 # 四、状态管理
-MobX 架构
-MobX 的核心是观察者模式。
+> 软件开发时有些通用的思想，比如隔离变化，约定优于配置等。隔离变化指做好抽象，把一些容易变化的地方找到共性，隔离出来而不要去影响其他的代码。约定优于配置就是不一定要写一大堆的配置，比如约定 view 文件夹只能放视图。根据这些思想，实现状态管理库的解决思路是：__将组件之间需要共享的状态抽取出来进行统一管理，遵循特定的约定去变更，让状态的变化可以预测以方便对某些场景的复现和回溯__。这样做的好处是：__状态和组件解耦合、更改行为可追踪__，根据这个思路产生了很多的模式和库。
 
-Store 是被观察者（observable）
-组件是观察者（observer）
-一旦Store有变化，会立刻被组件观察到，从而引发重新渲染。
+  * Flux 、Redux 、Vuex 均为单向数据流。
+  * Redux、Vuex 基于 Flux，Redux 较为泛用，Vuex 只能用于 vue。
+  * Redux、Vuex 适用于大型项目，MobX 在大型项目中会使代码可维护性变差。
+  * Flux、MobX 可以有多个 Store ，Redux 、Vuex 全局仅有一个 Store（单状态树）。
+  * Redux 引入了中间件，主要用于解决异步任务带来的副作用，可通过约定完成许多复杂工作。
+  * MobX 是状态管理库中代码侵入性最小的之一，具有细粒度控制、简单可扩展等优势，但是没有时间回溯能力，一般适合应用于中小型项目中。
 
 
-  * __MobX__：响应式管理，state 是可变对象，适合中小型项目。
-  * __Redux__：函数式管理，state 是不可变对象，适合大型项目。
+## Store
+> 缺点：没有限制组件必须执行 action 分发事件去改变 state。那样约定的好处是可以记录所有变化 (mutation)、保存状态快照、历史回滚等。
 
+  ```js
+  var store = {
+    // 状态存储到外部变量 store（可以是全局变量）
+    state: {
+      msg: 'Hello'
+    },
+    // 通过 action 改变数据，同时记录日志等
+    setMessageAction (newVal) {
+      this.state.msg = newVal
+    },
+    clearMessageAction () {
+      this.state.msg = ''
+    }
+  }
+  ```
+
+## Flux
+> react 官方提出的类似 MVC、MVVM 的一种架构模式而非具体架构，它根据__单向数据流__的核心思想提出了一些基本概念，所有框架都可以具体实现。
+
+  * Store 用来存放数据和处理 Action 来更新数据的具体方法，可以有多个。
+  * Action 本质是一个纯声明式的数据结构，只提供对事件的描述而没有处理逻辑。
+  * Dispatcher 用于接收所有 Action，然后分发 (dispatch) 事件改变 Store。
+
+  <div align="center"> 
+    ![Flux 模式](/images/react/flux.png)
+  </div>
+
+## Redux
+> Flux 模式的具体实现，函数式管理不可变的状态对象，适合大型项目。解决的问题是统一数据流、数据流完全可控并可追踪。
+
+  * __主要特点__
+    * 单向数据流：`Action、Store、View`。
+    * 单一数据源：只有一个 Store 统一管理。
+    * state 是只读的，状态更新时只能通过 Reducers 返回一个新 state，这样可以回退状态数据。
+    * 没有 Dispatcher，但在 Store 集成了 dispatch，改变状态只能通过 store.dispatch()。
+  * __组成结构__
+    * Action：一个用于更新状态的消息对象，主要属性包括 type、payload。
+    * Reducer：一个通过参数 state、action 推导出新 state 的纯函数（对于相同的参数返回相同的返回结果，不修改参数，不依赖外部变量）。
+    * Store：存储应用状态和更新方法，整个应用只有一个。主要功能如下：
+      * 获取当前的应用状态 `getState()`。
+      * 支持监听 store 的变化 `subscribe(listener)`。
+      * 支持监听 action 的分发来更新状态 `dispatch(action)`。
+      * 支持通过中间件（`redux-thunk、redux-saga、redux-promise 等`）处理异步任务流程。
+
+  <div align="center"> 
+    ![Redux](/images/react/redux.png)
+  </div>
+
+
+## MobX
+> 填补了 Redux 对状态相关概念约束太强而失去了灵活性的空缺，适合中小型项目。设计更多偏向于面向对象编程和响应式编程，取缔传统 React 的命令式编程，分而治之，将组件都变成可响应的。React 提供了渲染的最优方式，mobx 则给 React 提供了响应式的状态管理。
+
+  * __主要特点__
+    * 单向数据流：`Action、Store、View`。
+    * 状态对象是可变的，可以直接操作状态对象，没有状态回退能力。
+    * 多个数据源：根据模块划分出多个独立的 store。代码侵入性小，但大型项目时代码可维护性比较差。
+    * 面向对象编程：基于观察者模式，一般将状态包装成可观察对象，状态对象一旦变更就能自动局部精确更新。
+    * 响应式编程：声明整个链条所有联动关系，当某一环发生变更时自动触发后续链路，这样使得状态管理变得简单和易于扩展。
+  * __组成结构__
+    * Actions：改变状态的操作。
+    * State：某个模块的状态对象。
+    * Computed：通过纯函数派生出的值。
+    * Reactions：当状态改变时自动执行的响应。
+    * Autorun: 添加观察者的依赖收集，监听状态变化触发 Reactions。
+
+  <div align="center"> 
+    ![MobX](/images/react/mobx.png)
+  </div>
+
+
+## dva
 
 
 # 五、组件化开发
 
 ## 组件创建
 > 组件名的首字母必须大写，因为 JSX 转换时会调用 `React.createElement(type, config, children)`。type 声明了元素类型：首字母大写时会被 babel 看作一个组件而传入变量，小写时则看作一个 html 标签而传入字符串。
-
 
   * __函数式__：无状态组件
     * 组件不会被实例化，整体渲染性能较好，应尽量使用。
@@ -644,14 +654,12 @@ Store 是被观察者（observable）
 
   // 类组件：官方推荐，可以维护状态变量和实现复杂功能
   class MyCom extends React.Component{
-    // 继承：extends + super
-    constructor(props){
-      super(props);    
-      this.state = { name: "" }
-    }
+
+    state = { name: "" }
+    
     componentDidMount() {
-      this.setState(() => {
-        return { name: "William" }
+      this.setState({
+        name: "William"
       })
     }
     render(){
@@ -675,7 +683,6 @@ Store 是被观察者（observable）
 ## 组件模式
 > React 组件使用的最佳方式，最初是为了将数据逻辑和 UI 表现层进行分离而引入。通过在组件之间划分职责而创建可重用、高内聚的组件，这些组件可用于组合复杂的 UI，这在构建可扩展的应用程序时尤其重要。
 
-
   * __展示组件__：使用纯函数来简化表述的无状态组件。
   * __容器组件__：获取数据并渲染子组件的有状态组件。
   * __高阶组件__
@@ -687,37 +694,28 @@ Store 是被观察者（observable）
   // 高阶组件
   import {withRouter} from 'react-router-dom';
   class App extends React.Component {
-    constructor() {
-      super();
-      this.state = {path: ''}
-    }
+    state = { path: '' }
+
     componentDidMount() {
       let path = this.props.location.pathname;
-      this.setState(() => {
-        return { path }
-      })
+      this.setState({ path })
     }
     render() {
       return (<h1>rendering at: {this.state.path}</h1>)
     }
   }
-  // 使用了 withRouter 则可以直接访问 this.props.locationlocation
+  // 使用了 withRouter 就可以直接访问 this.props.locationlocation
   // 而不需要将 location 作为 props 直接传入，非常方便。
   export default withRouter(App)
 
   // 渲染回调：本质是暴露了外部属性 children
   class Counter extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        count: 0
-      }
-    }
+
+    state = { count: 0 }
+    
     inct = () => {
       this.setState(prevState => {
-        return {
-          count: prevState.count + 1
-        }
+        count: prevState.count + 1
       })
     }
     render() {
@@ -811,19 +809,9 @@ Store 是被观察者（observable）
 
   ```js
   export default class MyCom extends React.Component {
-    constructor(){
-      super();
-      this.state={
-        name: "张三",
-        age: 20
-      }
-    }
-
-    handleDelete = () => {
-      this.setState({
-        name: "",
-        age: 0
-      })
+    state = {
+      name: "张三",
+      age: 20
     }
 
     // 属性为变量时加 []
@@ -834,12 +822,7 @@ Store 是被观察者（observable）
     }
 
     render() {
-      return (
-        <div>
-          <button onDelete={this.handleDelete}></button>
-          <button onClick={ () => this.handleClick("name")}>点击</button>
-        </div>
-      )
+      return <button onClick={ () => this.handleClick("name")}>点击</button>
     }
   }
   ```
@@ -896,7 +879,7 @@ Store 是被观察者（observable）
     }
   }
   ```
-
+  
 
 ### Context
 
