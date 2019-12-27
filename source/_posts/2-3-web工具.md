@@ -727,83 +727,70 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
     4. 输入yes后可看到信息
               
 
-## 工作提交代码
+## 代码提交命令
+
   ```js
-  /**
-   *  远程分支   -->  本地分支
-   *  orgin/master --> master
-   *  orgin/dev/t_lishi/xx --> dev/t_lishi/xx
-  **/
-
-  git fetch --all        //更新远程修改但不会merge
-  git reset --hard orgin/master  // 强制更新(慎用)
-
-  git pull orgin master  // 拉取代码到本地并合并到本地
-
-
-  git branch            // 查看本地分支
-  git checkout master   // 切换到主分支分支
-
-  git branch -D BranchName    // 删除本地分支(--delete/-d)
-  git branch -r -D origin/BranchName  // 删除远程分支
-  git push origin :BranchName   // 删除远程分支简单方法
-
-  git checkout -b BranchName           // 创建并切换到该分支          
-  // 相当于以下两个命令的合并
-  git branch BranchName        // 新建    
-  git checkout BranchName      // 切换
-
-  git push origin BranchName   // 推送到远端
-  git branch -a                // 查看远程分支
-
-  // 修改某个文件后操作
-  git status   // 查看状态
-  git add .    // 指定需要提交到本地仓库的文件
-  git status 
-  git commit -m "create Branch"    // 提交代码到本地
-  git push origin BranchName       // 推送到远程仓库
-
-
   // 下载远程代码
-  git clone url                  // 拉取远程主分支代码到本地
-  git clone -b BranchName url    // 拉取指定分支代码到本地
-  git remote -v                  // 查询当前远程的版本
+  git clone url              // 拉取远程主分支代码到本地
+  git clone -b dev url       // 拉取指定分支代码到本地
+  git remote -v              // 查询当前远程的版本
 
-  // 切换代码库网址
-  git remote set-url origin url
+  // 创建分支
+  git branch              // 查看本地分支
+  git checkout -b dev     // 创建并切换到该分支          
+  // 相当于两个命令的合并
+  git branch dev          // 新建    
+  git checkout dev        // 切换
 
-  // 从远程仓库获取最新代码到本地当前分支
-  git pull
-  git pull origin master
-  git pull origin BranchName
+  // 删除分支：强制删除 -D
+  git branch -d dev
+  git branch -r -d origin/dev  
+  git push origin :dev         // 简单的远程分支删除方式
 
-  // 直接拉取远程分支
-  git checkout -b 本地分支名 origin/远程分支名  
+  // 推送本地修改
+  git branch -a
+  git status
+  git add .       // 指定需要提交到本地仓库的文件
+  git status 
+  git commit -m "create dev"  // 提交代码到本地
+  git push [origin dev]       // 推送到远程仓库
 
-  // 从远程仓库里拉取一条本地不存在的分支到本地
-  git stash                 // 保存本地修改
-  git pull
-  git checkout 远程分支名
-  git stash pop              // 将最新修改合并移到当前分支并删除
-  
-  git stash pop "stash@{n}"  // 合并修改并删除 stash
-  git stash apply            // 合并修改但不删除 stash
-  git stash apply "stash@{n}"
-  git stash drop             // 删除 stash
-  git stash clear             // 清空 stash
-  git stash show             // 展示最新 stash
-  git stash show "stash@{n}"
+  // 拉取远程代码并合并到本地
+  git stash                   // 保存本地修改，可添加带引号 stash@{0}
 
-  // 更新代码：推荐后者
   git pull = git fetch + git merge
-  git pull --rebase = git fetch + git rebase
+  git pull --rebase = git fetch + git rebase // 代码更整洁，推荐使用
 
-  // 提交代码
-  git add .
-  git commint -m ""
+  git checkout new_dev     // 切换到远程新分支
+  git stash list           // 查看所有的本地修改记录
+  git stash pop            // 合并最新修改到当前分支并删除
+  git stash apply          // 合并最新修改但不删除
+  git stash drop           // 删除最新 stash
+  git stash show           // 展示最新 stash
+  git stash clear          // 清空 stash
+
+  // 合并分支到当前分支
+  git checkout master
+  git merge dev            // 每次都产生一个新节点，提交记录会分开显示
+  git rebase dev           // 不产生新节点，提交记录融合为一个清晰的线性提交
+
+  // master 分支代码合并到某分支
+  git checkout master
+  git pull
+  git checkout dev
+  git merge master
   git push
-  ```
 
+  // 指定某分支在执行 git pull 时默认使用 rebase 方式
+  git config branch.dev.rebase true   // 对于已有仓库和分支进行配置 (dev 为分支名)
+  git config --global branch.autosetuprebase always     // 对于新建分支生效
+
+  // 其它
+  git fetch --all        // 更新远程修改但不会merge
+  git reset --hard orgin/master  // 强制更新(慎用)
+  git remote set-url origin url  // 修改远程仓库地址
+  ```
+   
 
 ## 把个人网页挂到 Github
   1. __Github 上建立仓库，比如 resume__

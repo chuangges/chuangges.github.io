@@ -62,7 +62,6 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
         {
           title: '登录页',
           alias: '/b',       // 路径别名
-
           path: '/', 
           name: 'Index',
           redirect: '/home', // 重定向(解决首次进入页面时不显示内容的问题)
@@ -86,9 +85,9 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
         {
           path: '/name',
           components: {      // 命名视图(同时渲染多个组件)
-              default: Foo,
-              a: Bar,
-              b: Baz
+            default: Foo,
+            a: Bar,
+            b: Baz
           }
         }
     ]
@@ -119,9 +118,7 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 ### CSS 标签跳转
   * __跳转标签__：`router-link`
     * 样式：tag="li"、active-class="active"、replace
-    * 导航
-      * 普通路由：`to= "/path"
-      * 动态路由：to="/user/12"、:to="{ name: 'user', params/query: { id: 1 } }"
+    * 导航：普通路由 `to= "/path"`、动态路由：`to="/user/12"、:to="{ name: 'user', params/query: { id: 1 } }"`。
   * __渲染视图__：`router-view`
     * 命名：name="user" 属性
     * 缓存：keep-alive  包裹
@@ -131,25 +128,25 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 ### JS 编程式导航
   ```js
   export default {
-      methods: {
-          to_home(){   // 字符串 和 对象
-              this.$router.push("home")      
-              this.$router.push({ path: '/login?url=' + this.$route.path })  
-          },
-          to_user(){  // 命名路由 和 查询参数
-              this.$router.push({ name: 'user', params: { id: 123 }})  
-              this.$router.push({ path: 'user', query: { id: 123 }})   
-          },
-          to_other(){
-              this.$router.go(n)         // 前进
-              this.$router.back()        // 后退
-              this.$router.forward()
-              this.$router.replace()     // 替换掉当前的history记录
-          },
-          get_obj(){
-              console.log(this.$route)   // 路由对象(包括 path、params 等)
-          }
-      }   
+    methods: {
+      to_home(){   // 字符串 和 对象
+        this.$router.push("home")      
+        this.$router.push({ path: '/login?url=' + this.$route.path })  
+      },
+      to_user(){  // 命名路由 和 查询参数
+        this.$router.push({ name: 'user', params: { id: 123 }})  
+        this.$router.push({ path: 'user', query: { id: 123 }})   
+      },
+      to_other(){
+        this.$router.go(n)         // 前进
+        this.$router.back()        // 后退
+        this.$router.forward()
+        this.$router.replace()     // 替换掉当前的history记录
+      },
+      get_obj(){
+        console.log(this.$route)   // 路由对象(包括 path、params 等)
+      }
+    }   
   }
   ```
 
@@ -160,9 +157,9 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
     * __params__：`:to="{ name: 'user', params: { id: 1 } }"`
     * __query__：`:to="{ name: 'user', query: { id: 1 } }"`
   * 注意
-    * 通过 path/params 传参时，需要在路由配置中标识指定参数形式 `path: '/user/:id'`
-    * 通过 params/query 传参时，参数必须是对象格式而且绑定 to 属性添加 `v-bind:`
-    * 跳转后的组件中获取参数 `this.$route.params/query.id`
+    * 通过 path/params 传参时，需要在路由配置中指定参数形式 `path: '/user/:id'`。
+    * 通过 params/query 传参时，参数必须是对象格式而且绑定 to 属性添加 `v-bind:`。
+    * 跳转后的组件中获取参数 `this.$route.params/query.id`。
 
 
 ## 导航钩子
@@ -171,19 +168,17 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 ### 分类
   * __全局钩子__：beforeEach，常用于登录权限等验证
   * __路由钩子__：beforeLeave / beforeEnter 
-  * __组件钩子__：
-    * beforeRouteLeave，用于 清除计时器, 提示保存内容, 存储信息等
-    * beforeRouteEnter：用于在跳转完成前获取数据
+  * __组件钩子__：beforeRouteLeave 用于清除计时器、提示保存内容、存储信息等，beforeRouteEnter 用于在跳转完成前获取数据。
 
     
 ### 参数
   * __to__：目标路由对象
   * __from__：当前路由对象
   * __next__：必须调用的函数，否则就是死循环
-    * `next()`：执行下一个钩子，如果钩子全部执行完成则导航状态为 confirmed
-    * `next(false)`：中断当前导航，即重置到 from 路由对应的地址
-    * `next('/')、next({path: '/'})`：中断掉当前导航并跳转到新地址
-    * `next(error)`：如果传入一个 Error 实例，则导航被终止并会将错误传递给 router.onError() 注册的回调
+    * `next()`：执行下一个钩子，如果钩子全部执行完成则导航状态为 confirmed。
+    * `next(false)`：中断当前导航，即重置到 from 路由对应的地址。
+    * `next('/')、next({path: '/'})`：中断掉当前导航并跳转到新地址。
+    * `next(error)`：如果传入一个 Error 实例，则导航被终止并会将错误传递给 router.onError() 注册的回调。
 
 
 
@@ -235,234 +230,234 @@ description: 路由控制 Router、异步通信 Axios、状态管理 Vuex
 
 ### 封装 axios
 
-    ```js
-    // axios.js
-    import axios from 'axios'
-    import router from '@/router'
-    import store from './store'
-    import { crypto, random, randomWord } from './assets/js/tool.js';
+  ```js
+  // axios.js
+  import axios from 'axios'
+  import router from '@/router'
+  import store from './store'
+  import { crypto, random, randomWord } from './assets/js/tool.js';
 
-    // 创建axios实例
-    const service = axios.create({
-        baseURL: process.env.VUE_APP_URL,
-        // timeout: 10000,            // 请求超时时间
-        responseType: "json",
-    })
+  // 创建axios实例
+  const service = axios.create({
+    baseURL: process.env.VUE_APP_URL,
+    // timeout: 10000,            // 请求超时时间
+    responseType: "json",
+  })
 
-    // 请求拦截器
-    service.interceptors.request.use(
-        config => {
-            // 1：加密数据
-            if(config.headers.level == 1){  
-                const KP = {
-                    key: randomWord(true, 16, 16),  // 秘钥
-                    iv: randomWord(true, 16, 16)    // 偏移量
-                };
-                config.data = crypto.AESEnc(JSON.stringify(config.data), KP.key)
+  // 请求拦截器
+  service.interceptors.request.use(
+      config => {
+          // 1：加密数据
+          if(config.headers.level == 1){  
+              const KP = {
+                  key: randomWord(true, 16, 16),  // 秘钥
+                  iv: randomWord(true, 16, 16)    // 偏移量
+              };
+              config.data = crypto.AESEnc(JSON.stringify(config.data), KP.key)
 
-                Object.assign(config.headers, {
-                    "Content-Type": "application/json;charset=utf-8",
-                    dataFormat: "json",
-                    authMethod: "no",
-                    signAlgo: "NO",
-                    transAlgo: "AES",
-                    shareKey: KP.key,
-                    timestamp: new Date().getTime(),
-                    nonce: String(random(0, 100))
-                })
-            }
-            
-            // 让每个请求携带 token
-            if (store.getters.token) {
-                config.data = Object.assign({ token: store.getters.token }, config.data)
-            }
-        
-            // 设置表头  'application/json'
-            config.headers['Content-Type'] = 'application/json;charset=utf-8'
+              Object.assign(config.headers, {
+                  "Content-Type": "application/json;charset=utf-8",
+                  dataFormat: "json",
+                  authMethod: "no",
+                  signAlgo: "NO",
+                  transAlgo: "AES",
+                  shareKey: KP.key,
+                  timestamp: new Date().getTime(),
+                  nonce: String(random(0, 100))
+              })
+          }
+          
+          // 让每个请求携带 token
+          if (store.getters.token) {
+              config.data = Object.assign({ token: store.getters.token }, config.data)
+          }
+      
+          // 设置表头  'application/json'
+          config.headers['Content-Type'] = 'application/json;charset=utf-8'
 
-            // 异步请求的取消操作
-            let CancelToken = axios.CancelToken;  
-            let cancel
-            config.cancelToken = new CancelToken( c => {
-                cancel = c;
-            })
-            cancel()
+          // 异步请求的取消操作
+          let CancelToken = axios.CancelToken;  
+          let cancel
+          config.cancelToken = new CancelToken( c => {
+              cancel = c;
+          })
+          cancel()
 
-            // 状态更新
-            store.commit('showLoad', { status: 1, msg: "" })
-            return config
-        },
-        error => {
-            store.commit('showLoad', { status: 2, msg: "" })
-            return Promise.reject(error)
-        }
-    )
-    // 响应拦截器
-    service.interceptors.response.use(
-        response => {
-            // 解密返回数据
-            response.data = JSON.parse(crypto.AESDec(response.data, response.config.headers.shareKey))
+          // 状态更新
+          store.commit('showLoad', { status: 1, msg: "" })
+          return config
+      },
+      error => {
+          store.commit('showLoad', { status: 2, msg: "" })
+          return Promise.reject(error)
+      }
+  )
+  // 响应拦截器
+  service.interceptors.response.use(
+      response => {
+          // 解密返回数据
+          response.data = JSON.parse(crypto.AESDec(response.data, response.config.headers.shareKey))
 
-            if(response.data.CResultCde == "0000"){
-                store.commit('hideLoad')
-            }else{
-                store.commit('showLoad', { status: 2, msg: response.data.CResultMsg })
-            }
-            return Promise.resolve(response)
-        },
-        error => {
-            store.commit('showLoad', { status: 2, msg: "" })
-            return Promise.reject(error)
-        }
-    )
-    // 导出对象
-    export default service
+          if(response.data.CResultCde == "0000"){
+              store.commit('hideLoad')
+          }else{
+              store.commit('showLoad', { status: 2, msg: response.data.CResultMsg })
+          }
+          return Promise.resolve(response)
+      },
+      error => {
+          store.commit('showLoad', { status: 2, msg: "" })
+          return Promise.reject(error)
+      }
+  )
+  // 导出对象
+  export default service
 
-    // 导出方法
-    export function indexQRCode(data){  // 不加密
-        return _request('/getHomePageQRcode', 'post', data, { level: 2 })
-    }
-    export function getProduct(data){   // 加密
-        const headers = { 
-            level: 1,     
-            module: "prodAction", 
-            method: "getProductInfoList"
-        }
-        return _request('', 'post', data, headers)
-    }
+  // 导出方法
+  export function indexQRCode(data){  // 不加密
+      return _request('/getHomePageQRcode', 'post', data, { level: 2 })
+  }
+  export function getProduct(data){   // 加密
+      const headers = { 
+          level: 1,     
+          module: "prodAction", 
+          method: "getProductInfoList"
+      }
+      return _request('', 'post', data, headers)
+  }
 
-    // 资料上传
-    export function batchFileUpload(data, progressfn){
-        return form_upload('/UploadController', data, progressfn)
-    }
-    
-    // 文件数据上传
-    function form_upload(url, data, progressfn){
-        // formData 需要纯净的 axios 请求
-        const formAxios = axios.create({
-            baseURL: process.env.VUE_APP_URL,
-            responseType: "json",
-            // timeout: 10000,
-        })
+  // 资料上传
+  export function batchFileUpload(data, progressfn){
+      return form_upload('/UploadController', data, progressfn)
+  }
+  
+  // 文件数据上传
+  function form_upload(url, data, progressfn){
+      // formData 需要纯净的 axios 请求
+      const formAxios = axios.create({
+          baseURL: process.env.VUE_APP_URL,
+          responseType: "json",
+          // timeout: 10000,
+      })
 
-        return new Promise((resolve, reject) => {
-            formAxios({
-            method: 'post',
-            data: data,
-            headers: {
-                'Content-Type': "multipart/form-data"
-            },
-            onUploadProgress(progressEvent) { // 原生获取上传进度的事件
-                if (progressEvent.lengthComputable) {
-                // lengthComputable 主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
-                // 如果 lengthComputable: false，就获取不到 progressEvent.total、progressEvent.loaded
-                progressfn(progressEvent);
-                }
-            },
+      return new Promise((resolve, reject) => {
+          formAxios({
+          method: 'post',
+          data: data,
+          headers: {
+              'Content-Type': "multipart/form-data"
+          },
+          onUploadProgress(progressEvent) { // 原生获取上传进度的事件
+              if (progressEvent.lengthComputable) {
+              // lengthComputable 主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+              // 如果 lengthComputable: false，就获取不到 progressEvent.total、progressEvent.loaded
+              progressfn(progressEvent);
+              }
+          },
 
-            }).then(response => {
-                return resolve(response.data)
-            }).catch(error => {
-                return reject(error)
-            })
-        })
-    }
+          }).then(response => {
+              return resolve(response.data)
+          }).catch(error => {
+              return reject(error)
+          })
+      })
+  }
 
-    // 表单数据上传
-    function _request (url, methods, data, headers = { level: 1 }, params = {}) {
-        return new Promise((resolve, reject) => {
-            service({
-            method: methods,
-            url: headers.level == 1 ? "/api" : url,
-            data: data,
-            params: Object.assign(params),
-            headers: Object.assign(headers),
-            responseType: headers.level == 1 ? "text" : "json"
+  // 表单数据上传
+  function _request (url, methods, data, headers = { level: 1 }, params = {}) {
+      return new Promise((resolve, reject) => {
+          service({
+          method: methods,
+          url: headers.level == 1 ? "/api" : url,
+          data: data,
+          params: Object.assign(params),
+          headers: Object.assign(headers),
+          responseType: headers.level == 1 ? "text" : "json"
 
-            }).then(response => {
-            return resolve(JSON.parse(response.data.extBody))
-            }).catch(error => {
-            return reject(error)
-            })
-        })
-    }
-    ```
+          }).then(response => {
+          return resolve(JSON.parse(response.data.extBody))
+          }).catch(error => {
+          return reject(error)
+          })
+      })
+  }
+  ```
 
 
 ### 引用方法
-    ```js
-    // main.js 全局引用
-    import http from './axios'
-    Vue.prototype.$axios = http
+  ```js
+  // main.js 全局引用
+  import http from './axios'
+  Vue.prototype.$axios = http
 
-    // 局部引用
-    import { indexQRCode } from '@/axios'
-    ```
+  // 局部引用
+  import { indexQRCode } from '@/axios'
+  ```
     
 
 ### 加密方法
 
-    ```js
-    // tool.js
+  ```js
+  // tool.js
 
-    // 随机整数
-    export function random(min, max){
-        if(max == null){
-                max = min;  
-                min = 0;
-        }
-        return min + Math.floor(Math.random()*(max-min+1))
-    }
+  // 随机整数
+  export function random(min, max){
+      if(max == null){
+              max = min;  
+              min = 0;
+      }
+      return min + Math.floor(Math.random()*(max-min+1))
+  }
 
-    /*
-    ** randomWord 产生任意长度随机字母数字组合
-    ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
-    */
-    export function randomWord(randomFlag, min, max){
-        var str = "",
-        pos = "",
-        range = min,
-        arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        // 随机产生
-        if(randomFlag){
-            range = Math.round(Math.random() * (max-min)) + min;
-        }
-        for(var i=0; i < range; i++){
-            pos = Math.round(Math.random() * (arr.length-1));
-            str += arr[pos];
-        }
-        return str;
-    }
+  /*
+  ** randomWord 产生任意长度随机字母数字组合
+  ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+  */
+  export function randomWord(randomFlag, min, max){
+      var str = "",
+      pos = "",
+      range = min,
+      arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+      // 随机产生
+      if(randomFlag){
+          range = Math.round(Math.random() * (max-min)) + min;
+      }
+      for(var i=0; i < range; i++){
+          pos = Math.round(Math.random() * (arr.length-1));
+          str += arr[pos];
+      }
+      return str;
+  }
 
-    /*
-    ** crypto-js 
-    ** word：待加密或者解密的字符串
-    ** keyStr：AES 加密需要用到的16位字符串的key
-    */
-    import CryptoJS from 'crypto-js'
-    export const crypto = {
-        aesKey: 'com.iescp.gate',
-    AESEnc (content, key) {
-        if (!key) {
-        key = this.aesKey;
-        }
-        key = CryptoJS.enc.Utf8.parse(key) // 加密密钥
-        var srcs = CryptoJS.enc.Utf8.parse(content)
-        var encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: key, mode: CryptoJS.mode.CBC })
-        return encrypted.toString();
-    },
+  /*
+  ** crypto-js 
+  ** word：待加密或者解密的字符串
+  ** keyStr：AES 加密需要用到的16位字符串的key
+  */
+  import CryptoJS from 'crypto-js'
+  export const crypto = {
+      aesKey: 'com.iescp.gate',
+  AESEnc (content, key) {
+      if (!key) {
+      key = this.aesKey;
+      }
+      key = CryptoJS.enc.Utf8.parse(key) // 加密密钥
+      var srcs = CryptoJS.enc.Utf8.parse(content)
+      var encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: key, mode: CryptoJS.mode.CBC })
+      return encrypted.toString();
+  },
 
-    AESDec: function (content, key) {
-        if (!key) {
-        key = this.aesKey;
-        }
-        key = CryptoJS.enc.Utf8.parse(key) // 解密密钥
-        let decrypted = CryptoJS.AES.decrypt(content, key, { iv: key, mode: CryptoJS.mode.CBC })
-        let decryptedStr = decrypted.toString(CryptoJS.enc.Utf8)
-        return decryptedStr;
-        }
-    } 
-    ```
+  AESDec: function (content, key) {
+      if (!key) {
+      key = this.aesKey;
+      }
+      key = CryptoJS.enc.Utf8.parse(key) // 解密密钥
+      let decrypted = CryptoJS.AES.decrypt(content, key, { iv: key, mode: CryptoJS.mode.CBC })
+      let decryptedStr = decrypted.toString(CryptoJS.enc.Utf8)
+      return decryptedStr;
+      }
+  } 
+  ```
 
 
 

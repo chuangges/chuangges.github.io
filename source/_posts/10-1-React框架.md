@@ -7,7 +7,7 @@ top: false
 keywords:
   - React
 date: 2019-08-17 22:05:46
-description: 基础介绍、项目开发、JSX 表达式、组件化开发
+description: 基础介绍、路由功能、状态管理、JSX 表达式、组件化开发
 ---
 
 # 一、基础介绍
@@ -147,184 +147,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
     ```
 
 
-# 二、JSX 表达式
-> 基于 ECMAScript 的一种语法拓展而并非一种新语言，用于创建虚拟 DOM。
-
-## 主要优点
-  * 编写组件时比较简单快速。
-  * 渲染时输出虚拟 dom，执行更快。
-  * 类型安全，在编译过程中就能发现错误。
-  * 防注入攻击：React DOM 在渲染之前默认会过滤所有传入的值并将所有内容转换为字符串，这样可以有效地防止 XSS（跨站脚本）攻击。
-
-
-## 使用规则
-
-  * 表格标签必须添加 tbody。
-  * 最外层有且只有一个标签，但可以是空标签。
-  * 对大小写敏感，区分是组件还是 html 标签。
-  * 所有的标签必须闭合，单标签必须有末尾反斜杠。
-  * 标签内放`<`会报错，因为他会按照 html 来解析。
-  * 在标签内部的注释需要写入 `{}`，在标签外的的注释则不需要。
-  * `{}` 不可插入： 函数声明、对象、for 循环、if 语句、while 语句。
-  * `{}` 可插入：变量、简单运算、JS 内置函数、函数执行、三元运算符、自定义组件。
-  * 属性名：小驼峰命名，不能使用关键字：`class - classNmae、for - htmlFor`。
-  * 属性值：字符串加引号，变量加 `{}`。如果包含换行符 `\n`，则需要设置 css 样式才能生效 `whiteSpace: 'pre-wrap'`。
-
-
-  ```js
-  // 空标签：<React.Fragment/> 的语法糖
-  class Columns extends React.Component {
-    render() {
-      return (
-        <>
-          <td>Hello</td>
-          <td>World</td>
-        </>
-      )
-    }
-  }
-
-  // 属性值
-  <div tabIndex="0"></div>
-  <img src = {`images/${star}.png`} />
-  <span className={`tab ${index===this.state.cIndex?"active":null}`}>标签</span>
-  const props = {
-    name: "Jack",
-    age: 20,
-    children: []
-  }
-  <span {...props}></span>
-
-  // 行内样式：双大括号，标准 JSON，省略 px，名字性驼峰
-  <p style={{"width" : 200, "height" : 200, "backgroundColor" : "red"}}></p>
-  <p style={{display: (index===this.state.cIndex) ? "block" : "none"}}>标签</p>
-
-  // 条件渲染
-  const isBtn = this.state.isBtn
-  <div>{ isBtn && <Button onClick={this.handleClick} />}</div>
-  <div>{ isBtn ? <Button /> : <span>内容</span> }</div>
-  if (isBtn) { return <div><Button /></div> }
-
-  function Render ({ if: cond, children }) {
-    return cond ? children : null
-  }
-  <Render if={status === 'loading'} >加载</Render>
-
-  // 表达式
-  function formatName(user) {
-    return user.firstName + ' ' + user.lastName;
-  }
-  render () {
-    return (
-      <div className="wrap">
-        <h1>{parseInt(Math.random() * 100)}年</h1>
-        <h2>{formatName(this.state.user)}</h2>
-      </div>
-    )
-  }
-
-  // 数组
-  <ul>
-    {arr.map((item,index)=> <li key={index}> {item} </li>)}
-  </ul>
-
-  // 事件
-  import cn from 'classnames';
-  export default function CustomIcon(props) {
-    const { type, className, active=false, onClick } = props;
-    const cls = cn('cc-custom-icon', className, `cc-custom-icon__${type}`, {
-      'cc-custom-icon--active': active
-    });
-    return <i className={cls} onClick={onClick}></i>
-  }
-
-  import { CustomIcon } from '@C/_common'
-  export default function DeletableBlock(props) {
-    const { title, children, index, onDelete } = props;
-
-    return (
-      <div className='cc-delete-block'>
-        <CustomIcon type="delete" onClick={() => handleDelete(index)} />
-        {/* 注释：子组件 */}
-        {children}
-      </div>
-    )
-
-    function handleDelete(index) {
-      onDelete(index)
-    }
-  }
-  ```
-
-
-## 实现原理
-
-  * __本质__：`React.createElement` 的语法糖。
-  * __解析规则__：`< 开头的标签使用 HTML 规则解析、{ 开头的使用 JS 规则解析`。
-  * JSX 为什么不会直接渲染为 DOM
-    * react 需要根据需求通过不同库将元素渲染到对应场景：`react-dom -> 页面、react-canvas -> canvas、ReactNative -> 原生 App`。
-    * 当数据变化而需要更新组件时，可以通过快速算法操作 Js 对象而不用操作 DOM，这样可以尽量减少浏览器重排而极大地优化性能。
-
-  <div align="center"> 
-    ![JSX 实现原理](/images/react/jsx.png)
-  </div>
-
-
-  ```js
-  // 编译前：JSX 表达式
-  <div class="input-wrap">
-    <input 
-      type="text" 
-      autocomplete="off" 
-      value="" 
-      id="mq" 
-      class="input" 
-      title="请输入搜索文字" />
-    <button>搜索</button>
-  </div>
-
-  // 编译过程：执行 React.createElement
-  React.createElement("div", {className: 'input-wrap'},
-    React.createElement(
-      "input",
-      { type:'text',
-        autocomplete:"off",
-        value:"",
-        id:"mq",
-        class:"input",
-        title:"请输入搜索文字" 
-      }
-    ),
-    React.createElement('button', null, "搜索")
-  )
-
-  // 编译结果：虚拟 DOM
-  {
-    tagName: 'div',
-    attribute: { className: 'input-wrap'},
-    children: [
-    {
-      tagName: 'input',
-      attribute: {
-        type: "text",
-        autocomplete:"off",
-        value:"",
-        id:"mq",
-        class:"input",
-        title:"请输入搜索文字"
-        }
-    },
-    {
-      tagName: "button",
-      attribute: null,
-      children: '搜索'
-      }
-    ]
-  }
-  ```
-
-
-# 三、路由功能
+# 二、路由功能
 > react-router-4.0 (以下简称 RR4) 采用单代码仓库模型架构，包含了若干相互独立的包。注意：react-router-dom/native 已经包含了 react-router 的依赖，使用时不需要安装和引用 react-router。
 
   * `react-router`：核心公用组件和方法。具体有：MemoryRouter、Prompt、Redirect、Route、RouterStaticRouter、 Switch、matchPath、withRouter。
@@ -528,7 +351,7 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
   ```
 
 
-# 四、状态管理
+# 三、状态管理
 > 软件开发时有些通用的思想，比如隔离变化，约定优于配置等。隔离变化指做好抽象，把一些容易变化的地方找到共性，隔离出来而不要去影响其他的代码。约定优于配置就是不一定要写一大堆的配置，比如约定 view 文件夹只能放视图。根据这些思想，实现状态管理库的解决思路是：__将组件之间需要共享的状态抽取出来进行统一管理，遵循特定的约定去变更，让状态的变化可以预测以方便对某些场景的复现和回溯__。这样做的好处是：__状态和组件解耦合、更改行为可追踪__，根据这个思路产生了很多的模式和库。
 
   * Flux 、Redux 、Vuex 均为单向数据流。
@@ -572,23 +395,76 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 ## Redux
 > Flux 模式的具体实现，函数式管理不可变的状态对象，适合大型项目。解决的问题是统一数据流、数据流完全可控并可追踪。
 
-  * __主要特点__
-    * 单向数据流：`Action、Store、View`。
-    * 单一数据源：只有一个 Store 统一管理。
-    * state 是只读的，状态更新时只能通过 Reducers 返回一个新 state，这样可以回退状态数据。
-    * 没有 Dispatcher，但在 Store 集成了 dispatch，改变状态只能通过 store.dispatch()。
-  * __组成结构__
-    * Action：一个用于更新状态的消息对象，主要属性包括 type、payload。
-    * Reducer：一个通过参数 state、action 推导出新 state 的纯函数（对于相同的参数返回相同的返回结果，不修改参数，不依赖外部变量）。
-    * Store：存储应用状态和更新方法，整个应用只有一个。主要功能如下：
-      * 获取当前的应用状态 `getState()`。
-      * 支持监听 store 的变化 `subscribe(listener)`。
-      * 支持监听 action 的分发来更新状态 `dispatch(action)`。
-      * 支持通过中间件（`redux-thunk、redux-saga、redux-promise 等`）处理异步任务流程。
+### 主要特点
+  * 单向数据流：`Action、Store、View`。
+  * 单一数据源：只有一个 Store 统一管理。
+  * state 是只读的：更新时只能触发 store.dispatch(action) 执行纯函数 Reducer。
+  * 使用纯函数执行修改：没有 Dispatcher，Reducer 接收旧状态和 action 并返回新状态，状态规则由开发者定义而可以预测新状态、回退到旧状态。
 
+### 组成结构
+> Action 只是描述了有事件执行，Reducer 负责具体执行事件。
+
+  * Action：定义数据变化的消息对象，属性只有 type、payload/error/meta。
+  * Reducer：一个接收参数 state、action 并推导出新 state 的纯函数（对于相同的参数返回相同的返回结果，不修改参数，不依赖和操作外部变量）。
+  * Store：存储和管理 state，整个应用只有一个。主要功能如下：
+    * 获取状态 `getState()`。
+    * 更新状态 `dispatch(action)`。
+    * 监听状态变化 `subscribe(listener)`。
+    * 支持通过中间件（`redux-thunk、redux-saga、redux-promise 等`）处理异步任务流程。
+
+### 实现流程
   <div align="center"> 
     ![Redux](/images/react/redux.png)
   </div>
+
+
+### 基础使用
+  ```js
+  // store/index.js
+  import {createStore} from 'redux';
+  import reducer from './reducer';
+  const store = createStore(
+    reducer,
+  )
+  export default store;
+
+
+  // store/reducer.js
+
+  // 初始 state
+  const initState={
+    inputValue: '',
+    list: []
+  };
+  // reducer可以接收state，但是绝不能修改state，返回的是新的state
+  export default (state = initState, action)=>{    
+    return state;
+  }
+
+  // 简单实现
+  const createStore = (reducer) => {
+    let state;
+    let listeners = [];
+
+    const getState = () => state;
+
+    const dispatch = (action) => {
+      state = reducer(state, action);
+      listeners.forEach(listener => listener());
+    };
+
+    const subscribe = (listener) => {
+      listeners.push(listener);
+      return () => {
+        listeners = listeners.filter(l => l !== listener);
+      }
+    };
+
+    dispatch({});
+
+    return { getState, dispatch, subscribe };
+  }
+  ```
 
 
 ## MobX
@@ -613,6 +489,183 @@ description: 基础介绍、项目开发、JSX 表达式、组件化开发
 
 
 ## dva
+
+
+# 四、JSX 表达式
+> 基于 ECMAScript 的一种语法拓展而并非一种新语言，用于创建虚拟 DOM。
+
+## 主要优点
+  * 编写组件时比较简单快速。
+  * 渲染时输出虚拟 dom，执行更快。
+  * 类型安全，在编译过程中就能发现错误。
+  * 防注入攻击：React DOM 在渲染之前默认会过滤所有传入的值并将所有内容转换为字符串，这样可以有效地防止 XSS（跨站脚本）攻击。
+
+
+## 使用规则
+
+  * 表格标签必须添加 tbody。
+  * 最外层有且只有一个标签，但可以是空标签。
+  * 对大小写敏感，区分是组件还是 html 标签。
+  * 所有的标签必须闭合，单标签必须有末尾反斜杠。
+  * 标签内放`<`会报错，因为他会按照 html 来解析。
+  * 在标签内部的注释需要写入 `{}`，在标签外的的注释则不需要。
+  * `{}` 不可插入： 函数声明、对象、for 循环、if 语句、while 语句。
+  * `{}` 可插入：变量、简单运算、JS 内置函数、函数执行、三元运算符、自定义组件。
+  * 属性名：小驼峰命名，不能使用关键字：`class - classNmae、for - htmlFor`。
+  * 属性值：字符串加引号，变量加 `{}`。如果包含换行符 `\n`，则需要设置 css 样式才能生效 `whiteSpace: 'pre-wrap'`。
+
+
+  ```js
+  // 空标签：<React.Fragment/> 的语法糖
+  class Columns extends React.Component {
+    render() {
+      return (
+        <>
+          <td>Hello</td>
+          <td>World</td>
+        </>
+      )
+    }
+  }
+
+  // 属性值
+  <div tabIndex="0"></div>
+  <img src = {`images/${star}.png`} />
+  <span className={`tab ${index===this.state.cIndex?"active":null}`}>标签</span>
+  const props = {
+    name: "Jack",
+    age: 20,
+    children: []
+  }
+  <span {...props}></span>
+
+  // 行内样式：双大括号，标准 JSON，省略 px，名字性驼峰
+  <p style={{"width" : 200, "height" : 200, "backgroundColor" : "red"}}></p>
+  <p style={{display: (index===this.state.cIndex) ? "block" : "none"}}>标签</p>
+
+  // 条件渲染
+  const isBtn = this.state.isBtn
+  <div>{ isBtn && <Button onClick={this.handleClick} />}</div>
+  <div>{ isBtn ? <Button /> : <span>内容</span> }</div>
+  if (isBtn) { return <div><Button /></div> }
+
+  function Render ({ if: cond, children }) {
+    return cond ? children : null
+  }
+  <Render if={status === 'loading'} >加载</Render>
+
+  // 表达式
+  function formatName(user) {
+    return user.firstName + ' ' + user.lastName;
+  }
+  render () {
+    return (
+      <div className="wrap">
+        <h1>{parseInt(Math.random() * 100)}年</h1>
+        <h2>{formatName(this.state.user)}</h2>
+      </div>
+    )
+  }
+
+  // 数组
+  <ul>
+    {arr.map((item,index)=> <li key={index}> {item} </li>)}
+  </ul>
+
+  // 事件
+  import cn from 'classnames';
+  export default function CustomIcon(props) {
+    const { type, className, active=false, onClick } = props;
+    const cls = cn('cc-custom-icon', className, `cc-custom-icon__${type}`, {
+      'cc-custom-icon--active': active
+    });
+    return <i className={cls} onClick={onClick}></i>
+  }
+
+  import { CustomIcon } from '@C/_common'
+  export default function DeletableBlock(props) {
+    const { title, children, index, onDelete } = props;
+
+    return (
+      <div className='cc-delete-block'>
+        <CustomIcon type="delete" onClick={() => handleDelete(index)} />
+        {/* 注释：子组件 */}
+        {children}
+      </div>
+    )
+
+    function handleDelete(index) {
+      onDelete(index)
+    }
+  }
+  ```
+
+
+## 实现原理
+
+  * __本质__：`React.createElement` 的语法糖。
+  * __解析规则__：`< 开头的标签使用 HTML 规则解析、{ 开头的使用 JS 规则解析`。
+  * JSX 为什么不会直接渲染为 DOM
+    * react 需要根据需求通过不同库将元素渲染到对应场景：`react-dom -> 页面、react-canvas -> canvas、ReactNative -> 原生 App`。
+    * 当数据变化而需要更新组件时，可以通过快速算法操作 Js 对象而不用操作 DOM，这样可以尽量减少浏览器重排而极大地优化性能。
+
+  <div align="center"> 
+    ![JSX 实现原理](/images/react/jsx.png)
+  </div>
+
+
+  ```js
+  // 编译前：JSX 表达式
+  <div class="input-wrap">
+    <input 
+      type="text" 
+      autocomplete="off" 
+      value="" 
+      id="mq" 
+      class="input" 
+      title="请输入搜索文字" />
+    <button>搜索</button>
+  </div>
+
+  // 编译过程：执行 React.createElement
+  React.createElement("div", {className: 'input-wrap'},
+    React.createElement(
+      "input",
+      { type:'text',
+        autocomplete:"off",
+        value:"",
+        id:"mq",
+        class:"input",
+        title:"请输入搜索文字" 
+      }
+    ),
+    React.createElement('button', null, "搜索")
+  )
+
+  // 编译结果：虚拟 DOM
+  {
+    tagName: 'div',
+    attribute: { className: 'input-wrap'},
+    children: [
+    {
+      tagName: 'input',
+      attribute: {
+        type: "text",
+        autocomplete:"off",
+        value:"",
+        id:"mq",
+        class:"input",
+        title:"请输入搜索文字"
+        }
+    },
+    {
+      tagName: "button",
+      attribute: null,
+      children: '搜索'
+      }
+    ]
+  }
+  ```
 
 
 # 五、组件化开发

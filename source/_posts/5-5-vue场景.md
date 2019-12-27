@@ -7,7 +7,7 @@ top: false
 keywords:
   - vue
 date: 2019-06-14 23:11:50
-description: 路由控制、数据加密、数据更新、页面刷新、页面缓存、页面跳转、UI 框架
+description: 路由控制、数据加密、数据更新、页面刷新、页面缓存、页面跳转
 ---
 
 # 一、路由控制
@@ -561,53 +561,6 @@ description: 路由控制、数据加密、数据更新、页面刷新、页面�
     stop(this.videoStream);
   }
   ```
-
-
-
-# 七、UI 框架
-
-## ElementUI
-
-### el-input
-  * 监听回车事件：`@keyup.enter.native="doSearch"`
-  * 监听输入值
-    * `v-on:input="doSearch"`
-    * 封装 input 之后无法直接监听原生事件，需要添加修饰符
-  * 获取改变前的数据
-    * @change 方法一般传递参数之后就会覆盖原本的数据
-    * 两种方案
-      * `el-input @change="value => changeVal(value, scope.row)"`
-      * `el-input @change="changeVal($event, scope.row, scope.$index)"`
-
-
-## Vux
-
-### 引用
-  * 安装：`cnpm i vux less less-loader vue-loader@14.2.2 -D`
-  * 注意：vue-loader 版本号必须加上，否则报错
-  * 配置
-    ```js
-    // vue.config.js
-    module.exports = {
-      configureWebpack: config => {
-        require('vux-loader').merge(config, {
-          options: {},
-          plugins: ['vux-ui']
-        })
-      },
-    }
-    ```
-  * 样式
-    ```scss
-    // App.vue：style lang="less"
-    @import '~vux/src/styles/index.less';
-    ```
-  * 点击延迟
-    ```js
-    // main.js：添加 Fastclick 移除移动端点击延迟
-    import FastClick from 'fastclick'
-    FastClick.attach(document.body)
-    ```
 
 
 
