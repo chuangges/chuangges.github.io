@@ -7,7 +7,7 @@ top: false
 keywords:
   - 开发工具
 date: 2019-02-23 15:41:48
-description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
+description: Mac 电脑、代码开发工具 (chrome、vscode、Postman)、<br/>前端构建工具 (Npm、Gulp、WebPack)、版本管理工具 Git
 ---
 
 # 一、电脑系统 Mac
@@ -62,56 +62,38 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
 
 
 
-# 三、代码编辑工具
+# 二、代码开发工具
 
-## 浏览器工具 chrome
+## 浏览器 chrome
 
-### 搜索
-> Google输入框中所有空格都被理解为加号
+### 搜索匹配
+> Google 输入框中所有空格都被理解为加号。
 
-  * 完整匹配: `mysql foreign key`（引号）
-  * 筛选: `mysql key - nodejs`（加减号）
-  * 返回所有: `mysql connect error *`（加通配符）
-  * 站内搜索: `mysql foreign key site:stackoverflow.com`
-  * 加速: 输入网址后点击 Tab，这样可直接使用该站点的站内搜索
+  * 完整匹配：`mysql foreign key`（引号）
+  * 筛选：`mysql key - nodejs`（加减号）
+  * 返回所有：`mysql connect error *`（加通配符）
+  * 站内搜索：`mysql foreign key site:stackoverflow.com`
+  * 加速：输入网址后点击 Tab，这样可直接使用该站点的站内搜索
 
 
-### 调试 js 代码
-  * Alert, Console等
-  * 断点调试
-    * 步骤：F12 开发者工具 ——> 点击Sources菜单 ——> 左侧树中找到相应文件 ——> 点击行号列(右键为条件断点) ——> 刷新页面 ——> JS执行到断点位置停住，此时可以跟随鼠标查看功能按钮
-    * [相关技巧](http://blog.csdn.net/crper/article/details/50722753) 
-  * debug 断点
-    * 在触发文件中添加 `debugger;` 语句后触发，当代码执行到该语句时就会自动断点, 接下去的操作和在Sources面板添加断点调试几乎一模一样，唯一区别在于调试后需要删除该语句。
-    * 由于有时会遇到异步加载html片段的情况，其JS代码在Sources中无法找到，因此无法直接在开发工具中直接添加断点时可用debug断点（F10一步一步执行，F8一下执行完成）
-  * 高阶调试功能
-    * [内置抓包工具等](https://www.cnblogs.com/guaidianqiao/p/7615430.html) 
+### 调试 JS
+  * __Alert、Console 等__
+  * __断点调试__：F12 开发者工具、Sources 菜单、左侧树中相应文件、点击行号列(右键为条件断点)、刷新页面、JS 执行到断点位置暂停。[相关技巧](http://blog.csdn.net/crper/article/details/50722753)。 
+  * __Debug 断点__：文件中添加 `debugger;` 断点语句，其它操作同上，唯一区别在于调试后需要删除该语句。由于有时会遇到异步加载 html 片段的情况，JS 代码在 Sources 中无法找到，此时只能使用 debug 断点（F10一步一步执行，F8一下执行完成）。
+  * __高阶调试功能__：[内置抓包工具等](https://www.cnblogs.com/guaidianqiao/p/7615430.html) 
 
 
 ### 扩展插件
-  * 谷歌访问助手
-    * 安装：[下载安装包](http://www.ggfwzs.com/) —> 更多工具 —> 扩展程序 —> 直接拖拽 ——> 添加扩展
-    * 扩展其它插件：谷歌访问助手 —> 谷歌网上商店 —> 搜索插件 —> 添加扩展
-  * 常用插件推荐
-    * 掘金
-    * Google 翻译         
-    * FeHelper 
-    * JSONView   
-    * What runs         
-    * Clear Cache
-    * Code Plunker    
-    * Vue.js devtools         
-    * AngularJS Batarang      
-    * React Developer Tools  
+  * 谷歌访问助手：[下载安装包](http://www.ggfwzs.com/)、更多工具、扩展程序、直接拖拽、添加扩展。安装后可通过谷歌网上商店添加扩展插件。
+  * 常用插件推荐：掘金、Google 翻译、FeHelper、JSONView、What runs、Clear Cache、Code Plunker、Vue.js devtools、AngularJS Batarang、React Developer Tools。
 
 
 ### 实用黑科技
   * __实现翻墙__
-    * 配置 proxy 代理：setting system —> proxy settings —> LAN setting —> proxy server —> 配置 Address、Port
-    * 配置 Chrome 扩展：下载 [Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/) —> 注册登录
-  * __解析 VIP 视频__
-    * 打开网站 [Greasy Fork](https://greasyfork.org/zh-CN) —> 搜索VIP视频解析 —> 安装脚本
-  * 其它：视频广告过滤、电脑管家上网防护等
+    * 配置 proxy 代理：setting system、proxy settings、LAN setting、proxy server、配置 Address、Port。
+    * 配置 Chrome 扩展：下载 [Hoxx VPN Proxy](https://www.crx4chrome.com/crx/39922/)、注册登录。
+  * __解析 VIP 视频__：打开网站 [Greasy Fork](https://greasyfork.org/zh-CN)、搜索VIP视频解析、安装脚本。
+  * 其它：视频广告过滤、电脑管家上网防护等。
 
 
 ## 代码编辑器 vscode
@@ -210,7 +192,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   ```
 
 
-## 接口调试器 Postman
+## 接口调试工具 Postman
 
 ### 基础功能
   <div align="center">
@@ -245,8 +227,20 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   * `OAuth 2.0`：支持获得 token 并添加到 request
 
 
+## 移动端调试工具 vConsole
+> 手机端查看控制台信息很不方便，通过 vConsole.js 重写 console 方法，实现了类似于微信小程序的移动端调试效果。它是腾讯推出的一个轻量、可拓展、针对手机网页的前端开发者调试面板。
 
-# 四、前端自动化构建
+
+  ```js
+  npm install vconsole
+
+  // main.js
+  var vConsole = new VConsole();
+  console.log('Hello world');
+  ```
+
+
+# 三、前端自动化构建
 
 ## 构建需求
 
@@ -281,7 +275,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
 
 
   
-# 五、包管理工具
+# 四、包管理工具
 
 ## Npm
 
@@ -366,7 +360,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
   ```
 
 
-# 六、构建工具 Gulp
+# 五、构建工具 Gulp
 
 ## 常用插件
   * gulp-minify-html：压缩html
@@ -562,7 +556,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
     ```
 
 
-# 七、打包工具 Webpack
+# 六、打包工具 Webpack
 
 ## 模块打包工具
 <div style="text-indent: 2em">分析项目结构，找到Js模块和浏览器不能直接运行的拓展语言（Scss、TypeScript 等），并将其转换和打包为合适的格式供浏览器使用。在很多场景下可以替代Gulp/Grunt类的工具，工作流程如下：</div>  
@@ -678,7 +672,7 @@ description: Mac 电脑、代码编辑工具 (chrome、vscode、Postman)、<br/>
 
 
 
-# 八、版本管理工具 Git
+# 七、版本管理工具 Git
 
 ## Git 和 Svn
   1. Svn：集中式管理工具。所有版本文件都集中存放到一个服务器上，所有开发者都从该服务器上更新或上传修改代码，注意需要连网。
