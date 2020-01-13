@@ -1,5 +1,5 @@
 ---
-title: Web 视频功能
+title: Web 图片和视频
 tags:
   - 项目开发
 categories: 项目开发
@@ -9,6 +9,252 @@ keywords:
 date: 2019-03-02 21:02:57
 description: Video 视频播放、Agora 视频通话、视频编辑
 ---
+
+# 一、图片处理
+
+## 预览上传
+
+  ```js
+  // <input type="file" accept="image/*" capture="camera" @change="changeImg" />
+  async changeImg(e) {
+    let file = e.target.files[0];
+    if (!file) return;
+
+    // 图片预览
+    let imgBase64 = await this.fileReader(file);
+    
+    // 图片上传：截取 data:image/png;base64 后面的纯字符串、file 对象
+    let base64Img = imgBase64.substring(imgBase64.indexOf(",") + 1);
+  },
+  // file 转 base64
+  fileReader(file, maxSize) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    return new Promise(resolve =>
+        (reader.onloadend = () => {
+          resolve(reader.result);
+        })
+    )
+  },
+  /**
+   * @method compress  图片压缩
+   * @param baseUrl     图片路径
+   * @param scale       缩放比例
+   * @param quality     图片质量
+   * 
+  **/
+  compress(baseUrl, file, maxSize = 1, scale = 1, quality = 0.9) {
+    // file.size 获取字节数：1MB = 1024KB，1KB = 1024字节
+    if (file.size < maxSize * 1024 * 1024) {
+        return baseUrl;
+    }
+
+    let img = new Image();
+    img.src = baseUrl;
+    img.setAttribute("crossOrigin", "Anonymous"); // url为外域时需要
+    return new Promise(resolve => 
+        (img.onload = () => {
+          let canvas = document.createElement("canvas"),
+            ctx = canvas.getContext("2d"),
+            w = img.width * scale,
+            h = img.height * scale;
+          canvas.width = w;
+          canvas.height = h;
+          ctx.drawImage(img, 0, 0, w, h);
+          let baseImg = canvas.toDataURL("image/jpeg", quality)
+          let file = this.dataURLtoFile(baseImg)
+          resolve(file);
+        })
+    )
+  }
+  // base64 转 file
+  dataURLtoFile(dataurl, filename){
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type: mime});
+  }
+  ```
+
+
+## OCR 扫描
+> OCR 是实时高效的定位与识别图片中的所有文字信息并返回文字框位置与文字内容，就是将图片上的文字内容智能识别为可编辑的文本。目前支持的场景有：`身份证识别、银行卡识别、名片识别、营业执照识别、行驶证驾驶证识别、车牌号识别、通用印刷体识别、手写体识别`。
+
+  ```js
+  /**
+  * 方法说明：jsBridge.js 封装 js 调用 Native 的方法
+  * @method idCardScan：呼叫身份证扫描
+  * @method getBank：导入银行卡
+  */
+  window.idCardScan = function () {
+    clearTimer()
+    let idcard = function () {
+      return new Promise((resolve, reject) => {
+        window.jsBridge.status.idCard.status = false
+        window.jsBridge.status.idCard.value = ''
+        window.HQAppJSInterface.requestScanCertificateCard()
+        window.__tid = window.setInterval(success => {
+          if (window.jsBridge.status.idCard.status) {
+            clearTimer()
+            resolve(window.jsBridge.status.idCard.value)
+            window.jsBridge.status.idCard.status = false
+            window.jsBridge.status.idCard.value = ''
+          } else {
+            // reject('fail')
+          }
+        }, 30)
+      })
+    }
+    return window.checkload().then(function (data) {
+      return idcard()
+    })
+  }
+  window.getBank = function () {
+    clearTimer()
+    let bank = function () {
+      return new Promise((resolve, reject) => {
+        window.jsBridge.status.bank.status = false
+        window.jsBridge.status.bank.value = ''
+        window.HQAppJSInterface.requestScanBankCard()
+        window.__tid = window.setInterval(success => {
+          if (window.jsBridge.status.bank.status) {
+            clearTimer()
+            resolve(window.jsBridge.status.bank.value)
+            window.jsBridge.status.bank.status = false
+            window.jsBridge.status.bank.value = ''
+          } else {
+            // reject('fail')
+          }
+        }, 30)
+      })
+    }
+    return window.checkload().then(function (data) {
+      return bank()
+    })
+  }
+  // 组件中调用
+  window.idCardScan().then(res => {
+    this.$emit('scan', JSON.parse(res))
+  })
+
+  /**
+  * @param Scan.vue：扫描组件
+  * @param Icon.vue：图标组件
+  * @desp H5 input 选择图片、native jsBridge 扫描
+  **/
+  <template>
+    <Icon class="wrap" scan @click="nativeScan">
+      <input v-if="h5" type="file" accept="image/*" @change="h5Scan">
+    </Icon>
+  </template>
+  <script>
+  export default {
+    name: 'HqScan',
+    components: {
+      HqIcon
+    },
+    props: {
+      h5: {
+        type: Boolean,
+        default: () => false
+      }
+    },
+    methods: {
+      nativeScan () {
+        if (!this.h5) {
+          // jsBridge
+          window.getBank().then(res => {
+            this.report(JSON.parse(res))
+          }).catch(console.error)
+        }
+      },
+      // 读取并压缩，然后上传并识别图片
+      h5Scan ($event) {
+        const file = $event.target.files[0]
+        let file = e.target.files[0];
+        this.fileReader(file)
+          .then(image => Promise.resolve(this.compress(file, img)))
+          .then(img => Promise.all([this.recognition(img), this.upload(img)]))
+          .then(this.merge)
+          .then(this.report, toast)
+      },
+      upload (file) {
+        return fetch(API.UPLOAD, { file }).then(({ url: [url] }) => {
+          return Promise.resolve(url)
+        }, this.reject)
+      },
+      recognition (image) {
+        // OCR 识别：将图片信息发给后端即可
+        return this.axios.post(API.OCR.BANK, { image }).then(({ data }) => {
+          const code = data['rsp_code']
+          if (code === '0000') {
+            return Promise.resolve(data)
+          } else if (code === '1111') {
+            return Promise.reject(data['error_msg'])
+          } else {
+            return Promise.reject('银行卡识别失败')
+          }
+        })
+      },
+      merge ([info, cardImgUrl]) {
+        toast('扫描成功')
+        return Promise.resolve({ ...info, cardImgUrl })
+      },
+      reject (data) {
+        return Promise.reject(data)
+      },
+      report (data) {
+        this.$emit('scan', data)
+      },
+      toast(text){
+        toast.show({ 
+          width: '200px', 
+          type: 'text',
+          text
+        })
+      }
+    }
+  }
+  </script>
+  <style lang="less">
+  .wrap {
+    position: relative;
+    input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      -webkit-appearance: button;
+      opacity: 0;
+    }
+  }
+  </style>
+  ```
+
+
+
+
+
+
+## 人脸识别
+
+### 实现原理
+
+  1. 通过 HOG 找出图片中所有人脸的位置
+  2. 计算出人脸的 68 个特征点并适当的调整人脸位置，对齐人脸
+  3. 将得到的面部图像放入神经网络，得到 128 个特征测量值，并保存它们
+  4. 和以前保存过的测量值一并计算欧氏距离并得到欧氏距离值，通过对比数值大小确定是否同一个人
+
+
+### 应用场景
+> 人脸识别分为两大步骤：人脸检测和人脸识别，它们的应用场景也各不相同
+
+  * 人脸检测：美颜、换肤、抠图、换脸。目的是找出人脸的位置
+  * 人脸识别：会员、支付。目的是识别用户
+
 
 
 # 一、Video 视频播放

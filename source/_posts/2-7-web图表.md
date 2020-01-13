@@ -1,5 +1,5 @@
 ---
-title: Echarts 图表插件
+title: Web 图表插件
 tags:
   - 插件
   - 项目开发
@@ -8,7 +8,7 @@ top: false
 keywords:
   - 插件
 date: 2019-03-22 22:06:14
-description: 图表类 (echarts)
+description: Echarts
 ---
 
 # 一、ECharts
