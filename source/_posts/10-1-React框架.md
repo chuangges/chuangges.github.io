@@ -21,8 +21,8 @@ description: 基础介绍、路由功能、状态管理、JSX 表达式、组件
     * __virtual DOM__：描述 dom 元素结构结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性。
     * __DOM Diff__：对比改变前后两个 js 对象差异的算法，用于计算出更新的最小步骤并最终只把变化的部分重新渲染到真实 dom。
   4. __组件化开发__
-    * DOM 树上的节点被称为元素，Virtual DOM 上的节点则称为组件。
-    * 组件是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发推荐使用 JSX 而不能用模板。
+    * DOM 树上的节点被称为__元素__，Virtual DOM 上的节点则称为__组件__。
+    * 组件是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发__推荐使用 JSX__ 而不能用模板。
   5. __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)，但这只是拓展功能。
 
 
@@ -161,20 +161,29 @@ description: 基础介绍、路由功能、状态管理、JSX 表达式、组件
 > 所有与路由有关的组件（Link、NavLink、Route、Switch）必须包裹在容器组件中，容器组件有且只能有一个子元素。
 
   * 容器组件
-    * `<BrowserRouter>`：浏览器自带的 H5 API，restful 风格。需要添加服务器配置 (node/nginx)，让前端发送的请求映射到对应的 html 文件。
-    * `<HashRouter>`：使用 hash 方式在前端完成路由切换。`#` 后面的内容不会发送到服务器端，对于后端来说路由地址始终不变。
-    * `<MemoryRouter>`：在内存中管理 history，地址栏不会变化。用于 reactNative。
-    * `<NativeRouter>`
-    * `<StaticRouter>`
+    * `<BrowserRouter>`：浏览器的路由组件，利用 HTML5 的 history API (pushState、replaceState 和 popstate 事件) 来同步 URL、UI。需要添加服务器配置 (node/nginx)，让前端请求映射到对应的 html。
+    * `<HashRouter>`：使用 URL hash (window.location.hash) 方式在前端完成路由切换。`#` 后面的内容不会发送到服务器端，路由地址对于后端始终不变。
+    * `<MemoryRouter>`：内存路由组件，在内存中管理 URL history，主要用于 ReactNative 这种非浏览器的环境。
+    * `<StaticRouter>`：地址不改变的静态路由组件，主要用于服务端渲染。
+    * `<NativeRouter>`：Native 的路由组件。
   * 相关组件
-    * `<Link>`：react-router 提供，用于点击时切换路由。
+    * `<Link>`：react-router 提供，用于点击时链接到某路径。
     * `<NavLink>`：Link 的加强版，可以自定义选中状态和钩子函数。
     * `<Switch>`：用于嵌套 Route 组件，多个路径相同时只匹配第一个。
     * `<Route>`：用于实现 RR4 动态路由的嵌套。
-    * `<Redirect>`：用于路由重定向。
+    * `<Redirect>`：用于重定向到某路径。
     
 
   ```js
+  <BrowserRouter 
+    basename="/admin"     // 路由器的默认根路径
+    forceRefresh={false}  // 布尔类型，导航时是否刷新整个页面
+    keyLength={12}        // location.key 的长度，默认 6
+    getUserConfirmation={getConfirmation}  // 导航需要确认时执行的函数
+  >
+    <Link to="/home"/>   // 渲染为 <a href="/admin/home">
+  </BrowserRouter>
+
   <Link 
     to="/about" 
     replace={true}         // 覆盖当前路径
@@ -354,16 +363,16 @@ description: 基础介绍、路由功能、状态管理、JSX 表达式、组件
 # 三、状态管理
 > 软件开发时有些通用的思想，比如隔离变化，约定优于配置等。隔离变化指做好抽象，把一些容易变化的地方找到共性，隔离出来而不要去影响其他的代码。约定优于配置就是不一定要写一大堆的配置，比如约定 view 文件夹只能放视图。根据这些思想，实现状态管理库的解决思路是：__将组件之间需要共享的状态抽取出来进行统一管理，遵循特定的约定去变更，让状态的变化可以预测以方便对某些场景的复现和回溯__。这样做的好处是：__状态和组件解耦合、更改行为可追踪__，根据这个思路产生了很多的模式和库。
 
-  * Flux 、Redux 、Vuex 均为单向数据流。
-  * Redux、Vuex 基于 Flux，Redux 较为泛用，Vuex 只能用于 vue。
-  * Redux、Vuex 适用于大型项目，MobX 在大型项目中会使代码可维护性变差。
-  * Flux、MobX 可以有多个 Store ，Redux 、Vuex 全局仅有一个 Store（单状态树）。
-  * Redux 引入了中间件，主要用于解决异步任务带来的副作用，可通过约定完成许多复杂工作。
-  * MobX 是状态管理库中代码侵入性最小的之一，具有细粒度控制、简单可扩展等优势，但是没有时间回溯能力，一般适合应用于中小型项目中。
+  * __Flux 、Redux 、Vuex__ 均为单向数据流。
+  * __Redux、Vuex__ 基于 Flux，Redux 较为泛用，Vuex 只能用于 vue。
+  * __Redux、Vuex__ 适用于大型项目，__MobX__ 在大型项目中会使代码可维护性变差。
+  * __Flux、MobX__ 可以有多个 Store ，__Redux 、Vuex__ 全局仅有一个 Store（单状态树）。
+  * __Redux__ 引入了中间件，用于解决异步任务带来的副作用，可通过约定完成许多复杂工作。
+  * __MobX__ 是状态管理库中代码侵入性最小的之一，具有细粒度控制、简单可扩展等优势，但是没有时间回溯能力，一般适合应用于中小型项目中。
 
 
 ## Store
-> 缺点：没有限制组件必须执行 action 分发事件去改变 state。那样约定的好处是可以记录所有变化 (mutation)、保存状态快照、历史回滚等。
+> 缺点：没有约定组件只能执行 dispatch(action) 去改变 state。那样约定的好处是可以记录所有变化、保存状态快照、历史回滚等。
 
   ```js
   var store = {
@@ -384,33 +393,28 @@ description: 基础介绍、路由功能、状态管理、JSX 表达式、组件
 ## Flux
 > react 官方提出的类似 MVC、MVVM 的一种架构模式而非具体架构，它根据__单向数据流__的核心思想提出了一些基本概念，所有框架都可以具体实现。
 
-  * Store 用来存放数据和处理 Action 来更新数据的具体方法，可以有多个。
-  * Action 本质是一个纯声明式的数据结构，只提供对事件的描述而没有处理逻辑。
-  * Dispatcher 用于接收所有 Action，然后分发 (dispatch) 事件改变 Store。
+  * __Store__ 用来存放数据和处理 Action 来更新数据的具体方法，可以有多个。
+  * __Action__ 本质是一个纯声明式的数据结构，只提供对事件的描述而没有处理逻辑。
+  * __Dispatcher__ 用来接收所有 Action，然后执行 dispatch(action) 分发事件去改变 Store。
 
   <div align="center"> 
     ![Flux 模式](/images/react/flux.png)
   </div>
 
 ## Redux
-> Flux 模式的具体实现，函数式管理不可变的状态对象，适合大型项目。解决的问题是统一数据流、数据流完全可控并可追踪。
+> Flux 模式单向数据流思想的具体实现，通过自定义状态规则解决了状态可追踪、可预测、可回退的问题，适合大型项目。
 
-### 主要特点
-  * 单向数据流：`Action、Store、View`。
-  * 单一数据源：只有一个 Store 统一管理。
-  * state 是只读的：更新时只能触发 store.dispatch(action) 执行纯函数 Reducer。
-  * 使用纯函数执行修改：没有 Dispatcher，Reducer 接收旧状态和 action 并返回新状态，状态规则由开发者定义而可以预测新状态、回退到旧状态。
+### 设计原则
+  * __单一数据源__：只有一个 Store 统一管理。
+  * __state 是只读的__：通过纯函数 Reducer 更新不可变的状态对象。
+  * __使用纯函数执行修改__：Reducer 接收旧状态和 action 并返回新状态。
 
 ### 组成结构
 > Action 只是描述了有事件执行，Reducer 负责具体执行事件。
 
-  * Action：定义数据变化的消息对象，属性只有 type、payload/error/meta。
-  * Reducer：一个接收参数 state、action 并推导出新 state 的纯函数（对于相同的参数返回相同的返回结果，不修改参数，不依赖和操作外部变量）。
-  * Store：存储和管理 state，整个应用只有一个。主要功能如下：
-    * 获取状态 `getState()`。
-    * 更新状态 `dispatch(action)`。
-    * 监听状态变化 `subscribe(listener)`。
-    * 支持通过中间件（`redux-thunk、redux-saga、redux-promise 等`）处理异步任务流程。
+  * __Action__：定义数据变化的消息对象，属性只有 type、payload/error/meta。
+  * __Reducer__：一个传入 state、action 并返回新 state 的纯函数。纯函数的主要特点有：输入相同则输出一定相同、不修改参数、不依赖外部变量和方法）。
+  * __Store__：存储和管理 state，整个应用只有一个。主要功能有：获取状态 `getState()`、更新状态 `dispatch(action)`、监听状态变化 `subscribe(listener)`、通过中间件 `redux-thunk、redux-saga、redux-promise 等` 处理异步任务。
 
 ### 实现流程
   <div align="center"> 
@@ -477,11 +481,11 @@ description: 基础介绍、路由功能、状态管理、JSX 表达式、组件
     * 面向对象编程：基于观察者模式，一般将状态包装成可观察对象，状态对象一旦变更就能自动局部精确更新。
     * 响应式编程：声明整个链条所有联动关系，当某一环发生变更时自动触发后续链路，这样使得状态管理变得简单和易于扩展。
   * __组成结构__
-    * Actions：改变状态的操作。
-    * State：某个模块的状态对象。
-    * Computed：通过纯函数派生出的值。
-    * Reactions：当状态改变时自动执行的响应。
-    * Autorun: 添加观察者的依赖收集，监听状态变化触发 Reactions。
+    * __Actions__：改变状态的操作。
+    * __State__：某个模块的状态对象。
+    * __Computed__：通过纯函数派生出的值。
+    * __Reactions__：当状态改变时自动执行的响应。
+    * __Autorun__: 添加观察者的依赖收集，监听状态变化触发 Reactions。
 
   <div align="center"> 
     ![MobX](/images/react/mobx.png)
