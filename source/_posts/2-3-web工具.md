@@ -294,12 +294,12 @@ description: Mac 电脑、代码开发工具 (chrome、vscode、Postman)、<br/>
   npm uninstall <name>      //卸载包
   npm update <name>         //更新包   
   /**
-    * 可添加的修饰符
-    *     -g                 全局(不加则为本地安装)
-    *     -S / --save        需要发布到生产环境的依赖(默认)
-    *     -D / --save-dev    只用于开发环境的依赖
-    *     --no-save          不写入package.json的依赖
-    */
+   * @title 可添加的修饰符
+   * @prame -g               全局(不加则为本地安装)
+   * @prame --no-save        不写入 package.json 的依赖
+   * @prame -S / --save      生产环境还要用的依赖 (package.json/dependencies)
+   * @prame -D / --save-dev  只用于开发环境的依赖 (package.json/devDependencies)
+  **/
 
   npm run script-key        // 执行package.json中 "scripts" 选项对应的js 
   npm start                 // 比较特殊
@@ -730,8 +730,9 @@ description: Mac 电脑、代码开发工具 (chrome、vscode、Postman)、<br/>
   git remote -v              // 查询当前远程的版本
 
   // 创建分支
-  git branch              // 查看本地分支
-  git checkout -b dev     // 创建并切换到该分支          
+  git branch                       // 查看本地分支
+  git checkout -b dev              // 创建并切换到该分支
+  git checkout -b dev origin/dev   // 切换到指定远程分支       
   // 相当于两个命令的合并
   git branch dev          // 新建    
   git checkout dev        // 切换

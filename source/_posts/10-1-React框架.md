@@ -1,5 +1,5 @@
 ---
-title: React 框架的基础使用
+title: React 框架
 tags:
   - React
 categories: React
@@ -7,15 +7,14 @@ top: false
 keywords:
   - React
 date: 2019-08-17 22:05:46
-description: 基础介绍、JSX 表达式、组件化开发、路由功能、状态管理
+description: React、JSX 表达式、组件化开发、路由功能、状态管理库
 ---
 
-# 一、基础介绍
-> 定位是一个用于动态构建用户界面的 JavaScript 库 (Facebook 开源)，它抽离了 dom 而使我们构建页面变得简单。
-但是它不是一个 MVC 框架而只针对 View，对于一个大型复杂应用来说只有 dom 层的便捷是不够的，应用代码的组织管理和通信等问题并没有解决，它还需要集成 Redux、React-router 等其它库。
+# 一、React
+> Facebook 开源的一个用于动态构建用户界面的 JS 库，本质是 DOM 的一个抽象层，相当于 MVC View。由于没有涉及到代码结构、组件通信等问题，它并不是 Web 应用的完整解决方案，还需要集成 Redux、React-router 等其它库。
 
 ## 主要特点
-> 采用声明范式来描述应用，建立虚拟 dom，支持 JSX 语法，通过 react 构建组件，能够很好的去复用代码。
+> 采用声明范式来描述应用，构建虚拟 dom，支持 JSX 语法，组件化方便复用代码。
   
   1. __声明式设计__：采用简洁易懂的声明范式，可以轻松描述应用。
   2. __单向数据流__：推崇一种单向的数据流动模式，减少了重复代码。
@@ -403,9 +402,7 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
 
   * __展示组件__：使用纯函数来简化表述的无状态组件。
   * __容器组件__：获取数据并渲染子组件的有状态组件。
-  * __高阶组件__
-    * 本质：一个接收一个组件作为参数并进行修改，然后返回一个新组件的函数。
-    * 应用：使用 react-router-v4 之后就可以使用 `withRouter()` 来继承以 props 形式传递给组件的各种方法。使用了 redux 之后就可以使用 `connect({})()` 方法来将展示组件和 store 中的数据进行连接。
+  * __高阶组件__：本质是一个接收一个组件作为参数，修改后返回一个新组件的函数。使用 react-router-v4 之后可以使用 `withRouter()` 继承以 props 形式传递给组件的方法。使用 redux 之后可以使用 `connect({})()` 连接展示组件和 store 的数据。
   * __渲染回调__：主要用于共享或重用组件逻辑。虽然许多开发人员倾向于使用高阶组件的可重用逻辑，但是渲染回调减少了命名空间冲突并更好地说明了逻辑来源。
 
   ```js
@@ -422,8 +419,8 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
       return (<h1>rendering at: {this.state.path}</h1>)
     }
   }
-  // 使用了 withRouter 就可以直接访问 this.props.locationlocation
-  // 而不需要将 location 作为 props 直接传入，非常方便。
+  // 使用 withRouter 可以直接访问 this.props.location
+  // 而不需要将 location 作为 props 直接传入。
   export default withRouter(App)
 
   // 渲染回调：本质是暴露了外部属性 children
@@ -442,7 +439,7 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
   }
   class App extends React.Component {
     render() {
-      return  <Counter>{state => (<h1>The count is: {state.count}</h1> )}</Counter>
+      return  <Counter>{state => (<h1>{state.count}</h1> )}</Counter>
     }
   }
   ```
@@ -512,9 +509,6 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
 ### render
 > class 方式创建组件时用于实例化 React 组件(转换格式并插入到指定节点) 的渲染函数，可以返回的类型有：`React 元素（Jsx）、数组（Arrays）、片段（fragments）、插槽（Portals）、字符串、数字、布尔值、null`。当组件 props、state 被改变时会重新执行，但是 shouldComponentUpdate 返回 false 时不会执行。
 
-
-
-
   ```js
   // 三个参数：渲染元素、插入节点、回调函数
   import ReactDOM from "react-dom"
@@ -550,7 +544,7 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
 
 
 ### props
-> 实现父子组件通信的对外接口，数据是只读的但可以在子组件限制其类型和默认值。
+> 继承父组件属性和方法的对外接口，数据是只读的但可以在子组件限制其类型和默认值。
 
   ```js
   // 传递数据和事件
@@ -908,7 +902,7 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
   ```
 
 
-# 五、状态管理
+# 五、状态管理库
 > 软件开发时有些通用的思想，比如隔离变化，约定优于配置等。隔离变化指做好抽象，把一些容易变化的地方找到共性，隔离出来而不要去影响其他的代码。约定优于配置就是不一定要写一大堆的配置，比如约定 view 文件夹只能放视图。根据这些思想，实现状态管理库的解决思路是：__将组件之间需要共享的状态抽取出来进行统一管理，遵循特定的约定去变更，让状态的变化可以预测以方便对某些场景的复现和回溯__。这样做的好处是：__状态和组件解耦合、更改行为可追踪__，根据这个思路产生了很多的模式和库。
 
   * __Flux 、Redux 、Vuex__ 均为单向数据流。
@@ -938,7 +932,7 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
   ```
 
 ## Flux
-> react 官方提出的类似 MVC、MVVM 的一种架构模式而非具体架构，它根据__单向数据流__的核心思想提出了一些基本概念，所有框架都可以具体实现。
+> react 官方提出的类似 MVC、MVVM 的一种架构模式，它根据__单向数据流__的核心思想提出了一些基本概念，其它框架可以具体实现。
 
   * __Store__：用来存放数据和处理 Action 来更新数据的具体方法，可以有多个。
   * __Action__：本质是一个纯声明式的数据结构，只提供对事件的描述而没有处理逻辑。
@@ -956,7 +950,7 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
     * __state 是只读的__：通过纯函数 Reducer 更新不可变的状态对象。
     * __使用纯函数执行修改__：Reducer 接收旧状态和 action 并返回新状态。
   * 组成结构
-    * __Action__：描述数据变化的消息对象，store 数据的唯一来源。
+    * __Action__：描述用户行为的消息对象，store 数据的唯一来源。
     * __Reducer__：具体执行改变 state 的纯函数，返回根据 state、action 计算出新 state。纯函数特点：输入相同则输出一定相同、不修改参数、不依赖外部变量和方法。
     * __Store__：存储和管理 state。主要功能有：获取状态 `getState()`、更新状态 `dispatch(action)`、监听状态变化 `subscribe(listener)`、通过中间件 `redux-thunk、redux-saga、redux-promise 等` 处理异步任务。
 
@@ -1001,43 +995,5 @@ description: 基础介绍、JSX 表达式、组件化开发、路由功能、状
     * __reducers__：等同于 redux reducer。
     * __subscriptions__：订阅信息。
 
-
-# 六、Redux
-
-### 相关库
-> 框架绑定：`React react-redux、Angular ng-redux、Angular2 ng2-redux、Backbone backbone-redux、Falcor redux-falcor、Deku deku-redux`。
-
-
-
-【react-redux】
-
-定位：react-redux是为了让redux更好的适用于react而生的一个库，使用这个库，要遵循一些规范；
-
-主要内容
-
-UI组件：就像一个纯函数，没有state，不做数据处理，只关注view，长什么样子完全取决于接收了什么参数（props）
-容器组件：关注行为派发和数据梳理，把处理好的数据交给UI组件呈现；React-Redux规定，所有的UI组件都由用户提供，容器组件则是由React-Redux自动生成。也就是说，用户负责视觉层，状态管理则是全部交给它。
-connect：这个方法可以从UI组件生成容器组件；但容器组件的定位是处理数据、响应行为，因此，需要对UI组件添加额外的东西，即mapStateToProps和mapDispatchToProps，也就是在组件外加了一层state；
-mapStateToProps：一个函数， 建立一个从（外部的）state对象到（UI组件的）props对象的映射关系。 它返回了一个拥有键值对的对象；
-mapDispatchToProps：用来建立UI组件的参数到store.dispatch方法的映射。 它定义了哪些用户的操作应该当作动作，它可以是一个函数，也可以是一个对象。
-       以上，redux的出现已经可以使react建立起一个大型应用，而且能够很好的管理状态、组织代码，但是有个棘手的问题没有很好地解决，那就是异步；  
-
-
-【redux-saga】：
-
-定位：react中间件；旨在于更好、更易地解决异步操作（action）；redux-saga相当于在Redux原有数据流中多了一层，对Action进行监听，捕获到监听的Action后可以派生一个新的任务对state进行维护；
-
-特点：通过 Generator 函数来创建，可以用同步的方式写异步的代码；
-
-API：
-
-Effect： 一个简单的对象，这个对象包含了一些给 middleware 解释执行的信息。所有的Effect 都必须被 yield 才会执行。
-put：触发某个action，作用和dispatch相同；
-
-
-
-
-# Zarm
-https://zarm.design/#/components/collapse
 
 
