@@ -278,53 +278,49 @@ description: CSS3 要点、开发常用样式、动画
 
 
 ## 元素居中 
-  ```css
-  /* 块中块元素 */
-  .div-child {
-    margin: 0 auto;  
-  }
-  .div-parent {
-    display: table-cell;   
-    vertical-align: middle; 
+  ```scss
+  .parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  /* 块中内联元素 */
-  .div-parent {
-    text-align: center;   
-    height: 100px;
-    line-height: 100px;  
-    
-    /* 其它方法垂直居中 */
-    display: table-cell;    
-    vertical-align: middle;
-  }
-
-  /* 不定宽高的水平、垂直居中 */
-  /* 1.定位 */
+  // 2
   .parent {
     position: relative;
+    .child {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
-  .child { 
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -100px;   /* 自身宽度一半 */
-    margin-top: -50px;    /* 自身高度一半 */
+  
+  // 3
+  div.parent {
+    display: grid;
+    .child {
+      justify-self: center;
+      align-self: center;
+    }
   }
-  /* 2.CSS3 */
-  .wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 3;
-    transform: translate(-50%,-50%);
+
+  // 4
+  div.parent {
+    font-size: 0;
+    text-align: center;
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0;
+      height: 100%;
+      vertical-align: middle;
+    }
+    .child {
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
-  /* 3.flexbox方法 (设置父元素，让子元素水平居中) */
-  .parent {       
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-  }  
   ```
 
 
@@ -517,7 +513,7 @@ description: CSS3 要点、开发常用样式、动画
 ## 常用特殊图形
 
   ```scss
-  // 三角形
+  // 三角形：原理是相邻边框连接处是均分
   .triangle{
     width: 0;
     height: 0;

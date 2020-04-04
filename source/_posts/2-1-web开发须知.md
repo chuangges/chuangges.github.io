@@ -284,31 +284,47 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
 
 
 
-## 渲染流程
-> 即渲染引擎工作流。DOM 树构建完成时触发 DOMContentLoaded 事件，页面加载完成时触发 load 事件。
+## 渲染机制
+> 即渲染引擎工作流，为了更好的用户体验，渲染引擎会尽可能早的将内容呈现到屏幕上，并不会等到所有 html 解析完成之后再去构建和布局 render tree。它是解析完一部分内容就显示一部分内容，同时可能还在网络下载其余内容。相关事件：DOM 树构建完成时触发 DOMContentLoaded 事件，页面加载完成时触发 load 事件。
 
-  1. 构建 DOM 树：将 HTML 的各种标签解析为 dom 树的各个节点，两者一一对应。
-  2. 构建 CSSOM 树：将 css 样式信息解析为渲染树，它由一些包含有颜色和大小等属性并按照顺序显示在屏幕的矩形组成。
-  3. 解析并执行 js 脚本代码。
-  4. 加载图标、图片等外部静态文件。
-  5. 渲染树布局和绘制：渲染树确定各个 dom 节点在屏幕的位置并根据颜色等信息绘制出网页。
-
-  <div align="center">
-    ![浏览器渲染](/images/web/browerRender.png) 
-  </div> 
-
-
-## 渲染问题
-  * __资源下载__
-    * 图片下载不会产生阻塞
-    * css 下载时会阻塞渲染，但带有 media 属性除外：css 是由单独的下载线程异步下载，加载时不会阻塞 DOM 树解析但会阻塞 render 树渲染。
+  1. __浏览器解析 url__
+    1. 用户输入 URL，浏览器解析后获取主机名和端口号。
+    2. 通过 DNS 查询将主机名转换成服务器 ip 的地址。
+    3. 浏览器建立一条与目标服务器的 TCP 连接（三次握手）。
+    4. 浏览器向服务器发送一条 HTTP 请求报文并获取服务器响应。
+    5. 浏览器关闭连接并重复请求至资源全部加载后，解析文档内容并渲染到页面。
+  2. __浏览器渲染__
+    1. 解析 HTML 标记并构建 DOM 树。
+    2. 解析 CSS 标记并构建 CSSOM 树。
+    3. 根据 DOM、CSSOM 构建渲染树，节点是包含颜色等属性的渲染对象。
+    4. 布局：根据渲染树进行布局，计算各个节点在页面的位置、大小等信息。
+    5. 绘制：调用渲染对象的 paint 方法，将它们的内容显示在屏幕并绘制基础组件。
+  3. __资源下载问题__
+    * 图片下载不会产生阻塞。
+    * css 下载时会阻塞渲染，但带有 media 属性除外：css 由单独的下载线程异步下载，加载时不会阻塞 DOM 树解析但会阻塞 render 树渲染。
     * 遇到 script 标签时，DOM 构建停止直到 js 脚本下载并执行完毕，此时浏览器一般会下载其他资源但不会解析。如果 js 中有对 CSSOM 的操作，还会先确保 CSSOM 已经被下载并构建。
-  * __重绘重排导致重新进行渲染树的生成__
-    * 重绘：简单外观的改变就会引起重绘，比如颜色变化等。重排一定重绘。
-    * 重排(回流)：重新计算布局，通常由元素的结构、增删、位置、尺寸变化引起。比如 img 下载成功后替换填充页面 img 元素而引起尺寸变化。也会由 js 的属性值读取引起，比如读取 offset、scroll、cilent、getComputedStyle 等信息。
-  * __优化方法__
-    * 直接改变 className，如果动态改变样式则使用 cssText
-    * 让要操作的元素进行离线处理，处理完后一起更新：`display: none` 引发两次回流和重绘、`DocumentFragment` 进行缓存操作只引发一次回流和重绘、`cloneNode(true/false)、replaceChild` 只引发一次回流和重绘。
+  4. __重绘重排__
+    * 重绘：简单外观的改变而不会影响布局，比如 outline、visibility、color。
+    * 回流：布局或几何属性改变而重新计算布局，大部分都会会导致页面的重新渲染。
+    * 关系：重绘不一定会引发回流，回流必定会发生重绘，它们都会重新生成渲染树。
+
+
+## 优化方案
+
+  * __CSS__
+    * CSS 硬件加速。
+    * 避免使用 table 布局。
+    * 使用 transform 代替 top。
+    * 尽可能在 DOM 树的最末端改变 class。
+    * 避免使用 CSS 表达式，可能会引发回流。
+    * 避免设置多层内联样式，CSS 选择符从右往左匹配查找，避免节点层级过多。
+    * 使用 visibility 替换 display: none，前者引起重绘，后者引发回流。
+    * 将动画效果应用到 position: absolute/fixed 的元素，避免影响其他布局。
+  * __Javascript__
+    * 避免频繁操作样式，修改 class 最好。
+    * 避免频繁操作 DOM，合并多次修改为一次。
+    * 避免频繁读取会引发回流/重绘的属性，将结果缓存。
+    * 对具有复杂动画的元素使用绝对定位，使它脱离文档流。
 
 
 # 七、JS 运行机制
@@ -682,45 +698,4 @@ description: 前端技术栈、程序员网站、服务器、页面渲染、框�
     ![移动端优化](/images/mobile/optimization.png) 
   </div>
 
-
-## JS 节流和防抖
-> 在网页实际运行的某些场景下，有些事件是会被不间断的被触发的，而不是我们认为的滚动一次触发一次。这种情况下，由于过于频繁地 DOM 操作和资源加载，严重影响了网页性能，甚至会造成浏览器崩溃。两者都是某个行为持续地触发，区别在于只需要判断是要优化到减少它的执行次数还是只执行一次。
-
-  * __节流__
-    * 基础理解：一个水龙头在滴水，可能一次性会滴很多滴，但是我们只希望它每隔 500ms 滴一滴水并保持这个频率。即我们希望函数以一个可以接受的频率重复调用，通过节流函数减少回调函数的执行次数。
-    * 应用场景：拖拽元素时 `drag` 事件、监听滚动时 `scroll` 事件、鼠标移动时 `mousemove` 事件、手指滑动时 `touchmove` 事件
-  * __防抖__
-    * 基础理解：将一个弹簧按下，继续加压，继续按下，但只会在最后放手的一瞬反弹。即我们希望回调函数即使在设定时间内反复调用，也只会在间隔时间超过设定时间后调用一次，通过防抖函数让回调函数实现延时执行。
-    * 应用场景：搜索框输入内容时 `keyup` 事件、浏览器窗口调整大小时 `resize` 事件
-
-
-  ```js
-  // 节流：首次不执行
-  function throttle(callback, duration=200){
-    let timer = null;
-    return function(){
-      if(timer) return;
-      timer = setTimeout(()=>{
-        callback.apply(this,arguments);
-        timer = null;
-      }, duration);
-    }
-  }
-  let handleScroll = throttle(handleScroll)
-  window.addEventListener("touchmove", handleScroll);
-
-  // 防抖：首次不执行
-  function debounce(callback, delay=200){
-    let timer = null;
-    return function(){
-      if(timer) clearTimeout(timer);
-      timer = setTimeout(()=>{
-        callback.apply(this,arguments);
-        timer = null;
-      }, delay);
-    }
-  }
-  let handleSeach = debounce(seachAjax, 500)
-  input.addEventListener("keyup", e=>{ handleSeach(e.target.value)})
-  ```
 

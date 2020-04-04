@@ -19,9 +19,8 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
     * `组件化`：通过简洁 API 提供高效的组件系统，通过操作数据来更新页面。
     * `响应式`：页面根据不同分辨率改变大小，适应式则根据分辨率选择不同页面。
   * __MVVM 模式__
-    * `Model`：对应 js 对象的数据部分。
-    * `View`：对应 DOM 元素的视图部分。
-    * `Viewmodel`：绑定数据、DOM 的中间件。
+    * 组成部分：View 模板、Model 数据、Viewmodel 监听的中间件。
+    * 主要特点：响应式、双向绑定、数据驱动、视图与数据分离、只需要关注 View 和 Model 而方便开发。
 
     <div align="center"> 
       ![Vue MVVM](/images/vue/vue_bing.png) 
@@ -49,61 +48,102 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
 ## UI 框架
   * PC端：`Element、iView、vue-element-admin`
   * 移动端
-    * `Vux`：采用微信的 weui 的设计样式，主要服务于微信页面
-    * `Vant`：由有赞前端团队基于有赞统一的规范实现，类似微信样式
-    * `mint-ui`：饿了么出品，文档详细，示例齐全，缺点是比较丑
-    * `Muse-UI`：兼容 PC 端和移动端，样式好看，建议使用在主打海外市场的应用
-    * `vonic`：采用了 ionic 样式，有部分组件被存放到 Vue 对象，比如 this.$tabbar
-    * `vue-material`：基于谷歌的 Material Design 规范构建，缺点是没有时间选择器、非中文文档
-    * `cube-ui`：由滴滴内部组件库精简提炼而来，核心目标是做到体验极致、灵活性强、易扩展以及提供良好的周边生态（后编译）
+    * `Vux`：采用微信的 weui 的设计样式，主要服务于微信页面。
+    * `Vant`：由有赞前端团队基于有赞统一的规范实现，类似微信样式。
+    * `mint-ui`：饿了么出品，文档详细，示例齐全，缺点是比较丑。
+    * `Muse-UI`：兼容 PC 端和移动端，样式好看，建议使用在主打海外市场的应用。
+    * `vonic`：采用了 ionic 样式，有部分组件被存放到 Vue 对象，比如 this.$tabbar。
+    * `vue-material`：基于谷歌的 Material Design 规范构建，缺点是没有时间选择器、无中文文档。
+    * `cube-ui`：由滴滴内部组件库精简提炼而来，核心目标是做到体验极致、灵活性强、易扩展以及提供良好的周边生态（后编译）。
 
 
-## 双向绑定
+## vue 文件渲染流程
 
-### 实现方式
-
-  * __发布者-订阅者模式__：一般通过 sub、pub 的方式实现数据和视图的绑定监听。更新数据一般通过 `vm.set('property', value)`，但这种方式比较 low。我们更希望通过 `vm.property = value`，同时自动更新视图，于是有了以下方式。
-  * __脏值检查__：angular 通过脏值检测的方式对比数据变化来决定是否更新视图，最简单的方式是通过 `setInterval()` 轮询检测数据变化。angular 只有在指定事件触发时进入脏值检测：DOM 事件、XHR 响应事件等。
-  * __数据劫持__：vue 采用 数据劫持 结合 发布者-订阅者模式 的方式。通过 `Object.defineProperty()` 来劫持各个属性的 setter、getter。在数据变动时发布消息给订阅者，触发相应的监听回调。
-
-
-### vue 实现
-
-  1. 实现一个数据监听器 __Observer__，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者。
-  2. 实现一个指令解析器 __Compile__，对每个元素节点的指令进行扫描和解析，并根据初始化模板 data 数据和相应的订阅器。
-  3. 实现一个 __Watcher__，作为连接 Observer 和 Compile 的桥梁，能够订阅并收到每个属性变动的通知，然后执行相应回调函数，从而更新视图。
-  4. mvvm __入口函数__，整合以上三者。
+  1. 使用 vue-loader 编译时，会将 vue 文件中的 template 转化成 render 函数，作为组件对象方法，供运行时调用。
+  2. vue 编译器将 template 转化成 render 函数，template先转化成ast(抽象语法树)，再将 ast 转化成代码字符串 `(_c('div', [_c('span', [_v("1234")]), _c('app')], 1))`，再拼接该字符串 `"with(this){return " + code + "}"`，再将拼接后的字符串作为参数放到 `new Function(code)`，然后赋值给 render，render 调用时触发 `new Function(code)`。
+  3. _c 是 creatElement 函数的引用，该函数返回标签对应的节点实例。调用 render 函数时，节点实例以树形结构的返回，子节点保存在 children。当存在 `_c('app')`，_c 会从components 中找到对应的组件对象，并根据组件对象使用 `Vue.extend()` 创建组件构造函数。在创建节点实例时，将构造函数保存在节点实例的属性上。
+  4. 初始化 `new Vue()`，会执行 `vm.init() -> vm.$mount -> mountComponent` 。mountComponent 中的 `updateComponent = function () { vm._update(vm._render(), hydrating) }` 当页面初始化或者更新时调用，vm._render() 返回树形结构的节点实例，并作为参数传入 vm._update，在 vm._update 中会调用 `vm.__patch__` 更新页面并将节点信息传入。`vm.__patch__` 根据节点实例属性上的构造函数创建组件实例。
 
 
-  <div align="center"> 
-    ![Vue 双向绑定](/images/vue/data_bing.png)
-  </div> 
- 
+## 双向绑定实现流程
 
-### vue 核心
-> 通过 `Object.defineProperty()` 重新定义对象属性值的获取、设置操作。
+  1. __解析模板为 render 函数。__
+    * 模板本质是一串包含指令等逻辑的字符串，最终必须转换成 JS 代码，原因为：必须使用 JS 来处理模板中的逻辑、必须使用 JS 将模板渲染到页面上。
+    * render 函数包含所有的模板信息并返回一个虚拟 DOM，模板中用到的 data 属性和 vue 指令都分别变成了 JS 变量和 JS 逻辑，它的核心是设置对象属性和方法时可以简化代码的 with 函数。
+  2. __响应式开始监听。__
+    * Object.defineProperty 监听：将一个普通 Js 对象传给 Vue 实例的 data 选项时，vue 将遍历此对象的所有属性，并使用 Object.defineProperty 把这些属性全部转为 getter/setter。
+    * 将 data 的属性代理到 vm：render 函数中 with(this){} this 指的是 vm (vm.title、vm.list)，其中 title、list 变量都是 data 的属性。
+  3. __首次渲染显示页面，且绑定依赖。__
+    * 初次渲染，执行 updateComponent() 函数，执行 vm._render() 函数。
+    * 执行 render 函数，会访问到 vm.title、vm.list。
+    * 访问 vm.title vm.list 就会被响应式的 get 方法监听到。
+    * 执行 updateComponent()函数，会走到 vdom 的 patch 方法。
+    * patch 将 vnode 渲染成 DOM，初次渲染完成。
+  4. __data 属性变化，触发 rerender 函数。__
+    * 修改属性，被响应式的 set 监听到。
+    * set 中执行 updateComponent。
+    * updateComponent 重新执行 vm._render()。
+    * 生成的 vnode、prevVnode，通过 patch 进行对比。
+    * 局部渲染 html。
+
 
   ```js
-  // Observer.js
-  function defineReactive(data, key, val) {
-    observe(val); // 监听子属性
-    // 参数：操作对象、对象属性名、属性描述符
-    Object.defineProperty(data, key, {
-      enumerable: true, // 可枚举
-      configurable: false, // 不能再 define
-      get: function() {
-        // 由于需要在闭包内添加 watcher，所以通过 Dep 定义一个全局 
-        // target 属性来暂存 watcher, 添加完移除
-        if (Dep.target) dep.addSub(Dep.target)
-        return val;
-      },
-      set: function(newVal) {
-        if (val === newVal) return
-        val = newVal
-        // 通知所有订阅者
-        dep.notify()   
-      }
-    })
+  // 1、解析模板为 render 函数：核心 with 的参数 this 表示 vm。
+  <div id="app">
+      <p>{{price}}</p>
+  </div>
+  with(this){
+    // _c、_v、_l 函数分别用来创建一个 html 元素、文本节点、数组。
+    return _c(
+      'div',
+        {
+          attrs: {"id": "app"}
+        },
+        [
+          _c('p', [_v(_s(price))])
+        ]
+    )
+  }
+
+  // 2、响应式监听
+  var obj = {};   // 要传给 
+  var data = {
+      price: 100,
+      name: 'zhangsan'
+  };
+  var key, value;
+  for (key in data) {
+      /**
+       * @prame 闭包：保证 key 的独立作用域。
+       * @prame getter/setter 在属性被访问和修改时通知而让 vue 追踪依赖，但对用户不可见。
+       * @prame obj 传给 Vue 实例的 data 选项时，遍历它的所有属性并设置 getter/setter。
+      **/
+      (function (key) {
+          Object.defineProperty(obj, key, {
+              get: function() {
+                  console.log('get', key);
+                  return data[key];
+              },
+              set: function(newVal) {
+                  console.log('set', newVal);
+                  data[key] = newVal;
+              }
+          })
+      })(key)
+  }
+
+  // 3、vue 模板被渲染为 html
+  vm._update(vnode) {
+    const prevVnode = vm._vnode;
+    vm._vnode = vnode;
+    if (!prevVnode) {    // 第一次没有值
+        vm.$el = vm._patch_(vm.$el, vnode);
+    } else {
+        vm.$el = vm._patch_(prevVnode, vnode);
+    }
+  }
+  function updateComponent() {
+    vm._update(vm._render());
   }
   ```
 
@@ -197,7 +237,7 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
 
 ## 服务器端渲染 SSR
 
-  * 两种模式：后端首次渲染的单页面应用模式、后端模版渲染模式，区别在于使用后端路由的程度。前者是后端模板渲染和单页面的组合，首次加载时 vue 服务器将当前页面的数据和组件模版生成 html 字符串返回给浏览器，js 资源加载完成后运行单页面应用。
+  * 两种模式：后端首次渲染的单页面应用模式、后端模板渲染模式，区别在于使用后端路由的程度。前者是后端模板渲染和单页面的组合，首次加载时 vue 服务器将当前页面的数据和组件模板生成 html 字符串返回给浏览器，js 资源加载完成后运行单页面应用。
   * 优点：更好的 SEO 而方便搜索引擎爬虫、更快的首屏渲染而无需等待 Js 加载完成。
   * 缺点：更多的服务器负载（CPU 和内存资源）、更复杂的开发部署（兼容 Node 环境）。
   * 实现
@@ -274,6 +314,7 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
 
       
 # 三、路由控制 Router 
+> 路由根据不同地址展示不同的页面或数据。前端路由多用于 SPA，通过 hash / HTML5 historyApi 实现而不涉及到服务器。
 
 ## 基础使用
 > 将组件映射到路由，然后通过 vue-router 渲染

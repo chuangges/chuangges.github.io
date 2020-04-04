@@ -10,20 +10,16 @@ date: 2019-08-17 22:05:46
 description: React、JSX 表达式、组件化开发、路由功能、状态管理库
 ---
 
-# 一、React
-> Facebook 开源的一个用于动态构建用户界面的 JS 库，本质是 DOM 的一个抽象层，相当于 MVC View。由于没有涉及到代码结构、组件通信等问题，它并不是 Web 应用的完整解决方案，还需要集成 Redux、React-router 等其它库。
+# 一、React 框架
+> Facebook 开源的一个用于动态构建用户界面的 JS 库，本质是 DOM 的一个抽象层，一个专注于 view 层的框架。虽然可以通过 props 实现简单结构的组件通信，但它没有涉及到复杂项目的代码结构、组件通信等问题，所以它并不是复杂应用的完整解决方案，还需要集成 Redux、React-router 等其它库。
 
 ## 主要特点
-> 采用声明范式来描述应用，构建虚拟 dom，支持 JSX 语法，组件化方便复用代码。
+> 采用声明范式来描述应用，构建 Virtual DOM，支持 JSX 语法，组件化方便复用代码。
   
   1. __声明式设计__：采用简洁易懂的声明范式，可以轻松描述应用。
   2. __单向数据流__：推崇一种单向的数据流动模式，减少了重复代码。
-  3. __高效渲染__：通过组件构建虚拟 DOM ，最大限度地减少了与 DOM 的交互。
-    * __virtual DOM__：描述 dom 元素结构结构和样式的 js 对象。组件状态改变时操作内存数据而不需要遍历元素的所有属性。
-    * __DOM Diff__：对比改变前后两个 js 对象差异的算法，用于计算出更新的最小步骤并最终只把变化的部分重新渲染到真实 dom。
-  4. __组件化开发__
-    * DOM 树上的节点被称为__元素__，Virtual DOM 上的节点则称为__组件__。
-    * 组件是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，React 组件开发__推荐使用 JSX__ 而不能用模板。
+  3. __高效渲染__：通过组件构建 __虚拟 DOM__（描述 DOM 元素结构结构和样式的 js 对象），组件状态改变时通过 __react-diff 算法__ 对比新旧 Virtual DOM 得出差异并只将变化部分重新渲染到真实 DOM。相比每次都需要遍历元素所有属性的传统渲染方式，React 极大减少了 DOM 操作而提升了性能。
+  4. __组件化开发__：DOM 树上的节点称为__元素__，Virtual DOM 上的节点则称为__组件__。React 组件是封装起来的具有独立功能的 UI 模块，具有高内聚、低耦合的特点，开发时不能用模板而推荐使用 __JSX__。
   5. __支持客户端与服务器渲染__：服务端渲染 (Node)、APP (ReactNative)，但这只是拓展功能。
 
 
@@ -67,11 +63,12 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
   * 都有 Virtual DOM、webComponent 规范(组件化)，通过 props 实现父子通信。
 
 ### 不同点
+  * __数据绑定__：vue 实现了数据的双向绑定，react 则不支持。
   * __框架模式__：Vue 是 `MVVM` 模式，React 则只针对 `MVC view 层`。
-  * __数据绑定__：vue 实现了数据的双向绑定，react 的数据流动则是单向的。
-  * __state 对象__：vue 不是必须的，react 应用状态则是不可变的并需要使用 setState 更新。
+  * __state 对象__：vue 不是必须的，react 状态不可变并且只能通过 setState 更新。
   * __virtual DOM__：vue 会跟踪每个组件的依赖关系而`不需要重新渲染整个组件树`，React 则是每当应用状态被改变时`重新渲染全部组件`，需要 shouldComponentUpdate 控制。
   * __组件写法__：Vue 推荐使用 `webpack + vue-loader` 的单文件组件，即把 html、css、js 写在同一文件。React 则推荐 `JSX + inline style`，即把 html、css 全部写进 Js。
+  * __复杂交互__：Vue 在工程上解决，通过记录 Model、双向绑定，Model 变更时更新 view 对应部分。React 则在算法上解决，实现 view 高效更新算法，Model 变更时更新整个 view。
 
 
 ## 项目构建
@@ -225,7 +222,7 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
     )
   }
 
-  // 数组
+  // 列表
   <ul>
     {arr.map((item,index)=> <li key={index}> {item} </li>)}
   </ul>
@@ -343,7 +340,7 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
 
 
   ```js
-  // 函数组件：写法简洁，但是功能单一
+  // 函数组件：写法简洁，应尽量使用，但是功能单一
   function MyCom(props){
     return (<h1>mycomponent</h1>)
   }
@@ -445,25 +442,42 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
   ```
 
 ## 组件渲染
+> React 元素只是呈现一个DOM标签
 
   ```js
-  // 1、component：属性值是一个组件，URL、Route 匹配时就会被渲染
-  <Route path='/foo' component={FOO} />
+  // 渲染 API
+  class App extends React.Component {
+    state = { path: '' }
 
-  // 2、render：属性值是一个返回 jsx 元素的函数
+    render() {
+      return (<h1>rendering at: {this.state.path}</h1>)
+    }
+  }
+  // 渲染实现：name 传递给 props，Welcome 转换为标签
+  ReactDOM.render(
+    <Welcome name="张不怂" />,
+    document.getElementById('root')
+  )
+
+  /**
+   * @title Route 渲染
+   * @method 1、component: 属性值是一个组件，URL、Route 匹配时就会被渲染
+   * @method 2、render: 属性值是一个返回 jsx 元素的函数，方便为组件传递额外属性
+   * @method 3、children: 同上，区别是返回组件是否匹配都一定会渲染，不匹配时 match: null
+  **/
+  <Route path='/foo' component={FOO} />
   <Route path='/foo' render={props=>(
     <Foo {...props} data={extraProps} />
   )} />
-
-  // 3、children：属性值同上，但返回的组件一定会被渲染，但不匹配时 match: null
   <Route path='/foo' children={props=>(
-    <div className={props.match ? 'active' : ''}>
-        <Foo />
+    <div className={props.match ? 'active': ''}>
+      <Foo {...props} data={extraProps} />
     </div>
   )} />
   ```
 
-## 绑定 this
+## 事件绑定
+> 将事件绑定到 this。
 
   1. __constructor + bind__：只需要在构造函数中预先绑定一次
   2. __render + bind__：每次渲染时都需要重新绑定，存在性能问题
@@ -902,13 +916,13 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
   ```
 
 
-# 五、状态管理库
+# 五、状态管理
 > 软件开发时有些通用的思想，比如隔离变化，约定优于配置等。隔离变化指做好抽象，把一些容易变化的地方找到共性，隔离出来而不要去影响其他的代码。约定优于配置就是不一定要写一大堆的配置，比如约定 view 文件夹只能放视图。根据这些思想，实现状态管理库的解决思路是：__将组件之间需要共享的状态抽取出来进行统一管理，遵循特定的约定去变更，让状态的变化可以预测以方便对某些场景的复现和回溯__。这样做的好处是：__状态和组件解耦合、更改行为可追踪__，根据这个思路产生了很多的模式和库。
 
-  * __Flux 、Redux 、Vuex__ 均为单向数据流。
+  * __Flux、Redux、Vuex__ 均为单向数据流。
   * __Redux、Vuex__ 基于 Flux，Redux 较为泛用，Vuex 只能用于 vue。
   * __Redux、Vuex__ 适用于大型项目，__MobX__ 在大型项目中会使代码可维护性变差。
-  * __Flux、MobX__ 可以有多个 Store ，__Redux 、Vuex__ 全局仅有一个 Store（单状态树）。
+  * __Flux、MobX__ 可以有多个 Store ，__Redux、Vuex__ 全局仅有一个 Store（单状态树）。
   * __Redux__ 引入了中间件，用于解决异步任务带来的副作用，可通过约定完成许多复杂工作。
   * __MobX__ 是状态管理库中代码侵入性最小的之一，具有细粒度控制、简单可扩展等优势，但是没有时间回溯能力，一般适合应用于中小型项目中。
 
@@ -932,7 +946,7 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
   ```
 
 ## Flux
-> react 官方提出的类似 MVC、MVVM 的一种架构模式，它根据__单向数据流__的核心思想提出了一些基本概念，其它框架可以具体实现。
+> Facebooke 提出的类似 MVC、MVVM 的一种架构模式，它根据__单向数据流__的核心思想提出了一些基本概念，其它框架可以具体实现。
 
   * __Store__：用来存放数据和处理 Action 来更新数据的具体方法，可以有多个。
   * __Action__：本质是一个纯声明式的数据结构，只提供对事件的描述而没有处理逻辑。
@@ -942,21 +956,40 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
     ![Flux 模式](/images/react/flux.png)
   </div>
 
-## Redux
-> Flux 模式单向数据流思想和函数式编程思想结合形成的架构，主要特点是 没有 dispatcher、state 不可变。通过自定义状态的更新规则解决了状态可以追踪、预测、回退等问题，适合大型项目。
 
+## Redux
+> Flux 模式单向数据流思想和函数式编程思想结合形成的框架，主要有单向非响应式的数据流、没有 dispatcher、state 不可变等特点，通过自定义状态的更新规则解决了状态可以追踪、预测、回退等问题，适合大型项目。
+
+### 
+
+  * 主要功能：JS 应用的状态容器，提供可预测化的状态管理。
+    * __JS 应用__：任何 JS 构建的项目，可以与 Angular、React、Falcor 等框架绑定。
+    * __状态容器__：将项目 state 抽离出来并集中在一个树状结构对象 Store (状态容器)。
+    * __可预测性__：state 通过纯函数处理后返回新值从而实现状态更新，但本身并不改变。
   * 设计原则
-    * __单一数据源__：整个应用只有一个 Store 负责统一管理。
-    * __state 是只读的__：通过纯函数 Reducer 更新不可变的状态对象。
-    * __使用纯函数执行修改__：Reducer 接收旧状态和 action 并返回新状态。
+    * __单一数据源__：整个应用状态存储到唯一的 Store 负责统一管理。
+    * __state 是只读的__：唯一改变的方法是触发事先定义好的 action。
+    * __使用纯函数 reducer 执行 state 更新__：action 触发更新操作但并不具体执行。
   * 组成结构
-    * __Action__：描述用户行为的消息对象，store 数据的唯一来源。
-    * __Reducer__：具体执行改变 state 的纯函数，返回根据 state、action 计算出新 state。纯函数特点：输入相同则输出一定相同、不修改参数、不依赖外部变量和方法。
-    * __Store__：存储和管理 state。主要功能有：获取状态 `getState()`、更新状态 `dispatch(action)`、监听状态变化 `subscribe(listener)`、通过中间件 `redux-thunk、redux-saga、redux-promise 等` 处理异步任务。
+    * __Action__：描述用户行为的 js 对象，其中必须包含一个 type 字段来表示将要执行的动作，其它字段可以根据需求自定义。用于执行 `dispatch(action)` 更新数据。
+    * __Reducer__：根据 action 定义 state 修改规则的纯函数 `reducer(preState, action)`，它会返回一个新 state 并且不会改变旧值。纯函数特点：输入相同则输出一定相同、不修改参数、不依赖外部变量和方法。
+    * __Store__：存储和管理 state。主要提供功能：创建 store `createStore(reducer, defaultState) `、获取状态 `getState()`、更新状态 `dispatch(action)`、监听状态变化 `subscribe(listener)`、通过中间件 `redux-thunk、redux-saga、redux-promise 等` 处理异步任务。
+  * 工作流程
+    <div align="center"> 
+      ![Redux](/images/react/redux.png)
+    </div>
+
+
+### react-redux
+> 为了让没有关系的 __组件渲染方案 React、数据处理中心 Redux__ 更好地配合使用而专门开发的一个库，当然不引用也可以但会增加一些工作量和性能开销。它主要提供两个方法：__Provider__ 为后代组件传递 store、__connect__ 为组件提供数据和变更方法。
 
   <div align="center"> 
-    ![Redux](/images/react/redux.png)
+    ![react-redux 工作流程](/images/react/react-redux.png)
   </div>
+
+
+
+
 
 
 ## MobX
@@ -994,6 +1027,9 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
     * __effects__：副作用处理函数。
     * __reducers__：等同于 redux reducer。
     * __subscriptions__：订阅信息。
+
+
+
 
 
 

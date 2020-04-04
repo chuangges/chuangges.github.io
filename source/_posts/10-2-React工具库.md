@@ -7,20 +7,121 @@ top: false
 keywords:
   - React
 date: 2019-08-29 14:27:28
-description: Mobox 机制
+description: Redux、Mobox
 ---
 
-# 一、状态管理工具 MobX
-> 对于应用开发中的常见问题，React 和 MobX 都提供了最优和独特的解决方案，两者是一对强力组合。React 提供了优化 UI 渲染的机制，它使用虚拟 DOM 减少了昂贵的 DOM 变化的数量，将应用状态转换为可渲染组件树并对其进行渲染。MobX 则提供了优化应用状态与 React 组件同步的机制，它通过透明的函数响应式编程使得状态管理变得简单和可扩展，使用虚拟依赖状态图表实现在需要时更新最新数据。
-
-  https://cn.mobx.js.org/
+# 一、Redux
 
 
+## 应用实例
 
-# 六、Redux
+```js
+// ================= redux ===================
+// src/store/index.js
+import { createStore } from 'redux'
 
-### 相关库
-> 框架绑定：`React react-redux、Angular ng-redux、Angular2 ng2-redux、Backbone backbone-redux、Falcor redux-falcor、Deku deku-redux`。
+const reducer = (state = {count: 0}, action) => {
+  switch (action.type){
+    case 'INCREASE': return {count: state.count + 1};
+    case 'DECREASE': return {count: state.count - 1};
+    default: return state;   // 初始化
+  }
+}
+
+const actions = {
+  increase: () => ({type: 'INCREASE'}),
+  decrease: () => ({type: 'DECREASE'})
+}
+
+const store = createStore(reducer);
+store.subscribe(() =>
+  console.log(store.getState())
+)
+
+export default store
+
+// ReduxTest.js
+import React, { Component } from 'react'
+import store from '../store'
+
+export default class ReduxTest extends Component {
+
+  render() {
+    return (
+      <div>
+        <span>{store.getState()}</span>
+        <button onClick={() => store.dispatch({ type: 'add' })}>+</button>
+        <button onClick={() => store.dispatch({ type: 'minus' })}>-</button>
+      </div>
+    )
+  }
+}
+
+// ====================== react-redux =======================
+// index.js 入口文件
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import store from './store'
+import { Provider } from 'react-redux'
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App title="hello React" />
+  </Provider>,
+  document.getElementById('root')
+)
+
+// store/index.js
+import { createStore } from 'redux'
+
+const counterReducer = function(state = 0, action) {
+  const num = action.payload || 1
+  switch (action.type) {
+    case 'add':
+      return state + num
+    case 'minus':
+      return state - num
+    default:
+      return state
+  }
+}
+
+const store = createStore(counterReducer)
+
+export default store
+
+// ReduxTest.js
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+// 参数1：mapStateToProps = (state) => { return { num:state } }
+// 参数2：mapDispatchToProps = dispatch => { return { add: () => { dispatch({ type: 'add' }) } } }
+@connect(
+  state => ({ num: state }),
+  {
+    add: num => ({ type: 'add', payload: num }),
+    minus: () => ({ type: 'minus' })
+  }
+)
+class ReduxTest extends Component {
+  render() {
+    return (
+      <div>
+        <span>{this.props.num}</span>
+        <button onClick={() => this.props.add(2)}>+</button>
+        <button onClick={() => this.props.minus()}>-</button>
+      </div>
+    )
+  }
+}
+
+export default ReduxTest
+```
+
+
+
+
 
 
 
@@ -38,6 +139,22 @@ mapDispatchToProps：用来建立UI组件的参数到store.dispatch方法的映�
        以上，redux的出现已经可以使react建立起一个大型应用，而且能够很好的管理状态、组织代码，但是有个棘手的问题没有很好地解决，那就是异步；  
 
 
+
+　npm i -S redux 　　// 这里时我们需要下载的 redux 组件通信的插件
+
+　　　　npm i -S prop-types 　　// 我们的较验规则
+
+　　　　npm i -S react-redux　　// 我们的 react 版的 redux 为了就是更方便的使用 redux
+
+　　　　npm i -S redux-thunk　　// 异步加载我们的代码
+
+　　　　npm i -D redux-devtools-extension　　// 我们可以在谷歌中下载 redux 的插件，然后在项目中下载 redex-devtools-extension 的插件，我们就能在谷歌浏览器中实时的掌握 redux 的数据
+
+　　　　npm i -S react-router　　// 我们的路由插件
+
+
+
+
 【redux-saga】：
 
 定位：react中间件；旨在于更好、更易地解决异步操作（action）；redux-saga相当于在Redux原有数据流中多了一层，对Action进行监听，捕获到监听的Action后可以派生一个新的任务对state进行维护；
@@ -50,9 +167,9 @@ Effect： 一个简单的对象，这个对象包含了一些给 middleware 解�
 put：触发某个action，作用和dispatch相同；
 
 
+# 二、
 
-
-# Zarm
+# 三、Zarm
 https://zarm.design/#/components/collapse
 
 
