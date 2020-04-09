@@ -7,8 +7,51 @@ top: false
 keywords:
   - React
 date: 2019-08-29 14:27:28
-description: Redux、Mobox
+description: Hook、Redux、Mobox
 ---
+
+# 一、Hook
+> 从具象上来说是为函数组件（纯函数）提供副作用能力的 React API，从抽象意义上来说是确定状态源的解决方案。
+
+## Class Component 的问题
+
+### 组件复用困局
+> 对于组件之间的数据共享问题，React官方采用单向数据流（Flux）来解决。对于组件的复用，React 团队一直在探索解决方案：早期使用 __CreateClass + Mixins__ (混入：将对象复制到另一个对象)，然后使用 Class Component 取代 CreateClass 之后又设计了 __Render Props__ ()、__Higher Order Component__ (高阶组件：接收原组件为参数并返回一个新组件的函数)，直到再后来的 __Function Component + Hooks__ 设计。
+
+* Mixin 缺陷
+  * 命名冲突：多个 Mixin 可能定义了相同的 state 字段而导致数据覆盖问题。
+  * 相关依赖：组件与 Mixin、多个 Mixin 之间都可能存在依赖关系，维护成本较高。
+  * 增加复杂性：一个组件引入过多 mixin 时，代码逻辑将会非常复杂，过多的状态也降低了应用的可预测性。
+* HOC 优势
+  * HOC 不会影响组件内部的状态，不存在冲突和互相干扰，这就降低了耦合度。
+  * 不同于 Mixin 的打平+合并，HOC 具有天然的层级结构（组件树结构），降低了复杂度。
+* HOC 缺陷
+  * 嵌套地狱：过多的嵌套会导致难以溯源，而且存在属性覆盖问题。
+  * 静态构建：HOC 只是声明了新组件但不会马上渲染，只有在新组件被渲染时才会执行。
+* 
+
+
+  
+
+```js
+// HOC 高阶组件
+function getComponent(WrappedComponent) {
+  return class extends React.Component {
+    render() {
+      return <WrappedComponent {...this.props}/>;
+    }
+  }
+}
+```
+
+
+
+Render Props：
+
+数据流向更直观了，子孙组件可以很明确地看到数据来源
+但本质上Render Props是基于闭包实现的，大量地用于组件的复用将不可避免地引入了callback hell问题
+丢失了组件的上下文，因此没有this.props属性，不能像HOC那样访问this.props.children
+
 
 # 一、Redux
 

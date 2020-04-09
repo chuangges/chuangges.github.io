@@ -48,7 +48,7 @@ description: audio、Canvas、WebSocket、Worker<br/>拖放操作、地理定位
   * __浏览器读取规则__：从右向左，因为相比从左到右匹配更快、性能更优。
   * __元素隐藏方法__：display、Opacity、visibility、hide、遮罩等。
   * __伪类和伪元素__
-    * 伪类：`:hover、:link`等用于向已有元素添加特殊效果
+    * 伪类：`:hover、:active、:first-child`等用于向已有元素添加特殊效果。
     * 伪元素：`::before、::after`等用于新建抽象元素并添加样式而实现特殊效果。
 
 

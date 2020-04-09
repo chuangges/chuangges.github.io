@@ -324,6 +324,44 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
 
 
 # 三、组件化开发
+> React 采用 props 属性来接收外部的数据，使用 state 属性来管理组件自身数据，为了实现对数据变更做出响应需要而采用基于 Class 的组件设计，同时引入了生命周期的概念而提供了一系列 API 供开发者使用。
+
+  ```js
+  // React 基于 Class 设计组件
+  class MyConponent extends React.Component {
+    // 组件数据
+    state = {
+      counts: 0
+    }
+
+    // 响应数据变更
+    clickHandle = () => {
+      this.setState({ counts: this.state.counts++ });
+      if (this.props.onClick) this.props.onClick();
+    }
+
+    // lifecycle API
+    componentWillUnmount() {
+      console.log('Will mouned!');
+    }
+
+      // lifecycle API
+    componentDidMount() {
+      console.log('Did mouned!');
+    }
+
+    // 接收外来数据（或加工处理），并编排数据在视觉上的呈现
+    render(props) {
+      return (
+        <>
+          <span>Input content: {props.content}</span>
+          <span>btn click counts: {this.state.counts}</span>
+          <button onClick={this.clickHandle}>Add</button>
+        </>
+      );
+    }
+  }
+  ```
 
 ## 组件创建
 > 组件名的首字母必须大写，因为 JSX 转换时会调用 `React.createElement(type, config, children)`。type 声明了元素类型：首字母大写时会被 babel 看作一个组件而传入变量，小写时则看作一个 html 标签而传入字符串。
@@ -988,10 +1026,6 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
   </div>
 
 
-
-
-
-
 ## MobX
 > 基于 Flux 模式单向数据流思想，填补了 Redux 对相关概念约束太强而失去了灵活性的空缺，适合中小型项目。设计更多偏向于面向对象编程和响应式编程，取缔传统 React 的命令式编程，分而治之，将组件都变成可响应的。React 提供了渲染的最优方式，Mobx 则给 React 提供了响应式的状态管理。
 
@@ -1027,8 +1061,6 @@ description: React、JSX 表达式、组件化开发、路由功能、状态管�
     * __effects__：副作用处理函数。
     * __reducers__：等同于 redux reducer。
     * __subscriptions__：订阅信息。
-
-
 
 
 
