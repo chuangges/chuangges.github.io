@@ -11,49 +11,131 @@ description: Hook、Redux、Mobox
 ---
 
 # 一、Hook
-> 从具象上来说是为函数组件（纯函数）提供副作用能力的 React API，从抽象意义上来说是确定状态源的解决方案。
+> react16.8 引入的特性，它允许你在不写 class 的情况下操作 state 和其它特性。从具象上来说是为函数组件（纯函数）提供副作用能力的 React API，从抽象意义上来说是确定状态源的解决方案。使用规则如下：
 
-## Class Component 的问题
-
-### 组件复用困局
-> 对于组件之间的数据共享问题，React官方采用单向数据流（Flux）来解决。对于组件的复用，React 团队一直在探索解决方案：早期使用 __CreateClass + Mixins__ (混入：将对象复制到另一个对象)，然后使用 Class Component 取代 CreateClass 之后又设计了 __Render Props__ ()、__Higher Order Component__ (高阶组件：接收原组件为参数并返回一个新组件的函数)，直到再后来的 __Function Component + Hooks__ 设计。
-
-* Mixin 缺陷
-  * 命名冲突：多个 Mixin 可能定义了相同的 state 字段而导致数据覆盖问题。
-  * 相关依赖：组件与 Mixin、多个 Mixin 之间都可能存在依赖关系，维护成本较高。
-  * 增加复杂性：一个组件引入过多 mixin 时，代码逻辑将会非常复杂，过多的状态也降低了应用的可预测性。
-* HOC 优势
-  * HOC 不会影响组件内部的状态，不存在冲突和互相干扰，这就降低了耦合度。
-  * 不同于 Mixin 的打平+合并，HOC 具有天然的层级结构（组件树结构），降低了复杂度。
-* HOC 缺陷
-  * 嵌套地狱：过多的嵌套会导致难以溯源，而且存在属性覆盖问题。
-  * 静态构建：HOC 只是声明了新组件但不会马上渲染，只有在新组件被渲染时才会执行。
-* 
+  * 函数式编程，你不需要定义 constructor、render、class。
+  * 没有了显性的生命周期，所有渲染后的执行方法都在 useEffect 里面统一管理。
+  * 只能在最顶层使用 Hook，不能在循环、条件判断或嵌套函数中调用。只能在 React 函数组件中调用 Hook，不能在普通函数中调用。
 
 
-  
+## 组件复用方案
+> 对于组件之间的数据共享问题，React官方采用单向数据流（Flux）来解决。对于组件的复用，React 团队一直在探索解决方案：早期使用 __CreateClass + Mixins__ (混入：将对象复制到另一个对象)，然后使用 Class Component 取代 CreateClass 之后又设计了 __Render Props__ (通过 props 接受一个返回 react element 的函数来实现动态渲染)、__Higher Order Component__ (高阶组件：接收原组件为参数并返回一个新组件的函数)，直到再后来的 __Function Component + Hooks__(封装组件中状态相关逻辑的函数) 设计。
 
-```js
-// HOC 高阶组件
-function getComponent(WrappedComponent) {
-  return class extends React.Component {
-    render() {
-      return <WrappedComponent {...this.props}/>;
+  * __Mixin__ 缺陷
+    * 命名冲突：多个 Mixin 可能定义了相同的 state 字段而导致数据覆盖问题。
+    * 相关依赖：组件与 Mixin、多个 Mixin 之间都可能存在依赖关系，维护成本较高。
+    * 增加复杂性：一个组件引入过多 mixin 时，代码逻辑将会非常复杂，过多的状态也降低了应用的可预测性。
+  * __HOC__ 优势
+    * HOC 不会影响组件内部的状态，不存在冲突和互相干扰，这就降低了耦合度。
+    * 不同于 Mixin 的打平+合并，HOC 具有层级结构（组件树结构），降低了复杂度。
+  * HOC 缺陷
+    * 嵌套地狱：每一次 HOC 调用都会产生一个组件实例，过多的嵌套会导致难以溯源，而且可能会存在 props 属性覆盖问题。
+    * 静态构建：HOC 只是声明了新组件但不会马上渲染，只有在组件被渲染时才执行。
+  * __Render Prop__ 优势
+    * 动态构建，组件会重新渲染。
+    * 不用担心 props 的命名冲突。
+    * 可以溯源，子组件的 props 一定是来自于直接父组件。
+  * Render Prop 缺陷
+    * 嵌套地狱：虽然摆脱了组件多层嵌套的问题，但是转化为了函数回调的嵌套。
+    * 使用繁琐：HOC 可以通过装饰器语法的一行代码实现复用，Render Props 则不行。
+    * 没有组件的上下文：没有 this.props 属性，不能像 HOC 那样可以直接获取到子组件实例对象 this.props.children。
+  * __React Hooks__ 优势
+    * 解决了以上的嵌套问题，而且实现了视图和状态的分离，Hooks 还可以相互组合。
+    * Hooks 为函数组件而生，从而解决了类组件的几大问题：this 指向容易错误、声明周期中的逻辑代码难以理解和维护、代码复用成本高等。
+  * __React Hooks__ 缺陷
+    * 用法限制：只能在最顶层使用 Hook，不能在循环、条件判断或嵌套函数中调用。只能在 React 函数组件中调用 Hook，不能在普通函数中调用。
+    * 在闭包场景可能会引用到旧的 state、props 值，React.memo 也不能完全替代 shouldComponentUpdate（因为拿不到 state change，只针对 props change）。
+
+
+  ```js
+  // HOC 高阶组件
+  function getComponent(WrapCom) {
+    return class extends React.Component {
+      render() {
+        return <WrapCom {...this.props}/>;
+      }
     }
   }
-}
-```
+
+  // Render Prop
+  <Router>
+    <Route path="/home" render={() => <div>Home</div>} />
+  </Router>
+  ```
+
+
+## 基础 API
+
+  ```js
+  import React, { useState, useEffect, useContext } from 'react'
+  useEffect // 万能的生命周期、每次都触发的生命周期、可以重复写多个的生命周期
+  useContent // react自带的redux(mobx)、方便组建间传值
+  export default function TodoList(props) {
+
+    // 初始状态、改变状态的方法
+    const [count, setCount] = useState(0)
+
+    /**
+    * @prame 参数：function，默认每次渲染完成后执行，函数里更新 dom、添加订阅等。
+    * @prame 参数：[] 表示在首次渲染时执行，[count] 则表示只在 count 变化时执行。
+    **/
+    useEffect(() = {
+      document.title = `You clicked ${count} times`;
+    }, [])
+    // 清除 effect：组件卸载时需要清除 effect 创建的订阅、计时器等。
+    useEffect(() => {
+      const id = setInterval(() => {
+        setCount(count => count + 1)
+      }, 1000)
+      return () => clearInterval(id)
+    }, [])
+
+    // useContent
+    const value = useContext(MyContext);
+    
+    return(
+      <button onClick={() => {setCount(count + 1)}}>Click</button>
+    )
+  }
+  ```
 
 
 
-Render Props：
+## 自定义 Hook
 
-数据流向更直观了，子孙组件可以很明确地看到数据来源
-但本质上Render Props是基于闭包实现的，大量地用于组件的复用将不可避免地引入了callback hell问题
-丢失了组件的上下文，因此没有this.props属性，不能像HOC那样访问this.props.children
 
 
 # 一、Redux
+
+
+## 核心实现
+> 利用闭包管理 state 等变量，然后在 dispatch 时通过用户定义 reducer 获取新状态并赋值给 state，再把外部通过 subscribe 订阅触发。
+
+  ```js
+  function createStore(reducer) {
+    let currentState
+    let subscribers = []
+    function dispatch(action) {
+      currentState = reducer(currentState, action);
+      subscribers.forEach(s => s())
+    }
+    function getState() {
+      return currentState;
+    }
+    
+    function subscribe(subscriber) {
+        subscribers.push(subscriber)
+        return function unsubscribe() {
+            ...
+        }
+    }
+    dispatch({ type: 'INIT' });
+    return {
+      dispatch,
+      getState,
+    };
+  }
+  ```
 
 
 ## 应用实例
