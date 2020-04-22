@@ -888,6 +888,44 @@ description: CSS3 要点、开发常用样式、动画
 
 ## 1px border
   ```scss
+  // 法一
+  .border_1px {
+    border-bottom: 1px solid #000;
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .border_1px {
+        border-bottom: none;
+        border-width: 0 0 1px 0;
+        border-image: url(../img/1pxline.png) 0 0 2 0 stretch;
+    }
+  }
+
+  // 法二
+  .border_1px {
+    position: relative;
+  }
+  .border_1px:before {
+    content:'';
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #000;
+    transform-origin: 50% 0%;
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .border_1px:before {
+        transform: scaleY(0.5);
+    }
+  }
+  @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+    .border_1px:before {
+        transform: scaleY(0.33);
+    }
+  }
+
+  // 单一边框
   .hair-line {
     position: relative;
   }
@@ -918,23 +956,6 @@ description: CSS3 要点、开发常用样式、动画
   }
   .hair-line--a::after {
     border-width: 1px;
-  }
-
-  @mixin all-border-1px($color: #999, $radius: 10px) {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: 2px solid $color;
-    border-radius: $radius * 2;
-    box-sizing: border-box;
-    width: 200%;
-    height: 200%;
-    transform: scale(0.5);
-    transform-origin: left top;
-  }
-  .border-1px::after{
-    @include all-border-1px();
   }
   ```
 

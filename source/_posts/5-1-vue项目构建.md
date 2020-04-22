@@ -45,7 +45,7 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
     * 可以同时在浏览器和 nodejs 中使用
 
 
-## UI 框架
+## UI 库
   * PC端：`Element、iView、vue-element-admin`
   * 移动端
     * `Vux`：采用微信的 weui 的设计样式，主要服务于微信页面。
@@ -57,7 +57,7 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
     * `cube-ui`：由滴滴内部组件库精简提炼而来，核心目标是做到体验极致、灵活性强、易扩展以及提供良好的周边生态（后编译）。
 
 
-## vue 文件渲染流程
+## 文件渲染流程
 
   1. 使用 vue-loader 编译时，会将 vue 文件中的 template 转化成 render 函数，作为组件对象方法，供运行时调用。
   2. vue 编译器将 template 转化成 render 函数，template先转化成ast(抽象语法树)，再将 ast 转化成代码字符串 `(_c('div', [_c('span', [_v("1234")]), _c('app')], 1))`，再拼接该字符串 `"with(this){return " + code + "}"`，再将拼接后的字符串作为参数放到 `new Function(code)`，然后赋值给 render，render 调用时触发 `new Function(code)`。
@@ -409,8 +409,8 @@ description: Vue 框架、项目构建、Router、Axios、Vuex
 
        
 ### 404 错误
-  * __hash 模式__：只有 # 前面的内容会被包含在请求中。因此对于后端来说，即使没有做到对路由的全覆盖也不会返回404错误
-  * __history 模式__：前端的url必须和实际向后端发起请求的url 一致，比如 /book/id ，如果后端缺少对该路由的处理则返回 404 错误 
+  * __hash 模式__：只有 # 前面的内容会被包含在请求中。因此对于后端来说，即使没有做到对路由的全覆盖也不会返回 404 错误。
+  * __history 模式__：前端 url 必须和实际向后端发起请求的 url 一致，比如 /book/id ，如果后端缺少对该路由的处理则返回 404 错误。
 
   
 ### 注意问题
