@@ -28,7 +28,7 @@
 <meta property="og:description" content="audio、Canvas、WebSocket、Worker拖放操作、地理定位、全屏模式、数据存储">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-06T14:50:40.000Z">
-<meta property="article:modified_time" content="2022-09-30T05:44:40.368Z">
+<meta property="article:modified_time" content="2022-09-30T08:00:12.524Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="HTML CSS">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+                <time title="修改时间：2022-09-30 16:00:12" itemprop="dateModified" datetime="2022-09-30T16:00:12+08:00">2022-09-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,9 +246,9 @@
 <li>浮动模型：浮动流。浮动元素脱离文档流而释放空间，但不遮挡后面内容。<br>* float：设计初衷是文字环绕效果，主要特性有包裹性、破坏性。<br>* 清除浮动：清除对后面元素的影响，但父元素有浮动&#x2F;绝对定位时不需要。<br>* 清除方法：<code>给父元素指定高度、在浮动元素后面添加 clear: both、给浮动元素父元素添加 overflow: hidden/auto、底部添加伪元素 after</code>。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 清除浮动经典方法 */</span></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;       <span class="comment">/* 添加内容为空 */</span>   </span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;           <span class="comment">/* 不占空间 */</span></span><br><span class="line">  <span class="attribute">visibility</span>: hidden;  <span class="comment">/* 不可见  */</span>   </span><br><span class="line">  <span class="attribute">clear</span>: both</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;  </span><br><span class="line">  *zoom : <span class="number">1</span>;   <span class="comment">/* 兼容低版本浏览器 */</span>   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><ul>
-<li>__文件引入优先级__：就近原则，距离相应代码近的引入方式优先级高。</li>
-<li>__浏览器读取规则__：从右向左，因为相比从左到右匹配更快、性能更优。</li>
-<li>__元素隐藏方法__：display、Opacity、visibility、hide、遮罩等。</li>
+<li><strong>文件引入优先级</strong>：就近原则，距离相应代码近的引入方式优先级高。</li>
+<li><strong>浏览器读取规则</strong>：从右向左，因为相比从左到右匹配更快、性能更优。</li>
+<li><strong>元素隐藏方法</strong>：display、Opacity、visibility、hide、遮罩等。</li>
 <li><strong>伪类和伪元素</strong><ul>
 <li>伪类：<code>:hover、:active、:first-child</code>等用于向已有元素添加特殊效果。</li>
 <li>伪元素：<code>::before、::after</code>等用于新建抽象元素并添加样式而实现特殊效果。</li>
@@ -309,9 +309,9 @@
 <li>在当前 js 的主线程中，通过 Worker 类加载一个 js 文件来开辟一个新的线程</li>
 <li>新线程可以加载 JS 进行大量的复杂运算，同时主线程不需要挂起等待而是执行其它代码</li>
 <li>新线程创建时，它的脚本文件生成的两个对象和一套 API 可以实现主线程和子线程的数据通信<ul>
-<li>__worker 对象__：主线程脚本中通过构造函数显式创建，通过实例方法获取</li>
-<li>__WorkerGlobalScope 对象__：子线程脚本中隐式创建的全局对象，通过 this 获取</li>
-<li>__API 接口__：主线程和子线程脚本间进行数据传输的接口，主要为 postMessage、onmessage</li>
+<li><strong>worker 对象</strong>：主线程脚本中通过构造函数显式创建，通过实例方法获取</li>
+<li><strong>WorkerGlobalScope 对象</strong>：子线程脚本中隐式创建的全局对象，通过 this 获取</li>
+<li><strong>API 接口</strong>：主线程和子线程脚本间进行数据传输的接口，主要为 postMessage、onmessage</li>
 </ul>
 </li>
 </ul>
@@ -342,15 +342,15 @@
 <p>Worker 线程脚本</p>
 </blockquote>
 <ul>
-<li>__脚本限制__：无法调用 alert、confirm 等函数。</li>
-<li>__同源限制__：不能跨域加载脚本文件，它必须与主线程的脚本文件同源。</li>
-<li>__通信限制__：Worker 线程和主线程不在同一个上下文环境，它们不能直接通信。</li>
-<li>__文件限制__：无法读取本地文件，所加载的脚本必须 来自网络或通过服务器打开。</li>
-<li>__DOM 限制__：无法访问 DOM 节点、无法访问 window、document 等全局变量。</li>
+<li><strong>脚本限制</strong>：无法调用 alert、confirm 等函数。</li>
+<li><strong>同源限制</strong>：不能跨域加载脚本文件，它必须与主线程的脚本文件同源。</li>
+<li><strong>通信限制</strong>：Worker 线程和主线程不在同一个上下文环境，它们不能直接通信。</li>
+<li><strong>文件限制</strong>：无法读取本地文件，所加载的脚本必须 来自网络或通过服务器打开。</li>
+<li><strong>DOM 限制</strong>：无法访问 DOM 节点、无法访问 window、document 等全局变量。</li>
 </ul>
 <h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
-<li>__专用线程__：只能被创建它的页面访问，随当前页面的关闭而结束，通信通过 onmessage()、postmessage()。</li>
-<li>__共享线程__：可以被多个页面访问，connect 后通过 port 属性实现通信。</li>
+<li><strong>专用线程</strong>：只能被创建它的页面访问，随当前页面的关闭而结束，通信通过 onmessage()、postmessage()。</li>
+<li><strong>共享线程</strong>：可以被多个页面访问，connect 后通过 port 属性实现通信。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ---------- 专用线程 -----------</span></span><br><span class="line"><span class="comment">// 主线程 index.html/script</span></span><br><span class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> <span class="title class_">Worker</span>(<span class="string">&quot;worker.js&quot;</span>); </span><br><span class="line">worker.<span class="title function_">postMessage</span>(<span class="string">&quot;hello world&quot;</span>);      <span class="comment">// 发送数据</span></span><br><span class="line">worker.<span class="property">onmessage</span> = <span class="keyword">function</span> (<span class="params">event</span>) &#123;   <span class="comment">// 接收数据</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">data</span>);             </span><br><span class="line">  worker.<span class="title function_">terminate</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子线程：worker.js </span></span><br><span class="line">onmessage = <span class="keyword">function</span> (<span class="params">event</span>)&#123;          <span class="comment">// 接收数据</span></span><br><span class="line">  <span class="keyword">var</span> d = event.<span class="property">data</span>;    </span><br><span class="line">  <span class="title function_">postMessage</span>(<span class="string">&quot;已收到：&quot;</span> + d);        <span class="comment">// 发送数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过服务器打开文件：直接打开会报错</span></span><br><span class="line">live-server</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- 共享线程 -----------</span></span><br><span class="line"><span class="comment">// 主线程 </span></span><br><span class="line">worker.<span class="property">port</span>.<span class="property">onmessage</span> = <span class="keyword">function</span>(<span class="params">e</span>)&#123;&#125;</span><br><span class="line">worker.<span class="property">port</span>.<span class="title function_">postMessage</span>(<span class="string">&#x27;data&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子线程 </span></span><br><span class="line"><span class="title function_">addEventListener</span>(<span class="string">&#x27;connect&#x27;</span>, <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> port = event.<span class="property">ports</span>[<span class="number">0</span>]</span><br><span class="line">  <span class="comment">// 接收</span></span><br><span class="line">  port.<span class="property">onmessage</span> = <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">data</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 发送</span></span><br><span class="line">  port.<span class="title function_">postMessage</span>(<span class="string">&quot;data&quot;</span>);</span><br><span class="line">  port.<span class="title function_">start</span>();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -436,10 +436,10 @@
 <ul>
 <li>特点<ul>
 <li><strong>同源策略限制</strong> </li>
-<li>__单标签页限制__：同一个标签页中的同源页面共享数据。</li>
-<li>__只在本地存储__：数据只会在存储在本地，并在标签页关闭后清除。</li>
-<li>__存储方式__：采用键值对的方式，注意 value 值必须为字符串类型。</li>
-<li>__存储上限限制__：不同的浏览器存储的上限不同，但大多数限制在 5MB 以下。</li>
+<li><strong>单标签页限制</strong>：同一个标签页中的同源页面共享数据。</li>
+<li><strong>只在本地存储</strong>：数据只会在存储在本地，并在标签页关闭后清除。</li>
+<li><strong>存储方式</strong>：采用键值对的方式，注意 value 值必须为字符串类型。</li>
+<li><strong>存储上限限制</strong>：不同的浏览器存储的上限不同，但大多数限制在 5MB 以下。</li>
 </ul>
 </li>
 <li>API<ul>
@@ -575,9 +575,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/HTML-CSS/" rel="tag"># HTML CSS</a>
-          </div>
 
         
 
@@ -753,12 +750,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">634k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:37</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

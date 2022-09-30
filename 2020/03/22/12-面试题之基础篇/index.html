@@ -28,7 +28,7 @@
 <meta property="og:description" content="HTML CSS、JS、JS 框架、小程序、编程实现">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-22T09:31:06.000Z">
-<meta property="article:modified_time" content="2022-09-30T05:44:40.376Z">
+<meta property="article:modified_time" content="2022-09-30T08:00:12.711Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="面试题库">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+                <time title="修改时间：2022-09-30 16:00:12" itemprop="dateModified" datetime="2022-09-30T16:00:12+08:00">2022-09-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,18 +233,18 @@
 
       
         <h1 id="一、HTML、CSS"><a href="#一、HTML、CSS" class="headerlink" title="一、HTML、CSS"></a>一、HTML、CSS</h1><ul>
-<li>__语义化理解__：使用合理标签来创建页面内容，让页面结构更清晰。好处是便于浏览器和搜索引擎解析，提高代码的可读性和重用性。</li>
-<li>__CSS 盒模型__：width&#x2F;height 设置的宽高只是指 content、盒子宽高 &#x3D;&#x3D; 内容 + 填充 + 边距 + 边框、标准盒模型 box-sizing: content-box、IE 盒模型 box-sizing: border-box。</li>
-<li>__图片加载优化__：可视区域的图片懒加载 (按需加载)、前后图片的预加载 (页面加载完成之前下载所需资源，使用时从缓存中调用) 、使用雪碧图。</li>
-<li>__WebP__：谷歌开发的一种支持有损压缩和无损压缩的新图片格式，优点是相同质量的图片拥有更小的文件体积，非常适合于网络图片的传输。</li>
-<li>__header token 为何不会被劫持__：token 不是防止 XSS 而是为了防止 CSRF、CSRF 攻击的原因是浏览器会自动带上 cookie 而浏览器不会自动带上 token。</li>
-<li>__宽高覆盖规则__：min-width &gt; max-width &gt; width，即使设置了行内样式或 !important。</li>
-<li>__性能指标__：FP 首次绘制、FCP 首次内容绘制、LCP 最大内容绘制时间、FPS 每秒传输帧数、TTI 页面可交互时间、HTTP 请求响应时间、DNS 解析时间、TCP 连接时间</li>
+<li><strong>语义化理解</strong>：使用合理标签来创建页面内容，让页面结构更清晰。好处是便于浏览器和搜索引擎解析，提高代码的可读性和重用性。</li>
+<li><strong>CSS 盒模型</strong>：width&#x2F;height 设置的宽高只是指 content、盒子宽高 &#x3D;&#x3D; 内容 + 填充 + 边距 + 边框、标准盒模型 box-sizing: content-box、IE 盒模型 box-sizing: border-box。</li>
+<li><strong>图片加载优化</strong>：可视区域的图片懒加载 (按需加载)、前后图片的预加载 (页面加载完成之前下载所需资源，使用时从缓存中调用) 、使用雪碧图。</li>
+<li><strong>WebP</strong>：谷歌开发的一种支持有损压缩和无损压缩的新图片格式，优点是相同质量的图片拥有更小的文件体积，非常适合于网络图片的传输。</li>
+<li><strong>header token 为何不会被劫持</strong>：token 不是防止 XSS 而是为了防止 CSRF、CSRF 攻击的原因是浏览器会自动带上 cookie 而浏览器不会自动带上 token。</li>
+<li><strong>宽高覆盖规则</strong>：min-width &gt; max-width &gt; width，即使设置了行内样式或 !important。</li>
+<li><strong>性能指标</strong>：FP 首次绘制、FCP 首次内容绘制、LCP 最大内容绘制时间、FPS 每秒传输帧数、TTI 页面可交互时间、HTTP 请求响应时间、DNS 解析时间、TCP 连接时间</li>
 </ul>
 <h2 id="link、-import-导入"><a href="#link、-import-导入" class="headerlink" title="link、@import 导入"></a>link、@import 导入</h2><ul>
-<li>__从属关系__：@import 只能用于加载 CSS，link 是 XHTML 标签，它还可以定义 RSS、rel 连接属性、引入网站图标等。</li>
-<li>__加载顺序__：加载页面时，link 引入的 CSS 被同时加载，@import 引入的 CSS 会等到页面被全部加载完成后再加载。</li>
-<li>__兼容性__：link 无兼容性问题，@import 只有 IE5+ 才能被识别。</li>
+<li><strong>从属关系</strong>：@import 只能用于加载 CSS，link 是 XHTML 标签，它还可以定义 RSS、rel 连接属性、引入网站图标等。</li>
+<li><strong>加载顺序</strong>：加载页面时，link 引入的 CSS 被同时加载，@import 引入的 CSS 会等到页面被全部加载完成后再加载。</li>
+<li><strong>兼容性</strong>：link 无兼容性问题，@import 只有 IE5+ 才能被识别。</li>
 </ul>
 <h2 id="HTML5-form-自动完成"><a href="#HTML5-form-自动完成" class="headerlink" title="HTML5 form 自动完成"></a>HTML5 form 自动完成</h2><ul>
 <li><strong>autocomplete</strong> 属性规定表单是否应该启用自动完成功能，它自动完成允许浏览器预测对输入字段。在用户在开始键入时，浏览器基于之前键入过的值显示出历史选项。</li>
@@ -254,33 +254,33 @@
 <p>渲染引擎为了更好的用户体验会尽快将内容呈现到屏幕，它是解析完一部分内容就会显示而不会等到所有内容解析完成之后再去构建 render tree。</p>
 </blockquote>
 <ol>
-<li>解析 HTML 标记并构建 __DOM 树__。</li>
-<li>解析 CSS 标记并构建 __CSSOM 树__。</li>
-<li>根据 DOM、CSSOM 构建__渲染树__，节点是包含颜色等属性的渲染对象。</li>
-<li>__布局__：根据渲染树进行布局，计算各个节点在页面的位置、大小等信息。</li>
-<li>__绘制__：调用渲染对象的 paint 方法，将它们的内容显示在屏幕并绘制基础组件。</li>
+<li>解析 HTML 标记并构建 <strong>DOM 树</strong>。</li>
+<li>解析 CSS 标记并构建 <strong>CSSOM 树</strong>。</li>
+<li>根据 DOM、CSSOM 构建<strong>渲染树</strong>，节点是包含颜色等属性的渲染对象。</li>
+<li><strong>布局</strong>：根据渲染树进行布局，计算各个节点在页面的位置、大小等信息。</li>
+<li><strong>绘制</strong>：调用渲染对象的 paint 方法，将它们的内容显示在屏幕并绘制基础组件。</li>
 </ol>
 <h2 id="浏览器通信"><a href="#浏览器通信" class="headerlink" title="浏览器通信"></a>浏览器通信</h2><blockquote>
 <p>由于标签页之间无法直接通信，它们的通信本质都是通过中介者转发消息来实现的。</p>
 </blockquote>
 <ol>
-<li>__Websocket__：通信的标签页连接同一个服务器，服务器将收到的消息推送给所有客户端。</li>
-<li>__localStorage__：localStorage 在浏览上下文中新增&#x2F;修改&#x2F;删除时会触发 storage 事件。</li>
-<li>__SharedWorker__：服务器注册一个 onmessage 监听信息的事件，客户端(即使用 sharedWorker 的标签页)发送 message 时就会触发。</li>
+<li><strong>Websocket</strong>：通信的标签页连接同一个服务器，服务器将收到的消息推送给所有客户端。</li>
+<li><strong>localStorage</strong>：localStorage 在浏览上下文中新增&#x2F;修改&#x2F;删除时会触发 storage 事件。</li>
+<li><strong>SharedWorker</strong>：服务器注册一个 onmessage 监听信息的事件，客户端(即使用 sharedWorker 的标签页)发送 message 时就会触发。</li>
 </ol>
 <h2 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h2><ul>
-<li>缓存类型：根据响应头内容分为强制缓存和协商缓存，优先级顺序依次为 __cache-control、Expires、Etag、Last-modified__。</li>
+<li>缓存类型：根据响应头内容分为强制缓存和协商缓存，优先级顺序依次为 <strong>cache-control、Expires、Etag、Last-modified</strong>。</li>
 <li>缓存位置：<strong>Service Worker</strong> (运行在浏览器背后的独立线程)、<strong>Memory Cache</strong> (包含页面资源的内存缓存，关闭标签页面则释放)、<strong>Disk Cache</strong> (存储在硬盘的缓存)、<strong>Push Cache</strong> (会话缓存 Session)。</li>
 <li>缓存过程：浏览器在缓存中查找请求结果和缓存标识后发起请求，将返回结果存入缓存并根据响应头内容进行相应处理。</li>
 </ul>
 <h2 id="CSRF-攻击"><a href="#CSRF-攻击" class="headerlink" title="CSRF 攻击"></a>CSRF 攻击</h2><ul>
-<li>__实现__：跨站请求伪造攻击，攻击者诱导用户进入一个第三方网站，然后该网站向被攻击网站发送跨站请求。如果用户在被攻击网站中保存了登录状态，那么攻击者就可以利用这个登录状态（cookie），绕过后台的用户验证，冒充用户向服务器执行一些操作。</li>
-<li>__本质__：利用 cookie 会在同源请求中携带发送给服务器的特点来实现冒充用户。</li>
-<li>__防护方法__：同源检测和服务器检测请求来源、使用 token 进行验证、设置 cookie 时设置 Samesite 而限制 cookie 不能作为被第三方使用。</li>
+<li><strong>实现</strong>：跨站请求伪造攻击，攻击者诱导用户进入一个第三方网站，然后该网站向被攻击网站发送跨站请求。如果用户在被攻击网站中保存了登录状态，那么攻击者就可以利用这个登录状态（cookie），绕过后台的用户验证，冒充用户向服务器执行一些操作。</li>
+<li><strong>本质</strong>：利用 cookie 会在同源请求中携带发送给服务器的特点来实现冒充用户。</li>
+<li><strong>防护方法</strong>：同源检测和服务器检测请求来源、使用 token 进行验证、设置 cookie 时设置 Samesite 而限制 cookie 不能作为被第三方使用。</li>
 </ul>
 <h2 id="CSP-内容安全策略"><a href="#CSP-内容安全策略" class="headerlink" title="CSP 内容安全策略"></a>CSP 内容安全策略</h2><ul>
-<li>__实现__：本质是建立一个白名单，告诉浏览器哪些外部资源可以加载和执行。我们只需要配置规则，如何拦截由浏览器自己来实现。它也是解决 XSS 攻击的一个强力手段。</li>
-<li>__开启__：一种是设置 <code>HTTP 头部 Content-Security-Policy</code>，一种是设置 <code>meta 标签 &lt;meta http-equiv=&quot;Content-Security-Policy&quot;&gt;</code>。</li>
+<li><strong>实现</strong>：本质是建立一个白名单，告诉浏览器哪些外部资源可以加载和执行。我们只需要配置规则，如何拦截由浏览器自己来实现。它也是解决 XSS 攻击的一个强力手段。</li>
+<li><strong>开启</strong>：一种是设置 <code>HTTP 头部 Content-Security-Policy</code>，一种是设置 <code>meta 标签 &lt;meta http-equiv=&quot;Content-Security-Policy&quot;&gt;</code>。</li>
 </ul>
 <h2 id="简述-PWA"><a href="#简述-PWA" class="headerlink" title="简述 PWA"></a>简述 PWA</h2><blockquote>
 <p>指渐进式网页应用，目的是对 Web App 提升性能和改善用户体验。主要特点如下：</p>
@@ -293,15 +293,15 @@
 <li>消息推送。</li>
 </ul>
 <h2 id="移动端适配方案"><a href="#移动端适配方案" class="headerlink" title="移动端适配方案"></a>移动端适配方案</h2><ul>
-<li>__viewport 缩放__：针对不同分辨率的手机设置等比例缩放，但是 PC 端可能会界面变形。</li>
-<li>__响应式布局__：通过媒体查询根据不同分辨率适配，但代码可维护性差，适用于简单页面。</li>
-<li>__弹性布局__：使容器子元素的宽高能够合理填充空间，可通过百分比、vw + vh、rem。</li>
-<li>__vue 方案__：通过 vw 实现适配，安装插件 postcss-px-to-viewport 并配置即可。</li>
+<li><strong>viewport 缩放</strong>：针对不同分辨率的手机设置等比例缩放，但是 PC 端可能会界面变形。</li>
+<li><strong>响应式布局</strong>：通过媒体查询根据不同分辨率适配，但代码可维护性差，适用于简单页面。</li>
+<li><strong>弹性布局</strong>：使容器子元素的宽高能够合理填充空间，可通过百分比、vw + vh、rem。</li>
+<li><strong>vue 方案</strong>：通过 vw 实现适配，安装插件 postcss-px-to-viewport 并配置即可。</li>
 </ul>
 <h2 id="BFC-及其应用"><a href="#BFC-及其应用" class="headerlink" title="BFC 及其应用"></a>BFC 及其应用</h2><ul>
-<li>__简单介绍__：Block Format Context 块级格式化上下文，是页面盒模型的一种 CSS 渲染模式，相当于一个独立容器，里面的元素和外部的元素相互不影响。</li>
-<li>__创建方式__：html 根元素、float、position: absolute&#x2F;fixed、overflow: !visible、display: inline-block&#x2F;table&#x2F;flex。</li>
-<li>__主要作用__：清除浮动、不同 BFC 时可以阻止 margin 重叠。</li>
+<li><strong>简单介绍</strong>：Block Format Context 块级格式化上下文，是页面盒模型的一种 CSS 渲染模式，相当于一个独立容器，里面的元素和外部的元素相互不影响。</li>
+<li><strong>创建方式</strong>：html 根元素、float、position: absolute&#x2F;fixed、overflow: !visible、display: inline-block&#x2F;table&#x2F;flex。</li>
+<li><strong>主要作用</strong>：清除浮动、不同 BFC 时可以阻止 margin 重叠。</li>
 </ul>
 <h2 id="重绘、回流"><a href="#重绘、回流" class="headerlink" title="重绘、回流"></a>重绘、回流</h2><ul>
 <li><strong>重绘重排</strong><ul>
@@ -311,26 +311,26 @@
 </ul>
 </li>
 <li><strong>优化方案</strong><ul>
-<li>__JS__：避免频繁操作 DOM、缓存频繁读取的属性值、对复杂动画的元素使用定位。</li>
-<li>__CSS__：CSS 硬件加速、尽量在 DOM 树的最末端改变 class、避免使用 CSS 表达式而导致回流、避免设置多层内联样式而提高 CSS 选择符从右往左匹配查找速度、将动画效果应用到定位元素而避免影响其他布局。</li>
+<li><strong>JS</strong>：避免频繁操作 DOM、缓存频繁读取的属性值、对复杂动画的元素使用定位。</li>
+<li><strong>CSS</strong>：CSS 硬件加速、尽量在 DOM 树的最末端改变 class、避免使用 CSS 表达式而导致回流、避免设置多层内联样式而提高 CSS 选择符从右往左匹配查找速度、将动画效果应用到定位元素而避免影响其他布局。</li>
 </ul>
 </li>
 </ul>
 <h2 id="Web-性能优化"><a href="#Web-性能优化" class="headerlink" title="Web 性能优化"></a>Web 性能优化</h2><ul>
-<li>__减少请求量__：合并资源、减少 HTTP 请求、gzip 压缩、WebP 图片、路由懒加载。</li>
-<li>__加快请求速度__：预解析 DNS、减少域名数、并行加载、CDN 分发。 </li>
-<li>__资源预加载__：支持预拉取图片、脚本或者任何可以被浏览器缓存的资源，可用于告诉浏览器用户在未来可能用到哪些资源 link rel&#x3D;”prefetch” href&#x3D;”img.png”。</li>
-<li>__缓存技术__：cdn、浏览器缓存、本地缓存以及应用离线包。</li>
-<li>__渲染方案__：静态渲染 SR、前端渲染 CSR、服务端渲染 SSR、客户端渲染 NSR。</li>
+<li><strong>减少请求量</strong>：合并资源、减少 HTTP 请求、gzip 压缩、WebP 图片、路由懒加载。</li>
+<li><strong>加快请求速度</strong>：预解析 DNS、减少域名数、并行加载、CDN 分发。 </li>
+<li><strong>资源预加载</strong>：支持预拉取图片、脚本或者任何可以被浏览器缓存的资源，可用于告诉浏览器用户在未来可能用到哪些资源 link rel&#x3D;”prefetch” href&#x3D;”img.png”。</li>
+<li><strong>缓存技术</strong>：cdn、浏览器缓存、本地缓存以及应用离线包。</li>
+<li><strong>渲染方案</strong>：静态渲染 SR、前端渲染 CSR、服务端渲染 SSR、客户端渲染 NSR。</li>
 </ul>
 <h2 id="opacity、visibility、display"><a href="#opacity、visibility、display" class="headerlink" title="opacity、visibility、display"></a>opacity、visibility、display</h2><ul>
-<li>__opacity: 0__：占据空间，可以点击，引起重绘，子元素不影响。</li>
-<li>__display: none__：不占空间，不能点击，会引起回流，子元素不影响。</li>
-<li>__visibility: hidden__：占据空间，不能点击，引起重绘，子元素可设置 visible 进行显示。</li>
+<li><strong>opacity: 0</strong>：占据空间，可以点击，引起重绘，子元素不影响。</li>
+<li><strong>display: none</strong>：不占空间，不能点击，会引起回流，子元素不影响。</li>
+<li><strong>visibility: hidden</strong>：占据空间，不能点击，引起重绘，子元素可设置 visible 进行显示。</li>
 </ul>
 <h2 id="Rem-及其原理"><a href="#Rem-及其原理" class="headerlink" title="Rem 及其原理"></a>Rem 及其原理</h2><ul>
-<li>__Rem__：CSS3 新增的相对长度单位，指相对于根元素 html 的 font-size 大小，移动端新型浏览器支持较好。px 是相对固定单位，无法随着浏览器进行缩放。</li>
-<li>__转换原理__：默认根元素的 font-size: 16px，如果想要设置为 12px 则就是 12px&#x2F;16px &#x3D; 0.75rem。通过 postcss-px-to-viewport 插件可以实现对 px 到 vw 的自动转换。</li>
+<li><strong>Rem</strong>：CSS3 新增的相对长度单位，指相对于根元素 html 的 font-size 大小，移动端新型浏览器支持较好。px 是相对固定单位，无法随着浏览器进行缩放。</li>
+<li><strong>转换原理</strong>：默认根元素的 font-size: 16px，如果想要设置为 12px 则就是 12px&#x2F;16px &#x3D; 0.75rem。通过 postcss-px-to-viewport 插件可以实现对 px 到 vw 的自动转换。</li>
 </ul>
 <h2 id="移动端视口配置"><a href="#移动端视口配置" class="headerlink" title="移动端视口配置"></a>移动端视口配置</h2><ul>
 <li><strong>initial-scale</strong>: 初始的缩放比例。</li>
@@ -339,40 +339,40 @@
 <li><strong>user-scalable</strong>: 用户是否可以手动缩放。</li>
 </ul>
 <h2 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h2><ul>
-<li>__伪类__：用于为处于某种状态的已有元素添加样式，该状态是随着用户行为变化的。比如说 :hover。它只有处于 dom 树无法描述的状态才能为元素添加样式，所以称为伪类。</li>
-<li>__伪元素__：用于创建一些原本不在文档树中的元素，并为其添加样式。比如 ::before，虽然用户可以看到这些内容，但是其实它不在文档树中。</li>
-<li>__区别__：伪类的操作对象是文档树中已存在的元素，而伪元素是创建一个文档树外的元素。css 规范规定使用双冒号 :: 表示伪元素，一个冒号 : 表示伪类。</li>
+<li><strong>伪类</strong>：用于为处于某种状态的已有元素添加样式，该状态是随着用户行为变化的。比如说 :hover。它只有处于 dom 树无法描述的状态才能为元素添加样式，所以称为伪类。</li>
+<li><strong>伪元素</strong>：用于创建一些原本不在文档树中的元素，并为其添加样式。比如 ::before，虽然用户可以看到这些内容，但是其实它不在文档树中。</li>
+<li><strong>区别</strong>：伪类的操作对象是文档树中已存在的元素，而伪元素是创建一个文档树外的元素。css 规范规定使用双冒号 :: 表示伪元素，一个冒号 : 表示伪类。</li>
 </ul>
 <h2 id="css-可继承属性"><a href="#css-可继承属性" class="headerlink" title="css 可继承属性"></a>css 可继承属性</h2><ul>
-<li>__字体系列属性__：font-family、font-size、font-weight、font-style。</li>
-<li>__文本系列属性__：text-indent、text-align、line-hight、word-spacing、color。</li>
-<li>__其他__：cursor、visibility。</li>
+<li><strong>字体系列属性</strong>：font-family、font-size、font-weight、font-style。</li>
+<li><strong>文本系列属性</strong>：text-indent、text-align、line-hight、word-spacing、color。</li>
+<li><strong>其他</strong>：cursor、visibility。</li>
 </ul>
 <h1 id="二、JS"><a href="#二、JS" class="headerlink" title="二、JS"></a>二、JS</h1><ul>
-<li>__JS 特性__：运行在客户端浏览器、不用预编译而直接解析执行代码、弱类型语言而较为灵活、跨平台的语言而与操作系统无关、脚本语言、解释性语言。</li>
-<li>__事件委托__：将原本需要绑定在子元素的监听事件委托给父元素，通过 DOM 元素的事件冒泡机制实现父元素监听到子元素上事件的触发，特别适用于动态元素的绑定。</li>
-<li>__事件冒泡__：一个事件触发后会在子元素和父元素之间分为三个阶段传播：捕获阶段(window 对象传导到目标节点，不响应任何事件)、目标阶段(在目标节点上触发)，冒泡阶段(从目标节点传导回 window 对象)。</li>
-<li>__自执行函数__：声明并立刻调用的匿名函数，用来创建一个独立的作用域，一般用于框架、插件等场景。好处如下：防止变量扩散到全局而造成冲突、隔离作用域避免闭包造成引用变量无法释放、利用立即执行特性返回需要的函数或对象而避免每次通过条件判断处理。</li>
-<li>__尾调用优化__：指函数的最后一步调用另一个函数。代码执行是基于执行栈的，所以在一个函数里调用另一个函数时，会保留当前的执行上下文并新建另外一个加入栈中。使用尾调用时则不必再保留当前的执行上下文，从而节省了内存，这就是尾调用优化。ES6 的尾调用优化只在严格模式下开启，正常模式是无效的。</li>
-<li>_<em>new 操作符__：新建一个原型 <em>proto</em></em> 指向构造函数 prototype 的空对象，然后将这个新对象赋值给构造函数 this 指向并在执行构造函数后返回。</li>
-<li>__面向对象思想__：将问题分解并抽象为一个个具体对象，并且将对象及其公共的属性和方法封装成一个类，整个程序由对象之间的分工和合作完成。主要特点有封装 (通过对象相互访问)、继承 (从已有对象上继承出新对象)、多态 (多对象的不同形态)，极大提高了程序的复用性性和可维护性。核心在于类的实现：js 基于 function 模拟类，通过 prototype 属性实现类方法的共享，ES6 class 是定义类的一个语法糖，通过 extends 继承父类。</li>
-<li>__闭包__：指能够读取其他函数内部变量的函数，用来实现私有的方法和变量。主要特点有：函数嵌套函数、函数内部引用外部的参数和变量、参数和变量不会被垃圾回收机制回收。优点是可以避免全局变量的污染，缺点是闭包会常驻内存而容易造成内存泄漏。</li>
-<li>__Babel 实现 ES6 转为 ES5__：将代码字符串解析成抽象语法树 ES6 AST、处理后转换为 ES5 AST、通过新语法树生成代码字符串。</li>
+<li><strong>JS 特性</strong>：运行在客户端浏览器、不用预编译而直接解析执行代码、弱类型语言而较为灵活、跨平台的语言而与操作系统无关、脚本语言、解释性语言。</li>
+<li><strong>事件委托</strong>：将原本需要绑定在子元素的监听事件委托给父元素，通过 DOM 元素的事件冒泡机制实现父元素监听到子元素上事件的触发，特别适用于动态元素的绑定。</li>
+<li><strong>事件冒泡</strong>：一个事件触发后会在子元素和父元素之间分为三个阶段传播：捕获阶段(window 对象传导到目标节点，不响应任何事件)、目标阶段(在目标节点上触发)，冒泡阶段(从目标节点传导回 window 对象)。</li>
+<li><strong>自执行函数</strong>：声明并立刻调用的匿名函数，用来创建一个独立的作用域，一般用于框架、插件等场景。好处如下：防止变量扩散到全局而造成冲突、隔离作用域避免闭包造成引用变量无法释放、利用立即执行特性返回需要的函数或对象而避免每次通过条件判断处理。</li>
+<li><strong>尾调用优化</strong>：指函数的最后一步调用另一个函数。代码执行是基于执行栈的，所以在一个函数里调用另一个函数时，会保留当前的执行上下文并新建另外一个加入栈中。使用尾调用时则不必再保留当前的执行上下文，从而节省了内存，这就是尾调用优化。ES6 的尾调用优化只在严格模式下开启，正常模式是无效的。</li>
+<li><strong>new 操作符</strong>：新建一个原型 _proto** 指向构造函数 prototype 的空对象，然后将这个新对象赋值给构造函数 this 指向并在执行构造函数后返回。</li>
+<li><strong>面向对象思想</strong>：将问题分解并抽象为一个个具体对象，并且将对象及其公共的属性和方法封装成一个类，整个程序由对象之间的分工和合作完成。主要特点有封装 (通过对象相互访问)、继承 (从已有对象上继承出新对象)、多态 (多对象的不同形态)，极大提高了程序的复用性性和可维护性。核心在于类的实现：js 基于 function 模拟类，通过 prototype 属性实现类方法的共享，ES6 class 是定义类的一个语法糖，通过 extends 继承父类。</li>
+<li><strong>闭包</strong>：指能够读取其他函数内部变量的函数，用来实现私有的方法和变量。主要特点有：函数嵌套函数、函数内部引用外部的参数和变量、参数和变量不会被垃圾回收机制回收。优点是可以避免全局变量的污染，缺点是闭包会常驻内存而容易造成内存泄漏。</li>
+<li><strong>Babel 实现 ES6 转为 ES5</strong>：将代码字符串解析成抽象语法树 ES6 AST、处理后转换为 ES5 AST、通过新语法树生成代码字符串。</li>
 </ul>
 <h2 id="类型判断"><a href="#类型判断" class="headerlink" title="类型判断"></a>类型判断</h2><ul>
-<li>__typeof__：判断所有的基本数据类型，返回一个字符串。</li>
-<li>__instanceOf__：判断一个对象是否某构造函数的实例，返回值为 true&#x2F;false。</li>
-<li>__constructor__：返回一个对象具体的构造函数，比如 Array、Function、Map。</li>
-<li>__Object.prototype.toString.call()__：对象的一个原型扩展函数，可以判断所有数据类型。</li>
+<li><strong>typeof</strong>：判断所有的基本数据类型，返回一个字符串。</li>
+<li><strong>instanceOf</strong>：判断一个对象是否某构造函数的实例，返回值为 true&#x2F;false。</li>
+<li><strong>constructor</strong>：返回一个对象具体的构造函数，比如 Array、Function、Map。</li>
+<li>**Object.prototype.toString.call()**：对象的一个原型扩展函数，可以判断所有数据类型。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 6 种原始数据类型</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="string">&#x27;a&#x27;</span>);   <span class="comment">// &quot;string&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="number">1</span>);     <span class="comment">// &quot;number&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="literal">true</span>);  <span class="comment">// &quot;boolean&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="title class_">Symbol</span>());  <span class="comment">// &quot;symbol&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="literal">undefined</span>); <span class="comment">// &quot;undefined&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="literal">null</span>);  <span class="comment">// &quot;object&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对象类型</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> &#123;&#125;);    <span class="comment">// &quot;object&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> []);    <span class="comment">// &quot;object&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="keyword">new</span> <span class="title class_">Map</span>());  <span class="comment">// &quot;object&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="keyword">new</span> <span class="title class_">Set</span>());  <span class="comment">// &quot;object&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// function 类型</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">typeof</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;&#125;); <span class="comment">// &quot;function&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Apple</span> () &#123;&#125;</span><br><span class="line"><span class="keyword">let</span> fun = <span class="keyword">new</span> <span class="title class_">Function</span>();</span><br><span class="line"><span class="keyword">let</span> apple = <span class="keyword">new</span> <span class="title class_">Apple</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(fun <span class="keyword">instanceof</span> <span class="title class_">Function</span>);    <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(apple <span class="keyword">instanceof</span> <span class="title class_">Apple</span>);     <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(apple <span class="keyword">instanceof</span> <span class="title class_">Function</span>);  <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([] <span class="keyword">instanceof</span> <span class="title class_">Array</span>);   <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([] <span class="keyword">instanceof</span> <span class="title class_">Object</span>);  <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(&#123;&#125; <span class="keyword">instanceof</span> <span class="title class_">Object</span>);  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Map</span>() <span class="keyword">instanceof</span> <span class="title class_">Map</span>);     <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Map</span>() <span class="keyword">instanceof</span> <span class="title class_">Object</span>);  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(fun.<span class="property">constructor</span> === <span class="title class_">Function</span>);    <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(apple.<span class="property">constructor</span> === <span class="title class_">Apple</span>);     <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(apple.<span class="property">constructor</span> === <span class="title class_">Function</span>);  <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([].<span class="property">constructor</span> === <span class="title class_">Array</span>);   <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([].<span class="property">constructor</span> === <span class="title class_">Object</span>);  <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Map</span>().<span class="property">constructor</span> === <span class="title class_">Map</span>);    <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Map</span>().<span class="property">constructor</span> === <span class="title class_">Object</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(&#123;&#125;.<span class="property">constructor</span> === <span class="title class_">Object</span>);  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(fun));        <span class="comment">// &quot;[object Function]&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(apple));      <span class="comment">// &quot;[object Object]&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>([]));         <span class="comment">// &quot;[object Array]&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">new</span> <span class="title class_">Map</span>()));  <span class="comment">// &quot;[object Map]&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(&#123;&#125;));         <span class="comment">// &quot;[object Object]&quot;</span></span><br></pre></td></tr></table></figure>
 
 
 <h2 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h2><ul>
-<li>__运算符转换__：-、*、&#x2F;、% 会转换为数字后计算，+ 则进行数字相加或字符串拼接。</li>
-<li>__双等号转换__：两边会转换为同一类型再进行比较，有一个 NaN 则返回 false。</li>
-<li>__点号操作符__：数字、字符串等通过点调用方法时，隐式地将类型转换成对象。</li>
-<li>__if() 语句__：括号里的表达式部分会被隐式转换为布尔类型进行判断。</li>
+<li><strong>运算符转换</strong>：-、*、&#x2F;、% 会转换为数字后计算，+ 则进行数字相加或字符串拼接。</li>
+<li><strong>双等号转换</strong>：两边会转换为同一类型再进行比较，有一个 NaN 则返回 false。</li>
+<li><strong>点号操作符</strong>：数字、字符串等通过点调用方法时，隐式地将类型转换成对象。</li>
+<li><strong>if() 语句</strong>：括号里的表达式部分会被隐式转换为布尔类型进行判断。</li>
 </ul>
 <h2 id="小数精度丢失"><a href="#小数精度丢失" class="headerlink" title="小数精度丢失"></a>小数精度丢失</h2><blockquote>
 <p>有些小数在计算机使用二进制方式表示时无法准确表示，类似于十进制的 1&#x2F;3 无理数、无限循环。但是计算机存储小数的类型不管是 float&#x2F;double 都是有位数限制的，所以它们存储的只是一个近似值，这就导致了精度丢失。解决办法如下：</p>
@@ -429,18 +429,18 @@
 
 
 <h2 id="各种位置"><a href="#各种位置" class="headerlink" title="各种位置"></a>各种位置</h2><ul>
-<li>__offsetHeight__：表示可视区域的高度，包含边框和滚动条。</li>
-<li>__clientHeight__：表示可视区域的高度，不包含边框和滚动条。</li>
-<li>__scrollHeight__：表示所有区域的高度，包含因为滚动被隐藏的部分。 </li>
-<li>__clientTop__：表示边框厚度，在未指定的情况下默认为 0。</li>
-<li>__scrollTop__：滚动后被隐藏的高度，相对于 offsetParent 父坐标距离顶端的高度。</li>
+<li><strong>offsetHeight</strong>：表示可视区域的高度，包含边框和滚动条。</li>
+<li><strong>clientHeight</strong>：表示可视区域的高度，不包含边框和滚动条。</li>
+<li><strong>scrollHeight</strong>：表示所有区域的高度，包含因为滚动被隐藏的部分。 </li>
+<li><strong>clientTop</strong>：表示边框厚度，在未指定的情况下默认为 0。</li>
+<li><strong>scrollTop</strong>：滚动后被隐藏的高度，相对于 offsetParent 父坐标距离顶端的高度。</li>
 </ul>
 <h2 id="防抖和节流"><a href="#防抖和节流" class="headerlink" title="防抖和节流"></a>防抖和节流</h2><blockquote>
 <p>在网页实际运行的某些场景下，有些事件会被连续触发而频繁进行 DOM 操作和资源加载，严重影响了网页性能，甚至会造成浏览器崩溃。两者都是针对连续触发的某个行为，区别在于是要优化到减少它的执行次数还是只执行一次。</p>
 </blockquote>
 <ul>
-<li>__防抖__：将一个弹簧连续按下但只会在最后放手的一瞬反弹，即我们希望高频事件只执行一次而实现回调函数的延时执行。常见的应用场景有：搜索框输入内容时 keyup、浏览器窗口调整时 resize。</li>
-<li>__节流__：一个水龙头在滴水时保持 一滴水&#x2F;s 的频率。即我们希望高频事件以一定频率重复调用，减少函数的执行次数。常见的应用场景有：拖拽元素时 drag、监听滚动时 scroll、鼠标移动时 mousemove、手指滑动时 touchmove。</li>
+<li><strong>防抖</strong>：将一个弹簧连续按下但只会在最后放手的一瞬反弹，即我们希望高频事件只执行一次而实现回调函数的延时执行。常见的应用场景有：搜索框输入内容时 keyup、浏览器窗口调整时 resize。</li>
+<li><strong>节流</strong>：一个水龙头在滴水时保持 一滴水&#x2F;s 的频率。即我们希望高频事件以一定频率重复调用，减少函数的执行次数。常见的应用场景有：拖拽元素时 drag、监听滚动时 scroll、鼠标移动时 mousemove、手指滑动时 touchmove。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 防抖：n 秒内高频事件再次被触发则重新执行。</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">callback, delay=<span class="number">200</span></span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">if</span> (timer) <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">            callback.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);</span><br><span class="line">            timer = <span class="literal">null</span>;</span><br><span class="line">        &#125;, delay);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> handleSeach = <span class="title function_">debounce</span>(seachAjax, <span class="number">500</span>)</span><br><span class="line">input.<span class="title function_">addEventListener</span>(<span class="string">&quot;keyup&quot;</span>, <span class="function"><span class="params">e</span>=&gt;</span>&#123; <span class="title function_">handleSeach</span>(e.<span class="property">target</span>.<span class="property">value</span>)&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 节流：n 秒内只会执行一次。</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">throttle</span>(<span class="params">callback, duration=<span class="number">200</span></span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">if</span> (timer) <span class="keyword">return</span>;</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">            callback.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);</span><br><span class="line">            timer = <span class="literal">null</span>;</span><br><span class="line">        &#125;, duration);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> handleScroll = <span class="title function_">throttle</span>(handleScroll)</span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchmove&quot;</span>, handleScroll);</span><br></pre></td></tr></table></figure>
 
@@ -456,9 +456,9 @@
 <li>垃圾回收机制：JS 执行引擎将垃圾占用的对象空间回收的过程。对象创建时自动分配一块内存空间，对象不再被引用或者根作用域不能被访问时会自动释放它占用的内存。</li>
 </ul>
 <h2 id="堆栈溢出"><a href="#堆栈溢出" class="headerlink" title="堆栈溢出"></a>堆栈溢出</h2><ul>
-<li>__递归__：指一个函数不断的调用自身。它将原来的问题转化为更小的同一问题来求解，只需要少量代码就可以完成多次重复计算，大大地减少了程序的代码量。</li>
-<li>__堆栈溢出__：函数调用时会通过栈分配一定空间的数据块来保存参数、返回值等临时信息，等函数执行完成时才出栈。但是数据块写入数据过多时，会导致栈空间不足而产生数据覆盖问题，这就是递归中经常发生的栈溢出错误（stack overflow）。</li>
-<li>__栈溢出的解决方案__：使用闭包 (每次调用时返回一个匿名函数，相关的参数和局部变量将会被释放而不会额外增加堆栈大小)、优化调用、尾递归 (添加一个参数，记录递归次数)。</li>
+<li><strong>递归</strong>：指一个函数不断的调用自身。它将原来的问题转化为更小的同一问题来求解，只需要少量代码就可以完成多次重复计算，大大地减少了程序的代码量。</li>
+<li><strong>堆栈溢出</strong>：函数调用时会通过栈分配一定空间的数据块来保存参数、返回值等临时信息，等函数执行完成时才出栈。但是数据块写入数据过多时，会导致栈空间不足而产生数据覆盖问题，这就是递归中经常发生的栈溢出错误（stack overflow）。</li>
+<li><strong>栈溢出的解决方案</strong>：使用闭包 (每次调用时返回一个匿名函数，相关的参数和局部变量将会被释放而不会额外增加堆栈大小)、优化调用、尾递归 (添加一个参数，记录递归次数)。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 递归示例</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Fibonacci</span> (n) &#123;</span><br><span class="line">  <span class="keyword">if</span> ( n &lt;= <span class="number">2</span> ) &#123;<span class="keyword">return</span> <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Fibonacci</span>(n - <span class="number">1</span>) + <span class="title class_">Fibonacci</span>(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 栈溢出</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">factorial</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> n * <span class="title function_">factorial</span>(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 尾递归</span></span><br><span class="line"><span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">factorial</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    count ++;</span><br><span class="line">    <span class="keyword">if</span> (count &gt; <span class="number">1000</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;超过了最大调用次数&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> n * <span class="title function_">factorial</span>(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -473,10 +473,10 @@
 <li>事件循环机制：主线程执行完所有同步任务之后空闲时，重复去任务队列中查看是否有可执行的异步任务，有则推入主进程的执行栈。<br>1. 执行一个宏任务（栈中没有就从事件队列中获取）。<br>2. 执行过程中如果遇到微任务，就将它添加到微任务的任务队列中。<br>3. 宏任务执行完毕后，立即执行当前微任务队列中的所有微任务（依次执行）。<br>4. 当前宏任务执行完毕，开始检查渲染，然后 GUI 线程接管渲染。<br>5. 渲染完毕后，JS 线程继续接管，开始下一个宏任务（从任务队列中获取）。</li>
 </ol>
 <h2 id="JS-异步编程"><a href="#JS-异步编程" class="headerlink" title="JS 异步编程"></a>JS 异步编程</h2><ul>
-<li>__回调函数__：解决了同步问题但可能存在回调地狱，不能使用 try catch、return。</li>
-<li>__Promise__：同步的立即执行函数，解决了回调地狱但无法取消，需要回调函数捕获错误。</li>
-<li>__Generator__：多个线程互相协作来完成异步任务的异步编程方案，主要特点是线程 A 执行到某处之后暂停执行并等到线程 B 执行完毕后继续执行。</li>
-<li>__Async&#x2F;Await__：本质是一个自执行的 generate 函数，以同步方式实现异步代码提高了代码的可维护性，async 函数遇到 await 时会先执行异步操作并返回一个 Promise 对象。</li>
+<li><strong>回调函数</strong>：解决了同步问题但可能存在回调地狱，不能使用 try catch、return。</li>
+<li><strong>Promise</strong>：同步的立即执行函数，解决了回调地狱但无法取消，需要回调函数捕获错误。</li>
+<li><strong>Generator</strong>：多个线程互相协作来完成异步任务的异步编程方案，主要特点是线程 A 执行到某处之后暂停执行并等到线程 B 执行完毕后继续执行。</li>
+<li><strong>Async&#x2F;Await</strong>：本质是一个自执行的 generate 函数，以同步方式实现异步代码提高了代码的可维护性，async 函数遇到 await 时会先执行异步操作并返回一个 Promise 对象。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span>* <span class="title function_">gen</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">yield</span> x + <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> g = <span class="title function_">gen</span>(<span class="number">1</span>);</span><br><span class="line">g.<span class="title function_">next</span>().<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> g.<span class="title function_">next</span>(res)).<span class="title function_">then</span>()</span><br></pre></td></tr></table></figure>
 
@@ -495,24 +495,24 @@
 <li>不可以使用 new 命令：没有自己的 this 而无法调用 call&#x2F;apply、没有 prototype 属性。</li>
 </ul>
 <h2 id="MVC、MVP、MVVM"><a href="#MVC、MVP、MVVM" class="headerlink" title="MVC、MVP、MVVM"></a>MVC、MVP、MVVM</h2><ul>
-<li>__MVC__：View、Model 直接绑定，因此很多 view 可以修改多个 model 而变得混乱，交互增加导致代码不好维护。</li>
-<li>__MVP__：View 绑定事件的事件驱动机制，并通过 Presenter 实现分离和通信。它定义了 View、Presenter 之间的接口，需要维护 Presenter 的内部实现。</li>
-<li>__MVVM__：View、Model 分别通过 ViewModel 的 DOM-Listeners、Data-Bindings 绑定事件和监听数据而实现了双向绑定。它实现了数据与视图的分离，通过数据来驱动视图，开发者只需要关心数据变化 (DOM 操作被封装了)。</li>
+<li><strong>MVC</strong>：View、Model 直接绑定，因此很多 view 可以修改多个 model 而变得混乱，交互增加导致代码不好维护。</li>
+<li><strong>MVP</strong>：View 绑定事件的事件驱动机制，并通过 Presenter 实现分离和通信。它定义了 View、Presenter 之间的接口，需要维护 Presenter 的内部实现。</li>
+<li><strong>MVVM</strong>：View、Model 分别通过 ViewModel 的 DOM-Listeners、Data-Bindings 绑定事件和监听数据而实现了双向绑定。它实现了数据与视图的分离，通过数据来驱动视图，开发者只需要关心数据变化 (DOM 操作被封装了)。</li>
 </ul>
 <h2 id="Set、Map、WeakSet、WeakMap"><a href="#Set、Map、WeakSet、WeakMap" class="headerlink" title="Set、Map、WeakSet、WeakMap"></a>Set、Map、WeakSet、WeakMap</h2><ul>
-<li>__Set__：成员不能重复、只有键值而没有键名、可以遍历。</li>
-<li>__WeakSet__：成员都是对象、成员都是弱引用而不计入垃圾回收机制、不能遍历。</li>
-<li>__Map__：本质是键值对的集合、可以遍历、可以和各种数据格式转换。</li>
-<li>__WeakMap__：只接收对象为键名、键名指向的对象不计入垃圾回收机制、不能遍历。</li>
+<li><strong>Set</strong>：成员不能重复、只有键值而没有键名、可以遍历。</li>
+<li><strong>WeakSet</strong>：成员都是对象、成员都是弱引用而不计入垃圾回收机制、不能遍历。</li>
+<li><strong>Map</strong>：本质是键值对的集合、可以遍历、可以和各种数据格式转换。</li>
+<li><strong>WeakMap</strong>：只接收对象为键名、键名指向的对象不计入垃圾回收机制、不能遍历。</li>
 </ul>
 <h2 id="webpack-loader、plugin"><a href="#webpack-loader、plugin" class="headerlink" title="webpack loader、plugin"></a>webpack loader、plugin</h2><ul>
-<li>__loader__：一个转换器，将 A 文件进行编译成 B 文件，属于单纯的文件转换过程。</li>
-<li>__plugin__：一个扩展器，它丰富了 webpack 本身，针对的是 loader 结束后 webpack 打包的整个过程，它并不直接操作文件，而是基于事件机制工作，会监听 webpack 打包过程中的某些节点，执行广泛的任务。</li>
+<li><strong>loader</strong>：一个转换器，将 A 文件进行编译成 B 文件，属于单纯的文件转换过程。</li>
+<li><strong>plugin</strong>：一个扩展器，它丰富了 webpack 本身，针对的是 loader 结束后 webpack 打包的整个过程，它并不直接操作文件，而是基于事件机制工作，会监听 webpack 打包过程中的某些节点，执行广泛的任务。</li>
 </ul>
 <h1 id="三、JS-框架"><a href="#三、JS-框架" class="headerlink" title="三、JS 框架"></a>三、JS 框架</h1><h2 id="Angular、React、Vue"><a href="#Angular、React、Vue" class="headerlink" title="Angular、React、Vue"></a>Angular、React、Vue</h2><h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
-<li>__Vue__：双向数据流，vuex 集中管理数据，有指令且能自定义指令，双向数据绑定。</li>
-<li>__React__：单项数据流，操作虚拟 dom，redux 集中管理数据，无指令。</li>
-<li>__Angular__：单项数据流，学习成本高而且性能稍差于其它两个，双向绑定原理不同 vue。</li>
+<li><strong>Vue</strong>：双向数据流，vuex 集中管理数据，有指令且能自定义指令，双向数据绑定。</li>
+<li><strong>React</strong>：单项数据流，操作虚拟 dom，redux 集中管理数据，无指令。</li>
+<li><strong>Angular</strong>：单项数据流，学习成本高而且性能稍差于其它两个，双向绑定原理不同 vue。</li>
 </ul>
 <h3 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h3><blockquote>
 <p>尤雨溪开发的用于构建用户界面的一个渐进式 JS 库、数据驱动的组件系统、轻量高效的前端组件化方案，专注于视图层而不是一个全能框架。</p>
@@ -545,18 +545,18 @@
 <p>单双向绑定指 view、model 之间的映射关系，和数据流无关。优点是在表单交互较多的场景下，会简化大量与业务无关的代码。缺点是无法追踪局部状态的变化，增加了 debug 难度。react 采取单向绑定，vue 支持单向绑定(<code>插值，v-bind</code>) 和双向绑定(<code>v-model</code>)。</p>
 </blockquote>
 <ul>
-<li>__实现原理__：vue2.0 采用数据劫持结合发布者-订阅者模式的方式，通过 Object.defineProperty() 来劫持各个属性的 setter、getter 操作，在数据变动时发布消息给订阅者，触发相应监听回调。</li>
+<li><strong>实现原理</strong>：vue2.0 采用数据劫持结合发布者-订阅者模式的方式，通过 Object.defineProperty() 来劫持各个属性的 setter、getter 操作，在数据变动时发布消息给订阅者，触发相应监听回调。</li>
 <li><strong>实现流程</strong> <ul>
-<li>__1、模板解析为 render 函数__：函数包含所有的模板信息并返回一个虚拟 DOM，模板的 data 和指令变成了 JS 变量和 JS 逻辑。</li>
-<li>__2、响应式监听__：通过 Object.defineProperty 设置对象的 get&#x2F;set 实现监听 data 的属性变化，然后将 data 属性代理到实例对象 vm。</li>
-<li>__3、页面渲染__：通过 updateComponent() 将模板渲染为 html。首次渲染时直接渲染虚拟 DOM，data 属性变化触发重新渲染时对比新旧节点后局部渲染。</li>
+<li><strong>1、模板解析为 render 函数</strong>：函数包含所有的模板信息并返回一个虚拟 DOM，模板的 data 和指令变成了 JS 变量和 JS 逻辑。</li>
+<li><strong>2、响应式监听</strong>：通过 Object.defineProperty 设置对象的 get&#x2F;set 实现监听 data 的属性变化，然后将 data 属性代理到实例对象 vm。</li>
+<li><strong>3、页面渲染</strong>：通过 updateComponent() 将模板渲染为 html。首次渲染时直接渲染虚拟 DOM，data 属性变化触发重新渲染时对比新旧节点后局部渲染。</li>
 </ul>
 </li>
 <li><strong>实现方式</strong><ul>
-<li>__发布者-订阅者模式__：一般通过 sub、pub 的方式实现数据和视图的绑定监听，更新数据 <code>vm.set(&#39;property&#39;, value)</code>。</li>
-<li>__脏值检查__：angular 在指定事件触发时进入脏值检测，通过对比新旧数据来决定是否更新视图，它只对改变的数据进行更新元素。</li>
-<li>__数据劫持__：vue2.0 通过 <code>Object.defineProperty()</code> 来监听对象各个属性的 getter、setter，属性改变时触发回调。</li>
-<li>__ES6 Proxy__：vue3.0 用来替代 Object.defineProperty，因为它可以劫持整个对象而不需要遍历对象的所有属性。</li>
+<li><strong>发布者-订阅者模式</strong>：一般通过 sub、pub 的方式实现数据和视图的绑定监听，更新数据 <code>vm.set(&#39;property&#39;, value)</code>。</li>
+<li><strong>脏值检查</strong>：angular 在指定事件触发时进入脏值检测，通过对比新旧数据来决定是否更新视图，它只对改变的数据进行更新元素。</li>
+<li><strong>数据劫持</strong>：vue2.0 通过 <code>Object.defineProperty()</code> 来监听对象各个属性的 getter、setter，属性改变时触发回调。</li>
+<li><strong>ES6 Proxy</strong>：vue3.0 用来替代 Object.defineProperty，因为它可以劫持整个对象而不需要遍历对象的所有属性。</li>
 </ul>
 </li>
 </ul>
@@ -570,8 +570,8 @@
 <li><code>&lt;Input&gt;</code> 绑定 value，然后监听 input&#x2F;change 事件并在事件回调中调用方法。</li>
 </ul>
 <h3 id="Proxy-替代-Object-defineProperty"><a href="#Proxy-替代-Object-defineProperty" class="headerlink" title="Proxy 替代 Object.defineProperty"></a>Proxy 替代 Object.defineProperty</h3><ul>
-<li>__Object.defineProperty__：无法低耗费的监听到数组下标的变化，导致通过数组下标添加元素时不能实时响应。只能劫持对象的属性，从而需要对每个对象、每个属性进行遍历，如果属性值是对象则还需要深度遍历。</li>
-<li>__Proxy__：可以劫持整个对象并返回一个新对象。可以代理对象、数组、动态增加的属性。</li>
+<li><strong>Object.defineProperty</strong>：无法低耗费的监听到数组下标的变化，导致通过数组下标添加元素时不能实时响应。只能劫持对象的属性，从而需要对每个对象、每个属性进行遍历，如果属性值是对象则还需要深度遍历。</li>
+<li><strong>Proxy</strong>：可以劫持整个对象并返回一个新对象。可以代理对象、数组、动态增加的属性。</li>
 </ul>
 <h3 id="如何监控到属性修改并触发警告"><a href="#如何监控到属性修改并触发警告" class="headerlink" title="如何监控到属性修改并触发警告"></a>如何监控到属性修改并触发警告</h3><ul>
 <li>因为 Vue 是单向数据流，易于检测数据的流动，出现了错误可以更加迅速的定位到错误发生的位置。</li>
@@ -584,10 +584,10 @@
 <p>vue 生命周期：beforeCreate、created、beforeMount、Mounted、beforeUpdate、updated、beforedestroy、destroyed。</p>
 </blockquote>
 <ul>
-<li>__加载渲染过程__：父 beforeCreate -&gt; 父 created -&gt; 父 beforeMount -&gt; 子 beforeCreate -&gt; 子 created -&gt; 子 beforeMount -&gt; 子 mounted -&gt; 父 mounted。</li>
-<li>__子组件更新过程__：父 beforeUpdate -&gt; 子 beforeUpdate -&gt; 子 updated -&gt; 父 updated。</li>
-<li>__父组件更新过程__：父 beforeUpdate -&gt; 父 updated。</li>
-<li>__销毁过程__：父 beforeDestroy -&gt; 子 beforeDestroy -&gt; 子 destroyed -&gt; 父 destroyed。</li>
+<li><strong>加载渲染过程</strong>：父 beforeCreate -&gt; 父 created -&gt; 父 beforeMount -&gt; 子 beforeCreate -&gt; 子 created -&gt; 子 beforeMount -&gt; 子 mounted -&gt; 父 mounted。</li>
+<li><strong>子组件更新过程</strong>：父 beforeUpdate -&gt; 子 beforeUpdate -&gt; 子 updated -&gt; 父 updated。</li>
+<li><strong>父组件更新过程</strong>：父 beforeUpdate -&gt; 父 updated。</li>
+<li><strong>销毁过程</strong>：父 beforeDestroy -&gt; 子 beforeDestroy -&gt; 子 destroyed -&gt; 父 destroyed。</li>
 </ul>
 <h3 id="NextTick"><a href="#NextTick" class="headerlink" title="NextTick"></a>NextTick</h3><blockquote>
 <p>在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后使用 $nextTick，则可以在回调中获取更新后的 DOM。</p>
@@ -600,8 +600,8 @@
 <p>因为 JS 本身的特性带来的，如果 data 是一个对象，那么由于对象本身属于引用类型，当我们修改其中的一个属性时，会影响到所有 Vue 实例的数据。如果将 data 作为一个返回一个对象的函数，那么每一个实例的 data 属性都是独立的，不会相互影响了。</p>
 </blockquote>
 <h3 id="vuex-全局挂载"><a href="#vuex-全局挂载" class="headerlink" title="vuex 全局挂载"></a>vuex 全局挂载</h3><ul>
-<li>__window 挂载__：相当于增加全局属性，容易造成变量污染。数据是静态的而只能通过手动更新，数据更新后相关组件也不会重新渲染，必须手动渲染。</li>
-<li>__vue 实例挂载__：store 数据更新后就会立即渲染所有使用 store 数据的组件。Vuex 使用单向数据流，store 数据的更新需要经过 action 层、mutation 层，层次划分明确，便于管理。</li>
+<li><strong>window 挂载</strong>：相当于增加全局属性，容易造成变量污染。数据是静态的而只能通过手动更新，数据更新后相关组件也不会重新渲染，必须手动渲染。</li>
+<li><strong>vue 实例挂载</strong>：store 数据更新后就会立即渲染所有使用 store 数据的组件。Vuex 使用单向数据流，store 数据的更新需要经过 action 层、mutation 层，层次划分明确，便于管理。</li>
 </ul>
 <h3 id="Vuex-mutation、Redux-reducer-不能异步"><a href="#Vuex-mutation、Redux-reducer-不能异步" class="headerlink" title="Vuex mutation、Redux reducer 不能异步"></a>Vuex mutation、Redux reducer 不能异步</h3><blockquote>
 <p>纯函数，给定同样的输入返回同样的输出，可预测性。</p>
@@ -699,9 +699,9 @@
 <p>中间件提供第三方插件的模式，自定义拦截 action -&gt; reducer 的过程。变为 action -&gt; middlewares -&gt; reducer。这种机制可以让我们改变数据流，实现异步 action、action 过滤、日志输出、异常报告等功能。常见的中间件如下：</p>
 </blockquote>
 <ul>
-<li>__redux-thunk__：处理异步操作。</li>
-<li>__redux-logger__：提供日志输出。</li>
-<li>__redux-promise__：处理异步操作，actionCreator 的返回值是 promise。</li>
+<li><strong>redux-thunk</strong>：处理异步操作。</li>
+<li><strong>redux-logger</strong>：提供日志输出。</li>
+<li><strong>redux-promise</strong>：处理异步操作，actionCreator 的返回值是 promise。</li>
 </ul>
 <h3 id="redux-缺点"><a href="#redux-缺点" class="headerlink" title="redux 缺点"></a>redux 缺点</h3><ul>
 <li>组件所需要的数据必须由父组件传过来，而不能像 flux 中直接从 store 获取。</li>
@@ -726,11 +726,11 @@
 <li>它从技术讲和现有的前端开发差不多，采用 JS、WXML、WXSS 三种技术进行开发。功能可分为 webview、appService 两个部分。webview 用来展现 UI，appService 用来处理业务逻辑、数据及接口调用。两个部分在两个进程中运行，通过系统层 JSBridge 实现通信、UI 渲染、事件处理等。</li>
 </ul>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ul>
-<li>__onLoad()__：页面加载时触发，只会调用一次，可获取当前页面路径中的参数。</li>
-<li>__onShow()__：页面显示&#x2F;切入前台时触发，一般用来发送数据请求。</li>
-<li>__onReady()__：页面初次渲染完成时触发, 只会调用一次，代表页面已可和视图层进行交互。</li>
-<li>__onHide()__：页面隐藏&#x2F;切入后台时触发, 如底部 tab 切换到其他页面或小程序切入后台等。</li>
-<li>__onUnload()__：页面卸载时触发，比如 redirectTo、navigateBack 到其他页面时。</li>
+<li>**onLoad()**：页面加载时触发，只会调用一次，可获取当前页面路径中的参数。</li>
+<li>**onShow()**：页面显示&#x2F;切入前台时触发，一般用来发送数据请求。</li>
+<li>**onReady()**：页面初次渲染完成时触发, 只会调用一次，代表页面已可和视图层进行交互。</li>
+<li>**onHide()**：页面隐藏&#x2F;切入后台时触发, 如底部 tab 切换到其他页面或小程序切入后台等。</li>
+<li>**onUnload()**：页面卸载时触发，比如 redirectTo、navigateBack 到其他页面时。</li>
 </ul>
 <h2 id="双向绑定对比-vue"><a href="#双向绑定对比-vue" class="headerlink" title="双向绑定对比 vue"></a>双向绑定对比 vue</h2><blockquote>
 <p>大体相同，但小程序直接 this.data 的属性不可以同步到视图，必须调用 this.setData() 方法。</p>
@@ -758,7 +758,7 @@
 
 
 
-<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/__</span><br><span class="line">* @desp 变量提升：<span class="variable constant_">JS</span> 解析器都会将函数体内声明的变量移到函数体的顶部。</span><br><span class="line">* @result ：<span class="title class_">Goodbye</span> <span class="title class_">Jack</span>、<span class="title class_">World</span></span><br><span class="line">*</span><br><span class="line">__/</span><br><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;World&#x27;</span>;</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// var name; </span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> name === <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> name = <span class="string">&#x27;Jack&#x27;</span>;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Goodbye &#x27;</span> + name);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello &#x27;</span> + name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 查找变量时，当前函数体内没找到则到一直向上到全局对象中寻找。</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(name)</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 赋值表达式：undefined、&#123; n: 2 &#125;</span></span><br><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">n</span>: <span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a.<span class="property">x</span> = a = &#123;<span class="attr">n</span>: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="property">x</span>, b.<span class="property">x</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@desp</span> 变量提升：JS 解析器都会将函数体内声明的变量移到函数体的顶部。</span></span><br><span class="line"><span class="comment">* <span class="doctag">@result</span> ：Goodbye Jack、World</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;World&#x27;</span>;</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// var name; </span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> name === <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> name = <span class="string">&#x27;Jack&#x27;</span>;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Goodbye &#x27;</span> + name);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello &#x27;</span> + name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 查找变量时，当前函数体内没找到则到一直向上到全局对象中寻找。</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(name)</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 赋值表达式：undefined、&#123; n: 2 &#125;</span></span><br><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">n</span>: <span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a.<span class="property">x</span> = a = &#123;<span class="attr">n</span>: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="property">x</span>, b.<span class="property">x</span>)</span><br></pre></td></tr></table></figure>
 
 <h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="number">10</span>;</span><br><span class="line">(<span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// 内部作用域会先去查找已有变量的声明，有则赋值，但 IIFE 函数无法赋值。</span></span><br><span class="line">    b = <span class="number">20</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(b);         <span class="comment">// [Function b]</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">window</span>.<span class="property">b</span>);  <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// window.b = 20 打印：[Function b]、20</span></span><br><span class="line">    <span class="comment">// var b = 20 打印：20、10</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a)   <span class="comment">// undefined</span></span><br><span class="line">    a = <span class="number">5</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">window</span>.<span class="property">a</span>)   <span class="comment">// 10</span></span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">20</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a)   <span class="comment">// 20</span></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 
@@ -817,9 +817,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/" rel="tag"># 面试题库</a>
-          </div>
 
         
 
@@ -995,12 +992,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">634k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:37</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

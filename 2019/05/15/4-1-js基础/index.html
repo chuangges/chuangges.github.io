@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://chuangges.gitee.io/images/js/domNodes.png">
 <meta property="og:image" content="https://chuangges.gitee.io/images/js/bom.png">
 <meta property="article:published_time" content="2019-05-14T16:11:13.000Z">
-<meta property="article:modified_time" content="2022-09-30T05:44:40.375Z">
+<meta property="article:modified_time" content="2022-09-30T08:00:12.525Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="Javascript">
 <meta name="twitter:card" content="summary">
@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+                <time title="修改时间：2022-09-30 16:00:12" itemprop="dateModified" datetime="2022-09-30T16:00:12+08:00">2022-09-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,9 +240,9 @@
 <p>JavaScript 由对象组成，一切皆为对象</p>
 </blockquote>
 <h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><ul>
-<li>__ECMAScript__：核心，描述了JS的语法和基本对象</li>
-<li>__DOM__：文档对象模型，处理网页内容的方法和接口</li>
-<li>__BOM__：浏览器对象模型，与浏览器交互的方法和接口</li>
+<li><strong>ECMAScript</strong>：核心，描述了JS的语法和基本对象</li>
+<li><strong>DOM</strong>：文档对象模型，处理网页内容的方法和接口</li>
+<li><strong>BOM</strong>：浏览器对象模型，与浏览器交互的方法和接口</li>
 </ul>
 <h2 id="语言特点"><a href="#语言特点" class="headerlink" title="语言特点"></a>语言特点</h2><ul>
 <li>解释型的脚本语言：在程序的运行过程中逐行进行解释</li>
@@ -328,8 +328,8 @@
 <li>存储方式：存储在堆中的对象。js按引用访问其值，即访问时先从栈中读取内存地址（大小固定，保存于栈中），然后再找到保存在堆内存中的值。复制时只是复制了地址，两个对象实际指向的都是同一个值。</li>
 </ul>
 <h3 id="栈和堆"><a href="#栈和堆" class="headerlink" title="栈和堆"></a>栈和堆</h3><ul>
-<li>__栈 stack__：可理解为一个无盖水缸，它会自动分配内存空间和释放。用于存储基本数据类型，具有空间大小固定和先进后出的特点。</li>
-<li>__堆 heap__：可理解为封闭盒子，动态分配内存，大小不固定而且不会自动释放。用于存储基本数据类型包装起来的类，实际上保存的不是变量本身，而是指向该对象的指针。</li>
+<li><strong>栈 stack</strong>：可理解为一个无盖水缸，它会自动分配内存空间和释放。用于存储基本数据类型，具有空间大小固定和先进后出的特点。</li>
+<li><strong>堆 heap</strong>：可理解为封闭盒子，动态分配内存，大小不固定而且不会自动释放。用于存储基本数据类型包装起来的类，实际上保存的不是变量本身，而是指向该对象的指针。</li>
 </ul>
 <h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ul>
 <li>强制转换：<code>Boolean()、Number()、String()</code></li>
@@ -441,9 +441,9 @@
 <h2 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a>计时器</h2><div style="text-indent: 2em">requestAnimationFrame 采用系统时间间隔来保持最佳绘制效率而不需要手动设置，这样就不会因间隔时间过短而会造成 过度绘制并增加开销，也不会因时间太长则导致 动画卡顿不流畅，让各种网页动画效果能够有一个统一的刷新机制，从而节省系统资源，提高系统性能，改善视觉效果。</div>
 
 <ul>
-<li>__setTimeout__：延时执行指定代码, 取消时使用 clearTimeout</li>
-<li>__setInterval__：间隔时间重复执行代码, 取消时使用 clearInterval</li>
-<li>__requestAnimationFrame__：在浏览器每次刷新页面之前执行代码，时间间隔由浏览器刷新频率决定，取消时使用 cancelAnimationFrame</li>
+<li><strong>setTimeout</strong>：延时执行指定代码, 取消时使用 clearTimeout</li>
+<li><strong>setInterval</strong>：间隔时间重复执行代码, 取消时使用 clearInterval</li>
+<li><strong>requestAnimationFrame</strong>：在浏览器每次刷新页面之前执行代码，时间间隔由浏览器刷新频率决定，取消时使用 cancelAnimationFrame</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> box = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;box&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> timer = <span class="title function_">requestAnimationFrame</span>(<span class="keyword">function</span> <span class="title function_">step</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="keyword">var</span> width = <span class="built_in">parseInt</span>(box.<span class="property">style</span>.<span class="property">width</span>);</span><br><span class="line">      <span class="keyword">if</span>(width &lt; <span class="number">500</span>)&#123;</span><br><span class="line">          box.<span class="property">style</span>.<span class="property">width</span> = width + <span class="number">10</span>;</span><br><span class="line">          <span class="title function_">requestAnimationFrame</span>(step);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="title function_">cancelAnimationFrame</span>(timer);</span><br><span class="line">      &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -478,22 +478,22 @@
 
 <h2 id="JS-算法"><a href="#JS-算法" class="headerlink" title="JS 算法"></a>JS 算法</h2><ul>
 <li>排序算法<ul>
-<li>__冒泡排序__：比较任何两个相邻元素，如果第一个比第二个大则交换位置。元素向上移动到正确顺序，类似气泡上升至表面而得名。</li>
-<li>__选择排序__：每次从元素中选出最小或最大值，存放在序列的起始位置，以此循环至排序完毕。</li>
-<li>__插入排序__：将一个数据插入到已经排好序的有序数据中，从而得到一个新的、个数加一的有序数据，适用于少量数据的排序。</li>
-<li>__归并排序__：将原始序列切分成较小的序列直到无法再切分，然后将小序列排序后归并成大序列，直到最后只有一个排序完毕的大序列。</li>
-<li>__快速排序__：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行上述递归排序，以此达到整个数据变成有序序列。</li>
+<li><strong>冒泡排序</strong>：比较任何两个相邻元素，如果第一个比第二个大则交换位置。元素向上移动到正确顺序，类似气泡上升至表面而得名。</li>
+<li><strong>选择排序</strong>：每次从元素中选出最小或最大值，存放在序列的起始位置，以此循环至排序完毕。</li>
+<li><strong>插入排序</strong>：将一个数据插入到已经排好序的有序数据中，从而得到一个新的、个数加一的有序数据，适用于少量数据的排序。</li>
+<li><strong>归并排序</strong>：将原始序列切分成较小的序列直到无法再切分，然后将小序列排序后归并成大序列，直到最后只有一个排序完毕的大序列。</li>
+<li><strong>快速排序</strong>：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行上述递归排序，以此达到整个数据变成有序序列。</li>
 </ul>
 </li>
 <li>搜索算法<ul>
-<li>__顺序搜索__：让目标元素与列表中的每一个元素逐个比较，直到找出与给定元素相同的元素为止，缺点是效率低下。</li>
-<li>__二分搜索__：在一个有序列表，以中间值为基准拆分为两个子列表，拿目标元素与中间值作比较从而再在目标的子列表中递归此方法，直至找到目标元素。</li>
+<li><strong>顺序搜索</strong>：让目标元素与列表中的每一个元素逐个比较，直到找出与给定元素相同的元素为止，缺点是效率低下。</li>
+<li><strong>二分搜索</strong>：在一个有序列表，以中间值为基准拆分为两个子列表，拿目标元素与中间值作比较从而再在目标的子列表中递归此方法，直至找到目标元素。</li>
 </ul>
 </li>
 <li>其他<ul>
-<li>__贪心算法__：在对问题求解时，不考虑全局，总是做出局部最优解的方法。</li>
-<li>__动态规划__：在对问题求解时，由以求出的局部最优解来推导全局最优解。</li>
-<li>__复杂度__：一个方法在执行的整个生命周期所需要占用的时间、空间等资源。</li>
+<li><strong>贪心算法</strong>：在对问题求解时，不考虑全局，总是做出局部最优解的方法。</li>
+<li><strong>动态规划</strong>：在对问题求解时，由以求出的局部最优解来推导全局最优解。</li>
+<li><strong>复杂度</strong>：一个方法在执行的整个生命周期所需要占用的时间、空间等资源。</li>
 </ul>
 </li>
 </ul>
@@ -670,7 +670,7 @@
 <ul>
 <li>自身绑定：<code>on(事件名称, 事件处理函数)</code></li>
 <li>事件委托<code>on(事件名称, 可选后代元素, 传递数据, 事件处理函数)</code></li>
-<li>事件解绑：<code>off()</code> 解绑元素的所有事件、<code>off(&quot;click&quot;, &quot;__&quot;)</code> 解绑元素所有代理的事件但不解绑自身事件。</li>
+<li>事件解绑：<code>off()</code> 解绑元素的所有事件、<code>off(&quot;click&quot;, &quot;**&quot;)</code> 解绑元素所有代理的事件但不解绑自身事件。</li>
 <li>先解绑再绑定：<code>$(&quot;#btn&quot;).off(&quot;click&quot;).on(&quot;click&quot;, callback)</code> 防止事件累加，导致点击一次而事件执行多次。</li>
 </ul>
 </li>
@@ -728,7 +728,7 @@
 <li><code>$.extend( target, [objN])</code>：使用一个或多个其他对象来扩展第一个对象</li>
 <li>关系：<code>$.fn.pluginName = $.fn.extend(pluginName) = $.prototype.extend(pluginName)</code></li>
 </ul>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//   ========== 插件开发 =========</span></span><br><span class="line"><span class="comment">// 1、类级别 </span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">$</span>)&#123;     <span class="comment">// 调用：$.hello()</span></span><br><span class="line">    $.<span class="title function_">extend</span>(&#123;</span><br><span class="line">        <span class="attr">hello</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)(jQuery)</span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">$</span>)&#123;     <span class="comment">// 调用：$.myExtend.hello() </span></span><br><span class="line">    $.<span class="title function_">myExtend</span>(&#123;</span><br><span class="line">        <span class="attr">hello</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)(jQuery)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、对象级别</span></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">$</span>)&#123;  <span class="comment">// 调用：$(&quot;#box&quot;).myAnimate()</span></span><br><span class="line">    <span class="comment">// 写法一</span></span><br><span class="line">    $.fn.<span class="title function_">extend</span>(&#123;</span><br><span class="line">        <span class="attr">myAnimate</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; &#125; </span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 写法二</span></span><br><span class="line">    $.fn.<span class="property">myAnimate</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; &#125;</span><br><span class="line">&#125;)(jQuery) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/__</span><br><span class="line">  * @title 插件模板</span><br><span class="line">  * @desp 分号：开头是为了避免别人的代码不规范引起错误，结尾是为了避免压缩出错。</span><br><span class="line">  * @params <span class="variable language_">window</span>、<span class="variable language_">document</span>：快速查找，而且也便于代码压缩，比如 <span class="variable language_">window</span> 可能被压缩为 w。</span><br><span class="line">  * @params <span class="literal">undefined</span>：保证原生，防止他人把其定义为别的。</span><br><span class="line">  *</span><br><span class="line">  *</span><br><span class="line">__/</span><br><span class="line">;(<span class="keyword">function</span>(<span class="params">win, doc, $, <span class="literal">undefined</span></span>)&#123;    <span class="comment">// 没有第四个参数</span></span><br><span class="line">  <span class="comment">// 写法一</span></span><br><span class="line">  $.fn.<span class="title function_">extend</span>(&#123;</span><br><span class="line">    <span class="string">&quot;pluginName&quot;</span>: <span class="keyword">function</span>(<span class="params">opt</span>)&#123;&#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写法二</span></span><br><span class="line">  <span class="keyword">var</span> defaults = &#123; &#125;</span><br><span class="line">  $.fn.<span class="property">pluginName</span> = <span class="keyword">function</span>(<span class="params">opt</span>)&#123;</span><br><span class="line">    <span class="comment">// 合并默认配置和用户配置</span></span><br><span class="line">    <span class="keyword">var</span> set = $.<span class="title function_">extend</span>(&#123;&#125;, defaults, opt)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 支持链式调用</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>; </span><br><span class="line">  &#125; </span><br><span class="line">&#125;(<span class="variable language_">window</span>, <span class="variable language_">document</span>, jQuery))</span><br></pre></td></tr></table></figure>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//   ========== 插件开发 =========</span></span><br><span class="line"><span class="comment">// 1、类级别 </span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">$</span>)&#123;     <span class="comment">// 调用：$.hello()</span></span><br><span class="line">    $.<span class="title function_">extend</span>(&#123;</span><br><span class="line">        <span class="attr">hello</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)(jQuery)</span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">$</span>)&#123;     <span class="comment">// 调用：$.myExtend.hello() </span></span><br><span class="line">    $.<span class="title function_">myExtend</span>(&#123;</span><br><span class="line">        <span class="attr">hello</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)(jQuery)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、对象级别</span></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">$</span>)&#123;  <span class="comment">// 调用：$(&quot;#box&quot;).myAnimate()</span></span><br><span class="line">    <span class="comment">// 写法一</span></span><br><span class="line">    $.fn.<span class="title function_">extend</span>(&#123;</span><br><span class="line">        <span class="attr">myAnimate</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123; &#125; </span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 写法二</span></span><br><span class="line">    $.fn.<span class="property">myAnimate</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; &#125;</span><br><span class="line">&#125;)(jQuery) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@title</span> 插件模板</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@desp</span> 分号：开头是为了避免别人的代码不规范引起错误，结尾是为了避免压缩出错。</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@params</span> window、document：快速查找，而且也便于代码压缩，比如 window 可能被压缩为 w。</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@params</span> undefined：保证原生，防止他人把其定义为别的。</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line">;(<span class="keyword">function</span>(<span class="params">win, doc, $, <span class="literal">undefined</span></span>)&#123;    <span class="comment">// 没有第四个参数</span></span><br><span class="line">  <span class="comment">// 写法一</span></span><br><span class="line">  $.fn.<span class="title function_">extend</span>(&#123;</span><br><span class="line">    <span class="string">&quot;pluginName&quot;</span>: <span class="keyword">function</span>(<span class="params">opt</span>)&#123;&#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写法二</span></span><br><span class="line">  <span class="keyword">var</span> defaults = &#123; &#125;</span><br><span class="line">  $.fn.<span class="property">pluginName</span> = <span class="keyword">function</span>(<span class="params">opt</span>)&#123;</span><br><span class="line">    <span class="comment">// 合并默认配置和用户配置</span></span><br><span class="line">    <span class="keyword">var</span> set = $.<span class="title function_">extend</span>(&#123;&#125;, defaults, opt)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 支持链式调用</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>; </span><br><span class="line">  &#125; </span><br><span class="line">&#125;(<span class="variable language_">window</span>, <span class="variable language_">document</span>, jQuery))</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="Lodash"><a href="#Lodash" class="headerlink" title="Lodash"></a>Lodash</h2><blockquote>
@@ -736,21 +736,21 @@
 </blockquote>
 <ul>
 <li>辅助函数<ul>
-<li>__Array__：适合于数组，比如填充数据、查找元素、数组分片等。</li>
-<li>__Collocation__：适用于数组和对象，部分适用于字符串，比如分组、查找、过滤等。</li>
-<li>__Function__：适用于函数，比如节流、延迟、缓存、设置钩子等。</li>
-<li>__Lang__：普遍适用于各种类型，常用于执行类型判断和类型转换。</li>
-<li>__Math__：使用与数值类型，常用于执行数学运算。</li>
-<li>__Number__：适用于生成随机数，比较数值与数值区间的关系。</li>
-<li>__Object__：适用于对象类型，常用于对象的创建、扩展、类型转换、检索、集合等。</li>
-<li>__Seq__：常用于创建链式调用，提高执行性能（惰性计算）。</li>
-<li>__String__：适用于字符串类型。</li>
+<li><strong>Array</strong>：适合于数组，比如填充数据、查找元素、数组分片等。</li>
+<li><strong>Collocation</strong>：适用于数组和对象，部分适用于字符串，比如分组、查找、过滤等。</li>
+<li><strong>Function</strong>：适用于函数，比如节流、延迟、缓存、设置钩子等。</li>
+<li><strong>Lang</strong>：普遍适用于各种类型，常用于执行类型判断和类型转换。</li>
+<li><strong>Math</strong>：使用与数值类型，常用于执行数学运算。</li>
+<li><strong>Number</strong>：适用于生成随机数，比较数值与数值区间的关系。</li>
+<li><strong>Object</strong>：适用于对象类型，常用于对象的创建、扩展、类型转换、检索、集合等。</li>
+<li><strong>Seq</strong>：常用于创建链式调用，提高执行性能（惰性计算）。</li>
+<li><strong>String</strong>：适用于字符串类型。</li>
 </ul>
 </li>
 <li>lodash&#x2F;fp 模块：提供了更接近函数式编程的开发方式，主要特点如下。<ul>
-<li>__Rearragned Arguments__：重新调整参数位置，便于函数之间的聚合。</li>
-<li>__Capped Iteratee Argument__：封装 Iteratee 参数。</li>
-<li>__Fixed Arity__：固化参数个数，便于柯里化。</li>
+<li><strong>Rearragned Arguments</strong>：重新调整参数位置，便于函数之间的聚合。</li>
+<li><strong>Capped Iteratee Argument</strong>：封装 Iteratee 参数。</li>
+<li><strong>Fixed Arity</strong>：固化参数个数，便于柯里化。</li>
 <li><strong>New Methods</strong></li>
 </ul>
 </li>
@@ -798,9 +798,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
-          </div>
 
         
 
@@ -976,12 +973,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">634k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:37</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

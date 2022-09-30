@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chuangges.gitee.io/images/js/texture-map.png">
 <meta property="article:published_time" content="2019-03-10T05:06:46.000Z">
-<meta property="article:modified_time" content="2022-09-30T05:44:40.376Z">
+<meta property="article:modified_time" content="2022-09-30T08:00:12.525Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="前端技术栈">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+                <time title="修改时间：2022-09-30 16:00:12" itemprop="dateModified" datetime="2022-09-30T16:00:12+08:00">2022-09-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,7 +214,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>24k</span>
+              <span>23k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -235,11 +235,11 @@
 
       
         <h1 id="一、WebGL-原生绘图"><a href="#一、WebGL-原生绘图" class="headerlink" title="一、WebGL 原生绘图"></a>一、WebGL 原生绘图</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="OpenGL、WebGL"><a href="#OpenGL、WebGL" class="headerlink" title="OpenGL、WebGL"></a>OpenGL、WebGL</h3><ul>
-<li>__OpenGL__：最常用的跨平台图形库，用于渲染 2D、3D 矢量图形的跨语言、跨平台的应用程序编程接口</li>
-<li>__OpenGL ES__：OpenGL API 的子集 GPU，是针对手机、PDA 和游戏主机等嵌入式设备而专门设计的接口</li>
-<li>__GLSL__：OpenGL ES 着色语言，用于OpenGL中着色编程的语言。在图形卡的GPU上执行，代替了固定的渲染管线的一部分，使渲染管线中不同层次具有可编程性，如视图转换、投影转换等。  </li>
-<li>__WebGL__：基于 OpenGL 设计的面向 web 的图形标准，它提供的一系列 Js API 对显卡的硬件细节进行了封装抽象，可用于控制 GPU渲染管线(显卡硬件) 进行图形渲染，从而获得了较高性能。</li>
-<li>__WebGL程序__：主要组成是 js控制代码 和 计算机的图形处理单元GPU。而 GPU 核心即着色程序 program 由顶点和片元两个着色器组成，使用 GLSL 编写并通过常以字符串的形式存放在Js中等待调用 (浏览器不识别 GLSL)。</li>
+<li><strong>OpenGL</strong>：最常用的跨平台图形库，用于渲染 2D、3D 矢量图形的跨语言、跨平台的应用程序编程接口</li>
+<li><strong>OpenGL ES</strong>：OpenGL API 的子集 GPU，是针对手机、PDA 和游戏主机等嵌入式设备而专门设计的接口</li>
+<li><strong>GLSL</strong>：OpenGL ES 着色语言，用于OpenGL中着色编程的语言。在图形卡的GPU上执行，代替了固定的渲染管线的一部分，使渲染管线中不同层次具有可编程性，如视图转换、投影转换等。  </li>
+<li><strong>WebGL</strong>：基于 OpenGL 设计的面向 web 的图形标准，它提供的一系列 Js API 对显卡的硬件细节进行了封装抽象，可用于控制 GPU渲染管线(显卡硬件) 进行图形渲染，从而获得了较高性能。</li>
+<li><strong>WebGL程序</strong>：主要组成是 js控制代码 和 计算机的图形处理单元GPU。而 GPU 核心即着色程序 program 由顶点和片元两个着色器组成，使用 GLSL 编写并通过常以字符串的形式存放在Js中等待调用 (浏览器不识别 GLSL)。</li>
 </ul>
 <h3 id="CPU、GPU"><a href="#CPU、GPU" class="headerlink" title="CPU、GPU"></a>CPU、GPU</h3><blockquote>
 <p>图像处理主要偏简单的矩阵运算，逻辑判断等很少。两者的设计架构不同。GPU很适合做简单的并发计算，应用于图像处理、深度学习等领域加快速度，引爆了人工智能</p>
@@ -261,11 +261,11 @@
 <h3 id="图形渲染"><a href="#图形渲染" class="headerlink" title="图形渲染"></a>图形渲染</h3>  <div style="text-indent: 2em">渲染是从使用计算机程序模型生成图像的过程。在图形中一个虚拟场景的呈现需要使用 几何、视点、纹理、光照和阴影等通过一个渲染程序传递信息描述，输出一个数字图像。渲染可以在本地或远程上进行。复杂图像所需的硬件资源可以在专用服务器上完成，即基于服务器的绘制。渲染也可以通过在本地CPU完成, 即基于客户端的渲染。所以渲染类型如下：</div>
 
 <ul>
-<li>__软件渲染__：所有的渲染是在 CPU 的帮助下计算完成。 </li>
-<li>__硬件渲染__：所有的图形计算都由 GPU (图形处理单元)完成的。</li>
+<li><strong>软件渲染</strong>：所有的渲染是在 CPU 的帮助下计算完成。 </li>
+<li><strong>硬件渲染</strong>：所有的图形计算都由 GPU (图形处理单元)完成的。</li>
 </ul>
 <h3 id="图形术语"><a href="#图形术语" class="headerlink" title="图形术语"></a>图形术语</h3><ul>
-<li>__坐标系__：x、y、z 轴<ul>
+<li><strong>坐标系</strong>：x、y、z 轴<ul>
 <li>无论画布多大，WebGL 上的坐标被限制为 (1, 1, 1)、(-1, -1, -1)。</li>
 <li>WebGL 在 GPU 上的主要工作是将顶点数据通过矩阵变换转换到裁剪空间坐标，然后基于空间坐标绘制像素点。</li>
 </ul>
@@ -276,8 +276,8 @@
 <li>驻留在 GPU 存储器却可以被直接呈现，提高了性能。</li>
 </ul>
 </li>
-<li>__图元__：几何顶点的组合(点、线段和三角面)，一般是三角形。</li>
-<li>__网格__：使用顶点所绘的 2D、3D 模型，它的每个面被称为 一个片元 (一般是三角形)。</li>
+<li><strong>图元</strong>：几何顶点的组合(点、线段和三角面)，一般是三角形。</li>
+<li><strong>网格</strong>：使用顶点所绘的 2D、3D 模型，它的每个面被称为 一个片元 (一般是三角形)。</li>
 <li><strong>片元和像素</strong><ul>
 <li>在光栅化中纹理映射之后图元信息转化为了像素。</li>
 <li>片元包括 像素点及其颜色、深度和纹理数据等信息。</li>
@@ -307,8 +307,8 @@
 <p>电脑一般都具有独立显卡</p>
 </blockquote>
 <ul>
-<li>__GPU__：渲染管线：可编程的着色器、不可编程的光栅器等，用于和 GPU 传递数据。</li>
-<li>__显存__：GPU 读写数据的存储区，主要组成有：<code>顶点缓存</code>(存储顶点的位置、颜色等数据)、<code>渲染缓存</code>(接收渲染管线生成数据)、<code>纹理缓存</code>(用于实现纹理贴图)、<code>帧缓存</code>(颜色缓存、深度缓存、模板缓存)。</li>
+<li><strong>GPU</strong>：渲染管线：可编程的着色器、不可编程的光栅器等，用于和 GPU 传递数据。</li>
+<li><strong>显存</strong>：GPU 读写数据的存储区，主要组成有：<code>顶点缓存</code>(存储顶点的位置、颜色等数据)、<code>渲染缓存</code>(接收渲染管线生成数据)、<code>纹理缓存</code>(用于实现纹理贴图)、<code>帧缓存</code>(颜色缓存、深度缓存、模板缓存)。</li>
 </ul>
 <h3 id="图像绘制流程"><a href="#图像绘制流程" class="headerlink" title="图像绘制流程"></a>图像绘制流程</h3><blockquote>
 <p>上线网站的 WebGL 相关文件会放在远程的服务器硬盘存储器。网页 http 请求后，CPU 将顶点坐标等数据 和 WebGL 程序代码 传递给 GPU 存储。</p>
@@ -323,16 +323,16 @@
 <p>获取顶点坐标、图元装配、光栅化(生成片元, 即一个个像素点)、存储在缓存区</p>
 </blockquote>
 <ol>
-<li>__数据准备__：<code>uv</code>(贴图坐标)、<code>索引</code>(顶点绘制顺序)、<code>矩阵数据</code>(uniform 变量传递给顶点着色器)、<code>顶点坐标</code>(attribute 变量传递给顶点着色器，一般由三维软件导出)。</li>
+<li><strong>数据准备</strong>：<code>uv</code>(贴图坐标)、<code>索引</code>(顶点绘制顺序)、<code>矩阵数据</code>(uniform 变量传递给顶点着色器)、<code>顶点坐标</code>(attribute 变量传递给顶点着色器，一般由三维软件导出)。</li>
 <li><strong>图元装配</strong><br>* 顶点着色器(Js 定义的程序代码，初始化后会传递给 GPU) 将顶点坐标转换为图元。<br>* 本质：GPU 逐顶点数量执行顶点着色器，通过矩阵变换将 3D 坐标转为 2D 图形。</li>
 <li><strong>光栅化</strong><br>* 片元着色器(处理模型的颜色、质地、光照效果、阴影) 将图元转换为像素点。<br>* 本质：GPU 逐片元数量执行片元着色器，为每个片元进行着色。</li>
-<li>__存储到缓存区__：片元只要通过了检测和融合 (融合单元主要实现透明度效果)，就可以存储到颜色缓存区，最终完成整个渲染。</li>
+<li><strong>存储到缓存区</strong>：片元只要通过了检测和融合 (融合单元主要实现透明度效果)，就可以存储到颜色缓存区，最终完成整个渲染。</li>
 </ol>
 <h2 id="绘图流程"><a href="#绘图流程" class="headerlink" title="绘图流程"></a>绘图流程</h2><ol>
-<li>__初始化绘图上下文__：<code>canvas.getContext(&quot;webgl&quot;, &#123; // 配置选项 &#125;</code>。</li>
-<li>__初始化着色器程序__：创建顶点着色器程序、片段着色器程序，然后通过 js 将这两个着色器 link 到一个 program (着色程序) 并提交到 GPU。</li>
-<li>__建立模型和数据缓存__：创建缓冲区对象并绑定到目标，然后写入顶点数据并连接所分配的变量。创建纹理并加载纹理图像，配置属性并在 webgl 中使用</li>
-<li>__图像绘制和动画__：简单图形 <code>gl.drawArrays(mode, first, count)</code>、复杂的三维图形：<code>gl.drawElements(mode, count, type, offset)</code>。</li>
+<li><strong>初始化绘图上下文</strong>：<code>canvas.getContext(&quot;webgl&quot;, &#123; // 配置选项 &#125;</code>。</li>
+<li><strong>初始化着色器程序</strong>：创建顶点着色器程序、片段着色器程序，然后通过 js 将这两个着色器 link 到一个 program (着色程序) 并提交到 GPU。</li>
+<li><strong>建立模型和数据缓存</strong>：创建缓冲区对象并绑定到目标，然后写入顶点数据并连接所分配的变量。创建纹理并加载纹理图像，配置属性并在 webgl 中使用</li>
+<li><strong>图像绘制和动画</strong>：简单图形 <code>gl.drawArrays(mode, first, count)</code>、复杂的三维图形：<code>gl.drawElements(mode, count, type, offset)</code>。</li>
 </ol>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">webGLStart</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 初始化上下文</span></span><br><span class="line">    <span class="keyword">var</span> canvas = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myCanvas&quot;</span>);</span><br><span class="line">    <span class="title function_">initGL</span>(canvas);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化着色器</span></span><br><span class="line">    <span class="title function_">initShader</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化缓冲区</span></span><br><span class="line">    <span class="title function_">initBuffers</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化纹理图片</span></span><br><span class="line">    <span class="title function_">initTexture</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指定清空画布的颜色，</span></span><br><span class="line">    gl.<span class="title function_">clearColor</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 清除颜色缓冲区 (使用定义的颜色来填充相应区域)</span></span><br><span class="line">    gl.<span class="title function_">clear</span>(gl.<span class="property">COLOR_BUFFER_BIT</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开启隐藏面消除的功能  启用深度测试</span></span><br><span class="line">    gl.<span class="title function_">enable</span>(gl.<span class="property">DEPTH_TEST</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始绘制场景</span></span><br><span class="line">    <span class="title function_">drawScene</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -374,8 +374,8 @@
 <p>引用插件 stats.js 之后可以在场景中的左上角看到视图小框，点击切换可看到以下信息。</p>
 </blockquote>
 <ul>
-<li>__38 MS (19-74)__：MS 表示渲染一帧需要的毫秒数，其值越小越好。</li>
-<li>__34 FPS (30-34)__：FPS 表示每秒渲染的帧数，其值越大越好，括号内表示帧率范围。</li>
+<li>**38 MS (19-74)**：MS 表示渲染一帧需要的毫秒数，其值越小越好。</li>
+<li>**34 FPS (30-34)**：FPS 表示每秒渲染的帧数，其值越大越好，括号内表示帧率范围。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动画性能检测： http://www.wjceo.com/lib/js/libs/stats.min.js</span></span><br><span class="line">stats = <span class="keyword">new</span> <span class="title class_">Stats</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数为 0 时显示 FPS 界面，参数为 1 时显示 MS 界面</span></span><br><span class="line">stats.<span class="title function_">setMode</span>(<span class="number">1</span>);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// stats 的界面对应左上角</span></span><br><span class="line">stats.<span class="property">domElement</span>.<span class="property">style</span>.<span class="property">position</span> = <span class="string">&#x27;absolute&#x27;</span>;</span><br><span class="line">stats.<span class="property">domElement</span>.<span class="property">left</span> = <span class="string">&#x27;0px&#x27;</span>;</span><br><span class="line">stats.<span class="property">domElement</span>.<span class="property">top</span> = <span class="string">&#x27;0px&#x27;</span>;</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(stats.<span class="property">dom</span>);</span><br></pre></td></tr></table></figure>
 
@@ -384,22 +384,22 @@
 <p>绘图页面中必备且唯一的要素：camera、scene、renderer</p>
 </blockquote>
 <ul>
-<li>__Scene__：场景（三维空间），是物体、光源等元素的容器 </li>
-<li>__Camera__：相机（观察者），控制视角位置、范围和焦点位置 </li>
-<li>__Object3D__：物体（三维模型），包括二维的点线面、三维的粒子等</li>
-<li>__Light__：光源，包括全局光、平行光、点光源等</li>
-<li>__Renderer__：渲染器（画布），用于渲染场景及其物体</li>
-<li>__Control__：控制器（相机控件），可通过键盘、鼠标控制相机</li>
+<li><strong>Scene</strong>：场景（三维空间），是物体、光源等元素的容器 </li>
+<li><strong>Camera</strong>：相机（观察者），控制视角位置、范围和焦点位置 </li>
+<li><strong>Object3D</strong>：物体（三维模型），包括二维的点线面、三维的粒子等</li>
+<li><strong>Light</strong>：光源，包括全局光、平行光、点光源等</li>
+<li><strong>Renderer</strong>：渲染器（画布），用于渲染场景及其物体</li>
+<li><strong>Control</strong>：控制器（相机控件），可通过键盘、鼠标控制相机</li>
 </ul>
 <h3 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h3><ul>
-<li>__正投影相机__：OrthographicCamera，物体的实际尺寸而远近相同。<ul>
+<li><strong>正投影相机</strong>：OrthographicCamera，物体的实际尺寸而远近相同。<ul>
 <li>参数：视角、窗口的长宽比、近远裁面的距离</li>
 <li>OrthographicCamera(left, right, top, bottom, near, far)</li>
 </ul>
 </li>
-<li>__透视投影相机__：PerspectiveCamera，类似人眼而近大远小。</li>
-<li>__3D 相机__：StereoCamera，合成两个相机的拍摄结果，用于 3D 立体影像或视差屏障等效果。</li>
-<li>__全景相机__：CubeCamera，可以 360 度拍摄。</li>
+<li><strong>透视投影相机</strong>：PerspectiveCamera，类似人眼而近大远小。</li>
+<li><strong>3D 相机</strong>：StereoCamera，合成两个相机的拍摄结果，用于 3D 立体影像或视差屏障等效果。</li>
+<li><strong>全景相机</strong>：CubeCamera，可以 360 度拍摄。</li>
 </ul>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 属性设置</span></span><br><span class="line">camera.<span class="property">position</span>.<span class="title function_">set</span>(<span class="number">0</span>, -<span class="number">1</span>, <span class="number">5</span>);    <span class="comment">// 设定相机位置 </span></span><br><span class="line">camera.<span class="property">up</span>.<span class="property">x</span> = <span class="number">0</span>;                 <span class="comment">// 相机以哪个方向为上方</span></span><br><span class="line">camera.<span class="title function_">lookAt</span>(scene.<span class="property">position</span>);   <span class="comment">// 相机面向哪个坐标(默认面向z轴负方向)</span></span><br><span class="line">camera.<span class="title function_">lookAt</span>(<span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">Vector3</span>(<span class="number">10</span>,<span class="number">0</span>,<span class="number">0</span>));  <span class="comment">// 相机往x轴移动10单位 </span></span><br></pre></td></tr></table></figure>
 
@@ -410,15 +410,15 @@
 <ul>
 <li><p>分类</p>
 <ul>
-<li>__Line__：线段模型，由线条组成</li>
-<li>__Mesh__：网格模型，由三角面和四边形面组成</li>
-<li>__Points__：粒子系统，使用一堆点的集合来描述</li>
-<li>__Sprite__：精灵图，指包含于场景中的二维图像或动画，用于加载纹理(不接受阴影)。</li>
+<li><strong>Line</strong>：线段模型，由线条组成</li>
+<li><strong>Mesh</strong>：网格模型，由三角面和四边形面组成</li>
+<li><strong>Points</strong>：粒子系统，使用一堆点的集合来描述</li>
+<li><strong>Sprite</strong>：精灵图，指包含于场景中的二维图像或动画，用于加载纹理(不接受阴影)。</li>
 </ul>
 </li>
 <li><p>几何体</p>
 <ul>
-<li>__构造函数创建__：Geometry 是它们的基类<ul>
+<li><strong>构造函数创建</strong>：Geometry 是它们的基类<ul>
 <li><strong>二维平面</strong><ul>
 <li>圆平面：CircleGeometry </li>
 <li>矩形平面：PlaneGeometry</li>
@@ -480,18 +480,18 @@
 <p>三维物体表面各个可视属性（颜色、纹理、光滑度、透明度、反射率、反光度等）的结合，决定了物体的外观效果。THREE.Material 是材质的基类，拥有所有材质的公有属性，它派生出的各种材质如下：</p>
 </blockquote>
 <ul>
-<li>__MeshBasicMaterial__：基础材质，用于显示几何体的线框并给几何体赋予一种简单的颜色。特点：材质颜色如果没有指定则随机、物体颜色始终是材质颜色并且不会因光照产生明暗、阴影效果。</li>
-<li>__MeshLambertMaterial__：朗伯材质，用于创建 暗淡的、不光亮的表面。特点：可以通过 emissive 属性给材质添加亮色、在物体表面均匀地散射灯光，比如纸的表面粗糙但亮度均匀。</li>
-<li>__MeshPhongMaterial__：Phong 式材质，用于创建金属类光亮的表面。特点：反光强度更大、会给表面添加金属光泽、可通过 shininess 属性改变反光强度。</li>
-<li>__MeshStandardMaterial__：网格标准材质，用于创建暗淡的、有金属性光泽的表面。特点：MeshLambertMaterial 和 MeshPhoneMaterial 的结合、同时具有粗糙度和金属性的材质并且可以改变这些属性。</li>
-<li>__MeshDepthMaterial__：深度材质，根据内容所在的深度对网格对象的灰度级别从黑到白绘制。</li>
-<li>__MeshNormalMaterial__：法向材质，根据面的法线或朝向使用不同的颜色来渲染网格的面。</li>
-<li>__MeshFaceMaterial__：面材质，一个可以为几何体的各个表面指定不同颜色的容器。</li>
-<li>__ShaderMaterial__：着色器材质，允许使用自定义的着色器程序，比如顶点的放置方式、像素的着色方式。</li>
-<li>__LineBasicMaterial__：直线基础材质，用于在 THREE.Line 中创建着色的直线。</li>
-<li>__LineDashMaterial__：虚线材质，允许创建出一种虚线的效果。</li>
-<li>__PointsMaterial__：粒子材质，适用于粒子系统、模拟雪花雨等。</li>
-<li>__SpriteMaterial__：雪碧材质，用于加载图像纹理、canvas 创建的纹理等。</li>
+<li><strong>MeshBasicMaterial</strong>：基础材质，用于显示几何体的线框并给几何体赋予一种简单的颜色。特点：材质颜色如果没有指定则随机、物体颜色始终是材质颜色并且不会因光照产生明暗、阴影效果。</li>
+<li><strong>MeshLambertMaterial</strong>：朗伯材质，用于创建 暗淡的、不光亮的表面。特点：可以通过 emissive 属性给材质添加亮色、在物体表面均匀地散射灯光，比如纸的表面粗糙但亮度均匀。</li>
+<li><strong>MeshPhongMaterial</strong>：Phong 式材质，用于创建金属类光亮的表面。特点：反光强度更大、会给表面添加金属光泽、可通过 shininess 属性改变反光强度。</li>
+<li><strong>MeshStandardMaterial</strong>：网格标准材质，用于创建暗淡的、有金属性光泽的表面。特点：MeshLambertMaterial 和 MeshPhoneMaterial 的结合、同时具有粗糙度和金属性的材质并且可以改变这些属性。</li>
+<li><strong>MeshDepthMaterial</strong>：深度材质，根据内容所在的深度对网格对象的灰度级别从黑到白绘制。</li>
+<li><strong>MeshNormalMaterial</strong>：法向材质，根据面的法线或朝向使用不同的颜色来渲染网格的面。</li>
+<li><strong>MeshFaceMaterial</strong>：面材质，一个可以为几何体的各个表面指定不同颜色的容器。</li>
+<li><strong>ShaderMaterial</strong>：着色器材质，允许使用自定义的着色器程序，比如顶点的放置方式、像素的着色方式。</li>
+<li><strong>LineBasicMaterial</strong>：直线基础材质，用于在 THREE.Line 中创建着色的直线。</li>
+<li><strong>LineDashMaterial</strong>：虚线材质，允许创建出一种虚线的效果。</li>
+<li><strong>PointsMaterial</strong>：粒子材质，适用于粒子系统、模拟雪花雨等。</li>
+<li><strong>SpriteMaterial</strong>：雪碧材质，用于加载图像纹理、canvas 创建的纹理等。</li>
 </ul>
 <h3 id="光源"><a href="#光源" class="headerlink" title="光源"></a>光源</h3><blockquote>
 <p>THREE.Light 是所有光源的基类，其构造函数接受 hex(一个16进制的颜色值)作为参数。但要让光源具有颜色之外的特性。我们需要使用由基类派生出来的其他种类光源，注意环境光、方向光的光强不受距离远近影响。</p>
@@ -542,18 +542,18 @@
 
 
 <h3 id="渲染器"><a href="#渲染器" class="headerlink" title="渲染器"></a>渲染器</h3><ul>
-<li>__WebGLRender__：使用 WebGL 渲染图形</li>
-<li>__WebGLRenderTarget__：渲染一个缓冲区</li>
-<li>__WebGLRenderTargetCube__：用于 CubeCamera</li>
-<li>__CSS3DRenderer__：基于 CSS3，简化版为 2D</li>
-<li>__SVGRenderer__：使用 SVG 渲染几何数据</li>
+<li><strong>WebGLRender</strong>：使用 WebGL 渲染图形</li>
+<li><strong>WebGLRenderTarget</strong>：渲染一个缓冲区</li>
+<li><strong>WebGLRenderTargetCube</strong>：用于 CubeCamera</li>
+<li><strong>CSS3DRenderer</strong>：基于 CSS3，简化版为 2D</li>
+<li><strong>SVGRenderer</strong>：使用 SVG 渲染几何数据</li>
 </ul>
 <h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><ul>
-<li>__FlyControls__：飞行控制，用键盘和鼠标控制相机的移动和转动</li>
-<li>__OrbitControls__：轨道控制器，模拟轨道卫星旋转平移并用键盘、鼠标控制相机位置</li>
-<li>__PointerLockControls__：指针锁定，鼠标离开画布依然能被捕捉到鼠标交互而常用于游戏</li>
-<li>__TrackballControls__：轨迹球控制器，通过键盘和鼠标控制前后左右平移和缩放场景</li>
-<li>__TransformControls__：变换物体控制器，可以通过鼠标对物体的进行拖放等操作</li>
+<li><strong>FlyControls</strong>：飞行控制，用键盘和鼠标控制相机的移动和转动</li>
+<li><strong>OrbitControls</strong>：轨道控制器，模拟轨道卫星旋转平移并用键盘、鼠标控制相机位置</li>
+<li><strong>PointerLockControls</strong>：指针锁定，鼠标离开画布依然能被捕捉到鼠标交互而常用于游戏</li>
+<li><strong>TrackballControls</strong>：轨迹球控制器，通过键盘和鼠标控制前后左右平移和缩放场景</li>
+<li><strong>TransformControls</strong>：变换物体控制器，可以通过鼠标对物体的进行拖放等操作</li>
 </ul>
 <h1 id="三、Three-js-纹理"><a href="#三、Three-js-纹理" class="headerlink" title="三、Three.js 纹理"></a>三、Three.js 纹理</h1><h2 id="纹理贴图"><a href="#纹理贴图" class="headerlink" title="纹理贴图"></a>纹理贴图</h2><blockquote>
 <p>WebGL 提供了简单的纹理贴图功能，如果要实现凹凸、法线、环境等高级贴图功能则需要一定的算法。three.js 对常用的贴图算法进行了封装，可以用来实现各种贴图</p>
@@ -737,9 +737,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%A0%88/" rel="tag"># 前端技术栈</a>
-          </div>
 
         
 
@@ -915,12 +912,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">634k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:37</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
