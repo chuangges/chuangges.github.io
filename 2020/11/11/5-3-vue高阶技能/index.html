@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Proxy 对象、装饰器、Typescript Vue、require.context、render 函数、异步组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 高阶技能">
+<meta property="og:url" content="https://chuangges.gitee.io/2020/11/11/5-3-vue%E9%AB%98%E9%98%B6%E6%8A%80%E8%83%BD/index.html">
+<meta property="og:site_name" content="闯哥要去流浪了">
+<meta property="og:description" content="Proxy 对象、装饰器、Typescript Vue、require.context、render 函数、异步组件">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-11T09:02:04.000Z">
+<meta property="article:modified_time" content="2022-09-30T05:44:40.376Z">
+<meta property="article:author" content="chuangges">
+<meta property="article:tag" content="JS 框架">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chuangges.gitee.io/2020/11/11/5-3-vue%E9%AB%98%E9%98%B6%E6%8A%80%E8%83%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue 高阶技能 | 闯哥要去流浪了</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="闯哥要去流浪了" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">闯哥要去流浪了</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我知道你一定会来，所以我一直在等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuangges.gitee.io/2020/11/11/5-3-vue%E9%AB%98%E9%98%B6%E6%8A%80%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chuang.png">
+      <meta itemprop="name" content="chuangges">
+      <meta itemprop="description" content="chuangge's blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="闯哥要去流浪了">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue 高阶技能
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-11 17:02:04" itemprop="dateCreated datePublished" datetime="2020-11-11T17:02:04+08:00">2020-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS-%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">JS 框架</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+            <div class="post-description">Proxy 对象、装饰器、Typescript Vue、require.context、render 函数、异步组件</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、Proxy-对象"><a href="#一、Proxy-对象" class="headerlink" title="一、Proxy 对象"></a>一、Proxy 对象</h1><h2 id="对比-defineProperty"><a href="#对比-defineProperty" class="headerlink" title="对比 defineProperty"></a>对比 defineProperty</h2><blockquote>
+<p>Vue2.0 数据双向绑定通过 <strong>Object.defineProperty</strong> 去监听对象的每一个属性，然后在 get、set 方法中通过发布订阅者模式来实现的数据响应，但是存在一定的缺陷，比如只能监听已存在的属性而对增删属性无能为力，同时无法监听数组的变化，所以 Vue3.0 将其换成了功能更强大的 __Proxy__。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = <span class="title function_">observe</span>(</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;瑶瑶&#x27;</span>,</span><br><span class="line">    <span class="attr">sex</span>: <span class="string">&#x27;男&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function">(<span class="params">key, value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`属性[<span class="subst">$&#123;key&#125;</span>]的值被修改为[<span class="subst">$&#123;value&#125;</span>]`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line">obj.<span class="property">name</span> = <span class="string">&#x27;妹纸&#x27;</span></span><br><span class="line">obj.<span class="property">sex</span> = <span class="string">&#x27;女&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">observe</span>(<span class="params">obj, callback</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> newObj = &#123;&#125;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">keys</span>(obj).<span class="title function_">forEach</span>(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(newObj, key, &#123;</span><br><span class="line">      <span class="attr">configurable</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">enumerable</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj[key]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="title function_">set</span>(<span class="params">newVal</span>) &#123;</span><br><span class="line">        obj[key] = newVal</span><br><span class="line">        <span class="title function_">callback</span>(key, newVal)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> newObj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">observe</span>(<span class="params">obj, callback</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Proxy</span>(obj, &#123;</span><br><span class="line">    <span class="title function_">get</span>(<span class="params">target, key</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> target[key]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">set</span>(<span class="params">target, key, value</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(!target.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`新增属性<span class="subst">$&#123;key&#125;</span>, 值为<span class="subst">$&#123;value&#125;</span>`</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      target[key] = value</span><br><span class="line">      <span class="title function_">callback</span>(key, value)</span><br><span class="line">      <span class="comment">// return true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(target, &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取：目标对象、访问属性、proxy 对象本身</span></span><br><span class="line">  <span class="title function_">get</span>(<span class="params">target, key, receiver</span>)&#123; &#125;,      </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置：目标对象、赋值属性、新值、proxy 对象本身</span></span><br><span class="line">  <span class="title function_">set</span>(<span class="params">target, key, value, receiver</span>)&#123; &#125;, </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 判断：目标对象、属性       </span></span><br><span class="line">  <span class="title function_">has</span>(<span class="params">target, key</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(key.<span class="title function_">startsWith</span>(<span class="string">&#x27;_&#x27;</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target,key)</span><br><span class="line">  &#125;      </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除</span></span><br><span class="line">  <span class="title function_">deleteProperty</span>(<span class="params">target,key</span>) &#123;</span><br><span class="line">    <span class="comment">// const readonlyKeys = [&#x27;name&#x27;, &#x27;gzh&#x27;]</span></span><br><span class="line">    <span class="keyword">if</span>(readonlyKeys.<span class="title function_">includes</span>(key)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`属性<span class="subst">$&#123;key&#125;</span>不能被删除`</span>)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span> target[key]</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// proxy 监听函数</span></span><br><span class="line">  <span class="title function_">apply</span>(<span class="params"></span>)&#123;&#125;,      </span><br><span class="line"></span><br><span class="line">  <span class="comment">// Object.getOwnPropertyNames、Object.getownPropertySymbols、</span></span><br><span class="line">  <span class="comment">// Object.keys、Reflect.ownKeys 获取对象信息时</span></span><br><span class="line">  <span class="title function_">ownKeys</span>(<span class="params"></span>)&#123;&#125;,   </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 new 操作符时 </span></span><br><span class="line">  <span class="title function_">construct</span>(<span class="params"></span>)&#123;&#125;,      </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 Object.defineProperty 修改属性修饰符时</span></span><br><span class="line">  <span class="title function_">defineProperty</span>(<span class="params"></span>)&#123;&#125;,  </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取对象的原型时 </span></span><br><span class="line">  <span class="title function_">getPrototypeOf</span>(<span class="params"></span>)&#123;&#125;,  </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置对象的原型时</span></span><br><span class="line">  <span class="title function_">setPrototypeOf</span>(<span class="params"></span>)&#123;&#125;,   </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 Object.isExtensible 判断对象是否可以添加新属性时</span></span><br><span class="line">  <span class="title function_">isExtensible</span>(<span class="params"></span>)&#123;&#125;,   </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 Object.preventExtensions 设置对象不可以修改新属性时</span></span><br><span class="line">  <span class="title function_">preventExtensions</span>(<span class="params"></span>)&#123;&#125;,  </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取代理对象某个属性的属性描述时</span></span><br><span class="line">  <span class="title function_">getOwnPropertyDescriptor</span>(<span class="params"></span>)&#123;&#125;,  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h2><blockquote>
+<p>Proxy内部调用对象的默认行为的 API，提供的静态方法与 Proxy handler 相同。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;<span class="attr">name</span>: <span class="string">&#x27;子君&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">let</span> has = <span class="string">&#x27;name&#x27;</span> <span class="keyword">in</span> obj</span><br><span class="line"><span class="keyword">let</span> _has = <span class="title class_">Reflect</span>.<span class="title function_">has</span>(obj,<span class="string">&#x27;name&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二、装饰器"><a href="#二、装饰器" class="headerlink" title="二、装饰器"></a>二、装饰器</h1><blockquote>
+<p>使用 ts 开发时 vue-property-decorator 提供了很多装饰器，但是没有 ts 时也可以使用装饰器。</p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果有 eslint 则需要配置</span></span><br><span class="line"><span class="attr">parserOptions</span>: &#123;</span><br><span class="line">  <span class="attr">ecmaFeatures</span>:&#123;</span><br><span class="line">    <span class="comment">// 支持装饰器</span></span><br><span class="line">    <span class="attr">legacyDecorators</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params"></span>) &#123;</span><br><span class="line">    /__</span><br><span class="line">    * @param target 对应 methods 这个对象</span><br><span class="line">    * @param name 对应属性方法的名称</span><br><span class="line">    * @param descriptor 对应属性方法的修饰符</span><br><span class="line">    */</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">target, name, descriptor</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> fn = descriptor.<span class="property">value</span></span><br><span class="line">        descriptor.<span class="property">value</span> = <span class="keyword">function</span> (<span class="params">...rest</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`调用方法【<span class="subst">$&#123;name&#125;</span>】前`</span>)</span><br><span class="line">            fn.<span class="title function_">call</span>(<span class="variable language_">this</span>, ...rest)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`调用方法【<span class="subst">$&#123;name&#125;</span>】后`</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">getData</span>()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        @<span class="title function_">log</span>()</span><br><span class="line">        <span class="title function_">getData</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;获取数据&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h2><h3 id="函数节流与防抖"><a href="#函数节流与防抖" class="headerlink" title="函数节流与防抖"></a>函数节流与防抖</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; throttle, debounce &#125; <span class="keyword">from</span> <span class="string">&#x27;lodash&#x27;</span></span><br><span class="line">/__</span><br><span class="line">* 函数节流装饰器</span><br><span class="line">* @param &#123;number&#125; wait 节流的毫秒</span><br><span class="line">* @param &#123;<span class="title class_">Object</span>&#125; options 节流选项对象</span><br><span class="line">* [options.<span class="property">leading</span>=<span class="literal">true</span>] (boolean): 指定调用在节流开始前。</span><br><span class="line">* [options.<span class="property">trailing</span>=<span class="literal">true</span>] (boolean): 指定调用在节流结束后。</span><br><span class="line">*/</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> throttle = <span class="keyword">function</span> (<span class="params">wait, options = &#123;&#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">target, name, descriptor</span>) &#123;</span><br><span class="line">        descriptor.<span class="property">value</span> = <span class="title function_">throttle</span>(descriptor.<span class="property">value</span>, wait, options)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/__</span><br><span class="line">* 函数防抖装饰器</span><br><span class="line">* @param &#123;number&#125; wait 需要延迟的毫秒数。</span><br><span class="line">* @param &#123;<span class="title class_">Object</span>&#125; options 选项对象</span><br><span class="line">* [options.<span class="property">leading</span>=<span class="literal">false</span>] (boolean): 指定在延迟开始前调用。</span><br><span class="line">* [options.<span class="property">maxWait</span>] (number): 设置 func 允许被延迟的最大值。</span><br><span class="line">* [options.<span class="property">trailing</span>=<span class="literal">true</span>] (boolean): 指定在延迟结束后调用。</span><br><span class="line">*/</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> debounce = <span class="keyword">function</span> (<span class="params">wait, options = &#123;&#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">target, name, descriptor</span>) &#123;</span><br><span class="line">        descriptor.<span class="property">value</span> = <span class="title function_">debounce</span>(descriptor.<span class="property">value</span>, wait, options)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件中使用</span></span><br><span class="line"><span class="keyword">import</span> &#123;debounce&#125; <span class="keyword">from</span> <span class="string">&#x27;@/decorator&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>:&#123;</span><br><span class="line">    @<span class="title function_">debounce</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">resize</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="loading"><a href="#loading" class="headerlink" title="loading"></a>loading</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Toast</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line">/__</span><br><span class="line">* loading 装饰器</span><br><span class="line">* @param &#123;*&#125; message 提示信息</span><br><span class="line">* @param &#123;<span class="keyword">function</span>&#125; errorFn 异常处理逻辑</span><br><span class="line">*/</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loading = <span class="keyword">function</span> (<span class="params"></span></span><br><span class="line"><span class="params">  message = <span class="string">&#x27;加载中...&#x27;</span>, </span></span><br><span class="line"><span class="params">  errorFn = <span class="keyword">function</span> () &#123;&#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">target, name, descriptor</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> fn = descriptor.<span class="property">value</span></span><br><span class="line">        descriptor.<span class="property">value</span> = <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params">...rest</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> loading = <span class="title class_">Toast</span>.<span class="title function_">loading</span>(&#123;</span><br><span class="line">                <span class="attr">message</span>: message,</span><br><span class="line">                <span class="attr">forbidClick</span>: <span class="literal">true</span></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">await</span> fn.<span class="title function_">call</span>(<span class="variable language_">this</span>, ...rest)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                <span class="comment">// 调用失败并且用户自定义失败的回调函数时执行</span></span><br><span class="line">                errorFn &amp;&amp; errorFn.<span class="title function_">call</span>(<span class="variable language_">this</span>, error, ...rest)</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">error</span>(error)</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                loading.<span class="title function_">clear</span>()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件使用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>:&#123;</span><br><span class="line">    @<span class="title function_">loading</span>(<span class="string">&#x27;加载中&#x27;</span>)</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">getData</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">loadData</span>()</span><br><span class="line">      &#125;<span class="keyword">catch</span>(error)&#123; </span><br><span class="line">        <span class="title class_">Toast</span>.<span class="title function_">fail</span>(<span class="string">&#x27;加载失败&#x27;</span>) </span><br><span class="line">      &#125;  </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="确认框"><a href="#确认框" class="headerlink" title="确认框"></a>确认框</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Dialog</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span></span><br><span class="line">/__</span><br><span class="line">* 确认提示框装饰器</span><br><span class="line">* @param &#123;*&#125; message 提示信息</span><br><span class="line">* @param &#123;*&#125; title 标题</span><br><span class="line">* @param &#123;*&#125; cancelFn 取消回调函数</span><br><span class="line">*/</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">confirm</span>(<span class="params"></span></span><br><span class="line"><span class="params">  message = <span class="string">&#x27;确定要删除数据，此操作不可回退。&#x27;</span>,</span></span><br><span class="line"><span class="params">  title = <span class="string">&#x27;提示&#x27;</span>,</span></span><br><span class="line"><span class="params">  cancelFn = <span class="keyword">function</span>() &#123;&#125;</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">target, name, descriptor</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> originFn = descriptor.<span class="property">value</span></span><br><span class="line">    descriptor.<span class="property">value</span> = <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params">...rest</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="title class_">Dialog</span>.<span class="title function_">confirm</span>(&#123;</span><br><span class="line">          message,</span><br><span class="line">          <span class="attr">title</span>: title</span><br><span class="line">        &#125;)</span><br><span class="line">        originFn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, rest)</span><br><span class="line">      &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        cancelFn &amp;&amp; <span class="title function_">cancelFn</span>(error)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件使用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    @<span class="title function_">confirm</span>()</span><br><span class="line">    <span class="title function_">deleteData</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;在这里做删除操作&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="三、Typescript-Vue"><a href="#三、Typescript-Vue" class="headerlink" title="三、Typescript Vue"></a>三、Typescript Vue</h1><blockquote>
+<p>项目构建：vue create typescript-app。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">project</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, <span class="title class_">Prop</span>, <span class="title class_">Vue</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-property-decorator&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">Project</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Project.vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">@<span class="title class_">Component</span>(&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    project</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Vue</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// data</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  private <span class="attr">msg</span>: string = <span class="string">&quot;welcome to my app&quot;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  private <span class="attr">list</span>: <span class="title class_">Array</span>&lt;object&gt; = [</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">name</span>: <span class="string">&#x27;Preetish&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">age</span>: <span class="string">&#x27;26&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">name</span>: <span class="string">&#x27;John&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">age</span>: <span class="string">&#x27;30&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  ]</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// Prop</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Prop</span>() readonly msg!: string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Prop</span>(&#123;<span class="attr">default</span>: <span class="string">&#x27;John&#x27;</span>&#125;) readonly <span class="attr">name</span>: string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Prop</span>(&#123;<span class="attr">required</span>: <span class="literal">true</span>&#125;) readonly <span class="attr">age</span>: number</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Prop</span>(<span class="title class_">String</span>) readonly <span class="attr">address</span>: string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Prop</span>(&#123;<span class="attr">required</span>: <span class="literal">false</span>, <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">default</span>: <span class="string">&#x27;A&#x27;</span>&#125;) readonly <span class="attr">job</span>: string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// Computed</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">get</span> <span class="title function_">fullName</span>(): string &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">first</span> + <span class="string">&#x27; &#x27;</span> + <span class="variable language_">this</span>.<span class="property">last</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// Methods</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  public <span class="title function_">clickMe</span>(): <span class="keyword">void</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;clicked&#x27;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="title function_">addNum</span>(<span class="number">4</span>, <span class="number">2</span>))</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  public <span class="title function_">addNum</span>(<span class="attr">num1</span>: number, <span class="attr">num2</span>: number): number &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span> num1 + num2</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// Watchers</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Watch</span>(<span class="string">&#x27;name&#x27;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">nameChanged</span>(<span class="params">newVal: string</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">this</span>.<span class="property">name</span> = newVal</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Watch</span>(<span class="string">&#x27;project&#x27;</span>, &#123; </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">immediate</span>: <span class="literal">true</span>, <span class="attr">deep</span>: <span class="literal">true</span> </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">projectChanged</span>(<span class="params">newVal: Person, oldVal: Person</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// Emit</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Emit</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">addToCount</span>(<span class="params">n: number</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">this</span>.<span class="property">count</span> += n</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @<span class="title class_">Emit</span>(<span class="string">&#x27;resetData&#x27;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">resetCount</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">this</span>.<span class="property">count</span> = <span class="number">0</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 生命周期</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123; &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">beforeUpdate</span>(<span class="params"></span>) &#123; &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">// Mixins：ProjectMixin.ts</span></span><br><span class="line"><span class="language-xml">import &#123; Component, Vue &#125; from &#x27;vue-property-decorator&#x27;</span></span><br><span class="line"><span class="language-xml">@Component</span></span><br><span class="line"><span class="language-xml">class ProjectMixin extends Vue &#123;</span></span><br><span class="line"><span class="language-xml">  public projName: string = &#x27;My project&#x27;</span></span><br><span class="line"><span class="language-xml">  public setProjectName(newVal: string): void &#123;</span></span><br><span class="line"><span class="language-xml">    this.projName = newVal</span></span><br><span class="line"><span class="language-xml">  &#125;</span></span><br><span class="line"><span class="language-xml">&#125;</span></span><br><span class="line"><span class="language-xml">export default ProjectMixin</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">import &#123; Component, Vue, Mixins &#125; from &#x27;vue-property-decorator&#x27;</span></span><br><span class="line"><span class="language-xml">import ProjectMixin from &#x27;@/mixins/ProjectMixin&#x27;</span></span><br><span class="line"><span class="language-xml">@Component</span></span><br><span class="line"><span class="language-xml">export default class Project extends Mixins(ProjectMixin) &#123;</span></span><br><span class="line"><span class="language-xml">  get projectDetail(): string &#123;</span></span><br><span class="line"><span class="language-xml">    return this.projName + &#x27; &#x27; + &#x27;Preetish HS&#x27;</span></span><br><span class="line"><span class="language-xml">  &#125;</span></span><br><span class="line"><span class="language-xml">&#125;</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">// Vuex</span></span><br><span class="line"><span class="language-xml">npm install vuex-module-decorators vuex-class -D</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">// store/modules/user.ts</span></span><br><span class="line"><span class="language-xml">import &#123; VuexModule, Module, Mutation, Action &#125; from &#x27;vuex-module-decorators&#x27;</span></span><br><span class="line"><span class="language-xml">@Module(&#123; namespaced: true, name: &#x27;test&#x27; &#125;)</span></span><br><span class="line"><span class="language-xml">class User extends VuexModule &#123;</span></span><br><span class="line"><span class="language-xml">  public name: string = &#x27;&#x27;</span></span><br><span class="line"><span class="language-xml">  @Mutation</span></span><br><span class="line"><span class="language-xml">  public setName(newName: string): void &#123;</span></span><br><span class="line"><span class="language-xml">    this.name = newName</span></span><br><span class="line"><span class="language-xml">  &#125;</span></span><br><span class="line"><span class="language-xml">  @Action</span></span><br><span class="line"><span class="language-xml">  public updateName(newName: string): void &#123;</span></span><br><span class="line"><span class="language-xml">    this.context.commit(&#x27;setName&#x27;, newName)</span></span><br><span class="line"><span class="language-xml">  &#125;</span></span><br><span class="line"><span class="language-xml">&#125;</span></span><br><span class="line"><span class="language-xml">export default User</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">// store/modules/index.ts</span></span><br><span class="line"><span class="language-xml">import Vue from &#x27;vue&#x27;</span></span><br><span class="line"><span class="language-xml">import Vuex from &#x27;vuex&#x27;</span></span><br><span class="line"><span class="language-xml">import User from &#x27;@/store/modules/user&#x27;</span></span><br><span class="line"><span class="language-xml">Vue.use(Vuex)</span></span><br><span class="line"><span class="language-xml">const store = new Vuex.Store(&#123;</span></span><br><span class="line"><span class="language-xml">  modules: &#123;</span></span><br><span class="line"><span class="language-xml">    User</span></span><br><span class="line"><span class="language-xml">  &#125;</span></span><br><span class="line"><span class="language-xml">&#125;)</span></span><br><span class="line"><span class="language-xml">export default store</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;details&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;username&quot;</span>&gt;</span>User: &#123;&#123; nameUpperCase &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">&quot;name&quot;</span> @<span class="attr">keydown</span>=<span class="string">&quot;updateName($event.target.value)&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123; <span class="title class_">Component</span>, <span class="title class_">Vue</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-property-decorator&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123; namespace &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex-class&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> user = <span class="title function_">namespace</span>(<span class="string">&#x27;user&#x27;</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">@<span class="title class_">Component</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">User</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Vue</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @user.<span class="property">State</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  public name!: string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @user.<span class="property">Getter</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  public nameUpperCase!: string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  @user.<span class="property">Action</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  public updateName!: <span class="function">(<span class="params">newName: string</span>) =&gt;</span> <span class="keyword">void</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、require-context"><a href="#四、require-context" class="headerlink" title="四、require.context"></a>四、require.context</h1>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/__</span><br><span class="line">* @title <span class="built_in">require</span>.<span class="title function_">context</span>(directory, useSubdirectories, regExp)</span><br><span class="line">* @prame directory：检索目录。</span><br><span class="line">* @prame useSubdirectories：是否检索子文件夹。</span><br><span class="line">* @prame regExp：匹配文件的正则表达式，一般是文件名。</span><br><span class="line">__/</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件内引入多个组件</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> files = <span class="built_in">require</span>.<span class="title function_">context</span>(<span class="string">&#x27;@/components/home&#x27;</span>, <span class="literal">false</span>, <span class="regexp">/\.vue$/</span>)</span><br><span class="line"><span class="keyword">const</span> modules = &#123;&#125;</span><br><span class="line">files.<span class="title function_">keys</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> name = path.<span class="title function_">basename</span>(key, <span class="string">&#x27;.vue&#x27;</span>)</span><br><span class="line">  modules[name] = <span class="title function_">files</span>(key).<span class="property">default</span> || <span class="title function_">files</span>(key)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">    <span class="attr">components</span>: modules</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main.js 引入大量公共组件：.vue 结尾的文件</span></span><br><span class="line"><span class="keyword">const</span> requireComponents = <span class="built_in">require</span>.<span class="title function_">context</span>(<span class="string">&#x27;../components&#x27;</span>, <span class="literal">true</span>, <span class="regexp">/\.vue/</span>)</span><br><span class="line">requireComponents.<span class="title function_">keys</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">fileName</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> reqCom = requireComponents(fileName)</span><br><span class="line">  <span class="comment">// 兼容 import export、require module.export 两种规范</span></span><br><span class="line">  <span class="title class_">Vue</span>.<span class="title function_">component</span>(reqCom.<span class="property">name</span>, reqCom.<span class="property">default</span> || reqCom)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// vuex 动态引入模块文件</span></span><br><span class="line"><span class="keyword">const</span> modulesFiles = <span class="built_in">require</span>.<span class="title function_">context</span>(<span class="string">&#x27;../modules&#x27;</span>, <span class="literal">true</span>, <span class="regexp">/\.js$/</span>)</span><br><span class="line"><span class="keyword">const</span> modules = modulesFiles.<span class="title function_">keys</span>().<span class="title function_">reduce</span>(<span class="function">(<span class="params">modules, modulePath</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// set &#x27;./app.js&#x27; =&gt; &#x27;app&#x27;</span></span><br><span class="line">  <span class="keyword">const</span> moduleName = modulePath.<span class="title function_">replace</span>(<span class="regexp">/^\.\/(.*)\.\w+$/</span>, <span class="string">&#x27;$1&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> value = <span class="title function_">modulesFiles</span>(modulePath)</span><br><span class="line">  modules[moduleName] = value.<span class="property">default</span></span><br><span class="line">  <span class="keyword">return</span> modules</span><br><span class="line">&#125;, &#123;&#125;)</span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  modules,</span><br><span class="line">  getters</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、render-函数"><a href="#五、render-函数" class="headerlink" title="五、render 函数"></a>五、render 函数</h1><blockquote>
+<p>render：自定义渲染、适合复杂逻辑、性能较高。template：声明是渲染、适合逻辑简单、性能较低。</p>
+</blockquote>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 初级</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;level === 1&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 2&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 3&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span> <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">v-else-if</span>=<span class="string">&quot;level === 6&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span> <span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 优化版：利用 render 函数减小了代码重复率</span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">:level</span>=<span class="string">&quot;level&quot;</span>&gt;</span>Hello world<span class="tag">&lt;/<span class="name">child</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line">Vue.component(&#x27;child&#x27;, &#123;</span><br><span class="line">  render(h) &#123;</span><br><span class="line">    const tag = [&#x27;div&#x27;, &#x27;p&#x27;, &#x27;h1&#x27;, &#x27;textarea&#x27;][this.level-1]</span><br><span class="line">    return h(tag, this.$slots.default)</span><br><span class="line">  &#125;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    level: &#123;  type: Number,  required: true  &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;)   </span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;hehe&#x27;,</span><br><span class="line">  data() &#123; return &#123; level: 3 &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、异步组件"><a href="#六、异步组件" class="headerlink" title="六、异步组件"></a>六、异步组件</h1><blockquote>
+<p>项目过大时会导致加载缓慢，则需要异步组件实现按需加载。异步组件的渲染本质上是执行 2 次或 2 次以上的渲染，先把当前组件渲染为注释节点, 然后通过 forceRender 重新渲染。或者渲染为注释节点, 然后再渲染为 loading 节点, 在渲染为请求完成的组件。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一、异步注册组件</span></span><br><span class="line"><span class="comment">// 1、工厂函数执行 resolve 回调：切割代码为多个包并通过 Ajax 加载</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;async-webpack-example&#x27;</span>, <span class="keyword">function</span> (<span class="params">resolve</span>) &#123;</span><br><span class="line">  <span class="built_in">require</span>([<span class="string">&#x27;./async-com&#x27;</span>], resolve)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、工厂函数返回 Promise</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(</span><br><span class="line">  <span class="string">&#x27;async-webpack-example&#x27;</span>,</span><br><span class="line">  <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="string">&#x27;./async-com&#x27;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、工厂函数返回一个配置化组件对象</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">AsyncComponent</span> = (<span class="params"></span>) =&gt; (&#123;</span><br><span class="line">  <span class="attr">component</span>: <span class="title function_">import</span>(<span class="string">&#x27;./MyCom.vue&#x27;</span>),</span><br><span class="line">  <span class="attr">loading</span>: <span class="title class_">LoadingComponent</span>,</span><br><span class="line">  <span class="attr">error</span>: <span class="title class_">ErrorComponent</span>,</span><br><span class="line">  <span class="attr">delay</span>: <span class="number">200</span>,</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">3000</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二、路由的按需加载</span></span><br><span class="line"><span class="comment">// webpack&lt; 2.4 时</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>:<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">  <span class="attr">components</span>: <span class="function"><span class="params">resolve</span>=&gt;</span><span class="built_in">require</span>([<span class="string">&#x27;@/components/home&#x27;</span>], resolve)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// webpack&gt; 2.4 时</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>:<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">  <span class="attr">components</span>: <span class="function">()=&gt;</span><span class="title function_">import</span>(<span class="string">&#x27;@/components/home&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;margin-top:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chuangges
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuangges.gitee.io/2020/11/11/5-3-vue%E9%AB%98%E9%98%B6%E6%8A%80%E8%83%BD/" title="Vue 高阶技能">https://chuangges.gitee.io/2020/11/11/5-3-vue高阶技能/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh_CN" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JS-%E6%A1%86%E6%9E%B6/" rel="tag"># JS 框架</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/03/14-2-angular%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/" rel="prev" title="Angular 组件化开发">
+      <i class="fa fa-chevron-left"></i> Angular 组件化开发
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/10/15-%E6%99%BA%E8%83%BD%E5%B7%A5%E5%8E%82/" rel="next" title="智能工厂">
+      智能工厂 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Proxy-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">一、Proxy 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94-defineProperty"><span class="nav-number">1.1.</span> <span class="nav-text">对比 defineProperty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.2.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reflect"><span class="nav-number">1.3.</span> <span class="nav-text">Reflect</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">二、装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">常用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81%E4%B8%8E%E9%98%B2%E6%8A%96"><span class="nav-number">2.3.1.</span> <span class="nav-text">函数节流与防抖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loading"><span class="nav-number">2.4.</span> <span class="nav-text">loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E6%A1%86"><span class="nav-number">2.5.</span> <span class="nav-text">确认框</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Typescript-Vue"><span class="nav-number">3.</span> <span class="nav-text">三、Typescript Vue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81require-context"><span class="nav-number">4.</span> <span class="nav-text">四、require.context</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81render-%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">五、render 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">六、异步组件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chuangges" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/chuang.png">
+  <p class="site-author-name" itemprop="name">chuangges</p>
+  <div class="site-description" itemprop="description">chuangge's blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chuangges" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chuangges" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.docschina.org/" title="https:&#x2F;&#x2F;www.docschina.org&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">印记中文</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://tool.lu/" title="http:&#x2F;&#x2F;tool.lu&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">在线工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tinypng.com/" title="https:&#x2F;&#x2F;tinypng.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片压缩</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bigjpg.com/" title="https:&#x2F;&#x2F;bigjpg.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片放大</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tool.chinaz.com/" title="https:&#x2F;&#x2F;tool.chinaz.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">站长工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://learn-anything.xyz/" title="https:&#x2F;&#x2F;learn-anything.xyz&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Learn-Anything</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://stackoverflow.com/" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Stack-Overflow</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chuangge</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">638k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:40</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":180,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="混合开发、适配方案、flex 布局、事件类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端开发">
+<meta property="og:url" content="https://chuangges.gitee.io/2019/06/24/8-1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="闯哥要去流浪了">
+<meta property="og:description" content="混合开发、适配方案、flex 布局、事件类型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chuangges.gitee.io/images/mobile/flex.png">
+<meta property="og:image" content="https://chuangges.gitee.io/images/mobile/grail.png">
+<meta property="article:published_time" content="2019-06-23T18:03:23.000Z">
+<meta property="article:modified_time" content="2022-09-30T05:44:40.258Z">
+<meta property="article:author" content="chuangges">
+<meta property="article:tag" content="移动端开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chuangges.gitee.io/images/mobile/flex.png">
+
+<link rel="canonical" href="https://chuangges.gitee.io/2019/06/24/8-1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>移动端开发 | 闯哥要去流浪了</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="闯哥要去流浪了" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">闯哥要去流浪了</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我知道你一定会来，所以我一直在等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuangges.gitee.io/2019/06/24/8-1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chuang.png">
+      <meta itemprop="name" content="chuangges">
+      <meta itemprop="description" content="chuangge's blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="闯哥要去流浪了">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          移动端开发
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-24 02:03:23" itemprop="dateCreated datePublished" datetime="2019-06-24T02:03:23+08:00">2019-06-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">移动端开发</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+            <div class="post-description">混合开发、适配方案、flex 布局、事件类型</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、混合开发"><a href="#一、混合开发" class="headerlink" title="一、混合开发"></a>一、混合开发</h1><blockquote>
+<p>即跨平台应用开发：利用单个共享代码库和用户界面为 Android、iOS 开发移动应用程序，为 Windows、macOS 开发桌面应用程序。</p>
+</blockquote>
+<h2 id="开发模式"><a href="#开发模式" class="headerlink" title="开发模式"></a>开发模式</h2><ul>
+<li>应用开发模式<ul>
+<li>__Native App__：传统的原生 APP 开发模式。Android 基于 Java 语言并在底层调用 Google API，IOS 基于 objective-c&#x2F;swift 语言并在底层调用 App API。支持离线运行、支持设备所有功能、用户体验最好，但是开发成本高、更新版本时需要用户重新下载安装。</li>
+<li>__Web App__：网页开发模式，即将 SPA 模式等开发出的 Html5 页面部署在服务器并让用户使用手机浏览器访问。开发成本较低、跨平台开发、用户可直接访问最新版本，但是用户体验最差、不能调用相机等系统功能。</li>
+<li>__Hybrid App__：混合开发模式，即使用原生语言编写功能性的应用外壳，然后在 webview 内嵌展示性的 H5 页面，实现时由 Native 通过 JSBridge 等方法提供统一 API 并通过 Html5、JS 实现具体逻辑。兼具 Native 原生体验和 H5 跨平台开发和快速迭代的优势，但是对网络要求较高。</li>
+</ul>
+</li>
+<li>混合开发方案<ul>
+<li>__Capacitor&#x2F;Cordova&#x2F;Phonegap__：第一代技术，主要通过 webview 内嵌 H5 页面。</li>
+<li>__Ionic&#x2F;ReactNative&#x2F;Weex&#x2F;NativeScript__：第二代技术，通过一种语言触发原生平台的渲染引擎而实现原生体验，比如 ReactNative 结合 JS 和原生语法实现跨平台。</li>
+<li>__Flutter__：未来趋势，通过绘图引擎和 Dart 语言实现了高性能，但没有大规模应用。</li>
+</ul>
+</li>
+</ul>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Mac 下打开目录</span></span><br><span class="line"><span class="title class_">Finder</span>、command + shift + G、输入回车</span><br><span class="line"></span><br><span class="line"><span class="comment">// 环境变量配置</span></span><br><span class="line">vim ~/.<span class="property">bash_profile</span>          </span><br><span class="line">i、编辑内容、esc 退出、:wq 保存</span><br><span class="line">source ~/.<span class="property">bash_profile</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1、安装 node 版本的切换工具</span></span><br><span class="line">cd ~/</span><br><span class="line">git clone <span class="attr">https</span>:<span class="comment">//github.com/nvm-sh/nvm.git</span></span><br><span class="line">cd nvm</span><br><span class="line">./install.<span class="property">sh</span>  <span class="comment">// 等待执行成功：不成功时可以则执行几次</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ~/.bash_profile</span></span><br><span class="line"># nvm</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">NVM_DIR</span>=<span class="string">&quot;$HOME/.nvm&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;$NVM_DIR/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="string">&quot;$NVM_DIR/nvm.sh&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;$NVM_DIR/bash_completion&quot;</span> ] &amp;&amp; \. <span class="string">&quot;$NVM_DIR/bash_completion&quot;</span></span><br><span class="line"># node</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">NVM_NODEJS_ORG_MIRROR</span>=<span class="attr">https</span>:<span class="comment">//npmmirror.com/mirrors/node/</span></span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">NVM_IOJS_ORG_MIRROR</span>=<span class="attr">https</span>:<span class="comment">//npmmirror.com/mirrors/iojs/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ~/.zshrc</span></span><br><span class="line">source ~/.<span class="property">bash_profile</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 常用命令</span></span><br><span class="line">nvm ls-remote               <span class="comment">// 查看 node 可用版本  </span></span><br><span class="line">nvm install <span class="number">14.19</span><span class="number">.3</span>         <span class="comment">// 安装 node 指定版本</span></span><br><span class="line">nvm install --lts           <span class="comment">// 安装 node 最新稳定版本</span></span><br><span class="line">nvm uninstall <span class="number">11.15</span><span class="number">.0</span>       <span class="comment">// 卸载 node 指定版本</span></span><br><span class="line">nvm alias <span class="keyword">default</span> <span class="number">11.15</span><span class="number">.0</span>   <span class="comment">// 设置 node 默认版本</span></span><br><span class="line">nvm use <span class="number">11.15</span><span class="number">.0</span>             <span class="comment">// 使用 node 指定版本</span></span><br><span class="line">nvm list                    <span class="comment">// 查看 node 已安装版本</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// node 版本安装对应 cnpm</span></span><br><span class="line">npm install cnpm@<span class="number">7.1</span><span class="number">.0</span> -g --registry=<span class="attr">https</span>:<span class="comment">//registry.npm.taobao.org</span></span><br><span class="line">npm i cnpm -g --registry=<span class="attr">https</span>:<span class="comment">//registry.npmmirror.com/</span></span><br><span class="line"></span><br><span class="line">/__*</span><br><span class="line"> * @title <span class="number">2</span>、项目搭建工具安装</span><br><span class="line"> * @desp ionic5、ionic6 版本安装分别通过 ionic、@ionic/cli</span><br><span class="line"> * @desp npm：旧版本镜像已经弃用 <span class="attr">http</span>:<span class="comment">//registry.npm.taobao.org</span></span><br><span class="line"> __/</span><br><span class="line">npm i cnpm -g --registry=<span class="attr">https</span>:<span class="comment">//registry.npmmirror.com/</span></span><br><span class="line">cnpm i -g @angular/cli @ionic/cli cordova typescript</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/__*</span><br><span class="line"> * <span class="number">3</span>、android 环境配置</span><br><span class="line"> * <span class="title class_">Java</span> 工具包 <span class="variable constant_">JDK</span>：jdk-8u281-macosx-x64.<span class="property">dmg</span> </span><br><span class="line"> * 安装：android 工具包 android-sdk、构建工具 gradle</span><br><span class="line"> * gradle 手动安装：gradle.<span class="property">zip</span> 解压缩后拖至 /user/local/<span class="title class_">Caskroom</span></span><br><span class="line"> * </span><br><span class="line"> * @prame android studio：<span class="title class_">Android</span> 集成开发工具</span><br><span class="line"> * @prame jdk：<span class="title class_">Java</span> 开发工具包</span><br><span class="line"> * @prame android-sdk：<span class="title class_">Android</span> 开发工具包</span><br><span class="line"> * @prame gradle：项目构建工具</span><br><span class="line"> __/</span><br><span class="line">brew install android-sdk gradle</span><br><span class="line">brew list android-sdk</span><br><span class="line"></span><br><span class="line"><span class="comment">// .bash_profile</span></span><br><span class="line"># sdk</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">ANDROID_HOME</span>=<span class="regexp">/usr/</span>local/<span class="title class_">Caskroom</span>/android-sdk</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">PATH</span>=<span class="attr">$PATH</span>:$ANDROID_HOME/tools</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">PATH</span>=<span class="attr">$PATH</span>:$ANDROID_HOME/platform-tools</span><br><span class="line"># gradle</span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">GRADLE_HOME</span>=<span class="regexp">/usr/</span>local/<span class="title class_">Caskroom</span>/gradle-<span class="number">6.7</span><span class="number">.1</span></span><br><span class="line"><span class="keyword">export</span> <span class="variable constant_">PATH</span>=<span class="attr">$PATH</span>:$GRADLE_HOME/bin</span><br><span class="line"></span><br><span class="line"><span class="comment">// 校验</span></span><br><span class="line">java -version</span><br><span class="line">adb version</span><br><span class="line">gradle -version</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Ionic-Capacitor-Angular"><a href="#Ionic-Capacitor-Angular" class="headerlink" title="Ionic + Capacitor + Angular"></a>Ionic + Capacitor + Angular</h2><blockquote>
+<p>Ionic&#x2F;Angular 负责实现 H5 页面，Capacitor 则负责将 H5 应用编译打包为原生应用 (Android apk、iOS ipa)。</p>
+</blockquote>
+<ul>
+<li>__Ionic__：用于开发移动应用的开源 H5 框架，提供了移动端常用的组件库。ionic6 新增了 capacitor 调用原生功能的方式，虽然使用方便但是官方接口不多，之前版本只能集成 cordova。</li>
+<li>__Capacitor&#x2F;Cordova&#x2F;Phonegap__：不仅支持将 H5 代码打包为原生应用，还提供了 JS 调用原生设备功能的接口。Capacitor 是一个由 Ionic 团队开发维护的跨平台的应用程序容器，它对之前的 Cordova&#x2F;Phonegap 作出了优化并兼容了 Cordova 插件，现在已经成为 ionic4+ 项目默认的打包工具。</li>
+<li>__Vue&#x2F;React&#x2F;Angular__：前端 JS 框架，类似于 JQuery、BootStrap、Three.js 等。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/__*</span><br><span class="line"> * @title <span class="title class_">Ionic</span> <span class="title class_">Angular</span> 项目构建：ng v 查看版本</span><br><span class="line"> * @prame blank/tabs/sidemenu：空项目、带选项卡、带侧边栏</span><br><span class="line"> * @prame 手机浏览器调试：</span><br><span class="line"> __/</span><br><span class="line">ionic start ionic-angular tabs/blank/sidemenu</span><br><span class="line">ionic serve    <span class="comment">// 电脑运行：电脑端 localhost 访问</span></span><br><span class="line">ionic build    <span class="comment">// 编译打包：生成文件夹 www</span></span><br><span class="line">ionic serve --external --host=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>   <span class="comment">// 手机浏览器调试</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Capacitor 构建应用</span></span><br><span class="line">ionic capacitor add android     <span class="comment">// 添加安卓平台</span></span><br><span class="line">ionic capacitor copy android    <span class="comment">// 项目更新同步到安卓</span></span><br><span class="line">ionic capacitor run android</span><br><span class="line">ionic capacitor build android</span><br><span class="line">npm i @capacitor/core -D        <span class="comment">// 项目创建时已集成 capacitor 则不安装 </span></span><br><span class="line"><span class="comment">// Capacitor 添加原生插件：页面 ts 文件引用如下</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Camera</span>, <span class="title class_">CameraResultType</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@capacitor/camera&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">takePhoto</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> photo = <span class="keyword">await</span> <span class="title class_">Camera</span>.<span class="title function_">getPicture</span>(&#123;</span><br><span class="line">        <span class="attr">quality</span>: <span class="number">90</span>,</span><br><span class="line">        <span class="attr">allowEditing</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">resultType</span>: <span class="title class_">CameraResultType</span>.<span class="property">Uri</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">imgSrc</span> = photo.<span class="property">webPath</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// cordova 构建应用</span></span><br><span class="line">ionic integrations disable capacitor  <span class="comment">// 禁用 capacitor</span></span><br><span class="line">ionic cordova platform add android    <span class="comment">// 先删除 android 文件夹</span></span><br><span class="line">ionic cordova plugin add cordova-plugin-camera</span><br><span class="line">ionic cordova run/build android</span><br><span class="line">npm i @awesome-cordova-plugins/camera   <span class="comment">// 相机插件</span></span><br><span class="line">npm i @awesome-cordova-plugins/core     <span class="comment">// 打包时需要的依赖</span></span><br><span class="line"><span class="comment">// app.module.ts：全局引入服务</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Camera</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@awesome-cordova-plugins/camera/ngx&#x27;</span>;</span><br><span class="line">@<span class="title class_">NgModule</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [..., <span class="title class_">Camera</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// home.ts：页面引用</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">takePhoto</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> photo = <span class="keyword">await</span> <span class="title class_">Camera</span>.<span class="title function_">getPicture</span>(&#123;</span><br><span class="line">        <span class="attr">quality</span>: <span class="number">100</span>,</span><br><span class="line">        <span class="attr">mediaType</span>: <span class="title class_">Camera</span>.<span class="property">MediaType</span>.<span class="property">PICTURE</span>,</span><br><span class="line">        <span class="attr">encodingType</span>: <span class="title class_">Camera</span>.<span class="property">EncodingType</span>.<span class="property">JPEG</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/__*</span><br><span class="line"> * @title  目录解析</span><br><span class="line"> * @prame  android：ionic capacitor add android</span><br><span class="line"> * @prame  www：ionic build</span><br><span class="line"> __/</span><br><span class="line">├── e2e            <span class="comment">// ionic 端对端测试文件</span></span><br><span class="line">├── platforms      <span class="comment">// android/ios/pwa/...</span></span><br><span class="line">├── plugins        <span class="comment">// capacitor/cordova 插件文件夹</span></span><br><span class="line">├── www            <span class="comment">// ionic 打包生成目录</span></span><br><span class="line">├── src            <span class="comment">// ionic 开发工作目录</span></span><br><span class="line">│   ├── app           <span class="comment">// 应用根目录（组件、页面、服务、模块等）</span></span><br><span class="line">│   ├── assets        <span class="comment">// 资源目录（图片、js 框架等静态文件）</span></span><br><span class="line">│   ├── theme         <span class="comment">// 主题文件（设置主题信息的 scss 文件）</span></span><br><span class="line">│   ├── environments  <span class="comment">// 针对不同环境的构建配置选项 </span></span><br><span class="line">│   ├── index.<span class="property">html</span>    <span class="comment">// 主页面</span></span><br><span class="line">│   ├── main.<span class="property">ts</span>       <span class="comment">// 入口文件</span></span><br><span class="line">│   ├── polyfills.<span class="property">ts</span>  <span class="comment">// 兼容不同浏览器的原生 API</span></span><br><span class="line">│   └── karma.<span class="property">conf</span>.<span class="property">js</span>、test.<span class="property">js</span>   <span class="comment">// 测试相关配置</span></span><br><span class="line">│</span><br><span class="line">├── config.<span class="property">xml</span>     <span class="comment">// 打包成 app 的配置文件</span></span><br><span class="line">├── package.<span class="property">json</span>   <span class="comment">// 管理项目的元数据和依赖</span></span><br><span class="line">├── angular.<span class="property">json</span>   <span class="comment">// angular 配置文件</span></span><br><span class="line">├── tsconfig.<span class="property">json</span>  <span class="comment">// typescript 配置文件</span></span><br><span class="line">├── tslint.<span class="property">json</span>    <span class="comment">// 格式化和校验文件</span></span><br><span class="line">└── ionic.<span class="property">config</span>.<span class="property">json</span>、ionic.<span class="property">starter</span>.<span class="property">json</span> <span class="comment">// ionic 配置文件</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Ionic-Vue"><a href="#Ionic-Vue" class="headerlink" title="Ionic + Vue"></a>Ionic + Vue</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue/cli</span><br><span class="line">vue create ionic-vue</span><br><span class="line">cd ionic-vue</span><br><span class="line">npm run serve</span><br><span class="line"></span><br><span class="line">npm install @ionic/core @ionic/vue vue-router</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">IonicVue</span> <span class="keyword">from</span> <span class="string">&#x27;@ionic/vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@ionic/core/css/core.css&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@ionic/core/css/ionic.bundle.css&#x27;</span>;</span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span>;       <span class="comment">// 阻止 vue 启动时生成生产提示</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">ignoredElements</span> = [<span class="regexp">/^ion-/</span>]  <span class="comment">// 忽略 vue 之外的自定义元素</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">IonicVue</span>);</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// HelloWorld.vue：通过 ionic UI 组件重写</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">ion-app</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ion-header</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">ion-toolbar</span> <span class="attr">color</span>=<span class="string">&quot;primary&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ion-title</span>&gt;</span>Hello, Ionic!<span class="tag">&lt;/<span class="name">ion-title</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">ion-toolbar</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ion-header</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ion-content</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">ion-card</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ion-card-header</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">ion-card-subtitle</span>&gt;</span>Isn&#x27;t it great?<span class="tag">&lt;/<span class="name">ion-card-subtitle</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">ion-card-title</span>&gt;</span>Look at this view!<span class="tag">&lt;/<span class="name">ion-card-title</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">ion-card-header</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ion-card-content</span>&gt;</span>it does look fairly cold.<span class="tag">&lt;/<span class="name">ion-card-content</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">ion-card</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ion-content</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">ion-app</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Ionic-React"><a href="#Ionic-React" class="headerlink" title="Ionic + React"></a>Ionic + React</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">npm install create-react-app -g</span><br><span class="line">create-react-app ionic-react</span><br><span class="line">cd ionic-react</span><br><span class="line">npm start</span><br><span class="line">npm install @ionic/react react-router react-router-dom</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@ionic/core/css/core.css&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@ionic/core/css/ionic.bundle.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// App.js </span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">IonApp</span>,</span><br><span class="line">  <span class="title class_">IonHeader</span>,</span><br><span class="line">  <span class="title class_">IonToolbar</span>,</span><br><span class="line">  <span class="title class_">IonContent</span>,</span><br><span class="line">  <span class="title class_">IonTitle</span>,</span><br><span class="line">  <span class="title class_">IonCard</span>,</span><br><span class="line">  <span class="title class_">IonCardHeader</span>,</span><br><span class="line">  <span class="title class_">IonCardTitle</span>,</span><br><span class="line">  <span class="title class_">IonCardSubtitle</span>,</span><br><span class="line">  <span class="title class_">IonCardContent</span></span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@ionic/react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Component</span> &#123;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">IonApp</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">IonHeader</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">IonToolbar</span> <span class="attr">color</span>=<span class="string">&quot;primary&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">IonTitle</span>&gt;</span>Hello, Ionic!<span class="tag">&lt;/<span class="name">IonTitle</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">IonToolbar</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">IonHeader</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">IonContent</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">IonCard</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">IonCardHeader</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">IonCardSubtitle</span>&gt;</span>Isn&#x27;t it great?<span class="tag">&lt;/<span class="name">IonCardSubtitle</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">IonCardTitle</span>&gt;</span>Look at this view!<span class="tag">&lt;/<span class="name">IonCardTitle</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">IonCardHeader</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">IonCardContent</span>&gt;</span>it does look fairly cold.<span class="tag">&lt;/<span class="name">IonCardContent</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">IonCard</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">IonContent</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">IonApp</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">App</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二、适配方案"><a href="#二、适配方案" class="headerlink" title="二、适配方案"></a>二、适配方案</h1><blockquote>
+<p>让页面能在不同尺寸、不同分辨率的移动设备上，尽可能的实现合理展示。设计图都是 2 倍的，是因为页面中除了字体是矢量图而大部分都是位图。如果 1px 宽高的盒子里放入 1px 宽高的图片则图片会失真，因为在移动端渲染时是用 4px 渲染，但是如果我们给 1px 宽高的盒子放入 2px 宽高的图片则不失真。</p>
+</blockquote>
+<ul>
+<li>两种像素：使用 css 像素单位时，同样样式的代码在不同屏幕分辨率的移动设备中显示的情况基本一致，是因为移动设备通过像素比转换了 css 像素实际大小。<ul>
+<li>__设备像素__：物理像素，通常指设备的分辨率。单位 dp，是设备能控制显示的最小单位。主要特点是：同一个设备的 1dp 代表的物理长度是固定不变的、像素比例取决于 屏幕特性（是否高清屏）和用户缩放比例。</li>
+<li>__CSS 像素__：逻辑像素，主要用于精确度量浏览器的 Web 页面。单位 px，是独立于设备而用于 web 开发的抽象单位。主要特点是：改变大小的场景有缩放屏幕、更换设备。页面放大时，1px 等于更多的物理像素，页面能看到的内容减少。</li>
+</ul>
+</li>
+<li>Viewport<ul>
+<li>__Viewport__：浏览器上用来显示网页的部分区域，是手机浏览器的实际宽度。注意移动设备默认的是布局视口，但是移动端开发时需要的是理想视口，视口控制通过只对移动端有效的 meta 实现：设备宽度 &#x3D; 页面宽度 &#x3D; 浏览器视口宽度。</li>
+<li>__浏览器宽度__：PC 端网站都是以浏览器窗口(设备屏幕) 作为视口进行布局，但是手机浏览器的实际宽度默认比手机屏幕宽很多，手机浏览器内部的宽度始终会是本身 viewport 而无论手机宽度是 320px&#x2F;640px。手机浏览器的设计页面为了让浏览桌面端网页时显示正常一般基于 960px，但这样会使手机浏览器出现横向滚动条，所以移动端浏览器会自动将视口缩放到移动端窗口的大小，网页内容看起来被压扁而不容易观看。可简单理解为：__当浏览器宽度小于 980 时，Viewport 宽度就是980，当浏览器尺寸宽度大于 980 时 Viewport 宽度和浏览器宽度一致__。</li>
+<li>分类：<strong>布局视口</strong> (手机浏览器的实际区域，用于计算 CSS 页面布局)、<strong>视觉视口</strong> (用户当前看到的区域，放大页面时内容减少但并不会受影响)、<strong>理想视口</strong> (移动设备的屏幕区域，它以 CSS 单位计算并与设备的物理宽高无关)。</li>
+</ul>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设备判断：微信、支付宝、移动端、Ios、Android</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">isWechat</span>: navigator.<span class="property">userAgent</span>.<span class="title function_">toLowerCase</span>().<span class="title function_">indexOf</span>(<span class="string">&quot;micromessenger&quot;</span>) &gt; -<span class="number">1</span>,</span><br><span class="line">  <span class="attr">isAlipay</span>: navigator.<span class="property">userAgent</span>.<span class="title function_">toLowerCase</span>().<span class="title function_">indexOf</span>(<span class="string">&quot;alipay&quot;</span>) &gt; -<span class="number">1</span>,  </span><br><span class="line">  isMobile = <span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.<span class="title function_">test</span>(navigator.<span class="property">userAgent</span>),</span><br><span class="line">  <span class="attr">isIOS</span>: <span class="regexp">/iPhone|iPad|iPod/i</span>.<span class="title function_">test</span>(navigator.<span class="property">userAgent</span>),</span><br><span class="line">  <span class="attr">isAndroid</span>: <span class="regexp">/Android/i</span>.<span class="title function_">test</span>(navigator.<span class="property">userAgent</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 启用360浏览器的极速模式 (webkit)  </span></span><br><span class="line">&lt;meta name=<span class="string">&quot;renderer&quot;</span> content=<span class="string">&quot;webkit&quot;</span> /&gt;</span><br><span class="line"><span class="comment">// 优先使用 IE 最新版本和 Chrome  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=EDGE, chrome=1&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="comment">// 页面窗口自动调整到设备宽度，并禁止用户缩放页面 (scale) </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, height=device-height, </span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="comment">// 使用全屏模式运行，仅针对 ios safari  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="comment">// 设置顶端状态栏背景为灰色半透明，仅针对 ios safari  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="attr">content</span>=<span class="string">&quot;black-translucent&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="comment">// windows phone 点击无高光 </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;msapplication-tap-highlight&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="comment">// 关闭电话号码和邮箱的自动识别  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;format-detection&quot;</span> <span class="attr">content</span>=<span class="string">&quot;telephone=no, email=no&quot;</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="viewport-缩放"><a href="#viewport-缩放" class="headerlink" title="viewport 缩放"></a>viewport 缩放</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 针对不同屏幕分辨率的手机设置等比例缩放。简单方便，但是 PC 端可能会界面变形、像素失真。</span></span><br><span class="line">&lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, height=device-height, </span></span><br><span class="line"><span class="string">  initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="响应式布局"><a href="#响应式布局" class="headerlink" title="响应式布局"></a>响应式布局</h2><blockquote>
+<p>设计理念通过媒体查询根据不同的屏幕分辨率来进行适配，从而在不同设备不同分辨率下都有良好的用户体验，一般通过媒体查询设置移动端宽度。缺点是 无法覆盖全部分辨率、代码量大且维护性难、安卓机型问题较多，一般只适合简单的资讯类页面。</p>
+</blockquote>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 法一 */</span> </span><br><span class="line">link media=&quot;(<span class="attribute">max-width</span>:<span class="number">480px</span>)<span class="string">&quot; href=&quot;</span>mobile.css<span class="string">&quot;</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">/* 法二 */ </span></span><br><span class="line"><span class="string">@media all and (orientation :landscape) &#123;  /* 横屏 */  &#125; </span></span><br><span class="line"><span class="string">@media all and (orientation :portrait) &#123;  /* 竖屏 */  &#125;</span></span><br><span class="line"><span class="string">@media screen and (max-width: 500px) &#123;  </span></span><br><span class="line"><span class="string">   body &#123; background: black &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="弹性布局"><a href="#弹性布局" class="headerlink" title="弹性布局"></a>弹性布局</h2><blockquote>
+<p>使容器子元素的宽高能够最合理的方式填充空间。</p>
+</blockquote>
+<ul>
+<li>__百分比布局__：宽度自适应而实现在不同的分辨率下都能达到适配，但缺点是需要根据确定父级元素计算。width、height 等大多相对于直接父元素。border-radius、translate、background-size 等相对于自身。</li>
+<li>__vw、vh 布局__：指定相对视口的宽高实现宽高自适应，单位转换方便。但是缺点是单位换算时可能出现小数、一些低版本手机不支持。</li>
+<li>__rem 布局__：通过字体自适应解决移动端适配屏幕尺寸问题，只适用于固定尺寸，但是不能兼容所有终端，而且字号在不同屏幕上的绝对尺寸不一致而不符合用户习惯。实现原理是直接通过媒体查询设置根元素的 font-size、通过 js 读取屏幕宽度计算出对应尺寸并设置根元素的 font-size。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过媒体查询实现移动端字体的自适应</span></span><br><span class="line">@media screen and (min-<span class="attr">width</span>: 375px)&#123;</span><br><span class="line">  html &#123; font-<span class="attr">size</span>: <span class="number">14.</span>0625px; &#125;</span><br><span class="line">&#125;</span><br><span class="line">@media screen and (min-<span class="attr">width</span>: 360px)&#123;</span><br><span class="line">  html &#123; font-<span class="attr">size</span>: <span class="number">13.</span>5px;  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@media screen and (min-<span class="attr">width</span>: 320px)&#123;</span><br><span class="line">  html &#123; font-<span class="attr">size</span>: 12px; &#125;</span><br><span class="line">&#125;</span><br><span class="line">html &#123;</span><br><span class="line">  font-<span class="attr">size</span>: 16px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Js 动态设置 rem：以设计图 640 分辨率为标准封装 rem.js，网上有优化版 flexible.js 等</span></span><br><span class="line">(<span class="keyword">function</span> (<span class="params">doc, win</span>) &#123;</span><br><span class="line"><span class="keyword">var</span> docEl = doc.<span class="property">documentElement</span>,</span><br><span class="line">    resizeEvt = <span class="string">&#x27;orientationchange&#x27;</span> <span class="keyword">in</span> <span class="variable language_">window</span> ? <span class="string">&#x27;orientationchange&#x27;</span> : <span class="string">&#x27;resize&#x27;</span>,</span><br><span class="line">    recalc = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 获取屏幕宽度</span></span><br><span class="line">        <span class="keyword">var</span> clientWidth = docEl.<span class="property">clientWidth</span>;</span><br><span class="line">        <span class="keyword">if</span> (!clientWidth) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span> (clientWidth &gt;= <span class="number">640</span>) &#123;</span><br><span class="line">            docEl.<span class="property">style</span>.<span class="property">fontSize</span> = <span class="string">&#x27;100px&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 设置 html 的字体大小：clientWidth/(640/100)</span></span><br><span class="line">            docEl.<span class="property">style</span>.<span class="property">fontSize</span> = <span class="number">100</span> * (clientWidth / <span class="number">640</span>) + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="keyword">if</span> (!doc.<span class="property">addEventListener</span>) <span class="keyword">return</span>;</span><br><span class="line">win.<span class="title function_">addEventListener</span>(resizeEvt, recalc, <span class="literal">false</span>);</span><br><span class="line">doc.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, recalc, <span class="literal">false</span>);</span><br><span class="line">&#125;)(<span class="variable language_">document</span>, <span class="variable language_">window</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="vue-方案"><a href="#vue-方案" class="headerlink" title="vue 方案"></a>vue 方案</h2><blockquote>
+<p>。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue-cli3 项目通过 vw 实现移动端适配，安装插件 npm i postcss-px-to-viewport -D</span></span><br><span class="line"><span class="comment">// postcss.config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">plugins</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;autoprefixer&#x27;</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">&#x27;postcss-px-to-viewport&#x27;</span>: &#123; </span><br><span class="line">      <span class="attr">viewportWidth</span>: <span class="number">750</span>,    <span class="comment">// 视窗宽度，对应设计稿的宽度，一般是 750 </span></span><br><span class="line">      <span class="attr">viewportHeight</span>: <span class="number">1334</span>,  <span class="comment">// 视窗高度，根据 750 设备的宽度来指定，一般指定 1334</span></span><br><span class="line">      <span class="attr">unitPrecision</span>: <span class="number">3</span>,      <span class="comment">// 指定`px`转换为视窗单位值的小数位数（很多时候无法整除） </span></span><br><span class="line">      <span class="attr">viewportUnit</span>: <span class="string">&#x27;vw&#x27;</span>,    <span class="comment">// 指定需要转换成的视窗单位，建议使用 vw </span></span><br><span class="line">      <span class="attr">selectorBlackList</span>: [<span class="string">&#x27;.ignore&#x27;</span>, <span class="string">&#x27;.hairlines&#x27;</span>], <span class="comment">// 指定不转换为视窗单位的类</span></span><br><span class="line">      <span class="attr">minPixelValue</span>: <span class="number">1</span>,      <span class="comment">// 小于或等于`1px`不转换为视窗单位</span></span><br><span class="line">      <span class="attr">mediaQuery</span>: <span class="literal">false</span>      <span class="comment">// 允许在媒体查询中转换`px` </span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="三、Flex-布局"><a href="#三、Flex-布局" class="headerlink" title="三、Flex 布局"></a>三、Flex 布局</h1><blockquote>
+<p>如果想让一个盒子变成弹性盒子可以用 <code>display: flex</code>，弹性盒子中有主轴(横轴row) 和副轴(纵轴column)，可以根据需要设置盒子的容器(父元素)和项目(子元素)。</p>
+</blockquote>
+<h2 id="基础属性"><a href="#基础属性" class="headerlink" title="基础属性"></a>基础属性</h2>  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 容器属性</span></span><br><span class="line"><span class="selector-class">.parent</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 元素排列方向(左右和上下)，切换主副轴</span></span><br><span class="line">  <span class="attribute">flex-direction</span>: row | row-reverse | column | column-reverse;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 是否换行：reverse 往上一行换行</span></span><br><span class="line">  <span class="attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 复合属性，无顺序关系</span></span><br><span class="line">  <span class="attribute">flex-flow</span>: flex-direction flex-wrap; </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 副轴上(即子项垂直) 的对齐方式</span></span><br><span class="line">  <span class="attribute">align-items</span>: stretch | flex-start | flex-end | center | baseline;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 主轴上(即子项水平) 的对齐方式</span></span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 多行垂直(副轴) 对齐方式, 默认 stretch</span></span><br><span class="line">  <span class="attribute">align-content</span>: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 项目属性</span></span><br><span class="line"><span class="selector-class">.child</span>&#123;</span><br><span class="line">  <span class="comment">// 定义排列顺序, 数字越大越靠后(可为负值)</span></span><br><span class="line">  <span class="attribute">order</span>: number;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义放大比例 (单行有多余空间时)</span></span><br><span class="line">  <span class="attribute">flex-grow</span>: number;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义缩小比例 (单行空间不足时)    </span></span><br><span class="line">  <span class="attribute">flex-shrink</span>: number;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置主轴上项目宽度(建议代替宽度)   </span></span><br><span class="line">  <span class="attribute">flex-basis</span>: %/px/rem;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 前三者复合属性，默认0 1 auto; </span></span><br><span class="line">  <span class="attribute">flex</span>: grow [shrink] [basis];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义项目自己的对齐方式，可覆盖 align-items</span></span><br><span class="line">  <span class="attribute">align-self</span>: stretch | flex-start | flex-end | center | baseline;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="布局实例"><a href="#布局实例" class="headerlink" title="布局实例"></a>布局实例</h2>  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// div.box、span.item</span></span><br><span class="line"><span class="selector-class">.box-1</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.box-2</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.box-3</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="selector-class">.item</span><span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>) &#123;</span><br><span class="line">    <span class="attribute">align-self</span>: center;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.item</span><span class="selector-pseudo">:nth-child</span>(<span class="number">3</span>) &#123;</span><br><span class="line">    <span class="attribute">align-self</span>: flex-end;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.box-4</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-flow</span>: row-reverse wrap;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// div.box、div.column 分别两个 span.item</span></span><br><span class="line"><span class="selector-class">.box-5</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: space-between;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.column</span>&#123;</span><br><span class="line">    <span class="attribute">flex-basis</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.box-6</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box-7</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-flow</span>: column wrap;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// div.column 分别包含 2、1、3 个子元素</span></span><br><span class="line"><span class="selector-class">.box-8</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: space-between;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.column</span>&#123;</span><br><span class="line">    <span class="attribute">flex-basis</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.column</span><span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  <div align="center">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/mobile/flex.png" alt="flex 布局" width="60%">
+  </div>
+
+
+<h2 id="网格布局"><a href="#网格布局" class="headerlink" title="网格布局"></a>网格布局</h2><blockquote>
+<p>平均分布，即在容器里面平均分配空间</p>
+</blockquote>
+  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 几个子元素就平分几份</span></span><br><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="selector-class">.item</span>&#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 某个网格的宽度为固定的百分比，其余网格平均分配剩余的空间</span></span><br><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="selector-class">.item</span>&#123;</span><br><span class="line">    <span class="comment">// flex: 1 1 0%;</span></span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &amp;<span class="selector-class">.fixed</span>&#123;</span><br><span class="line">      <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">20%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="圣杯布局"><a href="#圣杯布局" class="headerlink" title="圣杯布局"></a>圣杯布局</h2>  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">100vh</span>;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line"></span><br><span class="line">  <span class="selector-tag">header</span>, <span class="selector-tag">footer</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.content</span>&#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    </span><br><span class="line">    <span class="selector-class">.main</span>&#123;</span><br><span class="line">      <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.left</span>, <span class="selector-class">.right</span>&#123;</span><br><span class="line">      <span class="comment">// 两个边栏的宽度设为 12em</span></span><br><span class="line">      <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">12em</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.left</span>&#123;</span><br><span class="line">      <span class="attribute">order</span>: -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 小屏幕时内容区三栏自动变为垂直叠加</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">max-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.left</span>, <span class="selector-class">.main</span>, <span class="selector-class">.right</span> &#123;</span><br><span class="line">      <span class="attribute">flex</span>: auto;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  <div align="center">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/mobile/grail.png" alt="圣杯布局" width="60%">
+  </div>
+
+
+<h2 id="流式布局"><a href="#流式布局" class="headerlink" title="流式布局"></a>流式布局</h2><blockquote>
+<p>每行的项目数固定，会自动分行</p>
+</blockquote>
+  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: black;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-flow</span>: row wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: flex-start;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.child</span> &#123;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">background-color</span>: white;</span><br><span class="line">  <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">25%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="固定底栏"><a href="#固定底栏" class="headerlink" title="固定底栏"></a>固定底栏</h2><blockquote>
+<p>页面内容太少时底栏会抬高到页面的中间，移动端 fixed 定位会导致输入内容的虚拟键盘会导致定位元素错位等问题</p>
+</blockquote>
+  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100vh</span>;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// header、footer、div.content</span></span><br><span class="line">  <span class="selector-class">.content</span>&#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: auto;</span><br><span class="line">    <span class="attribute">overflow-y</span>: scroll;</span><br><span class="line">    -webkit-<span class="attribute">overflow</span>-scrolling: touch;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 隐藏滚动条</span></span><br><span class="line">::-webkit-scrollbar&#123;  </span><br><span class="line">    <span class="attribute">width</span>: <span class="number">0px</span>; </span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fff</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// absolute 方式</span></span><br><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.content</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: auto;</span><br><span class="line">    <span class="attribute">overflow-y</span>: scroll;</span><br><span class="line">    -webkit-<span class="attribute">overflow</span>-scrolling: touch;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">footer</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="样式布局"><a href="#样式布局" class="headerlink" title="样式布局"></a>样式布局</h2>  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输入框的前方添加提示，后方添加按钮</span></span><br><span class="line"><span class="selector-class">.input-item</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="selector-tag">input</span>&#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 主栏的左侧或右侧添加一个图片栏 (类似头像)</span></span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: flex-start;</span><br><span class="line">  <span class="selector-tag">img</span>&#123;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">1em</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 两端对齐，列不满时左对齐</span></span><br><span class="line"><span class="comment">// 法一：如果每行有 n 项，则在最后添加 n-2 个空项</span></span><br><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="selector-tag">li</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f1f8ff</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">li</span><span class="selector-class">.empty</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 法二；利用 after/before，适用于每行 3/4 项</span></span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>:block;</span><br><span class="line">  <span class="attribute">content</span>:<span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">0px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="四、事件类型"><a href="#四、事件类型" class="headerlink" title="四、事件类型"></a>四、事件类型</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>__click__：单击事件。移动端中连续 click 的触发有 200~300ms 的延迟，延迟来自判断双击和长按，因为只有默认等待时间结束以确定没有后续动作发生时才会触发 click 事件。所以触摸事件反应更快，体验更好，也可以通过 fastclick 库解决延迟问题。</li>
+<li>__touch__：触摸类事件，分为四种触发方式：touchstart (触屏开始)、touchmove (拖拽)、touchend (触屏完成)、touchcancel (触屏取消)。触屏时如果有更高级别的事件发生，比如电话接入或弹出信息等，则触发 ontouchcancel 事件。</li>
+<li>__gesture__：手势类事件，可分为三种：gesturestart (两&#x2F;多根手指按下时)、gesturechange (两&#x2F;多根手指按下且移动时)、gestureend (倒数第二根手指移开时)。手势的专有属性有：rotation (手指变化引起的旋转角度)、scale (手指之间的距离)。</li>
+<li>__tap__：触碰类事件，一般用于代替 click 事件，分为四种：tap (手指触碰屏幕)、longTap (手指长按屏幕)、singleTap (手指单击屏幕)、doubleTap(手指双击屏幕)。</li>
+<li>__swipe__：滑动事件，分为五种：swipe (滑动手指)、swipeLeft (左滑)、swipeRight (右滑)、swipeUp (上滑)、swipeDown (下滑)。</li>
+</ul>
+<h2 id="触发"><a href="#触发" class="headerlink" title="触发"></a>触发</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 触发顺序：ontouchstart、ontouchmove、ontouchend、onclick</span></span><br><span class="line"><span class="title function_">addEvent</span>(dom, <span class="string">&#x27;tap click touchstart touchmove&#x27;</span>, <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addEvent</span>(<span class="params">dom, type, showAll</span>) &#123;</span><br><span class="line">    type = type.<span class="title function_">split</span>(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    type.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">item</span>) &#123;</span><br><span class="line">        dom.<span class="title function_">addEventListener</span>(item, <span class="keyword">function</span>(<span class="params">v</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(showAll ? v : v.<span class="property">type</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h3><ul>
+<li>获取：box.addEventListener(“touchstart”, function(event){ },true)。</li>
+<li>属性<ul>
+<li>touches：当前跟踪的触摸操作的 touch 对象的数组。</li>
+<li>targetTouches：特定于事件目标的 touch 对象数组 (事件冒泡指出目标对象)。</li>
+<li>changedTouches：表示自上次触摸以来发生了什么改变的 touch 对象的数组。</li>
+</ul>
+</li>
+<li>特点<ul>
+<li>touchend 事件时 touches、targetTouches 信息会被删除，changedTouches 保存最后一次的信息，最好用于计算手指信息。</li>
+<li>通过 jquery 不能获取以上三个属性，而通过 zepto.js (精简版的 jquery，现在用的不多) 可以正常获取。</li>
+</ul>
+</li>
+</ul>
+<h2 id="问题方案"><a href="#问题方案" class="headerlink" title="问题方案"></a>问题方案</h2><h3 id="click-延迟"><a href="#click-延迟" class="headerlink" title="click 延迟"></a>click 延迟</h3><blockquote>
+<p>原因：移动端浏览器会优先判断用户是否要触发双击缩放、双击滚动等默认行为，用户碰触页面后需要等待 300ms 左右来判断是不是双击动作而不是立即响应。</p>
+</blockquote>
+<ul>
+<li>设置 device-width：<meta name="viewport" content="width=device-width">&#96;。</li>
+<li>禁用缩放：<code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, user-scalable=no&quot;&gt;</code>。</li>
+<li>FastClick：<code>import fastclick from &#39;fastclick&#39;、fastclick.attach(document.body)</code>。</li>
+<li>CSS touch-action：<code>touch-action: none</code>，表示在该元素上的操作不会触发用户代理的任何默认行为。</li>
+</ul>
+<h3 id="点击穿透"><a href="#点击穿透" class="headerlink" title="点击穿透"></a>点击穿透</h3><blockquote>
+<p>原生 touch 事件、框架的自定义 tap 事件都存在该问题，因为 touch 系列事件发生大约 300ms 后才会触发 click 事件。</p>
+</blockquote>
+<ul>
+<li>出现问题<ul>
+<li>点击蒙层上的关闭按钮，蒙层消失后发现触发了按钮下面元素的 click 事件，如果有 a 标签则会触发页面跳转。</li>
+<li>直接点击页面内按钮跳转至新页面，然后发现新页面中对应位置元素的 click 事件被触发。</li>
+</ul>
+</li>
+<li>解决方案<ul>
+<li>不要混用 touch、click：只用一种事件就不会存在点击穿透问题。</li>
+<li>fastclick：引入库之后把页面内所有 touch 事件都换为 click。</li>
+<li>pointer-events： 不建议使用 mask 隐藏后，给按钮下面元素添加 <code>pointer-events: none;</code>。</li>
+<li>阻止默认：<code>&lt;div class=&quot;mask&quot; @touchmove.prevent&gt;&lt;/div&gt;、&lt;div ontouchend = &quot;e.preventDefault()&quot;&gt;&lt;/div&gt;</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="touch、mouse"><a href="#touch、mouse" class="headerlink" title="touch、mouse"></a>touch、mouse</h3>  <div style="text-indent: 2em">移动端中只有触屏事件完成后再次触发时，才会触发上一个事件的 mouseout 事件。即系统会在手指提起的瞬间判断接收到事件的元素是否被改变，若没有改变则会按照 mousedown、mouseup、click 的顺序依次触发，反之不会触发。</div>
+ 
+
+<h3 id="点击状态处理"><a href="#点击状态处理" class="headerlink" title="点击状态处理"></a>点击状态处理</h3><ul>
+<li>hover 样式：移动端不可用。</li>
+<li>touch 事件：动态增删 class 或绑定动画。</li>
+<li>激活状态：常用于 a、button 等元素的伪类 :active<ul>
+<li>js：<code>document.body.addEventListener(&#39;touchstart&#39;, fn)</code></li>
+<li>html：<code>body ontouchstart</code></li>
+</ul>
+</li>
+<li>点击高亮：<code>a &#123; tap-highlight-color: transparent; &#125;</code></li>
+</ul>
+<h3 id="touch、gesture"><a href="#touch、gesture" class="headerlink" title="touch、gesture"></a>touch、gesture</h3><ul>
+<li>当一个手指放在屏幕上时会触发 touchstart 事件，如果另一个手指又放到了屏幕上则会触发 gesturestart 事件，然后触发基于该手指的 touchstart 事件。</li>
+<li>如果两个手指在屏幕上滑动将会触发 gesturechange 事件，但只要有一个手指移开则会触发 gestureend 事件，然后又触发 touchend 事件。</li>
+</ul>
+
+    </div>
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;margin-top:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chuangges
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuangges.gitee.io/2019/06/24/8-1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/" title="移动端开发">https://chuangges.gitee.io/2019/06/24/8-1-移动端开发/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh_CN" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag"># 移动端开发</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/20/7-2-Node%E6%A1%86%E6%9E%B6/" rel="prev" title="Node.js 常用框架">
+      <i class="fa fa-chevron-left"></i> Node.js 常用框架
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/28/8-4-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%9A%BE%E7%82%B9/" rel="next" title="移动端技术难点">
+      移动端技术难点 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">一、混合开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">开发模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ionic-Capacitor-Angular"><span class="nav-number">1.3.</span> <span class="nav-text">Ionic + Capacitor + Angular</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ionic-Vue"><span class="nav-number">1.4.</span> <span class="nav-text">Ionic + Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ionic-React"><span class="nav-number">1.5.</span> <span class="nav-text">Ionic + React</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%80%82%E9%85%8D%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">二、适配方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#viewport-%E7%BC%A9%E6%94%BE"><span class="nav-number">2.1.</span> <span class="nav-text">viewport 缩放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80"><span class="nav-number">2.2.</span> <span class="nav-text">响应式布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80"><span class="nav-number">2.3.</span> <span class="nav-text">弹性布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-%E6%96%B9%E6%A1%88"><span class="nav-number">2.4.</span> <span class="nav-text">vue 方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Flex-%E5%B8%83%E5%B1%80"><span class="nav-number">3.</span> <span class="nav-text">三、Flex 布局</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%B1%9E%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">基础属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">布局实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80"><span class="nav-number">3.3.</span> <span class="nav-text">网格布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80"><span class="nav-number">3.4.</span> <span class="nav-text">圣杯布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E5%BC%8F%E5%B8%83%E5%B1%80"><span class="nav-number">3.5.</span> <span class="nav-text">流式布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E5%AE%9A%E5%BA%95%E6%A0%8F"><span class="nav-number">3.6.</span> <span class="nav-text">固定底栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E5%B8%83%E5%B1%80"><span class="nav-number">3.7.</span> <span class="nav-text">样式布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">四、事件类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">4.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91"><span class="nav-number">4.2.</span> <span class="nav-text">触发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.2.1.</span> <span class="nav-text">事件对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%96%B9%E6%A1%88"><span class="nav-number">4.3.</span> <span class="nav-text">问题方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#click-%E5%BB%B6%E8%BF%9F"><span class="nav-number">4.3.1.</span> <span class="nav-text">click 延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E7%A9%BF%E9%80%8F"><span class="nav-number">4.3.2.</span> <span class="nav-text">点击穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch%E3%80%81mouse"><span class="nav-number">4.3.3.</span> <span class="nav-text">touch、mouse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E7%8A%B6%E6%80%81%E5%A4%84%E7%90%86"><span class="nav-number">4.3.4.</span> <span class="nav-text">点击状态处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch%E3%80%81gesture"><span class="nav-number">4.3.5.</span> <span class="nav-text">touch、gesture</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chuangges" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/chuang.png">
+  <p class="site-author-name" itemprop="name">chuangges</p>
+  <div class="site-description" itemprop="description">chuangge's blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chuangges" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chuangges" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.docschina.org/" title="https:&#x2F;&#x2F;www.docschina.org&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">印记中文</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://tool.lu/" title="http:&#x2F;&#x2F;tool.lu&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">在线工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tinypng.com/" title="https:&#x2F;&#x2F;tinypng.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片压缩</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bigjpg.com/" title="https:&#x2F;&#x2F;bigjpg.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片放大</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tool.chinaz.com/" title="https:&#x2F;&#x2F;tool.chinaz.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">站长工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://learn-anything.xyz/" title="https:&#x2F;&#x2F;learn-anything.xyz&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Learn-Anything</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://stackoverflow.com/" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Stack-Overflow</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chuangge</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">638k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:40</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":180,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</html>

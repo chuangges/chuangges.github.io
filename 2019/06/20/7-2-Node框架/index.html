@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Express、Koa、Egg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js 常用框架">
+<meta property="og:url" content="https://chuangges.gitee.io/2019/06/20/7-2-Node%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="闯哥要去流浪了">
+<meta property="og:description" content="Express、Koa、Egg">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chuangges.gitee.io/images/nodejs/egg-run.png">
+<meta property="og:image" content="https://chuangges.gitee.io/images/nodejs/egg-framework.png">
+<meta property="article:published_time" content="2019-06-19T16:23:49.000Z">
+<meta property="article:modified_time" content="2022-09-30T05:44:40.375Z">
+<meta property="article:author" content="chuangges">
+<meta property="article:tag" content="JS 扩展">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chuangges.gitee.io/images/nodejs/egg-run.png">
+
+<link rel="canonical" href="https://chuangges.gitee.io/2019/06/20/7-2-Node%E6%A1%86%E6%9E%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Node.js 常用框架 | 闯哥要去流浪了</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="闯哥要去流浪了" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">闯哥要去流浪了</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我知道你一定会来，所以我一直在等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuangges.gitee.io/2019/06/20/7-2-Node%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chuang.png">
+      <meta itemprop="name" content="chuangges">
+      <meta itemprop="description" content="chuangge's blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="闯哥要去流浪了">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node.js 常用框架
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-20 00:23:49" itemprop="dateCreated datePublished" datetime="2019-06-20T00:23:49+08:00">2019-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS-%E6%89%A9%E5%B1%95/" itemprop="url" rel="index"><span itemprop="name">JS 扩展</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+            <div class="post-description">Express、Koa、Egg</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、Express"><a href="#一、Express" class="headerlink" title="一、Express"></a>一、Express</h1><blockquote>
+<p>基于 ES5 语法实现而只能通过回调实现异步代码，框架本身缺少约束而写法较多，只适合开发小型项目并作为新手入门级框架。</p>
+</blockquote>
+<h2 id="核心特性"><a href="#核心特性" class="headerlink" title="核心特性"></a>核心特性</h2><ul>
+<li>设置中间件来响应 HTTP 请求。</li>
+<li>定义路由表用于执行不同的 HTTP 请求。</li>
+<li>通过向模板传递参数来动态渲染 HTML。</li>
+</ul>
+<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置 views 的文件夹和模板</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;views&quot;</span>, __dirname + <span class="string">&quot;/views&quot;</span>);</span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;view engine&quot;</span>, <span class="string">&quot;jade&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态资源</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(__dirname + <span class="string">&#x27;/public&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态渲染</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="string">&#x27;Hello world&#x27;</span>);</span><br><span class="line">&#125;).<span class="title function_">listen</span>(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="搭建应用"><a href="#搭建应用" class="headerlink" title="搭建应用"></a>搭建应用</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认 localhost:3000</span></span><br><span class="line">npm install express express-generator -g </span><br><span class="line"></span><br><span class="line">express -e myApp  <span class="comment">// 使用 ejs 模板</span></span><br><span class="line">cd myApp</span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line">npm start </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><blockquote>
+<p>本质是处理 HTTP 请求的函数。每个中间件都可以接收到请求对象 req、响应对象 res 和回调函数 next 这三个参数，经过处理后可以通过调用 next() 传递给下一个中间件。</p>
+</blockquote>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li>__应用级中间件__：使用 app.use&#x2F;method 绑定到 app 对象。</li>
+<li>__路由级中间件__：使用 router.use&#x2F;method 绑定到 express.Router() 对象。</li>
+<li>__错误处理中间件__：接收四个参数，用于处理应用中的错误。</li>
+<li>__第三方中间件__：安装后 require 到文件中使用，用来扩展功能。</li>
+<li>__内置中间件__：express.static 托管静态资源、express.json 解析请求。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 应用级</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="function">(<span class="params">req,res,next</span>) =&gt;</span> &#123;   </span><br><span class="line">    <span class="title function_">next</span>()   </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由级</span></span><br><span class="line"><span class="keyword">var</span> router = express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user/:id&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(req.<span class="property">params</span>.<span class="property">id</span>==<span class="number">0</span>) <span class="title function_">next</span>(<span class="string">&#x27;route&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span> <span class="title function_">next</span>()</span><br><span class="line">&#125;,<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    res.<span class="title function_">end</span>(<span class="string">&quot;Hello world&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误处理</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="function">(<span class="params">err, req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="string">&#x27;Something broke&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 内置中间件 </span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(__dirname + <span class="string">&#x27;/public&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="定义方法"><a href="#定义方法" class="headerlink" title="定义方法"></a>定义方法</h3><ul>
+<li>__app.use__：对客户端请求路径及其所有扩展结果进行匹配。</li>
+<li>__app.method__：对客户端请求路径进行精确匹配，但会忽略锚点和 get 参数数据。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路径默认 &#x27;/&#x27;，匹配所有路径(都可以看作是 &#x27;/&#x27; 的扩展)</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径默认 &#x27;/&#x27; ，只匹配根路径</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123; &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="响应方法"><a href="#响应方法" class="headerlink" title="响应方法"></a>响应方法</h3><ul>
+<li>__res.end__：结束响应进程但不返回数据。</li>
+<li>__res.send__：发送各种类型的响应。</li>
+<li>__res.json__：发送 JSON 响应。</li>
+<li>__res.jsonp__：在 JSONP 的支持下发送 JSON 响应。</li>
+<li>__res.render__：呈现视图模板。</li>
+<li>__res.redirect__：重定向请求。</li>
+<li>__res.sendFile__：以八位元流形式发送文件。</li>
+<li>__res.download__：提示将要下载文件。</li>
+<li>__res.sendStatus__：设置响应状态码并发送其字符串表示。</li>
+</ul>
+<h2 id="路由管理"><a href="#路由管理" class="headerlink" title="路由管理"></a>路由管理</h2><h3 id="路径规则"><a href="#路径规则" class="headerlink" title="路径规则"></a>路径规则</h3><ul>
+<li>url 字符串不区分字母的大小写。</li>
+<li>url 传递的数据通过冒号语法提取。</li>
+<li>所有 get 方式提交的 url 参数及锚点均会被忽略。</li>
+<li>所有路由中间件的书写顺序至关重要，只会执行首次匹配到的中间件。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// localhost:3000/tom/24：tom, 24</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/:name/:age&#x27;</span>, <span class="function">(<span class="params">req, res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">params</span>.<span class="property">name</span>, req.<span class="property">params</span>.<span class="property">age</span>)</span><br><span class="line">  res.<span class="title function_">send</span>()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// localhost:3000/a#?name=tom </span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/a&#x27;</span>, <span class="function">(<span class="params">req, res</span>)=&gt;</span>&#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// localhost:3000/admin/login：只执行第一个</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/:username/:method&#x27;</span>, <span class="function">(<span class="params">req, res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">  res.<span class="title function_">end</span>()  <span class="comment">// 此处如果执行 next() 则会第二个</span></span><br><span class="line">&#125;)</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/admin/login&#x27;</span>, <span class="function">(<span class="params">req, res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">  res.<span class="title function_">end</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="路径匹配"><a href="#路径匹配" class="headerlink" title="路径匹配"></a>路径匹配</h3><h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配根路径的请求</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;root&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 /about 路径的请求</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/about&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;about&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 /random.text 路径的请求</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/random.text&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;random.text&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="字符串模式"><a href="#字符串模式" class="headerlink" title="字符串模式"></a>字符串模式</h4>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配 /user、/user/5，去掉 ? 则只匹配 /user/5</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/user/:id?&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;/users/:id?&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 acd 和 abcd</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/ab?cd&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;ab?cd&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 /abe 和 /abcde</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/ab(cd)?e&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;ab(cd)?e&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 abcd、abbcd、abbbcd等</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/ab+cd&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;ab+cd&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 abcd、abxcd、abRABDOMcd、ab123cd等</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/ab*cd&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;ab*cd&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配任何路径中含有 a 的路径：</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="regexp">/a/</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;/a/&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 butterfly、dragonfly，不匹配 butterflyman、dragonfly man等</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="regexp">/.*fly$/</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;/.*fly$/&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配 /abcd、/xyza、/lmnand、/pqr</span></span><br><span class="line">app.<span class="title function_">use</span>([<span class="string">&#x27;/abcd&#x27;</span>, <span class="string">&#x27;/xyza&#x27;</span>, <span class="regexp">/\/lmn|\/pqr/</span>], <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="路由句柄"><a href="#路由句柄" class="headerlink" title="路由句柄"></a>路由句柄</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个回调函数</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/example/a&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;Hello from A&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 多个回调函数</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/example/b&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;Hello&#x27;</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 回调函数数组</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123; <span class="title function_">next</span>() &#125;</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123; <span class="title function_">next</span>() &#125;</span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">function</span> (<span class="params">req, res</span>) &#123; res.<span class="title function_">send</span>(<span class="string">&#x27;Hello from C&#x27;</span>) &#125;</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/example/c&#x27;</span>, [a, b, c])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 混合使用</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/example/d&#x27;</span>, [a, b], <span class="keyword">function</span> (<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;Hello from D&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="参数解析"><a href="#参数解析" class="headerlink" title="参数解析"></a>参数解析</h3><ul>
+<li>__req.param__：已被弃用。</li>
+<li>__req.query__：解析 GET 请求中的查询字符串。</li>
+<li>__req.body__：解析 POST 请求中的数据（需引用body-parser）。</li>
+<li>__req.params__：解析 GET&#x2F;POST 请求中的占位符数据（如&#x2F;:name）。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user/10</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;user/:id&quot;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(req.<span class="property">params</span>[<span class="string">&quot;id&quot;</span>])</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// user/?id=10</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/user&quot;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(req.<span class="property">query</span>[<span class="string">&quot;id&quot;</span>])</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 body-parser 模块获取 post 请求数据</span></span><br><span class="line"><span class="keyword">let</span> bodyParser=<span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>)</span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/login&quot;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(req.<span class="property">body</span>.<span class="property">name</span>, req.<span class="property">body</span>.<span class="property">password</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="特殊路由"><a href="#特殊路由" class="headerlink" title="特殊路由"></a>特殊路由</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 验证或处理 路径参数</span></span><br><span class="line">router.<span class="title function_">param</span>(<span class="string">&#x27;id&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res, next, id</span>) &#123;</span><br><span class="line">  req.<span class="property">name</span> = name</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;)</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user/:id&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;hello &#x27;</span> + req.<span class="property">name</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 链式路由：一个路径处理多种请求</span></span><br><span class="line">app.<span class="title function_">route</span>(<span class="string">&#x27;/book&#x27;</span>)</span><br><span class="line">  .<span class="title function_">get</span>(<span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">      res.<span class="title function_">send</span>(<span class="string">&#x27;Get a random book&#x27;</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">post</span>(<span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">      res.<span class="title function_">send</span>(<span class="string">&#x27;Add a book&#x27;</span>);</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="next-方法"><a href="#next-方法" class="headerlink" title="next 方法"></a>next 方法</h3><ul>
+<li>__next()__：从下一个处理函数开始往下执行</li>
+<li>__next(‘router’)__：直接执行下一个相同路由</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">  <span class="title function_">next</span>()           </span><br><span class="line">  <span class="comment">// 结果：1234，替换为next(&#x27;route&#x27;)则结果：1234</span></span><br><span class="line">  </span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">  <span class="title function_">next</span>(<span class="string">&#x27;route&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二、Koa"><a href="#二、Koa" class="headerlink" title="二、Koa"></a>二、Koa</h1><blockquote>
+<p>Express 团队打造的进阶框架，基于 ES7 语法使用 Promise 实现异步而极大简化了异步代码。但是开发项目时缺少约束，多人开发时代码合并困难而不适合团队协作开发项目。</p>
+</blockquote>
+<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ul>
+<li>__洋葱中间件模式__：next函数决定是否执行下一个中间件。</li>
+<li>__Context 对象__：内部封装了 HTTP 请求对象和响应对象。</li>
+<li>__异步处理__：使用 Promise 并配合 async await 实现异步。</li>
+</ul>
+<h2 id="基础使用-1"><a href="#基础使用-1" class="headerlink" title="基础使用"></a>基础使用</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// npm install koa koa-route</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Koa</span> = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Koa</span>()</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> route = <span class="built_in">require</span>(<span class="string">&#x27;koa-route&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态资源服务器：npm install koa-static</span></span><br><span class="line"><span class="keyword">const</span> serve = <span class="built_in">require</span>(<span class="string">&#x27;koa-static&#x27;</span>)</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">serve</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;/public&#x27;</span>)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态渲染页面：npm install koa-views ejs</span></span><br><span class="line"><span class="keyword">let</span> views = <span class="built_in">require</span>(<span class="string">&#x27;koa-views&#x27;</span>);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">views</span>(__dirname,&#123;</span><br><span class="line">  <span class="attr">extension</span>:<span class="string">&#x27;ejs&#x27;</span> <span class="comment">//指定用ejs模板</span></span><br><span class="line">&#125;))</span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next)=&gt;&#123;</span><br><span class="line">  <span class="comment">// 渲染 index.ejs</span></span><br><span class="line">  <span class="keyword">await</span> ctx.<span class="title function_">render</span>(<span class="string">&#x27;index&#x27;</span>, &#123;<span class="attr">name</span>:<span class="string">&#x27;cgp&#x27;</span>, <span class="attr">age</span>:<span class="number">9</span>&#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="搭建应用-1"><a href="#搭建应用-1" class="headerlink" title="搭建应用"></a>搭建应用</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认 localhost:3000</span></span><br><span class="line">npm install koa koa-generator -g </span><br><span class="line"></span><br><span class="line">koa2 project </span><br><span class="line">cd project</span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line">npm start</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="路由管理-1"><a href="#路由管理-1" class="headerlink" title="路由管理"></a>路由管理</h2><h3 id="原生路由"><a href="#原生路由" class="headerlink" title="原生路由"></a>原生路由</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 ctx.request.path 获取用户请求的路径</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="function"><span class="params">ctx</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (ctx.<span class="property">request</span>.<span class="property">path</span> == <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// ctx.response.body的简写 </span></span><br><span class="line">    ctx.<span class="property">body</span> = <span class="string">&#x27;&lt;p&gt;Hello World&lt;/p&gt;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="路由中间件"><a href="#路由中间件" class="headerlink" title="路由中间件"></a>路由中间件</h3><blockquote>
+<p>安装：npm install koa koa-router</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Koa</span> = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> <span class="title class_">Koa</span>();</span><br><span class="line"><span class="keyword">var</span> router = <span class="built_in">require</span>(<span class="string">&#x27;koa-router&#x27;</span>)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基础用法：常用 get、post、all</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">async</span> (ctx, next)=&gt;&#123;</span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&#x27;hello people&#x27;</span>;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">next</span>()</span><br><span class="line">&#125;);</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/list&#x27;</span>, <span class="keyword">async</span> (ctx, next)=&gt;&#123;</span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&#x27;list&#x27;</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 传递参数</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/home&#x27;</span>, <span class="function">(<span class="params">ctx,next</span>)=&gt;</span>&#123; </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;/home?id=1 传递参数：&#x27;</span>, ctx.<span class="property">query</span>);</span><br><span class="line">  <span class="title function_">next</span>();</span><br><span class="line">&#125;);</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user/:name&#x27;</span>, <span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;/user/tom 传递参数：&#x27;</span>, ctx.<span class="property">params</span>.<span class="property">name</span>);</span><br><span class="line">  <span class="title function_">next</span>();</span><br><span class="line">&#125;);</span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/user/register&#x27;</span>,<span class="title function_">async</span>(ctx, next)=&gt;&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(ctx.<span class="property">request</span>.<span class="property">body</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重定向</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/login&#x27;</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.<span class="title function_">redirect</span>(<span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 嵌套路由</span></span><br><span class="line"><span class="keyword">let</span> home = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line">home.<span class="title function_">get</span>(<span class="string">&#x27;/list&#x27;</span>, <span class="title function_">async</span>(ctx)=&gt;&#123;</span><br><span class="line">    ctx.<span class="property">body</span> = <span class="string">&quot;Home list&quot;</span>;</span><br><span class="line">&#125;).<span class="title function_">get</span>(<span class="string">&#x27;/todo&#x27;</span>, <span class="title function_">async</span>(ctx)=&gt;&#123;</span><br><span class="line">    ctx.<span class="property">body</span> =<span class="string">&#x27;Home ToDo&#x27;</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line">user.<span class="title function_">get</span>(<span class="string">&#x27;/list&#x27;</span>, <span class="title function_">async</span>(ctx)=&gt;&#123;</span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&quot;User list&quot;</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 装载所有子路由</span></span><br><span class="line"><span class="keyword">let</span> router = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line">router.<span class="title function_">use</span>(<span class="string">&#x27;/home&#x27;</span>, home.<span class="title function_">routes</span>(), home.<span class="title function_">allowedMethods</span>());</span><br><span class="line">router.<span class="title function_">use</span>(<span class="string">&#x27;/user&#x27;</span>, user.<span class="title function_">routes</span>(), user.<span class="title function_">allowedMethods</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载路由：当请求数据的方法与设置的方法不一致时会报错</span></span><br><span class="line">app.<span class="title function_">use</span>(router.<span class="title function_">routes</span>()).<span class="title function_">use</span>(router.<span class="title function_">allowedMethods</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听服务</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="中间件-1"><a href="#中间件-1" class="headerlink" title="中间件"></a>中间件</h2>  <div style="text-indent: 2em">每个中间件默认接受 `Context 对象、next 函数` 两个参数。`Context 对象内部封装了原生 NodeJS 包含的 request、response 对象，分别为 ctx.req、ctx.res。next函数被调用时，会暂停该中间件的运行并将控制传递给下一个中间件。</div>
+
+
+<h3 id="分类-1"><a href="#分类-1" class="headerlink" title="分类"></a>分类</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第三方中间件：引入koa-router并对其实例化</span></span><br><span class="line"><span class="keyword">var</span> router = <span class="built_in">require</span>(<span class="string">&#x27;koa-router&#x27;</span>)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误处理中间件</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>()</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">body</span> = &#123;</span><br><span class="line">    <span class="attr">code</span>: <span class="string">&#x27;404&#x27;</span>,</span><br><span class="line">    <span class="attr">message</span>: <span class="string">&#x27;服务器异常&#x27;</span>,</span><br><span class="line">    <span class="attr">desc</span>: error.<span class="property">message</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 应用级中间件</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  <span class="keyword">if</span>(ctx.<span class="property">status</span> === <span class="number">404</span>)&#123;</span><br><span class="line">    ctx.<span class="property">body</span> = <span class="string">&quot;404页面&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由级中间件</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&#x27;hello koa&#x27;</span>;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启动路由</span></span><br><span class="line">app.<span class="title function_">use</span>(router.<span class="title function_">routes</span>()).<span class="title function_">use</span>(router.<span class="title function_">allowedMethods</span>())</span><br></pre></td></tr></table></figure>
+<h3 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h3><ul>
+<li>多个中间件会形成堆栈结构，按先进后出顺序执行。</li>
+<li>任何路由都会先经过应用级中间件，当执行完成next后再去匹配相应路由。</li>
+<li>路由在匹配成功并执行完相应操作后还会再次进入应用级中间件执行 next 之后的逻辑。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;7&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;2&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&#x27;Hello Koa&#x27;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="第三方中间件"><a href="#第三方中间件" class="headerlink" title="第三方中间件"></a>第三方中间件</h3><ul>
+<li>__kao-views__：模板渲染</li>
+<li>__koa-router__：路由处理</li>
+<li>__koa-static__：静态文件读取</li>
+<li>__koa-bodyparse__：处理post请求的数据</li>
+</ul>
+<h2 id="常用功能"><a href="#常用功能" class="headerlink" title="常用功能"></a>常用功能</h2><h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h3><blockquote>
+<p>框架自带属性，不需要引入中间件</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置中文时报错解决</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 new Buffer().toString(&#x27;base64&#x27;) 转换</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">cookies</span>.<span class="title function_">set</span>(<span class="string">&#x27;test&#x27;</span>, <span class="keyword">new</span> <span class="title class_">Buffer</span>(<span class="string">&#x27;你好&#x27;</span>).<span class="title function_">toString</span>(<span class="string">&#x27;base64&#x27;</span>))</span><br><span class="line">  <span class="keyword">const</span> test = <span class="keyword">new</span> <span class="title class_">Buffer</span>(ctx.<span class="property">cookies</span>.<span class="title function_">get</span>(<span class="string">&#x27;test&#x27;</span>), <span class="string">&#x27;base64&#x27;</span>).<span class="title function_">toString</span>()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 encodeURIComponent() 转换</span></span><br><span class="line">  ctx.<span class="property">cookies</span>.<span class="title function_">set</span>(<span class="string">&#x27;name&#x27;</span>, <span class="built_in">encodeURIComponent</span>(<span class="string">&#x27;李&#x27;</span>))</span><br><span class="line">  <span class="keyword">const</span> name = <span class="built_in">decodeURIComponent</span>(ctx.<span class="property">cookies</span>.<span class="title function_">get</span>(<span class="string">&#x27;name&#x27;</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">&#x27;koa-router&#x27;</span>)();</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;koa-bodyparse&#x27;</span>);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">bodyParser</span>()); </span><br><span class="line"></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/add&#x27;</span>, <span class="keyword">async</span> (ctx)=&gt;&#123;</span><br><span class="line">  <span class="comment">// 获取表单提交的数据</span></span><br><span class="line">  <span class="keyword">const</span> body = ctx.<span class="property">request</span>.<span class="property">body</span></span><br><span class="line">  ctx.<span class="property">body</span> = &#123; <span class="attr">name</span>: body.<span class="property">name</span> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3>  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/file_upload&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;image&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;上传文件&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入：npm install koa-body --save</span></span><br><span class="line"><span class="keyword">const</span> koaBody = <span class="built_in">require</span>(<span class="string">&#x27;koa-body&#x27;</span>);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">koaBody</span>(&#123;</span><br><span class="line">  <span class="attr">multipart</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">formidable</span>: &#123;</span><br><span class="line">    <span class="attr">maxFileSize</span>: <span class="number">200</span>*<span class="number">1024</span>*<span class="number">1024</span>  <span class="comment">// 设置文件最大限制，默认 2M</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传图片</span></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/file_upload&#x27;</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 获取上传图片</span></span><br><span class="line">  <span class="keyword">const</span> data = ctx.<span class="property">request</span>.<span class="property">body</span>.<span class="property">files</span>.<span class="property">data</span>;</span><br><span class="line">  <span class="comment">// 创建可读流</span></span><br><span class="line">  <span class="keyword">const</span> savePath = path.<span class="title function_">join</span>(<span class="string">`./files`</span>, data.<span class="property">name</span>)</span><br><span class="line">  <span class="keyword">const</span> reader = fs.<span class="title function_">createReadStream</span>(data.<span class="property">path</span>)</span><br><span class="line">  <span class="comment">// 创建可写流</span></span><br><span class="line">  <span class="keyword">const</span> writer = fs.<span class="title function_">createWriteStream</span>(savePath)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> pro = <span class="keyword">new</span> <span class="title class_">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 可读流通过管道写入可写流</span></span><br><span class="line">    <span class="keyword">var</span> stream = reader.<span class="title function_">pipe</span>(writer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 图片上传成功后返回服务器地址，实时显示服务器图片</span></span><br><span class="line">    stream.<span class="title function_">on</span>(<span class="string">&#x27;finish&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(<span class="string">`http://当前服务器地址<span class="subst">$&#123;data.name&#125;</span>`</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  ctx.<span class="property">response</span>.<span class="property">body</span> =  <span class="keyword">await</span> pro</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传单个文件</span></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/uploadfile&#x27;</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 获取上传文件</span></span><br><span class="line">  <span class="keyword">const</span> file = ctx.<span class="property">request</span>.<span class="property">files</span>.<span class="property">file</span>; </span><br><span class="line">  <span class="comment">// 创建可读流</span></span><br><span class="line">  <span class="keyword">const</span> reader = fs.<span class="title function_">createReadStream</span>(file.<span class="property">path</span>);</span><br><span class="line">  <span class="keyword">let</span> filePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;public/upload/&#x27;</span>) + <span class="string">`/<span class="subst">$&#123;file.name&#125;</span>`</span>;</span><br><span class="line">  <span class="comment">// 创建可写流</span></span><br><span class="line">  <span class="keyword">const</span> upStream = fs.<span class="title function_">createWriteStream</span>(filePath);</span><br><span class="line">  <span class="comment">// 可读流通过管道写入可写流</span></span><br><span class="line">  reader.<span class="title function_">pipe</span>(upStream);</span><br><span class="line">  <span class="keyword">return</span> ctx.<span class="property">body</span> = <span class="string">&quot;上传成功！&quot;</span>;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传多个文件</span></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/uploadfiles&#x27;</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 获取上传文件，旧版本通过 ctx.request.body.files</span></span><br><span class="line">  <span class="keyword">const</span> files = ctx.<span class="property">request</span>.<span class="property">files</span>.<span class="property">file</span>; </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> file <span class="keyword">of</span> files) &#123;</span><br><span class="line">    <span class="comment">// 创建可读流</span></span><br><span class="line">    <span class="keyword">const</span> reader = fs.<span class="title function_">createReadStream</span>(file.<span class="property">path</span>);</span><br><span class="line">    <span class="comment">// 获取上传文件扩展名</span></span><br><span class="line">    <span class="keyword">let</span> filePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;public/upload/&#x27;</span>) + <span class="string">`/<span class="subst">$&#123;file.name&#125;</span>`</span>;</span><br><span class="line">    <span class="comment">// 创建可写流</span></span><br><span class="line">    <span class="keyword">const</span> upStream = fs.<span class="title function_">createWriteStream</span>(filePath);</span><br><span class="line">    <span class="comment">// 可读流通过管道写入可写流</span></span><br><span class="line">    reader.<span class="title function_">pipe</span>(upStream);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ctx.<span class="property">body</span> = <span class="string">&quot;上传成功！&quot;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="合并中间件"><a href="#合并中间件" class="headerlink" title="合并中间件"></a>合并中间件</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa-compose：将多个中间件合成为一个</span></span><br><span class="line"><span class="keyword">const</span> compose = <span class="built_in">require</span>(<span class="string">&#x27;koa-compose&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> first = asycn (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">next</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">second</span> = <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&#x27;Hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> middle = <span class="title function_">compose</span>([first, second])</span><br><span class="line">app.<span class="title function_">use</span>(middle)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="三、Egg"><a href="#三、Egg" class="headerlink" title="三、Egg"></a>三、Egg</h1><blockquote>
+<p>基于 koa2 的企业级框架，是由阿里 NodeJS 团队封装的企业级 Web 应用解决方案。</p>
+</blockquote>
+  <div style="text-indent: 2em">官方定位是 为企业级框架和应用而生和孕育出更多上层框架，奉行 `约定优于配置`，帮助开发团队和开发人员降低开发和维护成本。async 的特性避免了回调地狱，洋葱式的中间件架构更容易后置逻辑，内置的多进程管理会更好的利用服务器性能，以及更方便的单元测试和更加约束的目录架构。</div>
+
+
+<h2 id="框架体系"><a href="#框架体系" class="headerlink" title="框架体系"></a>框架体系</h2><ul>
+<li>核心体系：egg-core 模块。以 Koa.js 为基类并利用它的 中间件机制 和 HTTP服务机制 作为框架基础，以 Loader 机制作为 Egg.js 各分层机制的约定基础。</li>
+<li>辅助体系：egg-script、egg-bin 等模块：支持 开发模式、生产模式、多线程模式。</li>
+<li>生态体系：中间件、插件、框架。</li>
+</ul>
+<h2 id="主要特点-1"><a href="#主要特点-1" class="headerlink" title="主要特点"></a>主要特点</h2><ul>
+<li>渐进式开发</li>
+<li>内置多进程管理</li>
+<li>高度可扩展的插件机制</li>
+<li>框架稳定，测试覆盖率高</li>
+<li>基于 Koa 开发，性能优异</li>
+<li>提供基于 Egg 定制上层框架的能力</li>
+</ul>
+<h2 id="搭建应用-2"><a href="#搭建应用-2" class="headerlink" title="搭建应用"></a>搭建应用</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm i egg-init -g</span><br><span class="line">egg-init test --type=simple  </span><br><span class="line"></span><br><span class="line">cd test</span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line">npm run dev </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="项目运行"><a href="#项目运行" class="headerlink" title="项目运行"></a>项目运行</h2><ul>
+<li>绿色虚线框中的所有组件组成了一个实际执行代码逻辑的进程。</li>
+<li>request 进入后先穿过中间件，自定义中间件放在 app&#x2F;middleware 并在 config 启用。</li>
+<li>静态资源（project&#x2F;app&#x2F;public）经过内置的 egg-static 中间件时会直接响应给客户端，其它资源则会穿越所有中间件并到达路由文件 router.js。</li>
+<li>路由文件一般没有任何逻辑而只起到目录和索引的作用，它会直接指向一个处理请求的 controller（app&#x2F;controller）。</li>
+<li>Controller 负责调用并组合 Service（app&#x2F;service），最后将响应提交给客户端。Service 负责调用 Model 处理具体的业务逻辑。</li>
+<li>除此之外，Worker 中还有定时任务（app&#x2F;schedule）。</li>
+</ul>
+  <div align="center">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/nodejs/egg-run.png" alt="Egg Run" width="60%">
+  </div>
+
+
+<h2 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h2><blockquote>
+<p>要分析框架的实现原理，直接从所有源码开始分析比较难。但是可以先将其精简到最小功能系统，然后针对各个功能进行分析和叠加。</p>
+</blockquote>
+<h3 id="模块架构"><a href="#模块架构" class="headerlink" title="模块架构"></a>模块架构</h3>  <div align="center">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/nodejs/egg-framework.png" alt="Egg Framework" width="60%">
+  </div>
+
+
+<h3 id="最简目录"><a href="#最简目录" class="headerlink" title="最简目录"></a>最简目录</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── index.<span class="property">js</span>          <span class="comment">// 启动文件：初始化 应用实例 和 HTTP 服务器</span></span><br><span class="line">├── app               <span class="comment">// 业务模块：路由文件</span></span><br><span class="line">│     └── router.<span class="property">js</span>   </span><br><span class="line">├── lib               <span class="comment">// 应用模块：提供加载器和底层的中间件、插件、路由等机制</span></span><br><span class="line">|     ├── egg-core </span><br><span class="line">│     └── egg.<span class="property">js</span>                    </span><br><span class="line">└── package.<span class="property">json</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><ol>
+<li>应用初始化：加载所有 loader、加载所有中间件和插件等内容、路由注册。</li>
+<li>服务启动：提供 http 服务、执行路由处理。</li>
+</ol>
+<h3 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h3><ol>
+<li>EggApplication：继承 EggCore，按照顺序加载所有中间件、插件、路由等内容。</li>
+<li>EggCore<br>* 继承 Koa，实现功能：服务器的底层逻辑、工程项目文件的加载器、提供底层的中间件、插件、路由等机制。<br>* 构建 AppWorkerLoader：初始化加载器(继承 EggLoader)、路由(继承 Koa-router)。</li>
+<li>EggLoader：注入各种加载器方法。</li>
+</ol>
+<h3 id="路由优化"><a href="#路由优化" class="headerlink" title="路由优化"></a>路由优化</h3><ul>
+<li>路由大小写敏感</li>
+<li>RESTFul 实现</li>
+<li>Controller 句柄使用</li>
+<li>Generator Function 兼容</li>
+</ul>
+<h3 id="RESTFul"><a href="#RESTFul" class="headerlink" title="RESTFul"></a>RESTFul</h3><blockquote>
+<p>测试时需要先安装接口测试工具：chrome postman，然后在 chrome 地址栏使用</p>
+</blockquote>
+<ul>
+<li>约定路由路径和对应的控制器。</li>
+<li>统一处理封装 router 参数。</li>
+<li>统一封装 controller：根据请求类型和路径注册对应的控制器。<ul>
+<li>Async Function</li>
+<li>Generator Function</li>
+<li>controller 句柄读取 this.app.controller</li>
+</ul>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由文件添加</span></span><br><span class="line">router.<span class="title function_">resources</span>(<span class="string">&#x27;users&#x27;</span>, <span class="string">&#x27;/v1/users&#x27;</span>, <span class="string">&#x27;users&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新建文件 app/controller/users.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Controller</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;egg&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UsersController</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Controller</span> &#123;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">create</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;创建&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">destroy</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;删除&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">update</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;修改&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">show</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;查询&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">index</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;列表&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">new</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;创建页面&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">edit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">ctx</span>.<span class="property">body</span> = <span class="string">&#x27;修改页面&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">UsersController</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="加载器"><a href="#加载器" class="headerlink" title="加载器"></a>加载器</h3>  <div style="text-indent: 2em">实际项目中的业务代码除了路由文件，还有 controller、service 等其他分层的源码文件。Egg.js 是通过加载器 EggLoader 将这些分层的项目业务代码、中间件和插件代码的大部分功能注入到 this、this.app、this.ctx 对象。</div>
+
+
+
+ 
+
+
+
+
+
+    </div>
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;margin-top:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chuangges
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuangges.gitee.io/2019/06/20/7-2-Node%E6%A1%86%E6%9E%B6/" title="Node.js 常用框架">https://chuangges.gitee.io/2019/06/20/7-2-Node框架/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh_CN" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JS-%E6%89%A9%E5%B1%95/" rel="tag"># JS 扩展</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/16/7-1-Node%E5%9F%BA%E7%A1%80/" rel="prev" title="Node.js 主要内容">
+      <i class="fa fa-chevron-left"></i> Node.js 主要内容
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/24/8-1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="next" title="移动端开发">
+      移动端开发 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Express"><span class="nav-number">1.</span> <span class="nav-text">一、Express</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">核心特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">基础使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">搭建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.2.</span> <span class="nav-text">定义方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.3.</span> <span class="nav-text">响应方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">路由管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%99"><span class="nav-number">1.5.1.</span> <span class="nav-text">路径规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E5%8C%B9%E9%85%8D"><span class="nav-number">1.5.2.</span> <span class="nav-text">路径匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">字符串模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">数组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%A5%E6%9F%84"><span class="nav-number">1.5.3.</span> <span class="nav-text">路由句柄</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">1.5.4.</span> <span class="nav-text">参数解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E7%94%B1"><span class="nav-number">1.5.5.</span> <span class="nav-text">特殊路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#next-%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.6.</span> <span class="nav-text">next 方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Koa"><span class="nav-number">2.</span> <span class="nav-text">二、Koa</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">主要特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8-1"><span class="nav-number">2.2.</span> <span class="nav-text">基础使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%BA%94%E7%94%A8-1"><span class="nav-number">2.3.</span> <span class="nav-text">搭建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%AE%A1%E7%90%86-1"><span class="nav-number">2.4.</span> <span class="nav-text">路由管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E8%B7%AF%E7%94%B1"><span class="nav-number">2.4.1.</span> <span class="nav-text">原生路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.4.2.</span> <span class="nav-text">路由中间件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6-1"><span class="nav-number">2.5.</span> <span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB-1"><span class="nav-number">2.5.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.5.2.</span> <span class="nav-text">执行顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.5.3.</span> <span class="nav-text">第三方中间件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">2.6.</span> <span class="nav-text">常用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookies"><span class="nav-number">2.6.1.</span> <span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86"><span class="nav-number">2.6.2.</span> <span class="nav-text">表单处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">2.6.3.</span> <span class="nav-text">上传文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.6.4.</span> <span class="nav-text">合并中间件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Egg"><span class="nav-number">3.</span> <span class="nav-text">三、Egg</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB"><span class="nav-number">3.1.</span> <span class="nav-text">框架体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9-1"><span class="nav-number">3.2.</span> <span class="nav-text">主要特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%BA%94%E7%94%A8-2"><span class="nav-number">3.3.</span> <span class="nav-text">搭建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C"><span class="nav-number">3.4.</span> <span class="nav-text">项目运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">3.5.</span> <span class="nav-text">原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E6%9E%B6%E6%9E%84"><span class="nav-number">3.5.1.</span> <span class="nav-text">模块架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%AE%80%E7%9B%AE%E5%BD%95"><span class="nav-number">3.5.2.</span> <span class="nav-text">最简目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.5.3.</span> <span class="nav-text">执行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91"><span class="nav-number">3.5.4.</span> <span class="nav-text">代码逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E4%BC%98%E5%8C%96"><span class="nav-number">3.5.5.</span> <span class="nav-text">路由优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTFul"><span class="nav-number">3.5.6.</span> <span class="nav-text">RESTFul</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">3.5.7.</span> <span class="nav-text">加载器</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chuangges" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/chuang.png">
+  <p class="site-author-name" itemprop="name">chuangges</p>
+  <div class="site-description" itemprop="description">chuangge's blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chuangges" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chuangges" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.docschina.org/" title="https:&#x2F;&#x2F;www.docschina.org&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">印记中文</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://tool.lu/" title="http:&#x2F;&#x2F;tool.lu&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">在线工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tinypng.com/" title="https:&#x2F;&#x2F;tinypng.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片压缩</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bigjpg.com/" title="https:&#x2F;&#x2F;bigjpg.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片放大</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tool.chinaz.com/" title="https:&#x2F;&#x2F;tool.chinaz.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">站长工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://learn-anything.xyz/" title="https:&#x2F;&#x2F;learn-anything.xyz&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Learn-Anything</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://stackoverflow.com/" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Stack-Overflow</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chuangge</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">638k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:40</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":180,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</html>

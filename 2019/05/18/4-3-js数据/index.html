@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="字符串、对象、数组、base64、二进制对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 数据类型">
+<meta property="og:url" content="https://chuangges.gitee.io/2019/05/18/4-3-js%E6%95%B0%E6%8D%AE/index.html">
+<meta property="og:site_name" content="闯哥要去流浪了">
+<meta property="og:description" content="字符串、对象、数组、base64、二进制对象">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-18T15:11:12.000Z">
+<meta property="article:modified_time" content="2022-09-30T05:44:40.320Z">
+<meta property="article:author" content="chuangges">
+<meta property="article:tag" content="Javascript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chuangges.gitee.io/2019/05/18/4-3-js%E6%95%B0%E6%8D%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JS 数据类型 | 闯哥要去流浪了</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="闯哥要去流浪了" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">闯哥要去流浪了</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我知道你一定会来，所以我一直在等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuangges.gitee.io/2019/05/18/4-3-js%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chuang.png">
+      <meta itemprop="name" content="chuangges">
+      <meta itemprop="description" content="chuangge's blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="闯哥要去流浪了">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS 数据类型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-18 23:11:12" itemprop="dateCreated datePublished" datetime="2019-05-18T23:11:12+08:00">2019-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+            <div class="post-description">字符串、对象、数组、base64、二进制对象</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、字符串"><a href="#一、字符串" class="headerlink" title="一、字符串"></a>一、字符串</h1><blockquote>
+<p>用于存储和处理文本，可看作类数组</p>
+</blockquote>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str_1 = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">var</span> str_2 = <span class="title class_">String</span>(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> str_3 = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&#x27;hello str&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><ul>
+<li>length：长度</li>
+<li>prototype：原型属性，保存当前对象的原型对象</li>
+<li>constructor：引用属性，保存当前对象的构造函数</li>
+</ul>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ul>
+<li>字符索引：<code>charAt、indexOf</code></li>
+<li>正则匹配：<code>match、search、replace</code></li>
+<li>分割为数组：<code>split</code></li>
+<li>字符串连接：<code>concat</code></li>
+<li>裁剪字符串：<code>slice、substr、substring</code></li>
+</ul>
+<h2 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用方式</span></span><br><span class="line"><span class="keyword">var</span> eg1 = <span class="string">&quot; ab &quot;</span>.<span class="title function_">trim</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 去除左边的空格</span></span><br><span class="line"><span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">LTrim</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">replace</span>(<span class="regexp">/(^\s*)/g</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 去除右边的空格</span></span><br><span class="line"><span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">Rtrim</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">replace</span>(<span class="regexp">/(\s*$)/g</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//去除前后空格</span></span><br><span class="line"><span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">Trim</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">replace</span>(<span class="regexp">/(^\s*)|(\s*$)/g</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　</p>
+<h1 id="二、对象"><a href="#二、对象" class="headerlink" title="二、对象"></a>二、对象</h1><blockquote>
+<p>由方法和属性作为键值对组成的一个无序集合。可看作是一个黑盒子，使用时只关注它的对外接口而不需要了解内部结构</p>
+</blockquote>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
+<li>内部对象<br><div style="text-indent: 2em">包括<code>Array、Boolean、Date、Function、Global、Math、Number、Object、RegExp、String以及 Error、ReferenceError等各种错误类对象</code>。其中 <code>Global 和 Math</code> 这两个对象又被称为“内置对象”，这两个对象在脚本程序初始化时被创建，不必实例化这两个对象。</div></li>
+<li>宿主对象<br><div style="text-indent: 2em">执行JS脚本的环境提供的对象。对于嵌入到网页中的JS来说，其宿主对象就是浏览器提供的对象，所以又称为浏览器对象，如<code>Window、Documen、Element、form、image</code>等。不同的浏览器提供的宿主对象可能不同，即使提供的对象相同，其实现方式也大相径庭，这也带来了浏览器兼容问题，增加开发难度。</div></li>
+<li>自定义对象<br><div style="text-indent: 2em">开发人员自己定义的对象，用于扩展 JS 应用和功能。</div></li>
+</ol>
+<h2 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h2><blockquote>
+<p><code>字面量方式 和 new Object()</code> 是两种最常用的对象创建方式，但是在使用同一接口创建多个对象时会产生大量重复代码，为了简化代码量并提高可维护性，项目开发时一般使用面向对象写法。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、字面量创建</span></span><br><span class="line"><span class="keyword">var</span> p1 = &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;lisa&quot;</span>,</span><br><span class="line">        <span class="attr">say</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 报错, null / &quot;&quot; 都可以</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123; <span class="string">&quot;name&quot;</span>: <span class="title class_">None</span> &#125;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、Object.create 将对象继承到 __proto__ 属性上</span></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="title class_">Object</span>.<span class="title function_">create</span>(&#123; <span class="attr">x</span>: <span class="number">1</span> &#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p2.<span class="property">__proto__</span>)   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、new 继承构造函数的属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建系统内置对象</span></span><br><span class="line"><span class="keyword">var</span> p3 = <span class="keyword">new</span> <span class="title class_">Object</span>(&#123; <span class="attr">x</span>: <span class="number">1</span> &#125;)  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p3) </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="keyword">var</span> exp = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;ys&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建自定义对象 </span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p4 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;tom&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h2><ul>
+<li><strong>赋值</strong><ul>
+<li><code>=、new Object</code> </li>
+<li>原始对象和目标对象指向同一内存地址，任何修改都会相互影响</li>
+</ul>
+</li>
+<li><strong>浅拷贝</strong><ul>
+<li><code>Object.assign / $.extend (target, [objN])</code> </li>
+<li>只有目标对象的内层对象修改时才会影响原始对象</li>
+</ul>
+</li>
+<li><strong>深拷贝</strong><ul>
+<li><code>for in / JSON.parse(JSON.stringify(obj)) / $.extend(true, target, [objN])</code></li>
+<li>目标对象的任何修改都不会影响到原始对象</li>
+</ul>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 赋值</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">age</span>: <span class="number">18</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> _obj = obj;</span><br><span class="line">_obj.<span class="property">age</span> = <span class="number">20</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">age</span>, _obj.<span class="property">age</span>); <span class="comment">// 20 20</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 浅拷贝</span></span><br><span class="line"><span class="keyword">var</span> boy = &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  <span class="attr">address</span>: &#123; <span class="attr">home</span>: <span class="string">&#x27;北京&#x27;</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> _boy = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, boy);</span><br><span class="line">_boy.<span class="property">age</span> = <span class="number">20</span>;</span><br><span class="line">_boy.<span class="property">address</span>.<span class="property">home</span> = <span class="string">&quot;上海&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(boy.<span class="property">age</span>, _boy.<span class="property">age</span>);   <span class="comment">// 18 20</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(boy.<span class="property">address</span>.<span class="property">home</span>, _boy.<span class="property">address</span>.<span class="property">home</span>); <span class="comment">// 上海 上海</span></span><br></pre></td></tr></table></figure>
+<h2 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h2><ul>
+<li>__数据属性__：包含一个数据值的位置，用于读取和写入值<ul>
+<li>Configurable：配置，表示能否删除</li>
+<li>Enumerable：枚举，表示能否通过 for-in 循环</li>
+<li>Writable：可写，表示能否修改属性值</li>
+<li>Value：属性的数据值，表示读写属性值的位置</li>
+</ul>
+</li>
+<li><strong>访问器属性</strong><ul>
+<li>即存取器属性，是一组获取和设置值的函数</li>
+<li>设置 get&#x2F;set 特性之后，属性就会变成访问器属性</li>
+<li>不能直接定义，必须使用 Object.defineProperty() 来定义</li>
+<li>分类：Configurable、Enumerable、Get、Set</li>
+</ul>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cat = &#123; </span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Jine&quot;</span>, </span><br><span class="line">  <span class="attr">_year</span>: <span class="number">2020</span>    <span class="comment">// 私有属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看属性</span></span><br><span class="line"><span class="keyword">var</span> prop = <span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(cat, <span class="string">&quot;name&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置数据属性</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(cat, <span class="string">&#x27;name&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">value</span>: <span class="string">&#x27;Trump&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置访问器属性</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(dog, <span class="string">&#x27;year&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_year</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">set</span>: <span class="keyword">function</span> (<span class="params">newVal</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_year</span> = newVal</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化对象属性值</span></span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  <span class="attr">_name</span>: <span class="string">&#x27;Jack&#x27;</span>,</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">name</span>() &#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_name</span> + <span class="string">&quot;_s&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">name</span>(<span class="params">n</span>) &#123; </span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_name</span> = n </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">person.<span class="property">name</span> = <span class="string">&#x27;Lisa&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">name</span>);  <span class="comment">// Lisa_s</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">name</span>: <span class="string">&quot;tom&quot;</span>, <span class="attr">age</span>: <span class="number">20</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取</span></span><br><span class="line"><span class="comment">// 点操作后只能是属性名，有横杠时须去掉并把后面的首字母大写</span></span><br><span class="line"><span class="keyword">var</span> name = obj.<span class="property">name</span>   </span><br><span class="line"> <span class="comment">// 中括号中可放属性名或变量名  </span></span><br><span class="line"><span class="keyword">var</span> age = obj[<span class="string">&#x27;age&#x27;</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改</span></span><br><span class="line">obj.<span class="property">name</span> = <span class="string">&quot;新属性值&quot;</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法</span></span><br><span class="line">obj.<span class="property">say</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>) &#125;    </span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line"><span class="keyword">delete</span> obj.<span class="property">age</span>          </span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断类型</span></span><br><span class="line">obj <span class="keyword">instanceof</span> <span class="title class_">Object</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断对象实例是否包含某个属性</span></span><br><span class="line">obj.<span class="title function_">hasOwnProperty</span>(<span class="string">&quot;name&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断对象实例及其原型中是否包含某个属性</span></span><br><span class="line"><span class="string">&quot;name&quot;</span> <span class="keyword">in</span> obj</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断`obj`是否为空</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isEmptyObject</span>(<span class="params">obj</span>)&#123;  </span><br><span class="line">  <span class="keyword">if</span>(!obj || <span class="keyword">typeof</span> obj !== <span class="string">&#x27;object&#x27;</span> || <span class="title class_">Array</span>.<span class="title function_">isArray</span>(obj))&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ! <span class="title class_">Object</span>.<span class="title function_">keys</span>(obj).<span class="property">length</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><div style="text-indent: 2em">每个对象都会在其内部初始化一个属性，就是 prototype (原型)，当我们访问一个对象的属性时，如果这个对象内部没有这个属性则去 prototype 里找这个属性，这个 prototype 又会有自己的 prototype，直到 null 结束，如果没有则返回undefined，这就是原型链的运行原理，即查找顺序：`实例对象 obj --> 原型对象 fn.prototype --> Object.prototype -->  null`</div>
+
+<ol>
+<li>相互关系：<code>obj.constructor.prototype = obj.__proto__</code></li>
+<li>函数对象：通过 new Function() 创建都是函数对象，其他的都是普通对象。每个对象都有 <code>__proto__</code> 属性指向原型对象，但只有函数对象才有 <code>prototype</code> 属性</li>
+<li>原型对象：一个普通对象。所有的原型对象都会自动获得一个指向其构造函数的指针 <code>constructor</code>，构造函数通过 <code>prototype</code> 属性指向它的原型对象，可以说 原型对象 <code>Person.prototype</code> 就是构造函数 <code>Person</code> 的一个实例</li>
+<li>原型链继承：利用原型让一个引用类型继承另一个引用类型的属性和方法，即让原型对象等于另一个类型的实例，这样就可以通过 <code>__proto__</code> 属性构成实例与原型的链条, 从而实现继承。</li>
+</ol>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">say</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Son</span>(<span class="params">name</span>)&#123;</span><br><span class="line">    <span class="title class_">Person</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> s1 = <span class="keyword">new</span> <span class="title class_">Son</span>(<span class="string">&quot;son1&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="keyword">new</span> <span class="title class_">Son</span>(<span class="string">&quot;son2&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1.<span class="property">__proto__</span> == s2.<span class="property">__proto__</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><div style="text-indent: 2em">JSON 是一种轻量级的数据交互方式，可以存储和传输数据而显示更丰富的信息，一般作为前后端交互的数据格式。</div>
+
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// json 对象转为字符串</span></span><br><span class="line"><span class="keyword">var</span> json_1 = &#123; <span class="attr">name</span>: <span class="string">&quot;tom&quot;</span>, <span class="attr">age</span>: <span class="number">18</span> &#125;</span><br><span class="line"><span class="keyword">var</span> strJson = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(json)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// json 字符串转为对象</span></span><br><span class="line"><span class="keyword">var</span> strJson = <span class="string">&#x27;&#123; name: &quot;tom&quot;, age: 18 &#125;&#x27;</span></span><br><span class="line"><span class="keyword">var</span> json_2 = <span class="built_in">eval</span>(<span class="string">&#x27;(&#x27;</span> +strJson+ <span class="string">&#x27;)&#x27;</span>);   <span class="comment">// 不建议使用</span></span><br><span class="line"><span class="keyword">var</span> json_3 = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(strJson)        <span class="comment">// 接近 W3C 标准</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="类数组对象"><a href="#类数组对象" class="headerlink" title="类数组对象"></a>类数组对象</h2><div style="text-indent: 2em">拥有一个length属性和若干索引属性的对象，常见的有 `arguments、document.forms、document.getElementsByClassName`。arguments 是函数中自动创建的一种类数组对象，用来模拟函数重载效果（根据传入参数个数执行不同函数）。</div>
+
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转换为数组</span></span><br><span class="line"><span class="keyword">var</span> arrayLike = &#123; <span class="string">&#x27;0&#x27;</span> : <span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;1&#x27;</span> : <span class="string">&#x27;b&#x27;</span>, length : <span class="number">3</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> arr1 = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">slice</span>.<span class="title function_">call</span>(arrayLike);</span><br><span class="line"><span class="keyword">var</span> arr2 = [].<span class="property">slice</span>.<span class="title function_">call</span>(arrayLike);</span><br><span class="line"><span class="keyword">var</span> arr3 = <span class="title class_">Array</span>.<span class="title function_">from</span>(arrayLike);</span><br><span class="line"></span><br><span class="line"><span class="comment">// arguments 重载</span></span><br><span class="line"><span class="keyword">var</span> checkout = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  　　<span class="keyword">if</span>(<span class="variable language_">arguments</span>.<span class="property">length</span>==<span class="number">0</span>)&#123;</span><br><span class="line">  　　　　<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;微信&quot;</span>);</span><br><span class="line">  　　&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable language_">arguments</span>.<span class="property">length</span>==<span class="number">1</span>)&#123;</span><br><span class="line">  　　　　<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;现金&quot;</span>);</span><br><span class="line">  　　&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  　　　　<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;刷卡&quot;</span>);</span><br><span class="line">  　　&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">checkout</span>();      <span class="comment">// 微信</span></span><br><span class="line"><span class="title function_">checkout</span>(<span class="number">100</span>);   <span class="comment">// 现金</span></span><br><span class="line"><span class="title function_">checkout</span>(<span class="number">1</span>, <span class="number">2</span>);  <span class="comment">// 刷卡</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、数组"><a href="#三、数组" class="headerlink" title="三、数组"></a>三、数组</h1><blockquote>
+<p>一组数据的有序集合，表现形式是内存中的一段连续的内存地址</p>
+</blockquote>
+<h2 id="创建-2"><a href="#创建-2" class="headerlink" title="创建"></a>创建</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接创建 </span></span><br><span class="line"><span class="keyword">var</span> arr = []            <span class="comment">// 空数组</span></span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]    <span class="comment">// 三个元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过构造函数</span></span><br><span class="line"><span class="keyword">var</span> arr1 = <span class="keyword">new</span> <span class="title class_">Array</span>()    <span class="comment">// 空数组</span></span><br><span class="line"><span class="keyword">var</span> arr2 = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">10</span>)    <span class="comment">// 长度为10 </span></span><br><span class="line"><span class="keyword">var</span> arr3 =  <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span>, <span class="number">2</span>)   <span class="comment">// 两个元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数组中是否存在下标为 1 的元素</span></span><br><span class="line"><span class="number">1</span> <span class="keyword">in</span> arr </span><br></pre></td></tr></table></figure>
+
+<h2 id="拷贝-1"><a href="#拷贝-1" class="headerlink" title="拷贝"></a>拷贝</h2><ul>
+<li>浅拷贝<ul>
+<li><code>arr.slice(0)、arr.concat()</code></li>
+<li>如果数组元素都是基本类型，原始数组和目标数组的修改互不影响</li>
+<li>如果数组元素是对象或数组，这样会只拷贝引用而导致修改时相互影响</li>
+</ul>
+</li>
+<li>深拷贝<ul>
+<li><code>JSON.parse(JSON.stringify(arr))</code></li>
+<li>不论数组元素是什么类型，原始数组和目标数组的修改都会互不影响</li>
+</ul>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 浅拷贝</span></span><br><span class="line"><span class="keyword">var</span> shallowCopy = <span class="keyword">function</span> (<span class="params">obj</span>) &#123; </span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">&#x27;object&#x27;</span>) <span class="keyword">return</span>; </span><br><span class="line">  <span class="keyword">var</span> newObj = obj <span class="keyword">instanceof</span> <span class="title class_">Array</span> ? [] : &#123;&#125;; </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">      newObj[key] = obj[key];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 深拷贝</span></span><br><span class="line"><span class="keyword">var</span> deepCopy = <span class="keyword">function</span>(<span class="params">obj</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">&#x27;object&#x27;</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">var</span> newObj = obj <span class="keyword">instanceof</span> <span class="title class_">Array</span> ? [] : &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">      newObj[key] = <span class="keyword">typeof</span> obj[key] === <span class="string">&#x27;object&#x27;</span> ? <span class="title function_">deepCopy</span>(obj[key]) : obj[key];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="特殊数组"><a href="#特殊数组" class="headerlink" title="特殊数组"></a>特殊数组</h2><ul>
+<li>多维数组：元素是数组</li>
+<li>稀疏数组：索引不连续，length值大于实际元素个数</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二维数组</span></span><br><span class="line"><span class="keyword">var</span> arr = [ [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, ‘good’] ]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr[<span class="number">0</span>][<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 稀疏数组</span></span><br><span class="line"><span class="keyword">var</span> arr = [];</span><br><span class="line">arr[<span class="number">20</span>] = <span class="string">&quot;hello&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h2><ol>
+<li>基础<br>* 读写：<code>索引/属性</code><br>* 添加：<code>arr[index] = new</code><br>* 删除：<code>delete arr[index]</code><br>* 遍历：<code>for</code></li>
+<li>ES3<br>* 添加：<code>push、unshift、concat</code><br>* 删除：<code>pop、shift</code><br>* 裁剪：<code>slice、splice</code><br>* 排序：<code>sort、reverse</code><br>* 转换：<code>join、toString</code></li>
+<li>ES5<br>* 位置：<code>indexOf、lastIndexOf</code><br>* 迭代：<code>every、some、filter、forEach、map</code><br>* 累计：<code>reduce</code></li>
+</ol>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 元素读写</span></span><br><span class="line"> <span class="keyword">var</span> arr = [<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line"> consloe.<span class="title function_">log</span>(arr.<span class="property">length</span>)</span><br><span class="line"> consloe.<span class="title function_">log</span>(arr[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"> arr[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line"> arr[-<span class="number">1.23</span>] = <span class="literal">true</span>  <span class="comment">// 超出范围时就不是索引，而是属性</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">// 判断是否数组</span></span><br><span class="line"> <span class="title class_">Array</span>.<span class="title function_">isArray</span>(arr)   </span><br><span class="line"> arr <span class="keyword">instanceof</span> <span class="title class_">Array</span></span><br><span class="line"> arr.<span class="property">constructor</span> === <span class="title class_">Array</span></span><br><span class="line"> arr.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">apply</span>([<span class="title class_">Array</span>])</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 判断元素         </span></span><br><span class="line"> arr.<span class="title function_">every</span>(<span class="keyword">function</span>(<span class="params">item</span>)&#123;</span><br><span class="line">     <span class="keyword">return</span> item &gt; <span class="number">5</span></span><br><span class="line"> &#125;) </span><br><span class="line"></span><br><span class="line"> <span class="comment">// 排序</span></span><br><span class="line">arr.<span class="title function_">sort</span>(<span class="keyword">function</span>(<span class="params">a, b</span>)&#123; </span><br><span class="line">     <span class="keyword">return</span> a-b</span><br><span class="line"> &#125;)</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 遍历</span></span><br><span class="line"> arr.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">value, index, arr</span>)&#123; &#125;)</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 映射返回新数组，原数组不改变</span></span><br><span class="line"> arr.<span class="title function_">map</span>(<span class="keyword">function</span>(<span class="params">value, index, arr</span>)&#123; </span><br><span class="line">     <span class="keyword">return</span> value * <span class="number">2</span>    </span><br><span class="line"> &#125;)</span><br><span class="line"> arr.<span class="title function_">map</span>(<span class="function"><span class="params">item</span> =&gt;</span> item + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 过滤不符合条件的元素</span></span><br><span class="line"> arr.<span class="title function_">filter</span>(<span class="keyword">function</span>(<span class="params">value, index</span>)&#123; </span><br><span class="line">     <span class="keyword">return</span> value % <span class="number">2</span> !== <span class="number">0</span></span><br><span class="line"> &#125;)          </span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 累计</span></span><br><span class="line"> <span class="keyword">const</span> <span class="title function_">count</span> = arr =&gt; &#123;</span><br><span class="line">     <span class="keyword">return</span> arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> pre + cur</span><br><span class="line">     &#125;, <span class="number">0</span>) </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="扩展方法-1"><a href="#扩展方法-1" class="headerlink" title="扩展方法"></a>扩展方法</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最大值</span></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">max</span>(...arr)</span><br><span class="line"><span class="title class_">Math</span>.<span class="property">max</span>.<span class="title function_">apply</span>(<span class="literal">null</span>, arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最小值</span></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">min</span>(...arr)</span><br><span class="line"><span class="title class_">Math</span>.<span class="property">min</span>.<span class="title function_">apply</span>(<span class="literal">null</span>, arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数组去重</span></span><br><span class="line">[...<span class="keyword">new</span> <span class="title class_">Set</span>(arr)]  </span><br><span class="line"><span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="keyword">new</span> <span class="title class_">Set</span>(arr))   <span class="comment">// Set 有元素唯一的特性</span></span><br></pre></td></tr></table></figure>
+<h1 id="四、Base64"><a href="#四、Base64" class="headerlink" title="四、Base64"></a>四、Base64</h1><h2 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h2><ul>
+<li>__字节__：存储二进制数据的基本单位，可表示的范围是 0～255 (十六进制：0x00～0xFF)，其中 ASCII 值的范围为 0～127 (十六进制：0x00～0x7F)，而超过 ASCII 范围的 128～255 (十六进制：0x80 ～ 0xFF) 之间的值是不可见字符。</li>
+<li>__ASCII__：美国信息交换标准代码) 是基于拉丁字母的一套电脑编码系统，主要用于显示现代英语，其扩展版本可以部分支持其他西欧语言。其中 0～31、127 是控制字符(33 个)，32～126 是可打印字符(95 个)。</li>
+<li>__传输问题__：当不可见字符在网络上传输时一般需要经过多个路由设备，但是不同设备对字符的处理方式有些不同而可能导致字符被处理错误，常见的有中文乱码、图片失败等。</li>
+</ul>
+<h2 id="base64-简介"><a href="#base64-简介" class="headerlink" title="base64 简介"></a>base64 简介</h2><ul>
+<li>__base64__：基于 64 个可打印字符 <code>A-Z、a-z、0-9、+、/</code> 来表示二进制数据的一种方法。常用于处理文本数据的场合，表示、传输、存储一些二进制数据，包括 MIME 电子邮件、XML 复杂数据。</li>
+<li>__编码规则__：一种将二进制序列的数据转换为字符串的算法，只是无法直接看到明文但并非加密。中文通过 utf-8、gbk 等编码方式获取不同结果，图像和文本等转换为二进制序列后才能进行 Base64 编码。</li>
+<li>__base64 编码__：由于 2⁶ &#x3D; 64，所以每 6 个比特为一个单元并对应某个可打印字符。3 个字节有 24 个比特并对应 4 个 base64 单元，即 3 个字节可由 4 个可打印字符来表示并对应 24 个二进制位。</li>
+</ul>
+<h2 id="图片应用"><a href="#图片应用" class="headerlink" title="图片应用"></a>图片应用</h2><blockquote>
+<p>base64Url 字符串作为图片地址、图片上传时一般使用截取 <code>data:image/png;base64</code> 的纯字符串。编码后的数据体积一般会变大，浏览器不会缓存 base64Url 图片而需要每次访问页面时下载一次，所以不适合大量使用和复杂图片。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">/__</span><br><span class="line">  * @title 图片预览</span><br><span class="line">  * @method changeImg        图片选中：获取 file 对象</span><br><span class="line">  * @method fileReader       图片读取：file 转 base64</span><br><span class="line">  * <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;image/*&quot;</span> <span class="attr">capture</span>=<span class="string">&quot;camera&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    @<span class="attr">change</span>=<span class="string">&quot;changeImg&quot;</span> /&gt;</span></span></span><br><span class="line">__/</span><br><span class="line"><span class="keyword">async</span> changeImg (e) &#123;</span><br><span class="line">    <span class="keyword">let</span> file = e.<span class="property">target</span>.<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">if</span> (!file) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">let</span> base64Img = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="title function_">fileReader</span>(file);</span><br><span class="line">&#125;,</span><br><span class="line"><span class="keyword">async</span> clickImg () &#123;</span><br><span class="line">    <span class="keyword">let</span> base64Img = <span class="title function_">getBase64Image</span>(<span class="string">&quot;./pic.png&quot;</span>, <span class="number">0.8</span>);</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 图片文件</span></span><br><span class="line">fileReader (file, maxSize) &#123;</span><br><span class="line">    <span class="keyword">let</span> reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line">    reader.<span class="title function_">readAsDataURL</span>(file);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span></span><br><span class="line">        (reader.<span class="property">onloadend</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(reader.<span class="property">result</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">    )</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// Base64 格式</span></span><br><span class="line">getBase64Img (url, quality = <span class="number">0.5</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> img = <span class="keyword">new</span> <span class="title class_">Image</span>();</span><br><span class="line">    img.<span class="property">src</span> = url</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">        img.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> canvas = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;canvas&quot;</span>);</span><br><span class="line">            canvas.<span class="property">width</span> = img.<span class="property">width</span>;</span><br><span class="line">            canvas.<span class="property">height</span> = img.<span class="property">height</span>;</span><br><span class="line">            <span class="keyword">const</span> ctx = canvas.<span class="title function_">getContext</span>(<span class="string">&quot;2d&quot;</span>);</span><br><span class="line">            ctx.<span class="title function_">drawImage</span>(img, <span class="number">0</span>, <span class="number">0</span>, img.<span class="property">width</span>, img.<span class="property">height</span>);</span><br><span class="line">            dataURL = canvas.<span class="title function_">toDataURL</span>(<span class="string">&#x27;image/png&#x27;</span>, quality);</span><br><span class="line">            <span class="title function_">resolve</span>(dataURL)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment">// 格式转换</span></span><br><span class="line">dataUrlToBlob (dataurl, mimeType = <span class="string">&#x27;text/plain&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> bytes = <span class="variable language_">window</span>.<span class="title function_">atob</span>(dataurl.<span class="title function_">split</span>(<span class="string">&quot;,&quot;</span>)[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">let</span> ab = <span class="keyword">new</span> <span class="title class_">ArrayBuffer</span>(bytes.<span class="property">length</span>);</span><br><span class="line">    <span class="keyword">let</span> ia = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(ab);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bytes.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        ia[i] = bytes.<span class="title function_">charCodeAt</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Blob</span>([ab], &#123; <span class="attr">type</span>: mimeType &#125;);</span><br><span class="line">&#125;,</span><br><span class="line">dataUrlToFile (dataurl, filename = <span class="string">&#x27;file.txt&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> arr = dataurl.<span class="title function_">split</span>(<span class="string">&quot;,&quot;</span>),</span><br><span class="line">    mime = arr[<span class="number">0</span>].<span class="title function_">match</span>(<span class="regexp">/:(.*?);/</span>)[<span class="number">1</span>],</span><br><span class="line">    bstr = <span class="title function_">atob</span>(arr[<span class="number">1</span>]),</span><br><span class="line">    n = bstr.<span class="property">length</span>,</span><br><span class="line">    u8arr = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(n);</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        u8arr[n] = bstr.<span class="title function_">charCodeAt</span>(n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">File</span>([u8arr], filename, &#123; <span class="attr">type</span>: mime &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="编码解码"><a href="#编码解码" class="headerlink" title="编码解码"></a>编码解码</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原生 API：编码、解码、中文编码时需要先进行 URI 组件编码</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">btoa</span>(<span class="string">&#x27;xiaomabuhei&#x27;</span>)     </span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">atob</span>(<span class="string">&#x27;eGlhb21hYnVoZWk=&#x27;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">btoa</span>(<span class="variable language_">window</span>.<span class="built_in">encodeURIComponent</span>(<span class="string">&#x27;小黑马&#x27;</span>))</span><br><span class="line"><span class="variable language_">window</span>.<span class="built_in">decodeURIComponent</span>(<span class="variable language_">window</span>.<span class="title function_">atob</span>(baseStr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 封装 JS</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Base64</span> = &#123;</span><br><span class="line">  <span class="attr">_keyStr</span>: <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">encode</span>: <span class="keyword">function</span>(<span class="params">input</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> output = <span class="string">&quot;&quot;</span>;  </span><br><span class="line">    <span class="keyword">var</span> chr1, chr2, chr3, enc1, enc2, enc3, enc4;  </span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;  </span><br><span class="line">    input = <span class="title class_">Base64</span>.<span class="title function_">_utf8_encode</span>(input);  </span><br><span class="line">    <span class="keyword">while</span> (i &lt; input.<span class="property">length</span>) &#123;  </span><br><span class="line">        chr1 = input.<span class="title function_">charCodeAt</span>(i++);  </span><br><span class="line">        chr2 = input.<span class="title function_">charCodeAt</span>(i++);  </span><br><span class="line">        chr3 = input.<span class="title function_">charCodeAt</span>(i++);  </span><br><span class="line">        enc1 = chr1 &gt;&gt; <span class="number">2</span>;  </span><br><span class="line">        enc2 = ((chr1 &amp; <span class="number">3</span>) &lt;&lt; <span class="number">4</span>) | (chr2 &gt;&gt; <span class="number">4</span>);  </span><br><span class="line">        enc3 = ((chr2 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">2</span>) | (chr3 &gt;&gt; <span class="number">6</span>);  </span><br><span class="line">        enc4 = chr3 &amp; <span class="number">63</span>;  </span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">isNaN</span>(chr2)) &#123;  </span><br><span class="line">            enc3 = enc4 = <span class="number">64</span>;  </span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">isNaN</span>(chr3)) &#123;  </span><br><span class="line">            enc4 = <span class="number">64</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">        output = output +  </span><br><span class="line">        _keyStr.<span class="title function_">charAt</span>(enc1) + _keyStr.<span class="title function_">charAt</span>(enc2) +  </span><br><span class="line">        _keyStr.<span class="title function_">charAt</span>(enc3) + _keyStr.<span class="title function_">charAt</span>(enc4);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> output; </span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="attr">decode</span>: <span class="keyword">function</span>(<span class="params">input</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> output = <span class="string">&quot;&quot;</span>;  </span><br><span class="line">    <span class="keyword">var</span> chr1, chr2, chr3;  </span><br><span class="line">    <span class="keyword">var</span> enc1, enc2, enc3, enc4;  </span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;  </span><br><span class="line">    input = input.<span class="title function_">replace</span>(<span class="regexp">/[^A-Za-z0-9\+\/\=]/g</span>, <span class="string">&quot;&quot;</span>);  </span><br><span class="line">    <span class="keyword">while</span> (i &lt; input.<span class="property">length</span>) &#123;  </span><br><span class="line">        enc1 = _keyStr.<span class="title function_">indexOf</span>(input.<span class="title function_">charAt</span>(i++));  </span><br><span class="line">        enc2 = _keyStr.<span class="title function_">indexOf</span>(input.<span class="title function_">charAt</span>(i++));  </span><br><span class="line">        enc3 = _keyStr.<span class="title function_">indexOf</span>(input.<span class="title function_">charAt</span>(i++));  </span><br><span class="line">        enc4 = _keyStr.<span class="title function_">indexOf</span>(input.<span class="title function_">charAt</span>(i++));  </span><br><span class="line">        chr1 = (enc1 &lt;&lt; <span class="number">2</span>) | (enc2 &gt;&gt; <span class="number">4</span>);  </span><br><span class="line">        chr2 = ((enc2 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">4</span>) | (enc3 &gt;&gt; <span class="number">2</span>);  </span><br><span class="line">        chr3 = ((enc3 &amp; <span class="number">3</span>) &lt;&lt; <span class="number">6</span>) | enc4;  </span><br><span class="line">        output = output + <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(chr1);  </span><br><span class="line">        <span class="keyword">if</span> (enc3 != <span class="number">64</span>) &#123;  </span><br><span class="line">            output = output + <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(chr2);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">if</span> (enc4 != <span class="number">64</span>) &#123;  </span><br><span class="line">            output = output + <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(chr3);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    output = <span class="title class_">Base64</span>.<span class="title function_">_utf8_decode</span>(output);  </span><br><span class="line">    <span class="keyword">return</span> output;  </span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="attr">_utf8_encode</span>: <span class="keyword">function</span>(<span class="params">string</span>) &#123;</span><br><span class="line">    string = string.<span class="title function_">replace</span>(<span class="regexp">/\r\n/g</span>, <span class="string">&quot;\n&quot;</span>);  </span><br><span class="line">    <span class="keyword">var</span> utftext = <span class="string">&quot;&quot;</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> n = <span class="number">0</span>; n &lt; string.<span class="property">length</span>; n++) &#123;  </span><br><span class="line">        <span class="keyword">var</span> c = string.<span class="title function_">charCodeAt</span>(n);  </span><br><span class="line">        <span class="keyword">if</span> (c &lt; <span class="number">128</span>) &#123;  </span><br><span class="line">            utftext += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(c);  </span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>((c &gt; <span class="number">127</span>) &amp;&amp; (c &lt; <span class="number">2048</span>)) &#123;  </span><br><span class="line">            utftext += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>((c &gt;&gt; <span class="number">6</span>) | <span class="number">192</span>);  </span><br><span class="line">            utftext += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>((c &amp; <span class="number">63</span>) | <span class="number">128</span>);  </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            utftext += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>((c &gt;&gt; <span class="number">12</span>) | <span class="number">224</span>);  </span><br><span class="line">            utftext += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(((c &gt;&gt; <span class="number">6</span>) &amp; <span class="number">63</span>) | <span class="number">128</span>);  </span><br><span class="line">            utftext += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>((c &amp; <span class="number">63</span>) | <span class="number">128</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> utftext; </span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="attr">_utf8_decode</span>: <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> string = <span class="string">&quot;&quot;</span>;  </span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">var</span> c = c1 = c2 = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">while</span> ( i &lt; utftext.<span class="property">length</span> ) &#123;  </span><br><span class="line">        c = utftext.<span class="title function_">charCodeAt</span>(i);  </span><br><span class="line">        <span class="keyword">if</span> (c &lt; <span class="number">128</span>) &#123;  </span><br><span class="line">            string += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(c);  </span><br><span class="line">            i++;  </span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>((c &gt; <span class="number">191</span>) &amp;&amp; (c &lt; <span class="number">224</span>)) &#123;  </span><br><span class="line">            c2 = utftext.<span class="title function_">charCodeAt</span>(i+<span class="number">1</span>);  </span><br><span class="line">            string += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(((c &amp; <span class="number">31</span>) &lt;&lt; <span class="number">6</span>) | (c2 &amp; <span class="number">63</span>));  </span><br><span class="line">            i += <span class="number">2</span>;  </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            c2 = utftext.<span class="title function_">charCodeAt</span>(i+<span class="number">1</span>);  </span><br><span class="line">            c3 = utftext.<span class="title function_">charCodeAt</span>(i+<span class="number">2</span>);  </span><br><span class="line">            string += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(((c &amp; <span class="number">15</span>) &lt;&lt; <span class="number">12</span>) | ((c2 &amp; <span class="number">63</span>) &lt;&lt; <span class="number">6</span>) | (c3 &amp; <span class="number">63</span>));  </span><br><span class="line">            i += <span class="number">3</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> string;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="五、二进制对象"><a href="#五、二进制对象" class="headerlink" title="五、二进制对象"></a>五、二进制对象</h1><div style="text-indent: 2em">JS 最初无法处理文件、网络流等二进制编码格式的数据，只能先使用 charCodeAt() 逐字节读取或转换为 Base64 格式，但是处理速度慢而且容易出错。JS 后来通过引入 API 可以处理二进制数据但没有标准，所以 Web、NodeJS 各自处理而导致二进制处理方式有些不同。</div> 
+
+<h2 id="Web-Node-通用"><a href="#Web-Node-通用" class="headerlink" title="Web Node 通用"></a>Web Node 通用</h2><ul>
+<li>__ArrayBuffer__：表示内存中存储了一段二进制数据的缓冲区对象，本质是一串数字组成的乱码而且没有格式。它不能直接被操作，只能通过 TypedArray、DataView 进行读写。</li>
+<li>__TypedArray__：数据类型相同而且没有空位的类数组对象，本质是二进制数据的抽象数据结构，用于以指定格式读写二进制数据但本身并不存储。主要包括三类视图：有符号整数 (Int8Array、Int16Array、Int32Array)、无符号整数 (Uint8Array、Uint16Array、Uint32Array)、浮点数 (Float32Array、Float64Array)。<br>  __DataView__：TypedArray 的强化版视图，成员可以是不同的数据类型，而且读写时可以自行设定大小端字节序。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、ArrayBuffer：创建、裁剪</span></span><br><span class="line"><span class="keyword">let</span> buffer = <span class="keyword">new</span> <span class="title class_">ArrayBuffer</span>(<span class="number">8</span>)    </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(buffer.<span class="property">byteLength</span>)     <span class="comment">// 8 字节  </span></span><br><span class="line"><span class="title class_">ArrayBuffer</span>.<span class="title function_">isView</span>(buffer)         <span class="comment">// 是否为视图实例</span></span><br><span class="line"><span class="keyword">let</span> buffer1 = buffer.<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">1</span>)   <span class="comment">// 裁剪缓冲区</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、TypedArray：直接创建、buffer 转换、操作元素</span></span><br><span class="line"><span class="keyword">let</span> f = <span class="keyword">new</span> <span class="title class_">Float64Array</span>(<span class="number">8</span>)</span><br><span class="line"><span class="keyword">let</span> u = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(buffer, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i &lt; f.<span class="property">byteLength</span>; i++)&#123; &#125;</span><br><span class="line"><span class="comment">// 与普通数组互转</span></span><br><span class="line"><span class="keyword">let</span> _f = <span class="title class_">Array</span>.<span class="title function_">from</span>(f)</span><br><span class="line"><span class="keyword">let</span> _u = <span class="title class_">Array</span>.<span class="title function_">apply</span>([], u)</span><br><span class="line"><span class="keyword">let</span> u = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="comment">// 与字符串互转</span></span><br><span class="line"><span class="keyword">let</span> str = <span class="title class_">String</span>.<span class="property">fromCharCode</span>.<span class="title function_">apply</span>(<span class="literal">null</span>, buffer)</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">strToBuf</span> (str) &#123;</span><br><span class="line">    <span class="comment">// 每个字符占用 2 个字节</span></span><br><span class="line">    <span class="keyword">let</span> buf = <span class="keyword">new</span> <span class="title class_">ArrayBuffer</span>(str.<span class="property">length</span>*<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">let</span> bufView = <span class="keyword">new</span> <span class="title class_">Uint16Array</span>(buf)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i &lt; str.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        bufView[i] = str.<span class="title function_">charCodeAt</span>(i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bufView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、DataView：独有方法写入参数为 开始位置、写入数据、大/小端读取</span></span><br><span class="line"><span class="keyword">let</span> dataView = <span class="keyword">new</span> <span class="title class_">DataView</span>(buffer)</span><br><span class="line">dataView.<span class="title function_">getInt8</span>(<span class="number">0</span>)</span><br><span class="line">dataView.<span class="title function_">setInt8</span>(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">dataView.<span class="title function_">setInt32</span>(<span class="number">0</span>, <span class="number">25</span>, <span class="literal">false</span>) </span><br></pre></td></tr></table></figure>
+
+<h2 id="web-环境特有"><a href="#web-环境特有" class="headerlink" title="web 环境特有"></a>web 环境特有</h2><ul>
+<li><p>__Blob 对象__：表示一个不可变的文件对象，它提供了一系列操作文件的接口。</p>
+</li>
+<li><p><strong>Blob 功能</strong></p>
+<ul>
+<li>文件下载：通过 URL.createObjectURL(blob) 生成 blobUrl 赋值给 a.download。</li>
+<li>图片展示：通过 URL.createObjectURL(blob) 生成 blobUrl 赋值给 img.src。</li>
+<li>分片上传：通过 blob.slice 分割二进制数据上传。</li>
+<li>文件读取：通过 FileReader 将 blob&#x2F;flie 转化为文本。</li>
+</ul>
+</li>
+<li><p>__Blob 派生对象__：继承于底层对象 blob 并进行了扩展，但其内容一样无法修改。</p>
+<ul>
+<li>__File 对象__：保存文件的相关信息并允许 Js 访问。主要包括：input 元素选择文件后返回的 FileList 对象、普通元素被拖拽时返回的 DataTransfer 对象、HTMLCanvasElement 执行 mozGetAsFile() 方法后的返回结果。</li>
+<li>__FileReader 对象__：提供了异步读取文件或二进制数据并保存到 result 属性的接口：readAsText、readAsDataURL、readAsBinaryString、readAsArrayBuffer。</li>
+<li>__URL 对象__：通过内存文件创建出一个临时指向 File&#x2F;Blob 对象的 url。注意：网页刷新或关闭会导致 url 失效、同样的 blob 在不同的事件调用中会得到不同 url。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">/__</span><br><span class="line"> * @title <span class="number">1</span>、<span class="title class_">Blob</span> 对象</span><br><span class="line"> * @prame 创建：<span class="keyword">new</span> <span class="title class_">Blob</span>(二进制对象或字符串的数组, 数据类型)</span><br><span class="line"> * @prame 裁剪：blob.<span class="title function_">slice</span>(start, end, contentType)</span><br><span class="line"> * @prame canvas.<span class="title function_">toBlob</span>(callback, type, options)</span><br><span class="line"> __/</span><br><span class="line"><span class="keyword">let</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&quot;Hello World&quot;</span>], &#123;<span class="attr">type</span>:<span class="string">&quot;text/plain&quot;</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> buffer = <span class="keyword">new</span> <span class="title class_">ArrayBuffer</span>(<span class="number">8</span>)</span><br><span class="line"><span class="keyword">let</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([buffer], &#123;<span class="attr">type</span>:<span class="string">&quot;text/plain&quot;</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> uArr = <span class="keyword">new</span> <span class="title class_">Uint16Array</span>([<span class="number">97</span>, <span class="number">32</span>, <span class="number">72</span>, <span class="number">100</span>]);</span><br><span class="line"><span class="keyword">let</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([uArr]);</span><br><span class="line"></span><br><span class="line">blob.<span class="title function_">slice</span>(<span class="number">1</span>, <span class="number">5</span>)   <span class="comment">// 裁剪并返回新对象</span></span><br><span class="line">blob.<span class="title function_">close</span>()       <span class="comment">// 释放对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;canvas&quot;</span>);</span><br><span class="line">canvas.<span class="title function_">toBlob</span>(<span class="keyword">function</span>(<span class="params">blob</span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(blob)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">blobToFile</span> (blob, fileName) &#123;</span><br><span class="line">    blob.<span class="property">lastModifiedDate</span> = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">    blob.<span class="property">name</span> = fileName;</span><br><span class="line">    <span class="keyword">return</span> blob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、File 对象：选择文件后获取文件信息、拖动结束时获取拖动数据</span></span><br><span class="line"><span class="keyword">var</span> fileInput = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#fileInput&quot;</span>);</span><br><span class="line">fileInput.<span class="title function_">addEventListener</span>(<span class="string">&quot;change&quot;</span>, <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> fileList = fileInput.<span class="property">files</span></span><br><span class="line">    <span class="keyword">var</span> file = fileList[<span class="number">0</span>];</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(file.<span class="property">name</span>, file.<span class="property">size</span>)</span><br><span class="line">&#125;, <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> box = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;#box&quot;</span>);</span><br><span class="line">box.<span class="property">ondrop</span> = <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="comment">// 拖动的默认处理方式是在新窗口打开</span></span><br><span class="line">    event.<span class="title function_">preventDefault</span>()</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">dataTransfer</span>.<span class="property">files</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/__</span><br><span class="line"> * @title <span class="number">3</span>、<span class="title class_">FileReader</span> 读取数据</span><br><span class="line"> * @prame <span class="title function_">readAsText</span>(file, encoding)：返回纯文本，编码格式默认 <span class="variable constant_">UTF</span>-<span class="number">8</span></span><br><span class="line"> * @prame <span class="title function_">readAsDataURL</span>(file)：返回 <span class="title class_">Base64</span> 编码的 dataURL 字符串</span><br><span class="line"> * @prame <span class="title function_">readAsBinaryString</span>(file)：返回原始二进制字符串（每个字符表示一字节）</span><br><span class="line"> * @prame <span class="title function_">readAsArrayBuffer</span>(file)：返回包含文件内容的 <span class="title class_">ArrayBuffer</span> 对象</span><br><span class="line"> __/ </span><br><span class="line"><span class="keyword">var</span> reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line">reader.<span class="title function_">readAsArrayBuffer</span>(file);</span><br><span class="line"></span><br><span class="line">reder.<span class="property">onprogress</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;      <span class="comment">// 更新</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(reader.<span class="property">result</span>)  </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">target</span>.<span class="property">result</span>)</span><br><span class="line">&#125;</span><br><span class="line">reader.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;         <span class="comment">// 成功</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(reader.<span class="property">result</span>)  </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">target</span>.<span class="property">result</span>)</span><br><span class="line">&#125;</span><br><span class="line">reader.<span class="property">onloadstart</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123; &#125;  <span class="comment">// 开始</span></span><br><span class="line">reader.<span class="property">onloadend</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123; &#125;    <span class="comment">// 完成</span></span><br><span class="line">reader.<span class="property">onabort</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123; &#125;      <span class="comment">// 中止</span></span><br><span class="line">reader.<span class="property">onerror</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123; &#125;      <span class="comment">// 出错</span></span><br><span class="line">reader.<span class="title function_">abort</span>() </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、URL 对象：在网页插入图片</span></span><br><span class="line"><span class="keyword">var</span> img = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;img&quot;</span>);</span><br><span class="line">img.<span class="property">src</span> = <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">createObjectURL</span>(file);   <span class="comment">// 生成</span></span><br><span class="line">img.<span class="property">width</span> = <span class="number">60</span>;</span><br><span class="line">img.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">revokeObjectURL</span>(<span class="variable language_">this</span>.<span class="property">src</span>);     <span class="comment">// 释放</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(img);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Node-环境特有"><a href="#Node-环境特有" class="headerlink" title="Node 环境特有"></a>Node 环境特有</h2><blockquote>
+<p>Buffer 表示 V8 堆内存之外的一块原始内存，并不会占用 NodeJS 进程内存，常用来存储需要占用大量内存的数据。它继承于 Uint8Array 并实现了更多的接口，对象中的每个元素储存着 2 位 16 进制的数据，代表内存的一个字节。注意一个 Buffer 对象的大小在创建时就会固定下来，即创建之后不可改变。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">/__</span><br><span class="line"> * @title 创建</span><br><span class="line"> * @prame <span class="keyword">new</span> <span class="title class_">Buffer</span>：已弃用</span><br><span class="line"> * @prame <span class="title class_">Buffer</span>.<span class="property">from</span>：参数可为 string、buffer、array、object</span><br><span class="line"> * @prame <span class="title class_">Buffer</span>.<span class="property">alloc</span>：指定大小并已经初始化数据</span><br><span class="line"> * @prame <span class="title class_">Buffer</span>.<span class="property">allocUnsafe</span>：指定大小但并不初始化数据</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">const</span> buf = <span class="title class_">Buffer</span>.<span class="title function_">from</span>([<span class="number">0x62</span>, <span class="number">0x75</span>, <span class="number">0x66</span>]);</span><br><span class="line"><span class="keyword">const</span> buf = <span class="title class_">Buffer</span>.<span class="title function_">alloc</span>(<span class="number">5</span>, <span class="string">&#x27;aG8Q=&#x27;</span>, <span class="string">&#x27;base64&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> buf = <span class="title class_">Buffer</span>.<span class="title function_">allocUnsafe</span>(<span class="number">10</span>);  <span class="comment">// 一个参数</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(buf.<span class="property">length</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断</span></span><br><span class="line"><span class="title class_">Buffer</span>.<span class="title function_">isBuffer</span>(buf);           <span class="comment">// 是否 buffer 对象     </span></span><br><span class="line"><span class="title class_">Buffer</span>.<span class="title function_">isEncoding</span>(<span class="string">&#x27;base64&#x27;</span>);    <span class="comment">// 是否支持指定编码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 操作</span></span><br><span class="line">buf.<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">buf.<span class="title function_">compare</span>(_buf)</span><br><span class="line">buf.<span class="title function_">copy</span>(buf, <span class="number">2</span>)</span><br><span class="line">buf.<span class="title function_">indexOf</span>(<span class="string">&#x27;a&#x27;</span>, <span class="number">2</span>)</span><br><span class="line">buf.<span class="title function_">fill</span>(<span class="string">&#x27;a&#x27;</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line"><span class="title class_">Buffer</span>.<span class="title function_">concat</span>([buf, buf])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读写</span></span><br><span class="line"><span class="keyword">var</span> value = buf.<span class="title function_">readInt32LE</span>(<span class="number">0</span>)</span><br><span class="line">buf.<span class="title function_">writeFloatLE</span>(<span class="number">3.</span> <span class="number">16</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换</span></span><br><span class="line">buf = <span class="title class_">Buffer</span>.<span class="title function_">from</span>(<span class="string">&#x27;test&#x27;</span>)</span><br><span class="line">buf.<span class="title function_">toString</span>(<span class="string">&#x27;utf8&#x27;</span>)             <span class="comment">// test</span></span><br><span class="line">buf.<span class="title function_">toString</span>(<span class="string">&#x27;utf8&#x27;</span>, <span class="number">0</span>, <span class="number">2</span>)       <span class="comment">// te</span></span><br><span class="line">buf.<span class="title function_">toJSON</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// stream 转 buffer</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">streamToBuffer</span>(<span class="params">stream</span>) &#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> buffers = [];</span><br><span class="line">        stream.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, reject);</span><br><span class="line">        stream.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> buffers.<span class="title function_">push</span>(data))</span><br><span class="line">        stream.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="title class_">Buffer</span>.<span class="title function_">concat</span>(buffers))</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// buffer 转 stream</span></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">Duplex</span> = <span class="built_in">require</span>(<span class="string">&#x27;stream&#x27;</span>).<span class="property">Duplex</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">bufferToStream</span>(<span class="params">buffer</span>) &#123;  </span><br><span class="line">    <span class="keyword">let</span> stream = <span class="keyword">new</span> <span class="title class_">Duplex</span>();</span><br><span class="line">    stream.<span class="title function_">push</span>(buffer);</span><br><span class="line">    stream.<span class="title function_">push</span>(<span class="literal">null</span>);</span><br><span class="line">    <span class="keyword">return</span> stream;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;margin-top:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chuangges
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuangges.gitee.io/2019/05/18/4-3-js%E6%95%B0%E6%8D%AE/" title="JS 数据类型">https://chuangges.gitee.io/2019/05/18/4-3-js数据/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh_CN" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/15/4-1-js%E5%9F%BA%E7%A1%80/" rel="prev" title="JS 主要内容">
+      <i class="fa fa-chevron-left"></i> JS 主要内容
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/20/4-4-js%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="JS 数据结构">
+      JS 数据结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.</span> <span class="nav-text">一、字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">扩展方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">二、对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-1"><span class="nav-number">2.2.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D"><span class="nav-number">2.3.</span> <span class="nav-text">拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-1"><span class="nav-number">2.4.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C"><span class="nav-number">2.5.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-number">2.6.</span> <span class="nav-text">原型链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">2.7.</span> <span class="nav-text">序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.8.</span> <span class="nav-text">类数组对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">3.</span> <span class="nav-text">三、数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-2"><span class="nav-number">3.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D-1"><span class="nav-number">3.2.</span> <span class="nav-text">拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%95%B0%E7%BB%84"><span class="nav-number">3.3.</span> <span class="nav-text">特殊数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">操作方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95-1"><span class="nav-number">3.5.</span> <span class="nav-text">扩展方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Base64"><span class="nav-number">4.</span> <span class="nav-text">四、Base64</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%9B%A0"><span class="nav-number">4.1.</span> <span class="nav-text">使用原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base64-%E7%AE%80%E4%BB%8B"><span class="nav-number">4.2.</span> <span class="nav-text">base64 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%BA%94%E7%94%A8"><span class="nav-number">4.3.</span> <span class="nav-text">图片应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81"><span class="nav-number">4.4.</span> <span class="nav-text">编码解码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">五、二进制对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Node-%E9%80%9A%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text">Web Node 通用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-%E7%8E%AF%E5%A2%83%E7%89%B9%E6%9C%89"><span class="nav-number">5.2.</span> <span class="nav-text">web 环境特有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-%E7%8E%AF%E5%A2%83%E7%89%B9%E6%9C%89"><span class="nav-number">5.3.</span> <span class="nav-text">Node 环境特有</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chuangges" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/chuang.png">
+  <p class="site-author-name" itemprop="name">chuangges</p>
+  <div class="site-description" itemprop="description">chuangge's blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chuangges" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chuangges" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.docschina.org/" title="https:&#x2F;&#x2F;www.docschina.org&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">印记中文</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://tool.lu/" title="http:&#x2F;&#x2F;tool.lu&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">在线工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tinypng.com/" title="https:&#x2F;&#x2F;tinypng.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片压缩</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bigjpg.com/" title="https:&#x2F;&#x2F;bigjpg.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片放大</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tool.chinaz.com/" title="https:&#x2F;&#x2F;tool.chinaz.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">站长工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://learn-anything.xyz/" title="https:&#x2F;&#x2F;learn-anything.xyz&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Learn-Anything</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://stackoverflow.com/" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Stack-Overflow</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chuangge</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">638k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:40</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":180,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</html>

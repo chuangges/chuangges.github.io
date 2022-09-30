@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="编程范式：命令式、声明式、面向对象常用编程：函数式、模块化、异步编程设计模式；单例、策略、观察者、装饰器、代理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 编程范式">
+<meta property="og:url" content="https://chuangges.gitee.io/2019/06/01/4-6-js%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="闯哥要去流浪了">
+<meta property="og:description" content="编程范式：命令式、声明式、面向对象常用编程：函数式、模块化、异步编程设计模式；单例、策略、观察者、装饰器、代理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-01T13:38:29.000Z">
+<meta property="article:modified_time" content="2022-09-30T05:44:40.375Z">
+<meta property="article:author" content="chuangges">
+<meta property="article:tag" content="Javascript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chuangges.gitee.io/2019/06/01/4-6-js%E7%BC%96%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JS 编程范式 | 闯哥要去流浪了</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="闯哥要去流浪了" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">闯哥要去流浪了</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我知道你一定会来，所以我一直在等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuangges.gitee.io/2019/06/01/4-6-js%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chuang.png">
+      <meta itemprop="name" content="chuangges">
+      <meta itemprop="description" content="chuangge's blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="闯哥要去流浪了">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS 编程范式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-01 21:38:29" itemprop="dateCreated datePublished" datetime="2019-06-01T21:38:29+08:00">2019-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-30 13:44:40" itemprop="dateModified" datetime="2022-09-30T13:44:40+08:00">2022-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+            <div class="post-description">编程范式：命令式、声明式、面向对象<br>常用编程：函数式、模块化、异步编程<br>设计模式；单例、策略、观察者、装饰器、代理</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、编程范式"><a href="#一、编程范式" class="headerlink" title="一、编程范式"></a>一、编程范式</h1><blockquote>
+<p>即编程语言典型的编程风格&#x2F;方式，每种编程语言都适用于多种范式，它是程序员看待程序的观点，比如面向对象编程中的程序是一系列相互作用的对象、函数式编程中则是一个无状态的函数组合序列。</p>
+</blockquote>
+<ul>
+<li>__命令式编程__：注重执行过程的面向过程编程（解答题），根据步骤依次执行代码来解决问题。优点是性能高、不需要实例化等操作，缺点是依赖和影响外部变量、代码可读性低。</li>
+<li>__声明式编程__：注重执行结果的正则表达式、函数式编程（选择题），通过固定的函数或规则处理声明的变量来得到结果。优点是不依赖和影响外部变量、代码方便维护，缺点是占用资源较多、性能较差。</li>
+<li>__面向对象编程__：根据功能将问题分解并封装为包含属性和方法的各个对象。优点是复用性和可扩展性高、代码方便维护，缺点是代码可能冗余、性能较低。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令式</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">var</span> doubled = []</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.<span class="property">length</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> newNumber = numbers[i] * <span class="number">2</span></span><br><span class="line">  doubled.<span class="title function_">push</span>(newNumber)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 声明式</span></span><br><span class="line"><span class="comment">*   map 接受的是一个纯函数；它不具有任何副作用 (不会改变外部状态)</span></span><br><span class="line"><span class="comment">*   map 函数所做的事情是将直接遍历整个数组的过程归纳抽离出来，让我们专注于描述想要的是什么</span></span><br><span class="line"><span class="comment">__/</span></span><br><span class="line"><span class="comment">var doubled = numbers.map (function (n) &#123;</span></span><br><span class="line"><span class="comment">  return n * 2</span></span><br><span class="line"><span class="comment">&#125;)</span></span><br><span class="line"><span class="comment">console.log(doubled)   // [2, 4, 6, 8, 10]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">// 面向对象</span></span><br><span class="line"><span class="comment">(function() &#123;</span></span><br><span class="line"><span class="comment">  &quot;use strict&quot;;</span></span><br><span class="line"><span class="comment">  var Task = function(nums) &#123;</span></span><br><span class="line"><span class="comment">    this.nums = nums;</span></span><br><span class="line"><span class="comment">  &#125;;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  Task.prototype.square = function() &#123;</span></span><br><span class="line"><span class="comment">    var squares = [];</span></span><br><span class="line"><span class="comment">    for (var i=0; i&lt;this.nums.length; i++) &#123;</span></span><br><span class="line"><span class="comment">        squares.push(this.nums[i]*this.nums[i]);</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    return squares;</span></span><br><span class="line"><span class="comment">  &#125;;</span></span><br><span class="line"><span class="comment">  Task.prototype.sum = function(arr) &#123;</span></span><br><span class="line"><span class="comment">    var res = 0;</span></span><br><span class="line"><span class="comment">    for (var i=0; i&lt;arr.length; i++) &#123;</span></span><br><span class="line"><span class="comment">        res += arr[i];</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    return res;</span></span><br><span class="line"><span class="comment">  &#125;;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  var t = new Task([2,4,6]);</span></span><br><span class="line"><span class="comment">  console.log(t.sum(t.square()));  // 56</span></span><br><span class="line"><span class="comment">&#125;())</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二、常用编程模式"><a href="#二、常用编程模式" class="headerlink" title="二、常用编程模式"></a>二、常用编程模式</h1><blockquote>
+<p>模块化编程和异步编程内容较多，下面详述。</p>
+</blockquote>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><blockquote>
+<p>注重结果而不在乎过程，过程交给别人处理，提倡函数封装性思想。实现方式是将实现逻辑封装为 API 并相互调用。优点是避免状态共享、可变数据及副作用的产生。</p>
+</blockquote>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>__函数__：指数学中的函数而不是指命令式编程中的函数。自变量的映射，一个函数的值仅决定于函数参数的值而不依赖其他状态。</li>
+<li>__纯函数__：相同输入永远会得到相同输出的函数。没有任何副作用，不依赖、不改变外部状态。比如 slice 不会改变原数组而是纯函数，splice 会改变原数组而不符合条件。</li>
+<li>__变量和表达式__：变量指值的名称而非命令式编程中的变量 (存储状态的内存单元)，变量值不可变。表达式指一个有返回值的运算过程，函数式编程要求只使用表达式而不使用语句。语句则是执行操作但没有返回值，比如命令式编程的条件语句、循环语句等控制语句。</li>
+<li>__状态__：程序是拥有状态的。程序执行到断点时就停留在了某个状态，它包括了当前定义的全部变量和一些当前系统的状态，比如打开的文件、网络的连接、申请的内存等。具体保存的信息和语言有关系。程序通过状态不断推进直至目标。函数式编程强调无状态并不是不保存状态，而是强调将状态锁定在函数的内部，不依赖于外部的任何状态。准确点说，它是通过函数创建新的参数或返回值来将保存程序的状态全部完全保存到栈上。</li>
+<li>__函数柯里化__：将一个低阶函数转换为高阶函数的过程。</li>
+<li>__函数组合__：不使用所要处理的值，只合成运算过程。为了解决嵌套过深的函数如洋葱代码 h(g(f(x)))，我们需要通过函数组合一起来用柯里化来优化，让多个函数像拼积木一样。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 柯里化之前</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x, y</span>) &#123; <span class="keyword">return</span> x + y &#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 柯里化之后</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addX</span>(<span class="params">y</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">x</span>) &#123; <span class="keyword">return</span> x + y &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">addX</span>(<span class="number">2</span>)(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数组合</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">compose</span> = (<span class="params">f, g</span>) =&gt; (<span class="function"><span class="params">x</span> =&gt;</span> <span class="title function_">f</span>(<span class="title function_">g</span>(x)))</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">first</span> = arr =&gt; arr[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">var</span> reverse = arr = arr.<span class="title function_">reverse</span>()</span><br><span class="line"><span class="keyword">var</span> last = <span class="title function_">compose</span>(first, reverse)</span><br><span class="line"><span class="title function_">last</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])      <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>__高阶函数__：参数为函数或返回值为函数的函数。它提供了一种函数级别上的依赖注入（或反转控制）机制，可以将复用的粒度降低到函数级别。</li>
+<li>__闭包__：在形式上就是一个函数内部定义另一个函数，函数的堆栈在在函数返回后并不释放，可以理解为这些函数堆栈并不在栈上分配而是在堆上分配。</li>
+<li>__访问权限控制__：JS 中的作用域</li>
+<li>__延长变量生命周期__：面向对象语言里，函数内的变量是在栈上分配并在调用完成后销毁，变量的生命周期结束。而对象是在堆分配的，会常驻内存，除非被手动或自动回收掉。</li>
+<li>__函子 Functor__：遵守一些特定规则的容器类型，任何具有 map 方法的数据结构都可看作它的实现。它是一个对于函数调用的抽象，我们赋予容器自己去调用函数的能力。把东西装进一个容器，只留出一个接口 map 给容器外的函数，map 一个函数时，我们让容器自己来运行这个函数，这样容器就可以自由地选择何时何地如何操作这个函数。</li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><blockquote>
+<p>由于命令式编程语言也可以通过类似函数指针的方式来实现高阶函数，函数式的最主要的好处主要是不变性带来的。</p>
+</blockquote>
+<ul>
+<li>__引用透明__：指函数的运行不依赖于外部变量或状态。没有可变的状态而只依赖于输入的参数，只要参数相同则引用函数所得到的返回值都是相同的。其它语言的函数返回值一般与系统状态有关。这样很不利于观察和理解程序的行为。</li>
+<li>__没有副作用__：副作用指函数内部与外部互动而产生运算以外的其他结果。</li>
+<li>__无锁并发__：没有副作用使得函数式编程各个独立的部分的执行顺序可以随意打乱。（多个线程之间）不共享状态，不会造成资源争用，则不需要用锁来保护可变状态，也就不会出现死锁，这样可以更好地进行无锁的并发操作。</li>
+<li>__惰性求值__：在将表达式赋值给变量（或称作绑定）时并不计算表达式的值，而在变量第一次被使用时才进行计算。这样就可以通过避免不必要的求值提升性能。</li>
+</ul>
+<h2 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h2><blockquote>
+<p>将具体问题分解并抽象为一个个具体的对象，并且将对象及其公共的属性和方法封装成一个类，整个程序由对象之间的分工和合作完成。主要特点有封装 (只能通过对象来访问方法)、继承 (从已有对象上继承出新的对象)、多态 (多对象的不同形态)，极大提高了大型程序的重用性和可维护性。核心在于类的实现：js 基于 function 来模拟类，通过 prototype 属性来实现类方法的共享，ES6 class 是用来定义类的一个语法糖，通过 extends 来继承父类。类的定义如下：</p>
+</blockquote>
+<ul>
+<li>__工厂模式__：解决了重复实例化多个对象的问题，但是不能识别各自的实例化对象。</li>
+<li>__构造函数模式__：把函数当作一个类，实例化时它会隐式创建一个空对象并最后返回。建议首字母大写以区分普通函数，实例化的对象可以通过 instanceof 判断它的实例。</li>
+<li>__原型模式__：好处是可以让 <code>所有对象实例</code> 共享 <code>原型对象</code> 所包含的属性和方法。</li>
+<li>__混合模式__：可变属性写入构造函数，固定属性和方法写入原型对象，这样可以节省内存。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 工厂模式</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">person</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;     <span class="comment">// 原料</span></span><br><span class="line">  obj.<span class="property">name</span> = name;  <span class="comment">// 加工</span></span><br><span class="line">  obj.<span class="property">age</span> = age;    </span><br><span class="line">  obj.<span class="property">say</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>)    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj     </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="title function_">person</span>(<span class="string">&quot;tom&quot;</span>, <span class="number">18</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造函数模式</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>)&#123;     <span class="comment">// 类：模具</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;  </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;    </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">say</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123; </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>)    </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;tom&quot;</span>, <span class="number">20</span>);  <span class="comment">// 实例化对象：产品</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p2 <span class="keyword">instanceof</span> <span class="title class_">Person</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 原型模式</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>)&#123;  &#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">name</span> = <span class="string">&quot;tom&quot;</span>;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">age</span> = <span class="number">24</span>;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">say</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>) </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p3 = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 混合模式</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;   </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">say</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p4 = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="面向切面编程"><a href="#面向切面编程" class="headerlink" title="面向切面编程"></a>面向切面编程</h2><blockquote>
+<p>无侵入地将一个函数插入到另一个函数的前面或后面。</p>
+</blockquote>
+<div style="text-indent: 2em">主要功能是将日志统计、异常处理等一些跟核心业务逻辑模块无关的功能抽离出来并封装，然后动态插入到业务逻辑模块的指定位置。这样不仅简化了业务逻辑模块，而且方便统一管理功能模块。AOP 其实只是 OOP 的补充，OOP 从横向上区分出一个个的类，AOP 则从纵向上向对象中加入特定的代码。常用场景如下：`防止 window.onload 被二次覆盖、给 Ajax 请求动态添加参数、统计函数的执行时间、分离表单请求和校验、职责链模式、组合替代继承`。</div>
+
+
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// before 切面：让一个函数在另一个函数之前执行</span></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">before</span> = <span class="keyword">function</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> _self = <span class="variable language_">this</span>;     <span class="comment">// 保存原函数引用</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>)   <span class="comment">// 执行新函数，修正 this</span></span><br><span class="line">    <span class="keyword">return</span> _self.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);  <span class="comment">// 执行原函数</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// after 切面：让一个函数在另一个函数之后执行</span></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">after</span> = <span class="keyword">function</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> _self = <span class="variable language_">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> ret = _self.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);</span><br><span class="line">    fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;tangdy&#x27;</span>,</span><br><span class="line">  <span class="attr">getName</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.<span class="property">getName</span> = obj.<span class="property">getName</span>.<span class="title function_">before</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;before&quot;</span>)</span><br><span class="line">&#125;).<span class="title function_">after</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;after&quot;</span>)</span><br><span class="line">&#125;);</span><br><span class="line">obj.<span class="title function_">getName</span>();</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="事件驱动编程"><a href="#事件驱动编程" class="headerlink" title="事件驱动编程"></a>事件驱动编程</h2><blockquote>
+<p>命令式编程的代码本身给出了程序执行的顺序，但事件驱动程序中的许多代码可能在完全不可预料的时刻被执行 (由用户与正在执行的程序的互动激发导致)。常用于用户与程序的交互，常用于 GUI (图形用户界面) 编程应用通过图形用户接口（鼠标、键盘、触摸板）进行交互式的互动，也可以用于异常的处理和响应用户自定义的事件等。实现事件驱动需要考虑事件定义、事件触发、事件转化、事件合并、事件排队、事件分派、事件处理、事件连带等实际问题，属于事件驱动的编程语言有：VB、C#、Java、Node.js 等。</p>
+</blockquote>
+<ul>
+<li>__事件__：通知某个特定的事情已经发生（事件发生具有随机性）。</li>
+<li>__事件与轮询__：事件是静静地等待事情的发生，轮询则是一种无休止地观察和判断。</li>
+<li>__事件处理器__：对事件做出响应时执行的代码，使得程序能够对用户行为做出反映。</li>
+</ul>
+<h1 id="三、模块化编程"><a href="#三、模块化编程" class="headerlink" title="三、模块化编程"></a>三、模块化编程</h1><div style="text-indent: 2em">早期引用 JS 文件时直接通过 script，但是随着项目的复杂度越来越大，这种方式带来了逻辑混乱、可维护性差等问题。所以将代码合理拆分到不同的文件里，每个实现特定功能的文件就是一个模块，文件路径就是模块名，这种组织代码的方式就是模块化。</div> 
+
+<ul>
+<li><strong>编程优势</strong><ul>
+<li>开发效率高，有利于多人协同开发。</li>
+<li>解决项目中的全局变量污染的问题。</li>
+<li>功能单一，方便代码的复用和维护。</li>
+<li>解决文件依赖问题，无需关注文件引用顺序。</li>
+</ul>
+</li>
+<li><strong>执行环境</strong><ul>
+<li>服务器端：相同代码需要多次执行、CPU 和内存资源是瓶颈、从磁盘加载。</li>
+<li>浏览器端：代码从一个服务器端分发到多个客户端、网络是瓶颈、通过网络加载。</li>
+</ul>
+</li>
+<li><strong>发展进程</strong><ol>
+<li>闭包形式的函数 (命名空间)。</li>
+<li>通过立即执行函数(IIFE) 创建命名空间。</li>
+<li>服务器端运行时 NodeJS 的 CommonJS 规范。</li>
+<li>浏览器端运行 JS 的 AMD&#x2F;CMD 模块定义规范。</li>
+<li>兼容 AMD、CommonJS 的 UMD 规范。</li>
+<li>通过语言标准支持的 ES Module。</li>
+</ol>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 闭包</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Product</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">setName</span> = <span class="keyword">function</span>(<span class="params">value</span>) &#123; name = value &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">getName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="keyword">return</span> name &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="title class_">Product</span>();</span><br><span class="line">p.<span class="title function_">setName</span>(<span class="string">&quot;Fundebug&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="property">name</span>);        <span class="comment">// undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="title function_">getName</span>());   <span class="comment">// Fundebug</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 立即执行函数 IIFE</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable language_">module</span> = (<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">inc</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123; count += <span class="number">1</span> &#125;,</span><br><span class="line">        <span class="attr">dec</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123; count += -<span class="number">1</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="variable language_">module</span>.<span class="title function_">inc</span>();</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><blockquote>
+<p>服务器端的模块化开发规范，主要特点是同步加载模块，NodeJS 模块规范参照它实现。CommonJS 会在启动时把内置模块和加载过的模块放在本地硬盘，文件读取时不受限于网络而等待时间很短，所以在 Node 环境中使用同步加载的方式不会有很大问题。但是 CommonJS 如果应用在浏览器端，同步加载的机制会使得 JS 阻塞 UI 线程，造成页面卡顿，网速不好时还会导致浏览器假死。</p>
+</blockquote>
+<ul>
+<li>__模块定义__：NodeJs 为每个模块提供一个 exports 变量指向 module.exports，相当于在每个模块头部执行 <code>var exports = module.exports</code>。exports 默认是个空对象，可以添加属性和方法但不能被赋值，因为这样会切断了两者联系，而且不能导出需要new实例化的类。使用时建议 module.exports 导出对象和类、exports 导出普通函数和变量。</li>
+<li>__模块加载__：本质是读取模块内部的 module.exports 变量，特点是模块第一次加载并执行后就会缓存结果、模块的同步加载会阻塞下面代码的执行，方法有 require(加载其它模块)、require.resolve(解析模块标识符的绝对路径)。</li>
+<li>__模块标识__：require() 参数，require 根据其格式使用不同路径加载原则去寻找模块文件。取值范围为 模块名(小驼峰命名规范的字符串)、绝对路径(&#x2F; 开头)、相对路径(.&#x2F; 开头)。</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导出一个要实例化的类  module.exports = exports = function ()&#123; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// rocker.js </span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">    thisl.<span class="property">about</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>, <span class="variable language_">this</span>.<span class="property">age</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Rocker</span> = <span class="built_in">require</span>(<span class="string">&#x27;./rocker.js&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> r = <span class="keyword">new</span> <span class="title class_">Rocker</span>(<span class="string">&#x27;Ozzy&#x27;</span>, <span class="number">62</span>)</span><br><span class="line">r.<span class="title function_">about</span>()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出一个静态类 exports.funcName = function ()&#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hello.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello, world&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello, &#x27;</span> + name + <span class="string">&#x27;!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 写法一</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123; hello, greet &#125;</span><br><span class="line"><span class="comment">// 写法二</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">hello</span> = hello</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">greet</span> = greet</span><br><span class="line"><span class="comment">// 错误写法</span></span><br><span class="line"><span class="built_in">exports</span> = &#123; hello, greet &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用</span></span><br><span class="line"><span class="keyword">var</span> hello = <span class="built_in">require</span>(<span class="string">&#x27;./hello.js&#x27;</span>)</span><br><span class="line">hello.<span class="title function_">hello</span>()  <span class="comment">// Hello, world</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><blockquote>
+<p>异步模块定义，浏览器端模块化开发规范。它允许异步和按需加载模块来解决代码阻塞和被依赖文件必须先加载的问题，用于项目开发时需要引用库函数 RequireJS，</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 模块定义 define：可选模块标识, 依赖模块数组, 模块初始化的执行函数/对象</span></span><br><span class="line"><span class="title function_">define</span>([<span class="string">&#x27;dependency&#x27;</span>], <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> name = <span class="string">&#x27;Byron&#x27;</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">printName</span>(<span class="params"></span>)&#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(name) &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; printName &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模块加载 require：依赖模块数组, 模块加载成功后的回调函数</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">&#x27;myModule&#x27;</span>], <span class="keyword">function</span> (<span class="params">my</span>)&#123;</span><br><span class="line">　  my.<span class="title function_">printName</span>();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><blockquote>
+<p>AMD 基础上改进，浏览器的实现为 seaJS，主要区别是对依赖模块的执行时机处理不同：AMD 推崇依赖前置而在定义模块时声明其依赖模块，CMD 推崇就近依赖则只有在用到某个模块时再去加载。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义模块 index.js</span></span><br><span class="line"><span class="title function_">define</span>(<span class="keyword">function</span>(<span class="params"><span class="built_in">require</span>, <span class="built_in">exports</span>, <span class="variable language_">module</span></span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exports</span>.<span class="property">name</span> = <span class="string">&#x27;index&#x27;</span>;</span><br><span class="line">    <span class="built_in">exports</span>.<span class="property">hello</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;index&#x27;</span>) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;index&#x27;</span>,</span><br><span class="line">        <span class="attr">hello</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;index&#x27;</span>) &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载模块</span></span><br><span class="line">seajs.<span class="title function_">use</span>(<span class="string">&#x27;index&#x27;</span>, <span class="keyword">function</span>(<span class="params">my</span>) &#123;</span><br><span class="line">    my.<span class="title function_">hello</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h2><blockquote>
+<p>兼容 AMD、commonJS 而提出了跨平台的解决方案。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 无导入导出规范，只有如下的常规写法来检测 JS 环境</span></span><br><span class="line">(<span class="keyword">function</span> (<span class="params">root, factory</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">&#x27;function&#x27;</span> &amp;&amp; define.<span class="property">amd</span>) &#123;</span><br><span class="line">        <span class="comment">// AMD</span></span><br><span class="line">        <span class="title function_">define</span>([<span class="string">&#x27;jquery&#x27;</span>], factory);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">exports</span> === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">        <span class="comment">// CommonJS</span></span><br><span class="line">        <span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">factory</span>(<span class="built_in">require</span>(<span class="string">&#x27;jquery&#x27;</span>));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 挂载到全局：root 即 window</span></span><br><span class="line">        root.<span class="property">returnExports</span> = <span class="title function_">factory</span>(root.<span class="property">jQuery</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;(<span class="variable language_">this</span>, <span class="keyword">function</span> (<span class="params">$</span>) &#123;</span><br><span class="line">    <span class="comment">// 方法</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">myFunc</span>(<span class="params"></span>)&#123; &#125;;</span><br><span class="line">    <span class="comment">// 暴露公共方法</span></span><br><span class="line">    <span class="keyword">return</span> myFunc;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="ES-Module"><a href="#ES-Module" class="headerlink" title="ES Module"></a>ES Module</h2><blockquote>
+<p>CommonJS&#x2F;AMD 规范都只能在运行时确定依赖，ES6 module 模块编译时就能确定模块的依赖关系，以及输入和输出的变量，这种加载方式称为异步按需加载、静态加载。 </p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导出错误写法</span></span><br><span class="line"><span class="keyword">export</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">export</span> m;</span><br><span class="line"><span class="keyword">if</span> (x === <span class="number">2</span>) &#123; <span class="keyword">import</span> <span class="title class_">MyModual</span> <span class="keyword">from</span> <span class="string">&#x27;./myModual&#x27;</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出正确写法</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> m = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;m&#125;;</span><br><span class="line"><span class="keyword">export</span> &#123;n <span class="keyword">as</span> m&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> n;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入写法</span></span><br><span class="line"><span class="keyword">import</span> &#123;m, n&#125; <span class="keyword">from</span> <span class="string">&#x27;./myModual&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">MyModual</span> <span class="keyword">from</span> <span class="string">&#x27;./myModual&#x27;</span>;</span><br><span class="line"><span class="title function_">import</span>(<span class="string">&#x27;./myModule.js&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">&#123;export1, export2&#125;</span>) =&gt;</span> &#123; &#125;)</span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([<span class="title function_">import</span>(<span class="string">&#x27;./m1.js&#x27;</span>), <span class="title function_">import</span>(<span class="string">&#x27;./m2.js&#x27;</span>), <span class="title function_">import</span>(<span class="string">&#x27;./m3.js&#x27;</span>)])</span><br><span class="line">.<span class="title function_">then</span>(<span class="function">(<span class="params">[module1, module2, module3]</span>) =&gt;</span> &#123; &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="四、异步编程"><a href="#四、异步编程" class="headerlink" title="四、异步编程"></a>四、异步编程</h1><h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><blockquote>
+<p>作为参数传递到其它函数执行，优点是使用简单，缺点是层层嵌套而不利于代码维护、每个事件只能指定一个回调函数、各个模块之间高度耦合而导致流程混乱。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步操作变为异步</span></span><br><span class="line"><span class="title function_">f1</span>(f2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span> (callback) &#123;</span><br><span class="line">　　 <span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;  </span><br><span class="line">        <span class="title function_">callback</span>()  </span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="事件监听"><a href="#事件监听" class="headerlink" title="事件监听"></a>事件监听</h2><blockquote>
+<p>采用事件驱动模式，优点是可以绑定多个事件、每个事件可以指定多个回调函数、可以去耦合而有利于实现模块化，缺点则是整个程序变成事件驱动型，运行流程不清晰。常用的监听函数有：on、bind、listen、observe、addEventListener。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// f1 执行完成后立即触发 done 事件从而执行 f2</span></span><br><span class="line">f1.<span class="title function_">on</span>(<span class="string">&quot;done&quot;</span>, f2);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span> () &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;  </span><br><span class="line">        f1.<span class="title function_">trigger</span>(<span class="string">&quot;done&quot;</span>)  </span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="发布订阅"><a href="#发布订阅" class="headerlink" title="发布订阅"></a>发布订阅</h2><blockquote>
+<p>即观察者模式，它定义了一种一对多的关系，通过让多个观察者同时监听某个对象并在对象更新时执行相应操作。主要优点有：通过广播通信即可自动通知所有已经订阅过的对象、目标对象与观察者之间的抽象耦合关系能够单独扩展和重用、目标对象与观察者存在一种动态关联而增加了灵活性。缺点：目标与观察者之间的依赖关系并没有完全解除并且可能循环引用、观察者对象较多时消息发布会降低程序的效率。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// f1 执行完成后向信号中心 jQuery 发布 done 信号，从而引发 f2 的执行</span></span><br><span class="line">jQuery.<span class="title function_">subscribe</span>(<span class="string">&quot;done&quot;</span>, f2);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">// f1 的代码</span></span><br><span class="line">        jQuery.<span class="title function_">publish</span>(<span class="string">&quot;done&quot;</span>);</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Promise-对象"><a href="#Promise-对象" class="headerlink" title="Promise 对象"></a>Promise 对象</h2><blockquote>
+<p>表示一个异步操作的代理对象，用来解决回调地狱和并发 IO 操作的问题并能够更好地进行错误捕获。只有异步操作的结果可以决定 Promise 对象的当前状态，状态只能从 <strong>pending(等待)</strong> 转变为 <strong>fulfilled(已完成)</strong> &#x2F; <strong>rejected(已失败)</strong> 并且不能继续改变。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建实例：构造函数接收一个 executor 函数，操作完成后执行其参数 resolve/reject。</span></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 原生方法：then (reject 时触发)、catch (resolve 时触发)、finally (一定触发)。</span></span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function"><span class="params">val</span> =&gt;</span> &#123;   <span class="comment">// 抛出错误</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(val)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;         <span class="comment">// 不会执行</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;     <span class="comment">// 接收错误</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;         <span class="comment">// 继续执行</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">&#125;).<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;      <span class="comment">// 一般用于结束动画等</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 语法糖</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">42</span>).<span class="title function_">then</span>(<span class="function"><span class="params">value</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span><br><span class="line">&#125;)  <span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>(<span class="number">42</span>)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">reject</span>(value) <span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>)&#123;</span><br><span class="line">    <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;出错了&quot;</span>));</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并多个实例</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">timerPromisefy</span>(<span class="params">delay</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve</span>) &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(delay)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 当数组中所有 Promise 对象被 resolve 之后，该方法才执行 </span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([ <span class="title function_">timerPromisefy</span>(<span class="number">1</span>), <span class="title function_">timerPromisefy</span>(<span class="number">10</span>)])</span><br><span class="line">.<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 任何一个 promise 变为 resolve/reject，程序就停止运行</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>([ <span class="title function_">timerPromisefy</span>(<span class="number">1</span>), <span class="title function_">timerPromisefy</span>(<span class="number">10</span>)])</span><br><span class="line">.<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载完成后播放音乐</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">loadImg</span>([img, img_1, img_2]).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">playMusic</span>()</span><br><span class="line">    &#125;, <span class="number">500</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">loadImg</span> = (<span class="params">img</span>) =&gt; &#123;  </span><br><span class="line">    <span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(img)) &#123;</span><br><span class="line">        <span class="keyword">const</span> oImg = <span class="keyword">new</span> <span class="title class_">Image</span>()</span><br><span class="line">        oImg.<span class="property">src</span> = img</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">            oImg.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">resolve</span>()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    img.<span class="title function_">forEach</span>(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> oImg = <span class="keyword">new</span> <span class="title class_">Image</span>()</span><br><span class="line">        oImg.<span class="property">src</span> = val</span><br><span class="line">        arr.<span class="title function_">push</span>(<span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">            oImg.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">resolve</span>()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;))</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>(arr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据请求</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getBarcodeMaster</span> (data) &#123;</span><br><span class="line">    imanDialog.<span class="title function_">showLoading</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">        <span class="title class_">Http</span>.<span class="title function_">post</span>(&#123;</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;/api/getBarcodeMaster&#x27;</span>,</span><br><span class="line">            <span class="attr">data</span>: data,</span><br><span class="line">            <span class="attr">timeout</span>: <span class="number">12000</span></span><br><span class="line">        &#125;).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">            imanDialog.<span class="title function_">hideLoading</span>()</span><br><span class="line">            <span class="title function_">resolve</span>(res)</span><br><span class="line">        &#125;, <span class="keyword">function</span>(<span class="params">err</span>) &#123;</span><br><span class="line">            imanDialog.<span class="title function_">hideLoading</span>()</span><br><span class="line">            <span class="title function_">reject</span>(err)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">DataService</span>.<span class="title function_">getBarcodeMaster</span>(&#123;</span><br><span class="line">    <span class="attr">app</span>: $scope.<span class="property">app</span>,</span><br><span class="line">    <span class="attr">user</span>: $scope.<span class="property">user</span>,</span><br><span class="line">    <span class="attr">terminal</span>: umif.<span class="title function_">get</span>(<span class="string">&#x27;Terminal&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!res) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>()</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>()</span><br><span class="line">    <span class="keyword">return</span> imanDialog.<span class="title function_">showPopup</span>(&#123; <span class="attr">type</span>: <span class="number">1</span>, <span class="attr">scope</span>: $scope &#125;) </span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="async-x2F-await-异步函数"><a href="#async-x2F-await-异步函数" class="headerlink" title="async&#x2F;await 异步函数"></a>async&#x2F;await 异步函数</h2><blockquote>
+<p>一个用同步思维解决异步问题的方案，代码简洁而且更符合编写习惯。async 声明会返回一个 promise 对象的异步函数，await 表示等待后面的异步函数返回结果之后再执行并且只能用于 async 函数内部。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">getDistributionPlan</span> = <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> app = req.<span class="property">body</span>.<span class="property">app</span></span><br><span class="line">    <span class="keyword">let</span> user = req.<span class="property">body</span>.<span class="property">user</span></span><br><span class="line">    <span class="keyword">let</span> terminal = req.<span class="property">body</span>.<span class="property">terminal</span></span><br><span class="line">    <span class="keyword">let</span> newErr = <span class="keyword">new</span> <span class="title class_">Error</span>();</span><br><span class="line">        newErr.<span class="property">leval</span> = <span class="number">9</span>;</span><br><span class="line">        newErr.<span class="property">title</span> = <span class="string">&quot;参数错误&quot;</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="title function_">centerBizLogMsg</span>(app, user, terminal, <span class="string">&#x27;getDistributionPlan&#x27;</span>, req.<span class="property">body</span>)</span><br><span class="line">        <span class="keyword">let</span> userGroups = <span class="keyword">await</span> entityFun.<span class="title function_">find</span>(<span class="string">&#x27;ShiftGroupUser&#x27;</span>, &#123;</span><br><span class="line">            <span class="title class_">Person</span>: user.<span class="property">_id</span>,</span><br><span class="line">            <span class="string">&#x27;Department.IsShift&#x27;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">let</span> departments = userGroups.<span class="title function_">map</span>(<span class="function"><span class="params">item</span> =&gt;</span> item.<span class="property">Department</span>.<span class="title function_">toString</span>())</span><br><span class="line">        <span class="keyword">let</span> distributionPlanList = <span class="keyword">await</span> entityFun.<span class="title function_">find</span>(<span class="string">&#x27;DistributionPlan&#x27;</span>, &#123;</span><br><span class="line">            <span class="title class_">DistShiftGroup</span>: &#123; <span class="attr">$in</span>: departments &#125;,</span><br><span class="line">            <span class="attr">$where</span>: <span class="string">&quot;this.DistQty &gt; this.TotalDistQty&quot;</span></span><br><span class="line">            <span class="title class_">Status</span>: <span class="title class_">LogisticsEnum</span>.<span class="property">DistributionPlanStatus</span>.<span class="property">Confirmed</span>.<span class="property">Value</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            <span class="title class_">DistributionTime</span>: <span class="number">1</span></span><br><span class="line">        &#125;, [</span><br><span class="line">            &#123; <span class="attr">path</span>: <span class="string">&#x27;ItemMaster&#x27;</span>, <span class="attr">model</span>: <span class="string">&#x27;ItemMaster&#x27;</span>, <span class="attr">select</span>: <span class="string">&#x27;Name Code&#x27;</span> &#125;</span><br><span class="line">        ])</span><br><span class="line">        <span class="keyword">if</span> (distributionPlanList.<span class="property">length</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            newErr.<span class="property">message</span> = <span class="string">&#x27;未找到配送计划！&#x27;</span>;</span><br><span class="line">            res.<span class="title function_">json</span>(&#123; <span class="title class_">Data</span>: <span class="literal">null</span>, <span class="title class_">Error</span>: newErr &#125;);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        res.<span class="title function_">json</span>(&#123; <span class="title class_">Data</span>: distributionPlanList, <span class="title class_">Error</span>: <span class="literal">null</span> &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        newErr.<span class="property">message</span> = error.<span class="property">message</span>;</span><br><span class="line">        res.<span class="title function_">json</span>(&#123; <span class="title class_">Data</span>: <span class="literal">null</span>, <span class="title class_">Error</span>: newErr &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="五、设计模式"><a href="#五、设计模式" class="headerlink" title="五、设计模式"></a>五、设计模式</h1><blockquote>
+<p>设计模式是对软件设计开发过程中反复出现的某类问题的通用解决方案，更多的是指导思想和方法论，而不是现成的代码，目的是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。</p>
+</blockquote>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><blockquote>
+<p>仅允许类或对象具有单个实例，并且它使用全局变量来存储该实例。__实现方法__是判断是否存在该对象的实例，如果已存在则不再创建。__使用场景__适用于业务场景中只能存在一个的实例，比如弹窗、购物车。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 懒汉式：类加载时不创建实例，所以类加载速度快，但运行时获取对象的速度慢。</span></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">ShopCar</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> instance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 定义单例代码</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            buy (good) &#123; <span class="variable language_">this</span>.<span class="property">goods</span>.<span class="title function_">push</span>(good) &#125;,</span><br><span class="line">            <span class="attr">goods</span>: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">getInstance</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!instance) &#123; instance = <span class="title function_">init</span>() &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 饿汉式：类加载时完成了初始化，所以类加载较慢，但获取对象的速度快。</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ShopCar</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> instance = <span class="title function_">init</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span> () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            buy (good) &#123; <span class="variable language_">this</span>.<span class="property">goods</span>.<span class="title function_">push</span>(good) &#125;,</span><br><span class="line">            <span class="attr">goods</span>: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">getInstance</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> car1 = <span class="title class_">ShopCar</span>.<span class="title function_">getInstance</span>();</span><br><span class="line"><span class="keyword">let</span> car2 = <span class="title class_">ShopCar</span>.<span class="title function_">getInstance</span>();</span><br><span class="line">car1.<span class="title function_">buy</span>(<span class="string">&#x27;橘子&#x27;</span>);</span><br><span class="line">car2.<span class="title function_">buy</span>(<span class="string">&#x27;苹果&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(car1.<span class="property">goods</span>);     <span class="comment">// [ &#x27;橘子&#x27;, &#x27;苹果&#x27; ]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(car1 === car2);  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><blockquote>
+<p>定义一系列的算法，将每一个算法封装并让它们可以相互替换。__实现方法__是定义一组可变的策略类封装具体算法，定义一组不变的环境类将请求委托给某一个策略类。__使用场景__适用于业务场景中需要判断多种条件，甚至包含复杂条件嵌套的，可以使用策略模式来提升代码的可维护性和可读性。比如支付、博客权限校验。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义几个策略类</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">PaymentMethodStrategy</span> = &#123;</span><br><span class="line">    <span class="title class_">BankAccount</span>: <span class="keyword">function</span> (<span class="params">money</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> money &gt; <span class="number">50</span> ? money * <span class="number">0.7</span> : money;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title class_">CreditCard</span>: <span class="keyword">function</span> (<span class="params">money</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> money * <span class="number">0.8</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title class_">Alipay</span>: <span class="keyword">function</span> (<span class="params">money</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> money;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;; </span><br><span class="line"><span class="comment">// 环境类</span></span><br><span class="line"><span class="keyword">var</span> userPay = <span class="keyword">function</span> (<span class="params">selectedStrategy, money</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">PaymentMethodStrategy</span>[selectedStrategy](money);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;银行卡支付：&#x27;</span> + <span class="title function_">userPay</span>(<span class="string">&#x27;BankAccount&#x27;</span>, <span class="number">100</span>)); <span class="comment">// 70</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;支付宝支付：&#x27;</span> + <span class="title function_">userPay</span>(<span class="string">&#x27;Alipay&#x27;</span>, <span class="number">100</span>));      <span class="comment">// 100</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;信用卡支付：&#x27;</span> + <span class="title function_">userPay</span>(<span class="string">&#x27;CreditCard&#x27;</span>, <span class="number">100</span>));  <span class="comment">// 80</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><blockquote>
+<p>即订阅-发布模式，是对象的行为模式，在对象之间定义了一个被观察者对多个观察者的依赖关系，当被观察者发生变化时会通知所有的观察者对象做出对应操作。__使用场景__适用于业务场景中当一个对象的状态发生变化时，需要自动通知其它关联对象并自动更新状态或执行方法。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个群来保存通知，通知变化之后通知每个家长：被观察者</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Group</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">message</span> = <span class="string">&#x27;暂无通知&#x27;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parents</span> = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">getMessage</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">message</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setMassage</span>(<span class="params">message</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">message</span> = message;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">notifyAllObservers</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">notifyAllObservers</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parents</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">parent</span>) =&gt;</span> &#123;</span><br><span class="line">            parent.<span class="title function_">update</span>();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">attach</span>(<span class="params">parent</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parents</span>.<span class="title function_">push</span>(parent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 观察者：每个家长</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name, group</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">group</span> = group;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">group</span>.<span class="title function_">attach</span>(<span class="variable language_">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">update</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> 收到通知: <span class="subst">$&#123;<span class="variable language_">this</span>.group.getMessage()&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> group = <span class="keyword">new</span> <span class="title class_">Group</span>();</span><br><span class="line"><span class="keyword">let</span> t1 = <span class="keyword">new</span> <span class="title class_">Parent</span>(<span class="string">&#x27;李妈妈&#x27;</span>, group);</span><br><span class="line"><span class="keyword">let</span> t2 = <span class="keyword">new</span> <span class="title class_">Parent</span>(<span class="string">&#x27;王爸爸&#x27;</span>, group);</span><br><span class="line"><span class="keyword">let</span> t3 = <span class="keyword">new</span> <span class="title class_">Parent</span>(<span class="string">&#x27;张爷爷&#x27;</span>, group);</span><br><span class="line">group.<span class="title function_">setMassage</span>(<span class="string">&#x27;开家长会&#x27;</span>);</span><br><span class="line">group.<span class="title function_">setMassage</span>(<span class="string">&#x27;开运动会&#x27;</span>); </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  李妈妈 收到通知: 开家长会</span></span><br><span class="line"><span class="comment">  王爸爸 收到通知: 开家长会</span></span><br><span class="line"><span class="comment">  张爷爷 收到通知: 开家长会</span></span><br><span class="line"><span class="comment">  李妈妈 收到通知: 开运动会</span></span><br><span class="line"><span class="comment">  王爸爸 收到通知: 开运动会</span></span><br><span class="line"><span class="comment">  张爷爷 收到通知: 开运动会</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h2><blockquote>
+<p>不改变原代码的同时增加额外功能。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Man</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">run</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;跑步&#x27;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Decorator</span> = <span class="keyword">function</span> (<span class="params">old</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">oldAbility</span> = old.<span class="property">run</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fly</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;具备飞行能力&#x27;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">newAbility</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">oldAbility</span>();</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">fly</span>();</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> man = <span class="keyword">new</span> <span class="title class_">Man</span>();</span><br><span class="line"><span class="keyword">const</span> superMan = <span class="keyword">new</span> <span class="title class_">Decorator</span>(man);</span><br><span class="line">superMan.<span class="title function_">fly</span>();     <span class="comment">// 具备飞行能力</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><blockquote>
+<p>给某个对象提供一个代理对象，并由代理对象控制对原对象的引用，即中介。__实现方法__是定义一个委托者和一个代理，需要委托的事情在代理中完成。__使用场景__是有时需要代理对象帮助过滤掉一些请求或者开销大的对象。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Letter</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 暗恋人小明</span></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">XiaoMing</span> = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    <span class="title function_">sendLetter</span>(<span class="params">target</span>) &#123;</span><br><span class="line">        target.<span class="title function_">receiveLetter</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 代理小华</span></span><br><span class="line"><span class="keyword">let</span> xiaoHua = &#123;</span><br><span class="line">    <span class="title function_">receiveLetter</span>(<span class="params">customer</span>) &#123;</span><br><span class="line">        <span class="title class_">XiaoHong</span>.<span class="title function_">listenGoodMood</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="title class_">XiaoHong</span>.<span class="title function_">receiveLetter</span>(<span class="keyword">new</span> <span class="title class_">Letter</span>(customer + <span class="string">&#x27;的情书&#x27;</span>));</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 心仪对象小红</span></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">XiaoHong</span> = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小红&#x27;</span>,</span><br><span class="line">    <span class="title function_">receiveLetter</span>(<span class="params">letter</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&#x27;收到：&#x27;</span> + letter.<span class="property">name</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">listenGoodMood</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">fn</span>();</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">XiaoMing</span>.<span class="title function_">sendLetter</span>(xiaoHua);  <span class="comment">// 小红收到：小明的情书</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 复议后新分数比以前大 10 分才有权利去更新成绩</span></span><br><span class="line"><span class="keyword">const</span> scoreList = &#123;</span><br><span class="line">    <span class="string">&#x27;wang&#x27;</span>: <span class="number">90</span>,</span><br><span class="line">    <span class="string">&#x27;li&#x27;</span>: <span class="number">60</span>,</span><br><span class="line">    <span class="string">&#x27;wu&#x27;</span>: <span class="number">100</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> yyProxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(scoreList, &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params">scoreList, name</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (scoreList[name] &gt; <span class="number">69</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;输出成绩&#x27;</span>) <span class="keyword">return</span> scoreList[name]</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;不及格的成绩无法公示&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">set</span>: <span class="keyword">function</span> (<span class="params">scoreList, name, val</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (val - scoreList[name] &gt; <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;修改成绩&#x27;</span>) scoreList[name] = val</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;无法修改成绩&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;) </span><br><span class="line">yyProxy[<span class="string">&#x27;wang&#x27;</span>] = <span class="number">98</span>   <span class="comment">// 无法修改成绩</span></span><br><span class="line">yyProxy[<span class="string">&quot;li&quot;</span>] = <span class="number">80</span>     <span class="comment">// 修改成绩</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;margin-top:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chuangges
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuangges.gitee.io/2019/06/01/4-6-js%E7%BC%96%E7%A8%8B/" title="JS 编程范式">https://chuangges.gitee.io/2019/06/01/4-6-js编程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh_CN" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/28/4-5-js%E4%BA%A4%E4%BA%92/" rel="prev" title="JS 实现页面的通信和交互">
+      <i class="fa fa-chevron-left"></i> JS 实现页面的通信和交互
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/05/5-1-vue%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/" rel="next" title="Vue 项目构建">
+      Vue 项目构建 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">一、编程范式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B8%B8%E7%94%A8%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">二、常用编程模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.2.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">2.1.3.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">面向对象编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">面向切面编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E7%BC%96%E7%A8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">事件驱动编程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%A8%A1%E5%9D%97%E5%8C%96%E7%BC%96%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">三、模块化编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS"><span class="nav-number">3.1.</span> <span class="nav-text">CommonJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD"><span class="nav-number">3.2.</span> <span class="nav-text">AMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD"><span class="nav-number">3.3.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UMD"><span class="nav-number">3.4.</span> <span class="nav-text">UMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES-Module"><span class="nav-number">3.5.</span> <span class="nav-text">ES Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">四、异步编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">4.2.</span> <span class="nav-text">事件监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85"><span class="nav-number">4.3.</span> <span class="nav-text">发布订阅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.4.</span> <span class="nav-text">Promise 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-x2F-await-%E5%BC%82%E6%AD%A5%E5%87%BD%E6%95%B0"><span class="nav-number">4.5.</span> <span class="nav-text">async&#x2F;await 异步函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">五、设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.2.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.3.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.4.</span> <span class="nav-text">装饰器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.5.</span> <span class="nav-text">代理模式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chuangges" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/chuang.png">
+  <p class="site-author-name" itemprop="name">chuangges</p>
+  <div class="site-description" itemprop="description">chuangge's blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chuangges" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chuangges" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.docschina.org/" title="https:&#x2F;&#x2F;www.docschina.org&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">印记中文</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://tool.lu/" title="http:&#x2F;&#x2F;tool.lu&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">在线工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tinypng.com/" title="https:&#x2F;&#x2F;tinypng.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片压缩</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bigjpg.com/" title="https:&#x2F;&#x2F;bigjpg.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片放大</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tool.chinaz.com/" title="https:&#x2F;&#x2F;tool.chinaz.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">站长工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://learn-anything.xyz/" title="https:&#x2F;&#x2F;learn-anything.xyz&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Learn-Anything</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://stackoverflow.com/" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Stack-Overflow</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chuangge</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">638k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:40</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":180,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</html>
