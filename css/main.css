@@ -58,9 +58,12 @@ code {
 .posts-expand .post-title,
 .posts-expand .post-meta,
 .footer-inner,
-.post-button,
+.post-button {
+  text-align: center !important;
+}
 .post-body .post-description {
   text-align: center !important;
+  font-size: 18px;
 }
 .post-body h1,
 .post-body h2 {
@@ -1487,7 +1490,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #9460be;
+  background: #f042ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;

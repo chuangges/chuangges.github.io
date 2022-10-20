@@ -28,7 +28,7 @@
 <meta property="og:description" content="源码实现、网络相关、设计模式、算法相关、Nodejs">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-04-05T15:06:25.000Z">
-<meta property="article:modified_time" content="2022-09-30T08:35:22.330Z">
+<meta property="article:modified_time" content="2022-10-09T11:45:12.851Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="面试题库">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-30 16:35:22" itemprop="dateModified" datetime="2022-09-30T16:35:22+08:00">2022-09-30</time>
+                <time title="修改时间：2022-10-09 19:45:12" itemprop="dateModified" datetime="2022-10-09T19:45:12+08:00">2022-10-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,14 +212,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
+              <span>15k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
+              <span>14 分钟</span>
             </span>
             <div class="post-description">源码实现、网络相关、设计模式、算法相关、Nodejs</div>
 
@@ -273,7 +273,7 @@
 </ul>
 <h2 id="new-Vue-执行后"><a href="#new-Vue-执行后" class="headerlink" title="new Vue 执行后"></a>new Vue 执行后</h2><ol>
 <li>new Vue 会调用 Vue 原型链上的 _init 方法对 Vue 实例进行初始化。</li>
-<li>首先是 initLifecycle 初始化生命周期，对 Vue 实例内部的一些属性（如 children、parent、isMounted）进行初始化。</li>
+<li>首先 initLifecycle 初始化生命周期，对 children、isMounted 等实例属性进行初始化。</li>
 <li>initEvents，初始化当前实例上的一些自定义事件（Vue.$on）。</li>
 <li>initRender，解析 slots 绑定在 Vue 实例上，绑定 createElement 方法在实例上。</li>
 <li>完成对生命周期、自定义事件等属性的初始化后，触发生命周期钩子 beforeCreate。</li>
@@ -285,9 +285,9 @@
 <li>将解析好的虚拟 DOM 树通过 vue 渲染成真实 DOM，触发生命周期钩子 mounted。</li>
 </ol>
 <h2 id="webpack-热更新原理"><a href="#webpack-热更新原理" class="headerlink" title="webpack 热更新原理"></a>webpack 热更新原理</h2><ol>
-<li>修改一个或多个文件时，文件系统会接收更改并通知 webpack。</li>
-<li>webpack 重新编译构建一个或多个模块，并通知 HMR（Hot Module Replacement） 服务器进行更新。</li>
-<li>HMR Server 使用 Websocket 通知 HMR runtime 需要更新，HMR runtime 通过 HTTP 请求更新 jsonp。</li>
+<li>修改一个或多个文件时，文件系统会接收更改并通知 webpack 重新编译。</li>
+<li>webpack 构建一或多个模块，并通知 HMR（Hot Module Replacement）服务器更新。</li>
+<li>HMR Server 使用 Websocket 通知 HMR runtime 更新，runtime 通过 HTTP 更新 jsonp。</li>
 <li>HMR runtime 替换更新中的模块，如果确定这些模块无法更新，则触发整个页面刷新。</li>
 </ol>
 <h1 id="二、网络相关"><a href="#二、网络相关" class="headerlink" title="二、网络相关"></a>二、网络相关</h1><h2 id="HTTP-状态码及其功能"><a href="#HTTP-状态码及其功能" class="headerlink" title="HTTP 状态码及其功能"></a>HTTP 状态码及其功能</h2><ul>
@@ -309,6 +309,24 @@
 <li>502 错误网关</li>
 <li>503 服务不可用</li>
 </ul>
+<h2 id="输入-URL-到页面加载的全过程"><a href="#输入-URL-到页面加载的全过程" class="headerlink" title="输入 URL 到页面加载的全过程"></a>输入 URL 到页面加载的全过程</h2><ol>
+<li>用户输入 URL，浏览器进程通过 URL 和协议组装为完整 URL。</li>
+<li>网络进程接收到浏览器进程通过进程通信发送的 URL 后检查本地缓存资源。</li>
+<li>网络进程没有请求缓存时向服务器发起 HTTP 请求：通过 DNS 查询获取服务器的 IP 地址和端口、通过 IP 和服务器建立 TCP 连接、发送请求并接收服务器的响应内容。</li>
+<li>网络进程解析响应内容：状态码为 301&#x2F;302 时重定向，200 时则检查响应类型 Content-Type，字节流时将请求转给下载管理器并不再渲染，html 则发给渲染进程处理。</li>
+<li>渲染进程构建 DOM 树：如果 URL 和已打开的渲染进程根域名不同时会开启新进程。</li>
+<li>浏览器进程根据 DOM 树更新页面：关闭连接并重复请求至资源全部加载后更新页面。</li>
+</ol>
+<h2 id="HTTP-请求流程"><a href="#HTTP-请求流程" class="headerlink" title="HTTP 请求流程"></a>HTTP 请求流程</h2><ol>
+<li>构建请求：浏览器构建请求行后准备发起网络请求。</li>
+<li>查找缓存：浏览器首先会查询缓存中是否有请求资源副本，有则拦截请求并返回资源副本。</li>
+<li>准备 IP 地址和端口：浏览器请求 DNS 返回域名对应 IP 并缓存域名解析结果。</li>
+<li>等待 TCP 队列：Chrome 机制下同一个域名同时最多只能建立 6 个 TCP 连接。</li>
+<li>建立 TCP 连接：TCP 通过三次握手建立连接和传输数据，通过四次挥手断开连接。</li>
+<li>发送 HTTP 请求：浏览器建立 TCP 连接后首先会向服务器发送请求行，然后以请求头形式发送一些其他信息，如果是 POST 请求还会发送请求体。</li>
+<li>服务器处理请求：如果请求头或响应头有 Connection:keep-alive TCP 则保持打开状态。</li>
+<li>服务器返回请求和断开连接。</li>
+</ol>
 <h2 id="HTTPS-原理-握手过程"><a href="#HTTPS-原理-握手过程" class="headerlink" title="HTTPS 原理 (握手过程)"></a>HTTPS 原理 (握手过程)</h2><ol>
 <li>客户端使用 https 的 url 访问 web 服务器，要求与服务器建立 ssl 连接。</li>
 <li>web 服务器收到客户端请求后，会将网站的证书（包含公钥）传送一份给客户端。</li>
@@ -316,7 +334,7 @@
 <li>客户端利用公钥将会话秘钥加密，并传送给服务端，服务端利用自己的私钥解密。</li>
 <li>之后服务器与客户端使用秘钥加密传输。</li>
 </ol>
-<h2 id="HTTPS-握手过程中，客户端验证证书的合法性"><a href="#HTTPS-握手过程中，客户端验证证书的合法性" class="headerlink" title="HTTPS 握手过程中，客户端验证证书的合法性"></a>HTTPS 握手过程中，客户端验证证书的合法性</h2><ol>
+<h2 id="HTTPS-握手时客户端验证证书"><a href="#HTTPS-握手时客户端验证证书" class="headerlink" title="HTTPS 握手时客户端验证证书"></a>HTTPS 握手时客户端验证证书</h2><ol>
 <li>首先浏览器读取证书中的证书所有者、有效期等信息进行校验，校验证书的网站域名是否与证书颁发的域名一致，校验证书是否在有效期内。</li>
 <li>浏览器开始查找操作系统中已内置的受新人的证书发布机构 CA，与服务器发来的证书中的颁发者 CA 比对，用于校验证书是否为合法机构颁发。</li>
 <li>如果找不到，浏览器就会报错，说明浏览器发来的证书是不可信任的。</li>
@@ -324,7 +342,7 @@
 <li>浏览器使用相同 hash 算法计算出服务器发送证书的 hash 值，然后与证书中签名做对比。</li>
 <li>对比结果一致，则证明服务器发来的证书合法，没有被冒充。</li>
 </ol>
-<h2 id="http2-多路复用"><a href="#http2-多路复用" class="headerlink" title="http2 多路复用"></a>http2 多路复用</h2><ul>
+<h2 id="HTTP2-多路复用"><a href="#HTTP2-多路复用" class="headerlink" title="HTTP2 多路复用"></a>HTTP2 多路复用</h2><ul>
 <li>HTTP&#x2F;1 每次请求都会建立一次 HTTP 连接，即 3 次握手和 4 次挥手，这个过程在一次请求过程中占用了较长时间，即使开启了 Keep-Alive 解决了多次连接的问题，但是依然有两个效率上的问题，一是串行的文件传输，二是连接数过多导致的性能问题。HTTP&#x2F;2 的多路复用就是为了解决上述的两个性能问题。</li>
 <li>HTTP&#x2F;2 有两个重要概念，分别是帧（frame）和流（stream）。帧代表着最小的数据单位，每个帧会标识出该帧属于哪个流，流是多个帧组成的数据流。</li>
 <li>多路复用，就是在一个 TCP 连接中可以存在多条流。即可以发送多个请求，对端可以通过帧中的标识知道属于哪个请求。通过这个技术，可以避免 HTTP 旧版本中的队头阻塞问题，极大的提高传输性能。</li>
@@ -350,13 +368,6 @@
 <li>后端利用 secret 和加密算法（如：HMAC-SHA256）对 payload（如账号密码）生成一个字符串（token），然后返回前端。</li>
 <li>前端每次 request 都在 header 中带上 token。</li>
 <li>后端用同样的算法解密。</li>
-</ol>
-<h2 id="输入-URL-到页面加载的全过程"><a href="#输入-URL-到页面加载的全过程" class="headerlink" title="输入 URL 到页面加载的全过程"></a>输入 URL 到页面加载的全过程</h2><ol>
-<li>用户输入 URL，浏览器解析后获取主机名和端口号。</li>
-<li>如果主机名是域名，则通过 DNS 查询获取主机 IP 地址。</li>
-<li>浏览器建立一条与目标服务器的 TCP 连接（三次握手）。</li>
-<li>浏览器向服务器发送一条 HTTP 请求报文并获取服务器响应。</li>
-<li>浏览器关闭连接并重复请求至资源全部加载后，解析文档内容并渲染到页面。</li>
 </ol>
 <h2 id="SSL-连接断开后如何恢复"><a href="#SSL-连接断开后如何恢复" class="headerlink" title="SSL 连接断开后如何恢复"></a>SSL 连接断开后如何恢复</h2><ul>
 <li><strong>Session ID</strong>：每次会话都有一个编号，当对话中断后重新连接时，只要客户端提供编号并且服务器有该编号的记录，则双方可以继续使用以前的密钥，而不用重新生成。</li>
@@ -631,7 +642,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">一、源码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">函数柯里化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind%E3%80%81call%E3%80%81apply"><span class="nav-number">1.2.</span> <span class="nav-text">bind、call、apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F-new"><span class="nav-number">1.3.</span> <span class="nav-text">模拟 new</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy-Fetch-%E5%AE%9E%E7%8E%B0-axios"><span class="nav-number">1.4.</span> <span class="nav-text">Proxy + Fetch 实现 axios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise"><span class="nav-number">1.5.</span> <span class="nav-text">Promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React"><span class="nav-number">1.6.</span> <span class="nav-text">React</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux"><span class="nav-number">1.7.</span> <span class="nav-text">Redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-Vue-%E6%89%A7%E8%A1%8C%E5%90%8E"><span class="nav-number">1.8.</span> <span class="nav-text">new Vue 执行后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.9.</span> <span class="nav-text">webpack 热更新原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">二、网络相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-%E7%8A%B6%E6%80%81%E7%A0%81%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP 状态码及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-%E5%8E%9F%E7%90%86-%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">HTTPS 原理 (握手过程)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%AA%8C%E8%AF%81%E8%AF%81%E4%B9%A6%E7%9A%84%E5%90%88%E6%B3%95%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">HTTPS 握手过程中，客户端验证证书的合法性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http2-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">http2 多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB"><span class="nav-number">2.5.</span> <span class="nav-text">HTTPS 中间人攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#token-%E5%8A%A0%E5%AF%86"><span class="nav-number">2.6.</span> <span class="nav-text">token 加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5-URL-%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%85%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">2.7.</span> <span class="nav-text">输入 URL 到页面加载的全过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL-%E8%BF%9E%E6%8E%A5%E6%96%AD%E5%BC%80%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D"><span class="nav-number">2.8.</span> <span class="nav-text">SSL 连接断开后如何恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDN-%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.9.</span> <span class="nav-text">CDN 服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">三、设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">3.1.</span> <span class="nav-text">设计模式的原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E3%80%81%E8%AE%A2%E9%98%85-%E5%8F%91%E5%B8%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">观察者模式、订阅-发布模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.3.</span> <span class="nav-text">面向对象的设计原则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">四、算法相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0-flatten-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">迭代方式实现 flatten 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%BA%8F"><span class="nav-number">4.2.</span> <span class="nav-text">数组的随机排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81Nodejs"><span class="nav-number">5.</span> <span class="nav-text">五、Nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">5.1.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#require-%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">5.2.</span> <span class="nav-text">require 模块加载机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%A8%A1%E5%9D%97%E4%BA%92%E7%9B%B8%E5%BC%95%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text">两个模块互相引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5-I-x2F-O"><span class="nav-number">5.4.</span> <span class="nav-text">异步 I&#x2F;O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer"><span class="nav-number">5.5.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream"><span class="nav-number">5.6.</span> <span class="nav-text">Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC"><span class="nav-number">5.7.</span> <span class="nav-text">IPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">5.8.</span> <span class="nav-text">实现热更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-%E6%9B%B4%E9%80%82%E5%90%88%E5%A4%84%E7%90%86-I-x2F-O-%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1%E8%BF%98%E6%98%AF-CPU-%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1"><span class="nav-number">5.9.</span> <span class="nav-text">Node 更适合处理 I&#x2F;O 密集型任务还是 CPU 密集型任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-%E4%B8%BA%E4%BD%95%E4%B8%8D%E7%BB%99%E6%AF%8F%E4%B8%AA-js-%E6%96%87%E4%BB%B6%E4%BB%A5%E7%8B%AC%E7%AB%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E6%9D%A5%E9%81%BF%E5%85%8D%E4%BD%9C%E7%94%A8%E5%9F%9F%E8%A2%AB%E6%B1%A1%E6%9F%93"><span class="nav-number">5.10.</span> <span class="nav-text">Node 为何不给每个 js 文件以独立的上下文来避免作用域被污染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#console-log-%E6%98%AF%E5%90%8C%E6%AD%A5%E8%BF%98%E6%98%AF%E5%BC%82%E6%AD%A5"><span class="nav-number">5.11.</span> <span class="nav-text">console.log 是同步还是异步?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%88%B6-x2F-%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%AD%BB%E4%BA%A1%E6%9C%89%E4%BD%95%E5%BD%B1%E5%93%8D"><span class="nav-number">5.12.</span> <span class="nav-text">父&#x2F;子进程的死亡有何影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="nav-number">5.13.</span> <span class="nav-text">守护进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B2%98%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-number">5.14.</span> <span class="nav-text">粘包问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie%E3%80%81session"><span class="nav-number">5.15.</span> <span class="nav-text">cookie、session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hosts-%E6%96%87%E4%BB%B6"><span class="nav-number">5.16.</span> <span class="nav-text">hosts 文件</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">一、源码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">函数柯里化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind%E3%80%81call%E3%80%81apply"><span class="nav-number">1.2.</span> <span class="nav-text">bind、call、apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F-new"><span class="nav-number">1.3.</span> <span class="nav-text">模拟 new</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy-Fetch-%E5%AE%9E%E7%8E%B0-axios"><span class="nav-number">1.4.</span> <span class="nav-text">Proxy + Fetch 实现 axios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise"><span class="nav-number">1.5.</span> <span class="nav-text">Promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React"><span class="nav-number">1.6.</span> <span class="nav-text">React</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux"><span class="nav-number">1.7.</span> <span class="nav-text">Redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-Vue-%E6%89%A7%E8%A1%8C%E5%90%8E"><span class="nav-number">1.8.</span> <span class="nav-text">new Vue 执行后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.9.</span> <span class="nav-text">webpack 热更新原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">二、网络相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-%E7%8A%B6%E6%80%81%E7%A0%81%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP 状态码及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5-URL-%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%85%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">输入 URL 到页面加载的全过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E6%B5%81%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">HTTP 请求流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-%E5%8E%9F%E7%90%86-%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">HTTPS 原理 (握手过程)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-%E6%8F%A1%E6%89%8B%E6%97%B6%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%AA%8C%E8%AF%81%E8%AF%81%E4%B9%A6"><span class="nav-number">2.5.</span> <span class="nav-text">HTTPS 握手时客户端验证证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP2-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">2.6.</span> <span class="nav-text">HTTP2 多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB"><span class="nav-number">2.7.</span> <span class="nav-text">HTTPS 中间人攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#token-%E5%8A%A0%E5%AF%86"><span class="nav-number">2.8.</span> <span class="nav-text">token 加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL-%E8%BF%9E%E6%8E%A5%E6%96%AD%E5%BC%80%E5%90%8E%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D"><span class="nav-number">2.9.</span> <span class="nav-text">SSL 连接断开后如何恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDN-%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.10.</span> <span class="nav-text">CDN 服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">三、设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">3.1.</span> <span class="nav-text">设计模式的原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E3%80%81%E8%AE%A2%E9%98%85-%E5%8F%91%E5%B8%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">观察者模式、订阅-发布模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.3.</span> <span class="nav-text">面向对象的设计原则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">四、算法相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0-flatten-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">迭代方式实现 flatten 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%BA%8F"><span class="nav-number">4.2.</span> <span class="nav-text">数组的随机排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81Nodejs"><span class="nav-number">5.</span> <span class="nav-text">五、Nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">5.1.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#require-%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">5.2.</span> <span class="nav-text">require 模块加载机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%A8%A1%E5%9D%97%E4%BA%92%E7%9B%B8%E5%BC%95%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text">两个模块互相引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5-I-x2F-O"><span class="nav-number">5.4.</span> <span class="nav-text">异步 I&#x2F;O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer"><span class="nav-number">5.5.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream"><span class="nav-number">5.6.</span> <span class="nav-text">Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC"><span class="nav-number">5.7.</span> <span class="nav-text">IPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">5.8.</span> <span class="nav-text">实现热更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-%E6%9B%B4%E9%80%82%E5%90%88%E5%A4%84%E7%90%86-I-x2F-O-%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1%E8%BF%98%E6%98%AF-CPU-%E5%AF%86%E9%9B%86%E5%9E%8B%E4%BB%BB%E5%8A%A1"><span class="nav-number">5.9.</span> <span class="nav-text">Node 更适合处理 I&#x2F;O 密集型任务还是 CPU 密集型任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-%E4%B8%BA%E4%BD%95%E4%B8%8D%E7%BB%99%E6%AF%8F%E4%B8%AA-js-%E6%96%87%E4%BB%B6%E4%BB%A5%E7%8B%AC%E7%AB%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E6%9D%A5%E9%81%BF%E5%85%8D%E4%BD%9C%E7%94%A8%E5%9F%9F%E8%A2%AB%E6%B1%A1%E6%9F%93"><span class="nav-number">5.10.</span> <span class="nav-text">Node 为何不给每个 js 文件以独立的上下文来避免作用域被污染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#console-log-%E6%98%AF%E5%90%8C%E6%AD%A5%E8%BF%98%E6%98%AF%E5%BC%82%E6%AD%A5"><span class="nav-number">5.11.</span> <span class="nav-text">console.log 是同步还是异步?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%88%B6-x2F-%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%AD%BB%E4%BA%A1%E6%9C%89%E4%BD%95%E5%BD%B1%E5%93%8D"><span class="nav-number">5.12.</span> <span class="nav-text">父&#x2F;子进程的死亡有何影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="nav-number">5.13.</span> <span class="nav-text">守护进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B2%98%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-number">5.14.</span> <span class="nav-text">粘包问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie%E3%80%81session"><span class="nav-number">5.15.</span> <span class="nav-text">cookie、session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hosts-%E6%96%87%E4%BB%B6"><span class="nav-number">5.16.</span> <span class="nav-text">hosts 文件</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -734,12 +745,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">640k</span>
+    <span title="站点总字数">648k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:42</span>
+    <span title="站点阅读时长">9:49</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
