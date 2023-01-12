@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="操作电脑、开发调试、项目构建、版本管理">
@@ -105,7 +105,7 @@
       <h1 class="site-title">闯哥要去流浪了</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">我知道你一定会来，所以我一直在等</p>
+      <p class="site-subtitle" itemprop="description">愿你岁月可回首，且以深情共白头</p>
   </div>
 
   <div class="site-nav-right">
@@ -424,7 +424,7 @@
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常用命令</span></span><br><span class="line">npm -v                    <span class="comment">// 查看版本</span></span><br><span class="line">npm list                  <span class="comment">// 当前目录已安装插件</span></span><br><span class="line">npm init                  <span class="comment">// 生成 package.json 文件</span></span><br><span class="line"></span><br><span class="line">npm i &lt;name&gt; -g           <span class="comment">//安装包</span></span><br><span class="line">npm uninstall &lt;name&gt;      <span class="comment">//卸载包</span></span><br><span class="line">npm update &lt;name&gt;         <span class="comment">//更新包</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@title</span> 可添加的修饰符</span></span><br><span class="line"><span class="comment">* <span class="doctag">@prame</span> -g               全局(不加则为本地安装)</span></span><br><span class="line"><span class="comment">* <span class="doctag">@prame</span> --no-save        不写入 package.json 的依赖</span></span><br><span class="line"><span class="comment">* <span class="doctag">@prame</span> -S / --save      生产环境还要用的依赖 (package.json/dependencies)</span></span><br><span class="line"><span class="comment">* <span class="doctag">@prame</span> -D / --save-dev  只用于开发环境的依赖 (package.json/devDependencies)</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"></span><br><span class="line">npm run script-key        <span class="comment">// 执行package.json中 &quot;scripts&quot; 选项对应的js</span></span><br><span class="line">npm start                 <span class="comment">// 比较特殊</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 发布 npm 包</span></span><br><span class="line">cd test                 <span class="comment">// 选择目标文件夹</span></span><br><span class="line">npm init                <span class="comment">// 配置包的相关信息</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="number">1</span>      <span class="comment">// 编辑包 test/index.js</span></span><br><span class="line"></span><br><span class="line">npm adduser             <span class="comment">// 注册，第一次发布包</span></span><br><span class="line">npm login               <span class="comment">// 登录，非第一次发布包</span></span><br><span class="line"></span><br><span class="line">npm publish            <span class="comment">// 发布/更新包</span></span><br><span class="line">npm install 包名        <span class="comment">// npm官网搜索后验证下载</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 撤销发布的包要用force强制删除。超过24小时就不能删除了</span></span><br><span class="line">npm --force unpublish 包名</span><br></pre></td></tr></table></figure>
 
 <h3 id="Npx"><a href="#Npx" class="headerlink" title="Npx"></a>Npx</h3><blockquote>
-<p>如果你把 NPM 升级到最新版本 <a href="mailto:&#110;&#x70;&#x6d;&#64;&#53;&#x2e;&#x32;&#x2e;&#48;">&#110;&#x70;&#x6d;&#64;&#53;&#x2e;&#x32;&#x2e;&#48;</a>，它就会安装一个新的包 npx，它用来代替 npm 来直接执行包（package）命令。</p>
+<p>如果你把 NPM 升级到最新版本 <a href="mailto:&#x6e;&#112;&#109;&#x40;&#53;&#46;&#x32;&#x2e;&#x30;">&#x6e;&#112;&#109;&#x40;&#53;&#46;&#x32;&#x2e;&#x30;</a>，它就会安装一个新的包 npx，它用来代替 npm 来直接执行包（package）命令。</p>
 </blockquote>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 升级</span></span><br><span class="line">npm i npm@latest -g</span><br><span class="line">npm i cnpm -g --registry=<span class="attr">https</span>:<span class="comment">//registry.npmmirror.com/ </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// npm 使用 create-react-app</span></span><br><span class="line">npm init</span><br><span class="line">npm install -g create-react-app</span><br><span class="line">create-react-app my-app</span><br><span class="line"></span><br><span class="line"><span class="comment">// npx 直接使用，包不存在时会自动下载</span></span><br><span class="line">npx create-react-app my-app</span><br></pre></td></tr></table></figure>
 
@@ -687,7 +687,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -766,7 +766,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -775,12 +775,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">648k</span>
+    <span title="站点总字数">673k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:49</span>
+    <span title="站点阅读时长">10:12</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
