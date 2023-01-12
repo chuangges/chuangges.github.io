@@ -55,15 +55,17 @@ code {
   -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
-.posts-expand .post-title,
-.posts-expand .post-meta,
-.footer-inner,
-.post-button {
+.posts-expand .post-title {
   text-align: center !important;
 }
 .post-body .post-description {
   text-align: center !important;
   font-size: 18px;
+}
+.footer-inner,
+.post-button {
+  margin-top: 20px !important;
+  text-align: center !important;
 }
 .post-body .post-button .btn {
   color: #fff;
@@ -74,6 +76,14 @@ code {
 .post-body .post-button .btn:hover {
   color: #444;
   background: none;
+}
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  font-weight: 500;
 }
 .post-copyright {
   font-size: 14px;
@@ -1532,7 +1542,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff9ea6;
+  background: #fff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2186,7 +2196,7 @@ pre .javascript .function {
   color: #999;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
-  margin: 3px 0 60px 0;
+  margin: 6px 0 20px 0;
   text-align: center;
 }
 .posts-expand .post-meta .post-description {
