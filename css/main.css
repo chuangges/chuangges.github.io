@@ -65,10 +65,6 @@ code {
   text-align: center !important;
   font-size: 18px;
 }
-.post-body h1,
-.post-body h2 {
-  color: #7961a2;
-}
 .post-body .post-button .btn {
   color: #fff;
   background: #222;
@@ -88,14 +84,29 @@ code {
   list-style: none;
 }
 .post-body a {
-  color: #0593d3;
-  border-bottom: none;
-  border-bottom: 1px solid #0593d3;
+  border: none;
+  color: #fb6c28;
+  display: inline-block;
+  position: relative;
+}
+.post-body a::after {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  content: "";
+  width: 100%;
+  height: 1px;
+  opacity: 0;
+  background: #fb6c28;
+  transform: scaleX(0.25);
+  transition: transform 0.35s, opacity 0.35s;
+}
+.post-body a:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 .post-body a:hover {
-  color: #fc6423;
-  border-bottom: none;
-  border-bottom: 1px solid #fc6423;
+  color: #fb6c28;
 }
 .category-all-page .category-list-item {
   list-style: none !important;
@@ -286,6 +297,17 @@ ol p {
 }
 nav.pagination {
   text-align: right;
+}
+.post-body blockquote {
+  border-left: 5px solid #50bfff;
+  margin: 0 0 15px 2px;
+  padding: 8px 15px;
+  background: #f2f6fc;
+  border-radius: 6px;
+}
+.post-body blockquote p {
+  margin: 0;
+  line-height: 26px;
 }
 :root {
   --body-bg-color: #f5f7f9;
@@ -1510,7 +1532,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #30c632;
+  background: #ff9ea6;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
