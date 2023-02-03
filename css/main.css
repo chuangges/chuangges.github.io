@@ -362,6 +362,9 @@ nav.pagination {
   top: 12px;
   right: 20px;
 }
+.posts-expand .hbe-input-label-wave {
+  top: 0.5em;
+}
 :root {
   --body-bg-color: #f5f7f9;
   --content-bg-color: #fff;
@@ -1585,7 +1588,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff886b;
+  background: #2f4ffc;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
