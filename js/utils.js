@@ -95,6 +95,13 @@ NexT.utils = {
           selection.addRange(selected);
         }
         document.body.removeChild(ta);
+        let oDiv = document.createElement('div');
+        oDiv.innerHTML = '复制成功'
+        oDiv.className = 'im-toast-view';
+        document.body.append(oDiv);
+        setTimeout(function() {
+          document.body.removeChild(oDiv);
+        }, 1000)
       });
       button.addEventListener('mouseleave', event => {
         setTimeout(() => {

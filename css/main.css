@@ -73,6 +73,9 @@ code {
   padding: 0 10px;
   border: 2px solid #222;
 }
+.post-body .post-button .btn::after {
+  width: 0;
+}
 .post-body .post-button .btn:hover {
   color: #444;
   background: none;
@@ -129,6 +132,15 @@ ol p {
 .posts-expand .post-body img {
   padding: 0;
   border: 0;
+  cursor: pointer;
+  transition: transform 0.35s, box-shadow 0.35s;
+}
+.posts-expand .post-body img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 34px 20px -24px rgba(136,161,206,0.3);
+}
+.posts-expand .post-meta .post-description {
+  font-size: 1em;
 }
 .menu .menu-item a {
   font-size: 16px;
@@ -317,7 +329,38 @@ nav.pagination {
 }
 .post-body blockquote p {
   margin: 0;
-  line-height: 26px;
+  line-height: 28px;
+}
+.post-body blockquote code {
+  background: none;
+  font-weight: 500;
+}
+.im-toast-view {
+  border-radius: 4px;
+  color: #fff;
+  background: rgba(0,0,0,0.45);
+  position: fixed;
+  left: 40%;
+  top: 50px;
+  transform: translateX(-50%);
+  transition: opacity 0.3s, transform 0.4s, top 0.4s;
+  overflow: hidden;
+  padding: 5px 50px 5px 20px;
+  display: flex;
+  align-items: center;
+}
+.im-toast-view::after {
+  content: '\00a0';
+  display: inline-block;
+  border: 2px solid #fff;
+  border-top-width: 0;
+  border-right-width: 0;
+  width: 16px;
+  height: 8px;
+  transform: rotate(-50deg);
+  position: absolute;
+  top: 12px;
+  right: 20px;
 }
 :root {
   --body-bg-color: #f5f7f9;
@@ -1542,7 +1585,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #fff;
+  background: #ff886b;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2195,12 +2238,12 @@ pre .javascript .function {
 .posts-expand .post-meta {
   color: #999;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 0.75em;
+  font-size: 0.8125em;
   margin: 6px 0 20px 0;
   text-align: center;
 }
 .posts-expand .post-meta .post-description {
-  font-size: 0.875em;
+  font-size: 1em;
   margin-top: 2px;
 }
 .posts-expand .post-meta time {
@@ -2687,15 +2730,17 @@ ul.breadcrumb li + li:last-child {
   vertical-align: middle;
 }
 .main-menu .menu-item-active a::after {
-  background: #bbb;
-  border-radius: 50%;
-  content: ' ';
-  height: 6px;
-  margin-top: -3px;
+  content: '\00a0';
+  display: inline-block;
+  border: 2px solid #39f;
+  border-top-width: 0;
+  border-right-width: 0;
+  width: 16px;
+  height: 8px;
+  transform: rotate(-50deg);
   position: absolute;
+  top: 12px;
   right: 15px;
-  top: 50%;
-  width: 6px;
 }
 .sub-menu {
   background: var(--content-bg-color);
