@@ -6,10 +6,11 @@ pre {
   word-break: break-all;
   border: 1px solid #d6d6d6;
 }
-code {
+.post-body code {
   word-break: break-all;
-  color: #588ce9;
-  background: #eff4ff;
+  color: #409eff;
+  background: none;
+  padding: 0;
 }
 .highlight {
   position: relative;
@@ -59,8 +60,10 @@ code {
   text-align: center !important;
 }
 .post-body .post-description {
-  text-align: center !important;
   font-size: 18px;
+  margin-top: 10px;
+  line-height: 30px;
+  text-align: center !important;
 }
 .footer-inner,
 .post-button {
@@ -141,6 +144,10 @@ ol p {
 }
 .posts-expand .post-meta .post-description {
   font-size: 1em;
+  margin-bottom: 10px;
+}
+.posts-expand .post-eof {
+  width: 100%;
 }
 .menu .menu-item a {
   font-size: 16px;
@@ -1592,7 +1599,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #52866a;
+  background: #04deaf;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2246,7 +2253,7 @@ pre .javascript .function {
   color: #999;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.8125em;
-  margin: 6px 0 20px 0;
+  margin: 6px 0 0;
   text-align: center;
 }
 .posts-expand .post-meta .post-description {
