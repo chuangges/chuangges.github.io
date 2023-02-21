@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chuangges.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="组件库文档、前端智能化、渐进式应用、低代码平台、桌面应用、Rust 语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端成长技能栈">
+<meta property="og:url" content="https://chuangges.gitee.io/2022/10/21/17-%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/index.html">
+<meta property="og:site_name" content="闯哥要去流浪了">
+<meta property="og:description" content="组件库文档、前端智能化、渐进式应用、低代码平台、桌面应用、Rust 语言">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-21T02:49:53.000Z">
+<meta property="article:modified_time" content="2023-02-21T11:41:40.914Z">
+<meta property="article:author" content="chuangges">
+<meta property="article:tag" content="前端技术栈">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chuangges.gitee.io/2022/10/21/17-%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>前端成长技能栈 | 闯哥要去流浪了</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="闯哥要去流浪了" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">闯哥要去流浪了</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">愿你岁月可回首，且以深情共白头</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuangges.gitee.io/2022/10/21/17-%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chuang.png">
+      <meta itemprop="name" content="chuangges">
+      <meta itemprop="description" content="chuangge's blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="闯哥要去流浪了">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端成长技能栈
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-21 10:49:53" itemprop="dateCreated datePublished" datetime="2022-10-21T10:49:53+08:00">2022-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-21 19:41:40" itemprop="dateModified" datetime="2023-02-21T19:41:40+08:00">2023-02-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%A0%88/" itemprop="url" rel="index"><span itemprop="name">前端技术栈</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description">组件库文档、前端智能化、渐进式应用、低代码平台、桌面应用、Rust 语言</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、组件库在线文档"><a href="#一、组件库在线文档" class="headerlink" title="一、组件库在线文档"></a>一、组件库在线文档</h1><h2 id="Dumi-开发组件库"><a href="#Dumi-开发组件库" class="headerlink" title="Dumi 开发组件库"></a>Dumi 开发组件库</h2><blockquote>
+<p>静态站点框架主要有：Dumi、Storybook、Gitbook、VuePress、VitePress、Docsify。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> 1、初始化目录</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desp</span>  npx：npm5.2 新增的执行包，依赖包不存在时自动下载</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desp</span>  dumi 开发组件，father-build 将源码 md/ts 解析为 React</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line">npx @umijs/create-dumi-lib         <span class="comment">// 文档模式：只包含组件文档</span></span><br><span class="line">npx @umijs/create-dumi-lib --site  <span class="comment">// 站点模式：完整的组件库网站</span></span><br><span class="line">npx @umijs/create-dumi-app         <span class="comment">// 纯静态站点：不包含组件源码</span></span><br><span class="line"></span><br><span class="line">npx @umijs/create-dumi-lib --site</span><br><span class="line">npm install、npm start、npm run build</span><br><span class="line"></span><br><span class="line">├── <span class="variable constant_">README</span>.<span class="property">md</span></span><br><span class="line">├── docs                 <span class="comment">// 文档目录</span></span><br><span class="line">│   ├── index.<span class="property">md</span>         <span class="comment">// 文档首页</span></span><br><span class="line">│   └── otherDir         <span class="comment">// 文档其它路由</span></span><br><span class="line">│   		├── index.<span class="property">md</span></span><br><span class="line">│   		├── sample.<span class="property">md</span></span><br><span class="line">│   		└── help.<span class="property">md</span></span><br><span class="line">├── src                  <span class="comment">// 源码目录</span></span><br><span class="line">│   ├── index.<span class="property">ts</span>         <span class="comment">// 入口文件</span></span><br><span class="line">│   └── <span class="title class_">Foo</span>              <span class="comment">// 组件源码</span></span><br><span class="line">│       ├── index.<span class="property">md</span> </span><br><span class="line">│   		└── index.<span class="property">ts</span></span><br><span class="line">├── .<span class="property">umirc</span>.<span class="property">ts</span>            <span class="comment">// dumi 配置文件</span></span><br><span class="line">└── .<span class="property">fatherrc</span>.<span class="property">ts</span>         <span class="comment">// father-build 打包配置文件</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、新建组件 /src/MyButton/index.md：npm install antd -D</span></span><br><span class="line">---</span><br><span class="line"><span class="attr">title</span>: 页面名称</span><br><span class="line"><span class="attr">nav</span>:</span><br><span class="line">  <span class="attr">title</span>: <span class="title class_">Components</span>   <span class="comment">// 导航名称</span></span><br><span class="line">  <span class="attr">path</span>: <span class="regexp">/components   /</span><span class="regexp">/ 导航路由</span></span><br><span class="line"><span class="regexp">  order: 0            /</span><span class="regexp">/ 导航顺序，数字越小越靠前</span></span><br><span class="line"><span class="regexp">group:</span></span><br><span class="line"><span class="regexp">  title: MyButton</span></span><br><span class="line"><span class="regexp">  path: /</span>btn          <span class="comment">// 分组路由 = 导航路由+自己</span></span><br><span class="line">  <span class="attr">order</span>: <span class="number">1</span>            <span class="comment">// 分组顺序，默认以路径长度和字典序排序</span></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## <span class="title class_">MyButton</span></span><br><span class="line"><span class="comment">// ```tsx    使用时不注释</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">MyButton</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;my-dumi-doc&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; <span class="language-xml"><span class="tag">&lt;<span class="name">MyButton</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>click me!<span class="tag">&lt;/<span class="name">MyButton</span>&gt;</span></span>;</span><br><span class="line"><span class="comment">// ```</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// /src/index.ts：暴露组件</span></span><br><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> <span class="title class_">MyButton</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./MyButton&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// MyButton/index.tsx</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span>, <span class="title class_">ButtonProps</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;antd/dist/antd.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> interface <span class="title class_">MyButtonProps</span> <span class="keyword">extends</span> <span class="title class_">ButtonProps</span> &#123;</span><br><span class="line">    isMy?: boolean;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">MyButton</span>: <span class="title class_">React</span>.<span class="property">FC</span>&lt;<span class="title class_">MyButtonProps</span>&gt; = <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; children, ...restProps &#125; = props;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span> &#123;<span class="attr">...restProps</span>&#125;&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">MyButton</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="lerna-管理多个包"><a href="#lerna-管理多个包" class="headerlink" title="lerna 管理多个包"></a>lerna 管理多个包</h2><blockquote>
+<p>用来优化托管在 git&#x2F;npm 上的多包代码库的工作流的一个管理工具，可以让你在主项目下管理多个子项目，从而解决了多个包互相依赖并且发布时需要手动维护多个包的问题。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根目录初始化：自动生成 lerna.json、packages</span></span><br><span class="line">npm install -g lerna、lerna init</span><br><span class="line">lerna create @keith/button packages/button --yes</span><br><span class="line"></span><br><span class="line">lerna init       <span class="comment">// 初始化配置</span></span><br><span class="line">lerna create     <span class="comment">// 创建包</span></span><br><span class="line">lerna link       <span class="comment">// 链接包</span></span><br><span class="line">lerna add        <span class="comment">// 安装单个依赖</span></span><br><span class="line">lerna bootstrap  <span class="comment">// 安装全局依赖并链接到所有子包</span></span><br><span class="line">lerna clean      <span class="comment">// 清除 node_modules</span></span><br><span class="line">lerna list       <span class="comment">// 列出子包</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// tsconfig.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;declaration&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;paths&quot;</span>: &#123;  <span class="comment">// 此处新增组件目录</span></span><br><span class="line">      <span class="string">&quot;@keith/button&quot;</span>: [<span class="string">&quot;./packages/button/src/index.tsx&quot;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// .fatherrc.ts：添加 button</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">headPkgs</span>: string[] = [<span class="string">&#x27;button&#x27;</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">// package.json：添加 workspaces</span></span><br><span class="line"> <span class="string">&quot;workspaces&quot;</span>: [</span><br><span class="line">  <span class="string">&quot;packages/*&quot;</span></span><br><span class="line">],</span><br><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;start&quot;</span>: <span class="string">&quot;dumi dev&quot;</span>,</span><br><span class="line">  <span class="string">&quot;docs:build&quot;</span>: <span class="string">&quot;dumi build&quot;</span>,</span><br><span class="line">  <span class="string">&quot;docs:deploy&quot;</span>: <span class="string">&quot;gh-pages -d docs-dist&quot;</span>,</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;father-build&quot;</span>,</span><br><span class="line">  <span class="string">&quot;deploy&quot;</span>: <span class="string">&quot;npm run docs:build &amp;&amp; npm run docs:deploy&quot;</span>,</span><br><span class="line">  <span class="string">&quot;prettier&quot;</span>: <span class="string">&quot;prettier --write \&quot;**/*.&#123;js,jsx,tsx,ts,less,md,json&#125;\&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;test&quot;</span>: <span class="string">&quot;umi-test&quot;</span>,</span><br><span class="line">  <span class="string">&quot;test:coverage&quot;</span>: <span class="string">&quot;umi-test --coverage&quot;</span>,</span><br><span class="line">  <span class="string">&quot;prepublishOnly&quot;</span>: <span class="string">&quot;npm run build&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 去除多余目录：组件目录 lib/_test_、根目录 src</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Prettier-Eslint-代码风格"><a href="#Prettier-Eslint-代码风格" class="headerlink" title="Prettier Eslint 代码风格"></a>Prettier Eslint 代码风格</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm install @umijs/fabric -D</span><br><span class="line"></span><br><span class="line"><span class="comment">// .prettierrc.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="built_in">require</span>(<span class="string">&#x27;@umijs/fabric&#x27;</span>).<span class="property">prettier</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// .eslintrc.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [<span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;@umijs/fabric/dist/eslint&#x27;</span>)],</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="GitHooks-Commitlin-提交规范"><a href="#GitHooks-Commitlin-提交规范" class="headerlink" title="GitHooks Commitlin 提交规范"></a>GitHooks Commitlin 提交规范</h2><blockquote>
+<p><code>GitHooks</code> 是指在 git 操作时触发运行 .git&#x2F;hooks 目录下的钩子脚本，自定义钩子操作时如果直接修改 hooks 脚本并去掉 sample 后缀即可生效但是不能提交修改代码，所以一般通过引入工具 husky&#x2F;yorkie 来配置。<code>Commitlin</code> 是用来配置提交信息校验规则的工具。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">npm install @umijs/yorkie -D</span><br><span class="line">npm install @commitlint/cli @commitlint/config-conventional -D</span><br><span class="line"></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;gitHooks&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;pre-commit&quot;</span>: <span class="string">&quot;lint-staged&quot;</span>,</span><br><span class="line">    <span class="string">&quot;commit-msg&quot;</span>: <span class="string">&quot;commitlint -E GIT_PARAMS&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;lint-staged&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;packages/**/*.&#123;js, ts, jsx, tsx, md, json&#125;&quot;</span>: [</span><br><span class="line">      <span class="string">&quot;eslint --fix&quot;</span>,</span><br><span class="line">      <span class="string">&quot;prettier --write&quot;</span>,</span><br><span class="line">      <span class="string">&quot;git add .&quot;</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// .commitlintrc.js / commitlint.config.js </span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [<span class="string">&#x27;@commitlint/config-conventional&#x27;</span>],</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;type-enum&#x27;</span>: [</span><br><span class="line">      <span class="number">2</span>,</span><br><span class="line">      <span class="string">&#x27;always&#x27;</span>,</span><br><span class="line">      [</span><br><span class="line">        <span class="string">&#x27;feature&#x27;</span>,    <span class="comment">// 开发新功能</span></span><br><span class="line">        <span class="string">&#x27;fix&#x27;</span>,        <span class="comment">// 修补 bug</span></span><br><span class="line">        <span class="string">&#x27;refactor&#x27;</span>,   <span class="comment">// 代码重构</span></span><br><span class="line">        <span class="string">&#x27;docs&#x27;</span>,       <span class="comment">// 文档</span></span><br><span class="line">        <span class="string">&#x27;style&#x27;</span>,      <span class="comment">// 格式（不影响代码运行的变动）</span></span><br><span class="line">        <span class="string">&#x27;test&#x27;</span>,       <span class="comment">// 增加测试</span></span><br><span class="line">        <span class="string">&#x27;build&#x27;</span>,      <span class="comment">// 变更项目构建或外部依赖（webpack、package等）</span></span><br><span class="line">        <span class="string">&#x27;revert&#x27;</span>,     <span class="comment">// 回滚</span></span><br><span class="line">        <span class="string">&#x27;perf&#x27;</span>,       <span class="comment">// 改善性能</span></span><br><span class="line">      ],</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&#x27;type-empty&#x27;</span>: [<span class="number">2</span>, <span class="string">&#x27;never&#x27;</span>],       <span class="comment">// 不符合规范时，可提交但有警告</span></span><br><span class="line">    <span class="string">&#x27;subject-empty&#x27;</span>: [<span class="number">2</span>, <span class="string">&#x27;never&#x27;</span>],    <span class="comment">// 不符合规范时，可提交但有警告</span></span><br><span class="line">    <span class="string">&#x27;subject-full-stop&#x27;</span>: [<span class="number">0</span>, <span class="string">&#x27;never&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;subject-case&#x27;</span>: [<span class="number">0</span>, <span class="string">&#x27;never&#x27;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二、前端智能化"><a href="#二、前端智能化" class="headerlink" title="二、前端智能化"></a>二、前端智能化</h1><blockquote>
+<p>AI 在前端领域基于设计稿生成源代码的一系列落地方案。<a target="_blank" rel="external nofollow noopener noreferrer" href="https://code.fun/docs">CodeFun</a> 就是一款可以将 Figma、Sketch、Photoshop 等设计稿智能转换为前端源代码的工具。</p>
+</blockquote>
+<h1 id="渐进式应用-PWA"><a href="#渐进式应用-PWA" class="headerlink" title="渐进式应用 PWA"></a>渐进式应用 PWA</h1>
+    </div>
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;margin-top:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chuangges
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuangges.gitee.io/2022/10/21/17-%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/" title="前端成长技能栈">https://chuangges.gitee.io/2022/10/21/17-前端技能/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh_CN" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/26/16-Nginx/" rel="prev" title="Nginx 基础使用">
+      <i class="fa fa-chevron-left"></i> Nginx 基础使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/10/18-%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="next" title="微服务相关技术栈">
+      微服务相关技术栈 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BB%84%E4%BB%B6%E5%BA%93%E5%9C%A8%E7%BA%BF%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">一、组件库在线文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dumi-%E5%BC%80%E5%8F%91%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">Dumi 开发组件库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lerna-%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">lerna 管理多个包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prettier-Eslint-%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">1.3.</span> <span class="nav-text">Prettier Eslint 代码风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHooks-Commitlin-%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83"><span class="nav-number">1.4.</span> <span class="nav-text">GitHooks Commitlin 提交规范</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%89%8D%E7%AB%AF%E6%99%BA%E8%83%BD%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">二、前端智能化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%90%E8%BF%9B%E5%BC%8F%E5%BA%94%E7%94%A8-PWA"><span class="nav-number">3.</span> <span class="nav-text">渐进式应用 PWA</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chuangges" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/chuang.png">
+  <p class="site-author-name" itemprop="name">chuangges</p>
+  <div class="site-description" itemprop="description">chuangge's blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chuangges" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chuangges" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.docschina.org/" title="https:&#x2F;&#x2F;www.docschina.org&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">印记中文</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://tool.lu/" title="http:&#x2F;&#x2F;tool.lu&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">在线工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tinypng.com/" title="https:&#x2F;&#x2F;tinypng.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片压缩</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bigjpg.com/" title="https:&#x2F;&#x2F;bigjpg.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">图片放大</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tool.chinaz.com/" title="https:&#x2F;&#x2F;tool.chinaz.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">站长工具</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://learn-anything.xyz/" title="https:&#x2F;&#x2F;learn-anything.xyz&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Learn-Anything</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://stackoverflow.com/" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;" rel="external nofollow noopener noreferrer" target="_blank">Stack-Overflow</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chuangge</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">747k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">11:19</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":180,"height":360},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(e){e.imageLazyLoadSetting.processImages=t;var n=e.imageLazyLoadSetting.isSPA,i=e.imageLazyLoadSetting.preloadRatio||1,r=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){n&&(r=o());for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(e.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];e=function(){r=r.filter(function(t){return o!==t})},(t=o).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,t.removeAttribute("data-original"),e&&e()},t.src!==i&&(n.src=i))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),e.addEventListener("resize",a),e.addEventListener("orientationchange",a)}(this);</script></body>
+</html>
