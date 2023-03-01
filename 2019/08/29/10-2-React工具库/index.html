@@ -28,7 +28,7 @@
 <meta property="og:description" content="HOC、Hook、Redux、Mobox">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-29T06:27:28.000Z">
-<meta property="article:modified_time" content="2022-10-20T11:51:30.296Z">
+<meta property="article:modified_time" content="2023-02-23T03:47:58.082Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="JS 框架">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-20 19:51:30" itemprop="dateModified" datetime="2022-10-20T19:51:30+08:00">2022-10-20</time>
+                <time title="修改时间：2023-02-23 11:47:58" itemprop="dateModified" datetime="2023-02-23T11:47:58+08:00">2023-02-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -334,6 +334,14 @@
 <p>特点：通过 Generator 函数来创建，可以用同步的方式写异步的代码；</p>
 <p>API：</p>
 <p>Effect： 一个简单的对象，这个对象包含了一些给 middleware 解释执行的信息。所有的Effect 都必须被 yield 才会执行。<br>put：触发某个action，作用和dispatch相同；</p>
+<h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><ul>
+<li>单个组件内部数据传递：state</li>
+<li>父组件向子组件传递：props</li>
+<li>子组件向父组件传递：props</li>
+<li>兄弟组件之间的通信：props</li>
+<li>父组件向后代组件传递：props、Context API、Redux、发布-订阅模式、EventBus</li>
+<li>非关系组件传递：Context API、Redux、发布-订阅模式、EventBus</li>
+</ul>
 <h1 id="四、Zarm"><a href="#四、Zarm" class="headerlink" title="四、Zarm"></a>四、Zarm</h1><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zarm.design/#/components/collapse">https://zarm.design/#/components/collapse</a></p>
 
     </div>
@@ -442,7 +450,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">一、组件复用方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E5%85%A5-Mixin"><span class="nav-number">1.1.</span> <span class="nav-text">混入 Mixin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF-extends"><span class="nav-number">1.2.</span> <span class="nav-text">继承 extends</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6-HOC"><span class="nav-number">1.3.</span> <span class="nav-text">高阶组件 HOC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E5%B1%9E%E6%80%A7-Render-Props"><span class="nav-number">1.4.</span> <span class="nav-text">渲染属性 Render Props</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Hooks"><span class="nav-number">1.5.</span> <span class="nav-text">React Hooks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81react-hooks"><span class="nav-number">2.</span> <span class="nav-text">二、react-hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81-API"><span class="nav-number">2.1.</span> <span class="nav-text">主要 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="nav-number">2.2.</span> <span class="nav-text">自定义 Hook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Redux"><span class="nav-number">3.</span> <span class="nav-text">三、Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.1.</span> <span class="nav-text">核心实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">应用实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Zarm"><span class="nav-number">4.</span> <span class="nav-text">四、Zarm</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">一、组件复用方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E5%85%A5-Mixin"><span class="nav-number">1.1.</span> <span class="nav-text">混入 Mixin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF-extends"><span class="nav-number">1.2.</span> <span class="nav-text">继承 extends</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6-HOC"><span class="nav-number">1.3.</span> <span class="nav-text">高阶组件 HOC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E5%B1%9E%E6%80%A7-Render-Props"><span class="nav-number">1.4.</span> <span class="nav-text">渲染属性 Render Props</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Hooks"><span class="nav-number">1.5.</span> <span class="nav-text">React Hooks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81react-hooks"><span class="nav-number">2.</span> <span class="nav-text">二、react-hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81-API"><span class="nav-number">2.1.</span> <span class="nav-text">主要 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Hook"><span class="nav-number">2.2.</span> <span class="nav-text">自定义 Hook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Redux"><span class="nav-number">3.</span> <span class="nav-text">三、Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.1.</span> <span class="nav-text">核心实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">应用实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1"><span class="nav-number">3.3.</span> <span class="nav-text">组件通信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Zarm"><span class="nav-number">4.</span> <span class="nav-text">四、Zarm</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -457,7 +465,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -545,12 +553,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">747k</span>
+    <span title="站点总字数">750k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11:19</span>
+    <span title="站点阅读时长">11:22</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
