@@ -28,7 +28,7 @@
 <meta property="og:description" content="HOC、Hook、Redux、Mobox">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-29T06:27:28.000Z">
-<meta property="article:modified_time" content="2023-03-01T07:49:04.843Z">
+<meta property="article:modified_time" content="2023-04-20T03:25:20.147Z">
 <meta property="article:author" content="chuangges">
 <meta property="article:tag" content="JS 框架">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-01 15:49:04" itemprop="dateModified" datetime="2023-03-01T15:49:04+08:00">2023-03-01</time>
+                <time title="修改时间：2023-04-20 11:25:20" itemprop="dateModified" datetime="2023-04-20T11:25:20+08:00">2023-04-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,14 +212,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>11 分钟</span>
             </span>
             <div class="post-description">HOC、Hook、Redux、Mobox</div>
 
@@ -305,7 +305,22 @@
 
 
 
-<h2 id="自定义-Hook"><a href="#自定义-Hook" class="headerlink" title="自定义 Hook"></a>自定义 Hook</h2><h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><ul>
+<h2 id="自定义-Hook"><a href="#自定义-Hook" class="headerlink" title="自定义 Hook"></a>自定义 Hook</h2><blockquote>
+<p>实现能够自动上报页面浏览量和点击时间的 useLog，用来控制监听元素并分清依赖关系。</p>
+</blockquote>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> useRef 获取 DOM 元素。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> useContext 获取埋点的公共信息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> useCallback 缓存上报信息 </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> useEffect 监听 DOM 事件</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desp</span>  依赖关系：context 更新、引入 context 的 reportMessage 重新声明、</span></span><br><span class="line"><span class="comment"> * 让绑定 DOM 事件监听的 useEffect 里面能够绑定最新 reportMessage</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">LogContext</span> = <span class="title function_">createContext</span>(&#123;&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useLog</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> message = <span class="title function_">useContext</span>(<span class="title class_">LogContext</span>);</span><br><span class="line">  <span class="keyword">const</span> listenDOM = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">const</span> reportMessage = <span class="title function_">useCallback</span>(</span><br><span class="line">      <span class="keyword">function</span> (<span class="params">data, type</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (type === <span class="string">&quot;pv&quot;</span>) &#123;</span><br><span class="line">              <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;页面浏览量 pv 上报&quot;</span>, message);</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&quot;click&quot;</span>) &#123;</span><br><span class="line">              <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;组件 click 上报&quot;</span>, message, data);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      [message]</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> handleClick = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">          <span class="title function_">reportMessage</span>(e.<span class="property">target</span>, <span class="string">&quot;click&quot;</span>);</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="keyword">if</span> (listenDOM.<span class="property">current</span>) &#123;</span><br><span class="line">          listenDOM.<span class="property">current</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, handleClick);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (!listenDOM.<span class="property">current</span>) &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">          listenDOM.<span class="property">current</span>.<span class="title function_">removeEventListener</span>(<span class="string">&quot;click&quot;</span>, handleClick);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;, [reportMessage]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> [listenDOM, reportMessage];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件使用</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogContext</span>, useLog &#125; <span class="keyword">from</span> <span class="string">&quot;./hooks/useLog&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Home</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [dom, reportMessage] = <span class="title function_">useLog</span>();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;/* 监听内部点击 */&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">ref</span>=<span class="string">&#123;dom&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>按钮 1 (内部点击)<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>按钮 2 (内部点击)<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>按钮 3 (内部点击)<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;/* 外部点击 */&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;console.log(reportMessage)&#125;&#125;&gt;外部点击<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 阻断 useState 的更新效应</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Index</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="title class_">Home</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [value, setValue] = <span class="title function_">useState</span>(&#123;&#125;);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">LogContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;value&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Index</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setValue(&#123; cat: &quot;小猫&quot;, color: &quot;棕色&quot; &#125;)&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        点击</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">LogContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">App</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><ul>
 <li>单个组件内部数据传递：state</li>
 <li>父组件向子组件传递：props</li>
 <li>子组件向父组件传递：props</li>
@@ -359,8 +374,8 @@
       <i class="fa fa-chevron-left"></i> React 框架
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/03/11-1-typescript%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="TypeScript 简介和数据类型">
-      TypeScript 简介和数据类型 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/11/03/11-1-typescript%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="TypeScript 入门">
+      TypeScript 入门 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -435,7 +450,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -523,12 +538,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">779k</span>
+    <span title="站点总字数">791k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11:48</span>
+    <span title="站点阅读时长">11:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
